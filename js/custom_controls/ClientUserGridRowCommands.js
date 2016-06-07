@@ -20,19 +20,22 @@ function ClientUserGridRowCommands(id,options){
 	this.setElementById("reset_pwd",new Button(null,
 	{"caption":"Новый пароль",
 	"onClick":function(){
-			if (WindowQuestion.show(
-			{"text":"Пользователю будет назначен новый пароль, продолжить?"})==WindowQuestion.RES_YES){				
-				var contr = new ClientUser_Controller(new ServConnector(HOST_NAME));
-				contr.run("reset_pwd",{
-					"params":{"user_id":options.keys["id"]},
-					"func":function(){
-						WindowMessage.show({
-							"text":"Пользователю отправлен новый пароль.",
-							"type":WindowMessage.TP_NOTE
-							});
-					}
-				});
+		WindowQuestion.show({"text":"Пользователю будет назначен новый пароль, продолжить?",
+			callBack:function(res){
+				if (res==WindowQuestion.RES_YES){
+					var contr = new ClientUser_Controller(new ServConnector(HOST_NAME));
+					contr.run("reset_pwd",{
+						"params":{"user_id":options.keys["id"]},
+						"func":function(){
+							WindowMessage.show({
+								"text":"Пользователю отправлен новый пароль.",
+								"type":WindowMessage.TP_NOTE
+								});
+						}
+					});
+				}
 			}
+		})
 		},
 	"attrs":{"title":"отправить на почту новый пароль"}
 	})

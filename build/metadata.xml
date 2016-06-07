@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata debug="TRUE" owner="polimerplast" dataSchema="public">
 	<versions>	
-		<version dateOpen="2016-06-07 07:05">1.0021</version>
-		<lastBuild>2016-06-07 09:53:50</lastBuild>		
+		<version dateOpen="2016-06-07 07:05" dateClose="2016-06-07 11:06:25">1.0021</version>
+		<lastBuild>2016-06-07 11:25:18</lastBuild>		
 	</versions>	
 	<globalFilters>
 		<field id="client_id"/>

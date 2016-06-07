@@ -280,10 +280,13 @@ class User_Controller extends ControllerSQL{
 	}
 	
 	private function check_user($pm){
-		$ext_ref = ExtProg::getUserRefOnName($pm->getParamValue('ext_login'));
-		if ($ext_ref){
-			$pm->setParamValue('ext_id',$ext_ref);
-		}		
+		if ($pm->getParamValue('name')){
+			//если есть имя
+			$ext_ref = ExtProg::getUserRefOnName($pm->getParamValue('ext_login'));
+			if ($ext_ref){
+				$pm->setParamValue('ext_id',$ext_ref);
+			}				
+		}
 	}
 	
 	public function insert($pm){

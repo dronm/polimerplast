@@ -9,7 +9,7 @@
   <model id="ModelVars" write="1" rowsPerPage="0" listFrom="0" totalCount="0" browseMode="0" browseId="0">
     <row>
       <basePath>http://localhost/polimerplast/</basePath>
-      <scriptId>1.0019</scriptId>
+      <scriptId>1.0020</scriptId>
       <title/>
       <author/>
       <keywords/>

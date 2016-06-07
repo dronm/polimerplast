@@ -229,7 +229,7 @@ class ClientUser_Controller extends ControllerSQL{
 			//отправить по мылу
 			PPEmailSender::addEMail(
 				$link,
-				sprintf("email_reset_pwd(%d,%s)",
+				sprintf("email_reset_pwd(%d,'%s')",
 				$params->getParamById('user_id'),
 				$pwd),
 				NULL,
