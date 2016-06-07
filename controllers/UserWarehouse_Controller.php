@@ -102,7 +102,7 @@ class UserWarehouse_Controller extends ControllerSQL{
 		
 		$this->addPublicMethod($pm);
 		$this->setObjectModelId('UserWarehouseList_Model');		
-
+			
 		
 	}	
 	

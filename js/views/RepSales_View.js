@@ -434,6 +434,7 @@ function RepSales_View(id,options){
 extend(RepSales_View,PPViewReport);
 
 RepSales_View.prototype.addExtraParams = function(struc){
+	RepSales_View.superclass.addExtraParams.call(this,struc);	
 	struc.templ="RepSales";
 	//вид даты
 }

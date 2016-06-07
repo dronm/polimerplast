@@ -168,7 +168,7 @@ function ClientEditObject(fieldId,controlId,inLine,opts){
 		"minLengthForQuery":1,
 		"objectView":ClientDialog_View,
 		"noSelect":false,
-		"noOpen":false,
+		"noOpen":opts.noOpen||false,
 		//"winObj":opts.winObj,
 		"listView":ClientSelectList_View,
 		"value":opts.descr,

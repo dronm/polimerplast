@@ -164,7 +164,7 @@ function DOCOrderDialog_View(id,options){
 		var cont = new ControlContainer(id+"_client_panel","div",{"className":bs_col+"6"});		
 		//Заказчик
 		this.m_clientCtrl = new ClientEditObject("client_id",id+"_client",false,{
-			//"visible":(SERV_VARS.ROLE_ID!="client"),
+			"noOpen":true,
 			"onSelected":function(){
 				self.onClientSelected();
 			},

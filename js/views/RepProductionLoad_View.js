@@ -49,5 +49,6 @@ function RepProductionLoad_View(id,options){
 extend(RepProductionLoad_View,PPViewReport);
 
 RepProductionLoad_View.prototype.addExtraParams = function(struc){
+	RepProductionLoad_View.superclass.addExtraParams.call(this,struc);	
 	struc.templ="RepProductionLoad";
 }

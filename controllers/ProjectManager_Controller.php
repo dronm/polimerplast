@@ -16,33 +16,62 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldExtBool.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPoint.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPolygon.php');
 
-require_once(ABSOLUTE_PATH.'version.php');
 require_once('common/Logger.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ModelVars.php');
-require_once(FRAME_WORK_PATH.'build/proj_file_func.php');
-require_once(FRAME_WORK_PATH.'build/build_js.php');
-require_once(FRAME_WORK_PATH.'build/build_css.php');
-require_once('common/Git.php-master/Git.php');	
+require_once(FRAME_WORK_PATH.'build/ProjectManager.php');
 
 class ProjectManager_Controller extends Controller{
 
-	const UPDATES_DIR = 'updates';
-	const PROJ_FILE = 'project.tar.gz';
-	const DUMP_FILE = 'database.dump.gz';
 	const INVALID_UPDATE = 'Нет обновлений для данного проекта!';
+	const BUILD_LOG = 'build.log';
+	
+	private $projManager;
+	private $log;
+
+	private function getProjectDir(){
+		return substr(ABSOLUTE_PATH,0,strlen(ABSOLUTE_PATH)-1);
+	}
+
+	private function getRepoDir(){
+		return substr(FRAME_WORK_PATH,0,strlen(ABSOLUTE_PATH)-1);
+	}
+	
 	
 	public function __construct(){
 		
 			
-		$pm = new PublicMethod('install_update');
+		$pm = new PublicMethod('open_version');
+		
+				
+	$opts=array();
+	
+		$opts['length']=15;				
+		$pm->addParam(new FieldExtString('version',$opts));
+	
+			
+		$this->addPublicMethod($pm);
+
+			
+		$pm = new PublicMethod('close_version');
+		
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtText('commit_description',$opts));
+	
+			
+		$this->addPublicMethod($pm);
+
+			
+		$pm = new PublicMethod('minify_js');
 		
 		$this->addPublicMethod($pm);
 
 			
-		$pm = new PublicMethod('build_project');
+		$pm = new PublicMethod('build_all');
 		
 		$this->addPublicMethod($pm);
-
+			
 			
 		$pm = new PublicMethod('create_symlinks');
 		
@@ -54,7 +83,23 @@ class ProjectManager_Controller extends Controller{
 		$this->addPublicMethod($pm);
 
 			
-		$pm = new PublicMethod('unify_js');
+		$pm = new PublicMethod('push');
+		
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtText('commit_description',$opts));
+	
+			
+		$this->addPublicMethod($pm);
+			
+			
+		$pm = new PublicMethod('zip_project');
+		
+		$this->addPublicMethod($pm);
+
+			
+		$pm = new PublicMethod('zip_db');
 		
 		$this->addPublicMethod($pm);
 
@@ -64,104 +109,30 @@ class ProjectManager_Controller extends Controller{
 		$this->addPublicMethod($pm);
 			
 		
-	}
-	
-	private function do_update($logger){
-		$logger->add('Начало установки обновления ');
-	}
-
-	private function zip_project($logger){
-		$logger->add('Архивация файлов проекта');
-
-		$dir = substr(ABSOLUTE_PATH,0,strlen(ABSOLUTE_PATH)-1);
-		$dir_ar = explode('/',$dir);
-		$proj_id = $dir_ar[count($dir_ar)-1];
-		$par_dir = implode('/',array_slice($dir_ar,0,count($dir_ar)-1));
 		
-		if (!file_exists($dir.'/'.self::UPDATES_DIR)){
-			mkdir($dir.'/'.self::UPDATES_DIR);
-			chgrp($dir.'/'.self::UPDATES_DIR,BUILD_GROUP);
-			exec(sprintf('chmod %s %s',BUILD_DIR_PERMISSION,$dir.'/'.self::UPDATES_DIR));				
-		}
-
-		$out_scripts = $dir.'/'.self::UPDATES_DIR.'/'.self::PROJ_FILE;
-		if (file_exists($out_scripts)){
-			unlink($out_scripts);
-		}
-	
-		exec(sprintf('tar -zcf %s -C %s %s --exclude %s',
-			$out_scripts,
-			$par_dir,
-			$proj_id,
-			$dir.'/'.self::UPDATES_DIR
-		));
-		chgrp($out_scripts,BUILD_GROUP);
-		exec(sprintf('chmod %s %s',BUILD_DIR_PERMISSION,$out_scripts));				
-	}
-
-	private function dump_db($logger){
-		$logger->add('Архивация базы данных');
-		$dir = substr(ABSOLUTE_PATH,0,strlen(ABSOLUTE_PATH)-1);
-		$out_dbdump = $dir.'/'.self::UPDATES_DIR.'/'.self::DUMP_FILE;;
-		$cmd = sprintf(
-		'pg_dump -h %s -U %s -Fc -b postgresql://%s:%s@%s:%d/%s | gzip > %s',
-			DB_SERVER,
-			DB_USER,
-			DB_USER,
-			DB_PASSWORD,
-			DB_SERVER,
-			5432,
-			DB_NAME,
-			$out_dbdump
+		$this->projManager = new ProjectManager(
+			$this->getProjectDir(),
+			$this->getRepoDir(),
+			array(
+				'buildGroup' => BUILD_GROUP,
+				'buildFilePermission' => BUILD_FILE_PERMISSION,
+				'buildDirPermission' => BUILD_DIR_PERMISSION
+			)
+		);					
+		
+		$this->log = new Logger(dirname($this->projManager->getMdFile()).'/'. self::BUILD_LOG,array(
+			'buildGroup' => BUILD_GROUP,
+			'buildFilePermission' => BUILD_FILE_PERMISSION,
+			'buildDirPermission' => BUILD_DIR_PERMISSION
+			)
 		);
-	
-		exec($cmd);
-	}
-
-	private function tar_zips($logger){
-		$logger->add('Сборка архивов в один файл');
-		$dir = substr(ABSOLUTE_PATH,0,strlen(ABSOLUTE_PATH)-1);
-	
-		$out_all = $dir.'/'.self::UPDATES_DIR.'/'.str_replace('.','_',VERSION).'.tar';
-		exec(sprintf('tar -cf %s -C %s %s -C %s %s',
-			$out_all,
-			$dir.'/updates',
-			self::PROJ_FILE,
-			$dir.'/'.self::UPDATES_DIR,
-			self::DUMP_FILE		
-		));
-
-		chgrp($out_all,BUILD_GROUP);
-		exec(sprintf('chmod %s %s',BUILD_DIR_PERMISSION,$out_all));				
-	}
-
-	private function get_update_version(){
-	
-	}
-
-	public function install_update($pm){
-		$new_vers = $this->get_update_version();
-		if ($new_vers <= VERSION){
-			throw new Exception(self::INVALID_UPDATE);
-		}
-	
-		$logger = new Logger(ABSOLUTE_PATH.'updates/log');
 		
-		$logger->add('Начало установки обновления ',$new_vers);
-		
-		$this->zip_project($logger);
-		$this->dump_db($logger);
-		$this->tar_zips($logger);
-		$this->do_update($logger);
-		
-		$logger->close();
 	}
-	public function build_project($pm){
-		require_once(FRAME_WORK_PATH.'build/build.php');
-	}
+	
+	
+	/* *****************************  */
 	public function get_version($pm){
-		$struc = array();
-		get_version_inf($struc);
+		$this->projManager->getVersion($struc);
 		
 		$this->addModel(new ModelVars(
 			array('name'=>'Vars',
@@ -180,5 +151,55 @@ class ProjectManager_Controller extends Controller{
 		));		
 			
 	}
+	
+	public function open_version($pm){
+		$this->projManager->openVersion($_REQUEST['version'],$this->log);
+	}
+	
+	public function close_version($pm){
+		$struc = array();
+		$this->projManager->getVersion($struc);
+							
+		$this->projManager->createVersionFile($struc['version'],$this->log);						
+		$this->projManager->build($this->log);						
+		$this->projManager->minifyJs($struc['version'],$this->log);
+		$this->projManager->minifyCSS($struc['version'],$this->log);
+		$this->projManager->closeVersion($this->log);			
+		$this->projManager->prepareSQLForUpdate($this->log);
+	}
+	
+	public function minify_js($pm){
+		$struc = array();
+		$this->projManager->getVersion($struc);
+	
+		$this->projManager->minifyJs($struc['version'],$this->log);
+		$this->projManager->minifyCSS($struc['version'],$this->log);
+	}
+	
+	public function build_all($pm){
+		$this->projManager->build($this->log);
+	}
+	
+	public function create_symlinks($pm){
+		$this->projManager->createSymlinks($this->log);
+	}
+	
+	public function pull($pm){
+		$this->projManager->pull($this->log);
+		$this->projManager->createSymlinks($this->log);	
+	}
+	
+	public function push($pm){
+		$this->projManager->push($_REQUEST['commit_description'],$this->log);
+	}
+	
+	public function zip_project($pm){
+		$this->projManager->zipProject($this->log);
+	}
+	
+	public function zip_db($pm){
+		$this->projManager->zipDb($this->log);
+	}
+	
 }
 ?>

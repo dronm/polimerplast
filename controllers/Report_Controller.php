@@ -197,12 +197,15 @@ class Report_Controller extends ControllerSQL{
 		$params->setValidated('groups',DT_STRING);
 		$params->setValidated('agg_fields',DT_STRING);
 		$params->setValidated('agg_types',DT_STRING);
+		$params->setValidated('field_sep',DT_STRING);
 		
 		$model = new RepSale_Model($link);
 		$base_where = $this->conditionFromParams($pm,$model);
 		if (!$base_where){
 			throw new Exception('Не заданы даты!');
 		}
+		
+		$FIELD_SEP = ',';
 		
 		/* структуры отчета для удобства отделены*/
 		require_once('functions/RepSalesStruc.php');
@@ -276,8 +279,8 @@ class Report_Controller extends ControllerSQL{
 		$grp_fields = json_decode($params->getVal('groups'));
 		
 		//Агрегаты и типы функций - просто строки через запятую
-		$agg_fields = explode(',',$params->getVal('agg_fields'));
-		$agg_types = explode(',',$params->getVal('agg_types'));
+		$agg_fields = explode($FIELD_SEP,$params->getVal('agg_fields'));
+		$agg_types = explode($FIELD_SEP,$params->getVal('agg_types'));
 		if (count($agg_fields) <> count($agg_types)){
 			throw new Exception('Количество полей агрегатов не равно количеству функций агрегатов!');
 		}
