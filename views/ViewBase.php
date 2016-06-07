@@ -420,7 +420,6 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/Holiday_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/HolidayInline_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientDebt_View.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ProjectManager_View.js'));
 		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/UnregClientCheck.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/ClientAttrs.js'));

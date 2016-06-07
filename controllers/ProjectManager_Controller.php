@@ -33,9 +33,31 @@ class ProjectManager_Controller extends Controller{
 	}
 
 	private function getRepoDir(){
-		return substr(FRAME_WORK_PATH,0,strlen(ABSOLUTE_PATH)-1);
+		$pathArray = explode(PATH_SEPARATOR, get_include_path());
+		if (count($pathArray)>=2){
+			return $pathArray[1].substr(FRAME_WORK_PATH,0,strlen(FRAME_WORK_PATH)-1);
+		}
 	}
 	
+	private function printLog(){	
+		$lines = array();
+		$it = $this->log->getLineIterator();
+		$i = 0;
+		while($it->valid()){		
+			array_push($lines,new Field('line'.$i,DT_STRING,array('value'=>$it->current())));
+			$i++;
+			
+			$it->next();
+		}	
+		$this->addModel(new ModelVars(
+			array('name'=>'Vars',
+				'id'=>'Log_Model',
+				'values'=>$lines
+			)
+		));		
+	
+		$this->log->dump();
+	}
 	
 	public function __construct(){
 		
@@ -107,7 +129,17 @@ class ProjectManager_Controller extends Controller{
 		$pm = new PublicMethod('get_version');
 		
 		$this->addPublicMethod($pm);
+
 			
+		$pm = new PublicMethod('apply_patch');
+		
+		$this->addPublicMethod($pm);
+
+			
+		$pm = new PublicMethod('apply_sql');
+		
+		$this->addPublicMethod($pm);
+
 		
 		
 		$this->projManager = new ProjectManager(
@@ -148,12 +180,12 @@ class ProjectManager_Controller extends Controller{
 						array('value'=>$struc['lastBuild']))						
 				)
 			)
-		));		
-			
+		));					
 	}
 	
 	public function open_version($pm){
 		$this->projManager->openVersion($_REQUEST['version'],$this->log);
+		$this->printLog();
 	}
 	
 	public function close_version($pm){
@@ -166,6 +198,9 @@ class ProjectManager_Controller extends Controller{
 		$this->projManager->minifyCSS($struc['version'],$this->log);
 		$this->projManager->closeVersion($this->log);			
 		$this->projManager->prepareSQLForUpdate($this->log);
+		$this->projManager->push($_REQUEST['commit_description'],$this->log);
+		
+		$this->printLog();
 	}
 	
 	public function minify_js($pm){
@@ -174,10 +209,14 @@ class ProjectManager_Controller extends Controller{
 	
 		$this->projManager->minifyJs($struc['version'],$this->log);
 		$this->projManager->minifyCSS($struc['version'],$this->log);
+		
+		$this->printLog();
 	}
 	
 	public function build_all($pm){
 		$this->projManager->build($this->log);
+		
+		$this->printLog();
 	}
 	
 	public function create_symlinks($pm){
@@ -187,18 +226,30 @@ class ProjectManager_Controller extends Controller{
 	public function pull($pm){
 		$this->projManager->pull($this->log);
 		$this->projManager->createSymlinks($this->log);	
+		$this->printLog();
 	}
 	
 	public function push($pm){
 		$this->projManager->push($_REQUEST['commit_description'],$this->log);
+		$this->printLog();
 	}
 	
 	public function zip_project($pm){
 		$this->projManager->zipProject($this->log);
+		$this->printLog();
 	}
 	
 	public function zip_db($pm){
 		$this->projManager->zipDb($this->log);
+		$this->printLog();
+	}
+	
+	public function apply_patch($pm){
+	
+	}
+	
+	public function apply_sql($pm){
+	
 	}
 	
 }

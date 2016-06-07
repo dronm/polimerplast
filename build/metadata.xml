@@ -2,13 +2,13 @@
 <metadata debug="TRUE" owner="polimerplast" dataSchema="public">
 	<versions>	
 		<version dateOpen="2016-06-07 07:05" dateClose="2016-06-07 11:06:25">1.0021</version>
-		<lastBuild>2016-06-07 14:04:03</lastBuild>		
-	<version dateOpen="2016-06-07 11:06:56"/><version dateOpen="2016-06-07 11:06:57" dateClose="2016-06-07 14:06:30">1.0022</version><version dateOpen="2016-06-07 14:06:32">1.0023</version></versions>	
+		<lastBuild>2016-06-07 16:31:37</lastBuild>		
+	<version dateOpen="2016-06-07 11:06:56"/><version dateOpen="2016-06-07 11:06:57" dateClose="2016-06-07 14:06:30">1.0022</version><version dateOpen="2016-06-07 14:06:32" dateClose="2016-06-07 16:06:31">1.0023</version></versions>	
 	<globalFilters>
 		<field id="client_id"/>
 	</globalFilters>
 	<enums>
-		<enum cmd="add" id="role_types">
+		<enum id="role_types">
 			<value id="admin" descr="Администратор"/>
 			<value id="client" descr="Клиент"/>
 			<value id="sales_manager" descr="Отдел продаж"/>
@@ -2343,7 +2343,9 @@
 			</publicMethod>			
 			<publicMethod id="zip_project"/>
 			<publicMethod id="zip_db"/>
-			<publicMethod id="get_version"/>			
+			<publicMethod id="get_version"/>
+			<publicMethod id="apply_patch"/>
+			<publicMethod id="apply_sql"/>
 		</controller>
 		
 	</controllers>
@@ -2872,7 +2874,6 @@
 		<jsScript file="views/Holiday_View.js"/>
 		<jsScript file="views/HolidayInline_View.js"/>
 		<jsScript file="views/ClientDebt_View.js"/>
-		<jsScript file="views/ProjectManager_View.js"/>
 		
 		<jsScript file="custom_controls/UnregClientCheck.js"/>
 		<jsScript file="custom_controls/ClientAttrs.js"/>

@@ -26,6 +26,8 @@ function ProjectManager_Controller(servConnector){
 	this.add_zip_project();
 	this.add_zip_db();
 	this.add_get_version();
+	this.add_apply_patch();
+	this.add_apply_sql();
 	
 }
 extend(ProjectManager_Controller,ControllerDb);
@@ -91,5 +93,15 @@ extend(ProjectManager_Controller,ControllerDb);
 	var pm = this.addMethodById('get_version');
 	
 }
-			
+
+			ProjectManager_Controller.prototype.add_apply_patch = function(){
+	var pm = this.addMethodById('apply_patch');
+	
+}
+
+			ProjectManager_Controller.prototype.add_apply_sql = function(){
+	var pm = this.addMethodById('apply_sql');
+	
+}
+
 		
