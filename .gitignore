@@ -2,6 +2,8 @@
 proj-deploy.php
 Config.php
 Config.uniq.php
+page.xml
+test.php
 js20/controls
 js20/core
 js20/doc
