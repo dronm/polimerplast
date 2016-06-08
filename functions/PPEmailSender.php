@@ -8,7 +8,7 @@ class PPEmailSender extends EmailSender{
 			$link,
 			$funcText,
 			$attArray=NULL,
-			$smsType=NULL
+			$mailType=NULL
 		){
 		$ar = $link->query_first(sprintf(
 		"SELECT * FROM %s AS (
@@ -30,7 +30,7 @@ class PPEmailSender extends EmailSender{
 				EMAIL_FROM_ADDR,
 				$ar['mes_subject'],
 				$ar['body']	,
-				$smsType			
+				$mailType			
 			);
 			if (is_array($attArray)){
 				foreach ($attArray as $f){
