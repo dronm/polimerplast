@@ -394,10 +394,10 @@ class Report_Controller extends ControllerSQL{
 				/*Просто названия колонок основного запроса для group by*/
 				array_push($base_grp_ar,$grp_f);
 
-				/*Названия первой колонки каждой группировки для основного ORDER BY*/
-				if ($fld_ind==0){
+				/*ВСЕ КОЛОНКИ для основного ORDER BY*/
+				//if ($fld_ind==0){
 					array_push($main_ord_ar,$grp_f);
-				}				
+				//}				
 				
 				//Новая колонка с полем
 				$model->addField(new FieldSQLString($this->getDbLink(),NULL,NULL,$grp_f,array('alias'=>$field_descrs_ar[$fld_ind])));

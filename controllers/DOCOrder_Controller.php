@@ -2600,7 +2600,7 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 			
 			//по самовывозу статус меняем на закрыт!!!
 			$this->add_state($doc_id,
-				($ar['deliv_type']=='by_client')? 'shipped':'closed'
+				($ar['deliv_type']=='by_client')? 'closed':'shipped'
 				);
 			
 			//SMS снабженцу
