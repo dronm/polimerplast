@@ -244,8 +244,20 @@ class ProjectManager_Controller extends Controller{
 		$this->printLog();
 	}
 	
-	public function apply_patch($pm){
-	
+	public function apply_patch($pm){	
+		$this->projManager->pull($this->log);
+		$this->printLog();
+				
+		if(DEBUG){
+			throw new Exception('Can not be done in debug mode!');
+		}
+		
+		//remove build directory
+		exec('rm -f -r '. $this->getProjectDir().'/'. ProjectManager::BUILD_DIR);
+		
+		//remove updates/sql directory
+		exec('rm -f -r '. $this->getProjectDir().'/'. ProjectManager::UPDATES_DIR.'/'. ProjectManager::SQL_DIR);
+		
 	}
 	
 	public function apply_sql($pm){

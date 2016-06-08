@@ -39,9 +39,9 @@
 				<!-- database zip -->
 				<form action="index.php" method="POST" name="" enctype="multipart/form-data">
 					<input type="hidden" name="c" value="ProjectManager_Controller"/>
-					<input type="hidden" name="f" value="zip_project"/>
+					<input type="hidden" name="f" value="zip_db"/>
 					<input type="hidden" name="v" value="ProjectManager"/>
-					<input type="submit" value="Zip database" name="zip_db"/>			
+					<input type="submit" value="Zip database" name="zip_db"/>
 				</form>		
 
 				<!-- run sql -->
