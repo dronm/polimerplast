@@ -44,6 +44,14 @@
 					<input type="submit" value="Zip database" name="zip_db"/>			
 				</form>		
 
+				<!-- run sql -->
+				<form action="index.php" method="POST" name="" enctype="multipart/form-data">
+					<input type="hidden" name="c" value="ProjectManager_Controller"/>
+					<input type="hidden" name="f" value="apply_sql"/>
+					<input type="hidden" name="v" value="ProjectManager"/>
+					<input type="submit" value="Run sql scripts" name="apply_sql"/>
+				</form>		
+
 				<!-- install_patch -->
 				<form action="index.php" method="POST" name="" enctype="multipart/form-data">
 					<input type="hidden" name="c" value="ProjectManager_Controller"/>
@@ -66,7 +74,7 @@
 </div>
 </xsl:template>
 
-<xsl:template match="model[@id='Log_Model']/*">	
+<xsl:template match="model[@id='Log_Model']/row/*">	
 <div><xsl:value-of select="node()"/></div>
 </xsl:template>
 

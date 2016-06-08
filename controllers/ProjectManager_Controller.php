@@ -35,7 +35,7 @@ class ProjectManager_Controller extends Controller{
 	private function getRepoDir(){
 		$pathArray = explode(PATH_SEPARATOR, get_include_path());
 		if (count($pathArray)>=2){
-			return $pathArray[1].substr(FRAME_WORK_PATH,0,strlen(FRAME_WORK_PATH)-1);
+			return $pathArray[1].'/'. substr(FRAME_WORK_PATH,0,strlen(FRAME_WORK_PATH)-1).'/'. 'build';
 		}
 	}
 	
@@ -249,7 +249,16 @@ class ProjectManager_Controller extends Controller{
 	}
 	
 	public function apply_sql($pm){
-	
+		$this->projManager->applySQL(
+			array(
+				'DB_PASSWORD' => DB_PASSWORD,
+				'DB_SERVER_MASTER' => DB_SERVER_MASTER,
+				'DB_NAME' => DB_NAME,
+				'DB_USER' => DB_USER
+			),
+			$this->log
+		);
+		$this->printLog();	
 	}
 	
 }
