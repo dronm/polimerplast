@@ -139,7 +139,7 @@ class ProjectManager_Controller extends Controller{
 		$pm = new PublicMethod('apply_sql');
 		
 		$this->addPublicMethod($pm);
-
+			
 		
 		
 		$this->projManager = new ProjectManager(
