@@ -4,6 +4,7 @@ Config.php
 Config.uniq.php
 page.xml
 test.php
+build/build.log
 js20/controls
 js20/core
 js20/doc
