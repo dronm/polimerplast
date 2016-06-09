@@ -315,3 +315,13 @@ DOCOrderDOCTShipmentInline_View.prototype.setMethodParams = function(pm,checkRes
 	}
 	
 }
+
+DOCOrderDOCTShipmentInline_View.prototype.onGetData = function(resp){
+	DOCOrderDOCTShipmentInline_View.superclass.onGetData.call(this,resp);	
+	
+	var m = resp.getModelById("DOCOrderDOCTProductDialog_Model",true);
+	if (m.getNextRow()){
+		this.m_quantCtrl.m_isInteger = (m.getFieldValue("measure_unit_is_int")=="true");
+		//console.log("setting m_isInteger="+this.m_quantCtrl.m_isInteger);
+	}
+}

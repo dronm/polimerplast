@@ -1479,12 +1479,17 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 	}		
 	public function get_current_for_production_list($pm){
 		$model = new DOCOrderCurrentForProductionList_Model($this->getDbLink());
-		$where = new ModelWhereSQL();
+		
+		$order = $this->orderFromParams($pm,$model);
+		$where = $this->conditionFromParams($pm,$model);
+		if (!$where){
+			$where = new ModelWhereSQL();
+		}
+		
+		//Фильтр по списку складов		
 		$field = clone $model->getFieldById('warehouse_id');
 		$field->setValue('('.$_SESSION['warehouse_id_list'].')');
 		$where->addField($field,'IN',NULL,NULL);
-		
-		$order = $this->orderFromParams($pm,$model);
 		
 		$model->select(FALSE,$where,$order,
 			NULL,NULL,NULL,NULL,
@@ -3066,7 +3071,14 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 				ExtProg::paid_to_acc($firm_client_ar);
 				
 				$lmast->query(sprintf("UPDATE doc_orders
-				SET acc_pko=TRUE
+				SET
+					acc_pko=TRUE,
+					acc_pko_total = COALESCE(total,0)+
+						CASE
+							WHEN deliv_type='by_supplier'::delivery_types THEN COALESCE(deliv_total,0)
+						ELSE 0
+						END,
+					acc_pko_date = now()
 				WHERE id IN (%s)",$ids));
 				
 				$res_to_client = 'Сформирован ПКО по следующим заявкам: '.$numbers;
