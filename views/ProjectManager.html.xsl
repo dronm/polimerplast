@@ -57,7 +57,7 @@
 					<input type="hidden" name="c" value="ProjectManager_Controller"/>
 					<input type="hidden" name="f" value="apply_patch"/>
 					<input type="hidden" name="v" value="ProjectManager"/>
-					<input type="submit" value="Install patch" name="apply_patch"/>
+					<input type="submit" title="For production version only! Build directory and Updates/sql will be removed!" value="Install patch" name="apply_patch"/>
 				</form>		
 				
 			</div>

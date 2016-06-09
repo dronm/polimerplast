@@ -245,13 +245,13 @@ class ProjectManager_Controller extends Controller{
 	}
 	
 	public function apply_patch($pm){	
-		$this->projManager->pull($this->log);
-		$this->printLog();
-				
 		if(DEBUG){
 			throw new Exception('Can not be done in debug mode!');
 		}
-		
+	
+		$this->projManager->pull($this->log);
+		$this->printLog();
+						
 		//remove build directory
 		exec('rm -f -r '. $this->getProjectDir().'/'. ProjectManager::BUILD_DIR);
 		
