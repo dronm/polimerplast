@@ -36,7 +36,8 @@ require_once('common/barcodegen.1d-php5.v5.2.1/class/BCGFontFile.php');
 require_once('common/barcodegen.1d-php5.v5.2.1/class/BCGColor.php');
 require_once('common/barcodegen.1d-php5.v5.2.1/class/BCGDrawing.php');
 //require_once('common/barcodegen.1d-php5.v5.2.1/class/BCGean13.barcode.php');
-require_once('common/barcodegen.1d-php5.v5.2.1/class/BCGcodabar.barcode.php');
+//require_once('common/barcodegen.1d-php5.v5.2.1/class/BCGcodabar.barcode.php');
+require_once('common/barcodegen.1d-php5.v5.2.1/class/BCGcode128.barcode.php');
 
 class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 	public function __construct($dbLinkMaster=NULL){
@@ -295,14 +296,16 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 		*/
 		//$barcode_descr = substr('000000000000',1,12-strlen($ar['number'])).$ar['number'];
 		//$barcode_descr = $barcode_descr.EAN_check_sum($barcode_descr,13);
-		$barcode_descr = 'A'.$ar['number'].'A';
+		
+		//$barcode_descr = 'A'.$ar['number'].'A';
+		$barcode_descr = $ar['number'];
 		
 		//**** Генерация баркода ****
 		$colorFont = new BCGColor(0, 0, 0);
 		$colorBack = new BCGColor(255, 255, 255);		
 		
-		//$code = new BCGean13(); // Or another class name from the manual
-		$code = new BCGcodabar();
+		$code = new BCGcode128(); // Or another class name from the manual
+		//$code = new BCGcodabar();
 		
 		$code->setScale(1); // Resolution
 		$code->setThickness(30); // Thickness

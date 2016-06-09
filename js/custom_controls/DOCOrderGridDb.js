@@ -135,3 +135,8 @@ DOCOrderGridDb.prototype.initEditViewObj = function(contr){
 	
 	this.m_editViewObj.m_currentGrid = this.m_currentGrid;
 }
+
+DOCOrderGridDb.prototype.onRefresh = function(){
+	DOCOrderGridDb.superclass.onRefresh.call(this);
+	this.m_prodDescr = {};
+}
