@@ -14,6 +14,9 @@ function UserAccount_View(id,options){
 	options = options || {};
 	options.readMethodId = "get_account";
 	options.writeMethodId = "update";
+	
+	var PWD_MIN_LEN = 6;
+	
 	//options.customWriteMethod = true;
 	var contr = new User_Controller(new ServConnector(HOST_NAME));
 	options.readController = contr;
@@ -112,7 +115,8 @@ function UserAccount_View(id,options){
 		{"labelCaption":"Новый пароль:","name":"pwd",
 		"editContClassName":ctrl_cont_class,
 		"labelClassName":label_class,		
-		"attrs":{"maxlength":50,"size":20}
+		"attrs":{"maxlength":50,"size":20},
+		"minLength":PWD_MIN_LEN
 		});
 	this.bindControl(this.m_pwdCtrl,
 		{"modelId":model},
@@ -124,7 +128,8 @@ function UserAccount_View(id,options){
 		{"labelCaption":"Подтверждение:","name":"pwd_conf",
 		"editContClassName":ctrl_cont_class,
 		"labelClassName":label_class,		
-		"attrs":{"maxlength":50,"size":20}
+		"attrs":{"maxlength":50,"size":20},
+		"minLength":PWD_MIN_LEN
 		});
 	cont.addElement(this.m_pwdConfCtrl);
 	this.m_pwdConfInfCtrl = new Control("pwd_conf_inf","div",{"className":"error"});

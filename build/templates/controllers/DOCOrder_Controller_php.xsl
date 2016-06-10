@@ -1073,6 +1073,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 					'vh_trailer_plate'=>$ar['vh_trailer_plate'],
 					'vh_trailer_model'=>$ar['vh_trailer_model'],
 					'ext_order_id'=>$ar['ext_order_id'],
+					'ext_ship_id'=>$ar['ext_ship_id'],
 					'client_comment'=>$ar['client_comment'],
 					'sales_manager_comment'=>$ar['sales_manager_comment'],
 					'pay_cash'=>$ar['pay_cash'],
@@ -1172,93 +1173,100 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 			DOCOrder_Controller::docDataForExt(
 				$link,$doc_id,$head,$items);				
 			
-			//Паспорт качества
-			$sert_tmp_file = NULL;
-			$ar = $link->query_first(sprintf(
-			"SELECT
-				cl.email_sert,
-				cl.pay_type,
-				h.deliv_type,
-				u.email
-			FROM doc_orders AS h
-			LEFT JOIN clients cl ON cl.id=h.client_id
-			LEFT JOIN users u ON u.id=h.client_user_id
-			WHERE h.id=%d",$doc_id)
-			);		
-			$this->makePassport($link,$doc_id);
-			if ($ar['email_sert']=='t'){
-				$sert_tmp_file = $this->dump_passport_to_file($doc_id);
-			}
+			/* Если в безе уже есть отметка о реализации из 1с - значит отгрузка уже была!!!
+			и все смс/емайлы отправлялись, просто был обрыв и браузер об этом не знает,
+			в этом случае ничего не делаем!!!
+			*/
+			if (!strlen($head['ext_ship_id'])){
 			
-			//по самовывозу статус меняем на закрыт!!!
-			$this->add_state($doc_id,
-				($ar['deliv_type']=='by_client')? 'closed':'shipped'
-				);
-			
-			//SMS снабженцу
-			$link->query(sprintf(
-			"INSERT INTO sms_for_sending
-			(tel,body,sms_type)
-				(SELECT
-					t.cel_phone,
-					t.message,
-					'client_on_deliv'::sms_types
-				FROM sms_client_on_deliv t
-				WHERE t.doc_order_id=%d
-				)",
-			$doc_id
-			));
-			
-			//Выписка документов в 1с			
-			$res = array();
-			ExtProg::sale($head,$items,$res);
-			$link->query(sprintf(
-			"UPDATE doc_orders
-			SET
-				delivery_fact_date = now()::timestamp,
-				ext_ship_id='%s',
-				ext_ship_num='%s',
-				ext_invoice_id='%s',
-				ext_invoice_num='%s',
-				ext_invoice_date_time='%s'
-			WHERE id=%d",
-			$res['naklRef'],
-			$res['naklNum'],
-			$res['invRef'],
-			$res['invNum'],
-			date('Y-m-d H:i:s'),
-			$doc_id
-			));
-			
-			if ($ar['pay_type']!='cash'){
-				//документа на email с печатями
-				$ttn_attrs = $l->query_first(sprintf(
-					"SELECT * FROM doc_orders_ttn
-					WHERE doc_id=%d",
-				$doc_id
-				));		
-			
-				$tmp_file = ExtProg::print_shipment(
-						$ttn_attrs['ext_ship_id'],
-						$ttn_attrs,
-						$_SESSION['user_ext_id'],
-						0
-				);
-				
-				$_SESSION['ship_doc_'.$doc_id] = $tmp_file;
-				
-				$attch = array($tmp_file);
-				if (!is_null($sert_tmp_file)){
-					array_push($attch,$sert_tmp_file);
+				//Паспорт качества
+				$sert_tmp_file = NULL;
+				$ar = $link->query_first(sprintf(
+				"SELECT
+					cl.email_sert,
+					cl.pay_type,
+					h.deliv_type,
+					u.email
+				FROM doc_orders AS h
+				LEFT JOIN clients cl ON cl.id=h.client_id
+				LEFT JOIN users u ON u.id=h.client_user_id
+				WHERE h.id=%d",$doc_id)
+				);		
+				$this->makePassport($link,$doc_id);
+				if ($ar['email_sert']=='t'){
+					$sert_tmp_file = $this->dump_passport_to_file($doc_id);
 				}
-				$mail_id = PPEmailSender::addEMail(
-					$link,
-					sprintf("email_text_shipment(%d)",$doc_id),
-					$attch,
-					'shipment'
-				);
-			}
 			
+				//по самовывозу статус меняем на закрыт!!!
+				$this->add_state($doc_id,
+					($ar['deliv_type']=='by_client')? 'closed':'shipped'
+					);
+			
+				//SMS снабженцу
+				$link->query(sprintf(
+				"INSERT INTO sms_for_sending
+				(tel,body,sms_type)
+					(SELECT
+						t.cel_phone,
+						t.message,
+						'client_on_deliv'::sms_types
+					FROM sms_client_on_deliv t
+					WHERE t.doc_order_id=%d
+					)",
+				$doc_id
+				));
+			
+				//Выписка документов в 1с			
+				$res = array();
+				ExtProg::sale($head,$items,$res);
+			
+				$link->query(sprintf(
+				"UPDATE doc_orders
+				SET
+					delivery_fact_date = now()::timestamp,
+					ext_ship_id='%s',
+					ext_ship_num='%s',
+					ext_invoice_id='%s',
+					ext_invoice_num='%s',
+					ext_invoice_date_time='%s'
+				WHERE id=%d",
+				$res['naklRef'],
+				$res['naklNum'],
+				$res['invRef'],
+				$res['invNum'],
+				date('Y-m-d H:i:s'),
+				$doc_id
+				));
+			
+				if ($ar['pay_type']!='cash'){
+					//документа на email с печатями
+					$ttn_attrs = $l->query_first(sprintf(
+						"SELECT * FROM doc_orders_ttn
+						WHERE doc_id=%d",
+					$doc_id
+					));		
+			
+					$tmp_file = ExtProg::print_shipment(
+							$ttn_attrs['ext_ship_id'],
+							$ttn_attrs,
+							$_SESSION['user_ext_id'],
+							0
+					);
+				
+					$_SESSION['ship_doc_'.$doc_id] = $tmp_file;
+				
+					$attch = array($tmp_file);
+					if (!is_null($sert_tmp_file)){
+						array_push($attch,$sert_tmp_file);
+					}
+					$mail_id = PPEmailSender::addEMail(
+						$link,
+						sprintf("email_text_shipment(%d)",$doc_id),
+						$attch,
+						'shipment'
+					);
+				}
+			}			
 			$link->query('COMMIT');
 		}
 		catch(Exception $e){
