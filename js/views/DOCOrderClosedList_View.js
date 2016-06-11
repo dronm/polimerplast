@@ -15,6 +15,7 @@ function DOCOrderClosedList_View(id,options){
 	options.title = "Архив заявок";
 	
 	//options.className = "panel-body collapse";
+	options.refreshInterval = 0;
 	options.number = true;
 	options.products = true;
 	options.readModelId = "DOCOrderClosedList_Model";

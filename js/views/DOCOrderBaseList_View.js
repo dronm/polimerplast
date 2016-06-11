@@ -265,7 +265,6 @@ function DOCOrderBaseList_View(id,options){
 	}
 	
 	head.addElement(row);
-	
 	this.m_grid=new DOCOrderGridDb(id+"_grid",
 		{"head":head,
 		"body":new GridBody(),
@@ -279,7 +278,7 @@ function DOCOrderBaseList_View(id,options){
 		"commandPanel":options.commands,
 		"rowCommandPanelClass":null,
 		"filter":filter,
-		"refreshInterval":CONSTANT_VALS.db_controls_refresh_sec*1000,
+		"refreshInterval":(options.refreshInterval==undefined)? CONSTANT_VALS.db_controls_refresh_sec*1000:0,
 		"onSelect":options.onSelect,
 		"rowSelect":true,
 		"fieldValueToRowClass":"state",

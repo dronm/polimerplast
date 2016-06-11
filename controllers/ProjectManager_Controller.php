@@ -32,6 +32,10 @@ class ProjectManager_Controller extends Controller{
 		return substr(ABSOLUTE_PATH,0,strlen(ABSOLUTE_PATH)-1);
 	}
 
+	private function getJsDir(){
+		return substr(USER_JS_PATH,0,strlen(USER_JS_PATH)-1);
+	}
+
 	private function getRepoDir(){
 		$pathArray = explode(PATH_SEPARATOR, get_include_path());
 		if (count($pathArray)>=2){
@@ -145,6 +149,7 @@ class ProjectManager_Controller extends Controller{
 		$this->projManager = new ProjectManager(
 			$this->getProjectDir(),
 			$this->getRepoDir(),
+			$this->getJsDir();
 			array(
 				'buildGroup' => BUILD_GROUP,
 				'buildFilePermission' => BUILD_FILE_PERMISSION,

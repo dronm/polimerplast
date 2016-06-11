@@ -614,7 +614,7 @@ ServConnector.prototype.sendRequest=function(isGet,paramStr,async,onReturn,retCo
 var self=this;this.m_http=createRequestObject();var ready_func=function(){if(self.m_http.readyState==4){var status=self.m_http.status;var error_n=(status>=200&&status<300)?0:status;var error_s;var resp;if(error_n==0){try{if(xmlResponse){resp=new ServResponse();resp.parse(self.m_http.responseXML);error_n=resp.getRespResult();if(error_n!=0){error_s=resp.getRespDescr();}}
 else{resp=self.m_http.responseText;}}
 catch(e){error_n=-1;error_s=e.message;}}
-else{error_s=self.m_http.responseText;}
+else{error_s=self.m_http.statusText;}
 onReturn.call(retContext,error_n,error_s,resp,request_id);}};if(async){this.m_http.onreadystatechange=ready_func;}
 if(isGet){this.m_http.open("get",this.getHost()+
 this.getScript()+
@@ -1818,13 +1818,14 @@ ViewReport.prototype.makeReport=function(async){this.m_repResultOk=false;this.m_
 if(this.m_aggFieldContainer&&!this.m_aggFieldContainer.getSelectedCount()){this.m_errorControl.setValue("Не выбран ни один показательт!");return;}
 if(this.m_groupFieldContainer&&!this.m_groupFieldContainer.getSelectedCount()){this.m_errorControl.setValue("Не задана ни одна группировка!");return;}
 var qm_async=(async==undefined)?false:async;var self=this;var contr=new this.m_controller(new ServConnector(HOST_NAME));if(!this.fillParams(contr)){return;}
-this.m_reportControl.m_node.innerHTML="";if(this.m_commandPanel){this.m_commandPanel.setVisible(false);}
+this.m_reportControl.m_node.innerHTML="";if(this.m_commandPanel){this.m_commandPanel.setEnabled(false);}
 if(this.m_waitControl){this.m_waitControl.setVisible(true);}
 var params={};this.addExtraParams(params);contr.runPublicMethod(this.m_methodId,params,qm_async,function(respText){self.m_reportControl.m_node.innerHTML=respText;if(self.m_waitControl){self.m_waitControl.setVisible(false);}
-if(self.m_commandPanel){self.m_commandPanel.setVisible(true);}
+if(self.m_commandPanel){self.m_commandPanel.setEnabled(true);}
 this.m_repResultOk=true;},this,this.onError,false,false);}
-ViewReport.prototype.onError=function(resp,erCode,erStr){if(this.m_errorControl){this.m_errorControl.setValue(erStr);}
-this.m_repResultOk=false;}
+ViewReport.prototype.onError=function(resp,erCode,erStr){if(this.m_errorControl){this.m_errorControl.setValue(erCode+" "+erStr);}
+if(this.m_waitControl){this.m_waitControl.setVisible(false);}
+this.m_commandPanel.setEnabled(true);this.m_repResultOk=false;}
 ViewReport.prototype.addExtraParams=function(struc){}
 ViewReport.prototype.addExtraParamsForDownload=function(struc){}
 ViewReport.prototype.addStoringControl=function(control){this.m_storingControl[control.getId()]=control;}
@@ -4504,7 +4505,7 @@ if(options.client_number){row.addElement(new GridDbHeadCell(id+"_col_client_numb
 if(options.printed){row.addElement(new GridDbHeadCellBool(id+"_col_printed",{"value":"Печ.","readBind":{"valueFieldId":"printed"},"sortable":true,"colAttrs":{"align":"center"}}));}
 if(options.customer_survey_date){row.addElement(new GridDbHeadCellBool(id+"_col_cust_surv_date_time_descr",{"value":"Опрос","readBind":{"valueFieldId":"cust_surv_date_time_descr"},"sortable":true,"sortCol":"cust_surv_date_time","colAttrs":{"align":"center"}}));}
 if(options.submit_user){row.addElement(new GridDbHeadCellBool(id+"_col_submit_user_descr",{"value":"Ответств.","readBind":{"valueFieldId":"submit_user_descr"}}));}
-head.addElement(row);this.m_grid=new DOCOrderGridDb(id+"_grid",{"head":head,"body":new GridBody(),"className":"orders","controller":controller,"readMethodId":options.readMethodId,"readModelId":options.readModelId,"editViewClass":DOCOrderDialog_View,"editInline":false,"pagination":options.pagination,"commandPanel":options.commands,"rowCommandPanelClass":null,"filter":filter,"refreshInterval":CONSTANT_VALS.db_controls_refresh_sec*1000,"onSelect":options.onSelect,"rowSelect":true,"fieldValueToRowClass":"state","editWinClass":WIN_CLASS,"fixedHeader":true});this.addElement(this.m_grid);}
+head.addElement(row);this.m_grid=new DOCOrderGridDb(id+"_grid",{"head":head,"body":new GridBody(),"className":"orders","controller":controller,"readMethodId":options.readMethodId,"readModelId":options.readModelId,"editViewClass":DOCOrderDialog_View,"editInline":false,"pagination":options.pagination,"commandPanel":options.commands,"rowCommandPanelClass":null,"filter":filter,"refreshInterval":(options.refreshInterval==undefined)?CONSTANT_VALS.db_controls_refresh_sec*1000:0,"onSelect":options.onSelect,"rowSelect":true,"fieldValueToRowClass":"state","editWinClass":WIN_CLASS,"fixedHeader":true});this.addElement(this.m_grid);}
 extend(DOCOrderBaseList_View,ViewList); 
 function DOCOrderNewList_View(id,options){options=options||{};options.title="Новые заявки";options.readModelId="DOCOrderNewList_Model";options.readMethodId="get_new_list";options.commands=new GridCommands(id+"_grid_cmd",{"noPrint":true,"noInsert":true,"noDelete":true});DOCOrderNewList_View.superclass.constructor.call(this,id,options);if(SERV_VARS.ROLE_ID=="sales_manager"||SERV_VARS.ROLE_ID=="admin"){var btn;var popup_menu=new PopUpMenu();btn=new BtnCancelLastState({"grid":this.m_grid});options.commands.addElement(btn);popup_menu.addButton(btn);btn=new BtnSetClosed({"grid":this.m_grid});options.commands.addElement(btn);popup_menu.addButton(btn);popup_menu.addSeparator();options.commands.commandsToPopUp(popup_menu);this.m_grid.setPopUpMenu(popup_menu);}}
 extend(DOCOrderNewList_View,DOCOrderBaseList_View); 
@@ -4518,7 +4519,7 @@ else if(SERV_VARS.ROLE_ID=="production"){btn=new BtnPrint({"grid":this.m_grid});
 else if(SERV_VARS.ROLE_ID=="marketing"){btn=new BtnCustomSurvey({"grid":this.m_grid});options.commands.addElement(btn);popup_menu.addButton(btn);}
 popup_menu.addSeparator();options.commands.commandsToPopUp(popup_menu);this.m_grid.setPopUpMenu(popup_menu);}
 extend(DOCOrderCurrentList_View,DOCOrderBaseList_View); 
-function DOCOrderClosedList_View(id,options){options=options||{};options.title="Архив заявок";options.number=true;options.products=true;options.readModelId="DOCOrderClosedList_Model";options.readMethodId="get_closed_list";options.commands=new GridCommands(id+"_grid_cmd",{"noInsert":true,"noDelete":true,"noCopy":false});DOCOrderClosedList_View.superclass.constructor.call(this,id,options);var btn;var popup_menu=new PopUpMenu();if(SERV_VARS.ROLE_ID=="marketing"||SERV_VARS.ROLE_ID=="admin"){btn=new BtnCustomSurvey({"grid":this.m_grid});options.commands.addElement(btn);popup_menu.addButton(btn);}
+function DOCOrderClosedList_View(id,options){options=options||{};options.title="Архив заявок";options.refreshInterval=0;options.number=true;options.products=true;options.readModelId="DOCOrderClosedList_Model";options.readMethodId="get_closed_list";options.commands=new GridCommands(id+"_grid_cmd",{"noInsert":true,"noDelete":true,"noCopy":false});DOCOrderClosedList_View.superclass.constructor.call(this,id,options);var btn;var popup_menu=new PopUpMenu();if(SERV_VARS.ROLE_ID=="marketing"||SERV_VARS.ROLE_ID=="admin"){btn=new BtnCustomSurvey({"grid":this.m_grid});options.commands.addElement(btn);popup_menu.addButton(btn);}
 btn=new BtnPrintOrder({"grid":this.m_grid});options.commands.addElement(btn);popup_menu.addButton(btn);btn=new BtnPrintTorg12({"grid":this.m_grid});options.commands.addElement(btn);popup_menu.addButton(btn);btn=new BtnPrintInvoice({"grid":this.m_grid});options.commands.addElement(btn);popup_menu.addButton(btn);btn=new BtnPrintUPD({"grid":this.m_grid});options.commands.addElement(btn);popup_menu.addButton(btn);btn=new BtnPrintTTN({"grid":this.m_grid});options.commands.addElement(btn);popup_menu.addButton(btn);btn=new BtnPrintShipDocs({"grid":this.m_grid});options.commands.addElement(btn);popup_menu.addButton(btn);popup_menu.addSeparator();options.commands.commandsToPopUp(popup_menu);this.m_grid.setPopUpMenu(popup_menu);}
 extend(DOCOrderClosedList_View,DOCOrderBaseList_View); 
 function DOCOrderDialog_View(id,options){options=options||{};options.tagName="div";var self=this;this.m_beforeOpen=function(contr,isInsert,isCopy){var doc_id=0;if(!isInsert){doc_id=self.getDataControl(self.getId()+"_id").control.getValue();}
