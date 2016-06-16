@@ -1077,7 +1077,8 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 					'client_comment'=>$ar['client_comment'],
 					'sales_manager_comment'=>$ar['sales_manager_comment'],
 					'pay_cash'=>$ar['pay_cash'],
-					'deliv_vehicle_count'=>$ar['deliv_vehicle_count']
+					'deliv_vehicle_count'=>$ar['deliv_vehicle_count'],
+					'number'=>$ar['number']
 					);
 			}
 			array_push($items,array(
