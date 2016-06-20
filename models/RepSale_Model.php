@@ -480,6 +480,19 @@ class RepSale_Model extends ModelReportSQL{
 		));
 		$this->addField($f_doc_customer_survey_question);
 
+		$f_doc_deliv_total=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		,"doc_deliv_total"
+		,array(
+		
+			'alias'=>"Стоимость доставки"
+		,
+			'length'=>19,
+			'id'=>"doc_deliv_total"
+				
+		
+		));
+		$this->addField($f_doc_deliv_total);
+
 		$f_doct_product_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"doct_product_descr"
 		,array(

@@ -563,6 +563,10 @@ $field_resolver =
 			"field"=>"total",
 			"table"=>"doc_orders_t_products"
 		),
+		"doc_deliv_total" => array(
+			"field"=>"deliv_total",
+			"table"=>"doc_orders"
+		),
 		
 		"client_debt_days" => array(
 			"field"=>"days",

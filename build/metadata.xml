@@ -2,8 +2,8 @@
 <metadata debug="TRUE" owner="polimerplast" dataSchema="public">
 	<versions>	
 		<version dateOpen="2016-06-07 07:05" dateClose="2016-06-07 11:06:25">1.0021</version>
-		<lastBuild>2016-06-16 22:08:47</lastBuild>		
-	<version dateOpen="2016-06-07 11:06:56"/><version dateOpen="2016-06-07 11:06:57" dateClose="2016-06-07 14:06:30">1.0022</version><version dateOpen="2016-06-07 14:06:32" dateClose="2016-06-07 16:06:31">1.0023</version><version dateOpen="2016-06-07 16:06:32" dateClose="2016-06-08 10:06:07">1.0024</version><version dateOpen="2016-06-08 10:06:42" dateClose="2016-06-08 13:06:31">1.0025</version><version dateOpen="2016-06-08 14:06:25" dateClose="2016-06-09 15:06:33">1.0026</version><version dateOpen="2016-06-09 17:06:49" dateClose="2016-06-09 17:06:52">1.0027</version><version dateOpen="2016-06-09 17:06:52" dateClose="2016-06-09 21:06:53">1.0027</version><version dateOpen="2016-06-09 21:06:53" dateClose="2016-06-10 12:06:17">1.0028</version><version dateOpen="2016-06-10 12:06:18" dateClose="2016-06-11 14:06:03">1.0029</version><version dateOpen="2016-06-16 23:06:13">1.0030</version></versions>	
+		<lastBuild>2016-06-20 14:14:51</lastBuild>		
+	<version dateOpen="2016-06-07 11:06:56"/><version dateOpen="2016-06-07 11:06:57" dateClose="2016-06-07 14:06:30">1.0022</version><version dateOpen="2016-06-07 14:06:32" dateClose="2016-06-07 16:06:31">1.0023</version><version dateOpen="2016-06-07 16:06:32" dateClose="2016-06-08 10:06:07">1.0024</version><version dateOpen="2016-06-08 10:06:42" dateClose="2016-06-08 13:06:31">1.0025</version><version dateOpen="2016-06-08 14:06:25" dateClose="2016-06-09 15:06:33">1.0026</version><version dateOpen="2016-06-09 17:06:49" dateClose="2016-06-09 17:06:52">1.0027</version><version dateOpen="2016-06-09 17:06:52" dateClose="2016-06-09 21:06:53">1.0027</version><version dateOpen="2016-06-09 21:06:53" dateClose="2016-06-10 12:06:17">1.0028</version><version dateOpen="2016-06-10 12:06:18" dateClose="2016-06-11 14:06:03">1.0029</version><version dateOpen="2016-06-16 23:06:13" dateClose="2016-06-20 14:06:32">1.0030</version></versions>	
 	<globalFilters>
 		<field id="client_id"/>
 	</globalFilters>
@@ -1274,6 +1274,8 @@
 			<field id="doc_sales_manager_comment" dataType="String"/>
 			<field id="doc_client_comment" dataType="String"/>
 			<field id="doc_customer_survey_question" dataType="String"/>
+			
+			<field id="doc_deliv_total" dataType="Float" length="19" precision="2" alias="Стоимость доставки"/>
 			
 			<field id="doct_product_descr" dataType="String"/>
 			<field id="doct_product_mes" dataType="String"/>

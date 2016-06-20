@@ -1,5 +1,23 @@
 <?php
 class ExtProg{
+
+	private static function parseHeaders($headers){
+	    $head = array();
+	    foreach( $headers as $k=>$v )
+	    {
+		$t = explode( ':', $v, 2 );
+		if( isset( $t[1] ) )
+		    $head[ trim($t[0]) ] = trim( $t[1] );
+		else{
+		    $head[] = $v;
+		    if( preg_match( "#HTTP/[0-9\.]+\s+([0-9]+)#",$v, $out ) )
+		        $head['reponse_code'] = intval($out[1]);
+		        $head['reponse_descr'] = $v;
+		}
+	    }
+	    return $head;
+	}
+	
 	private static function send_query($cmd,$params,&$xml,$fileResp=FALSE,$fileExt='pdf'){
 		$CON_TIMEOUT = 300;		
 		/*
@@ -34,6 +52,11 @@ class ExtProg{
 		$context = stream_context_create($options);
 		$contents = file_get_contents('http://'.HOST_1C.':'.PORT_1C.'/API1c.php', FALSE, $context);
 		
+		$header_res = self::parseHeaders($http_response_header);
+		if ($header_res['reponse_code']&&$header_res['reponse_code']!=200){
+			throw new Exception($header_res['reponse_descr']);
+		}
+		
 		//ответ всегда в ANSI		
 		//throw new Exception($contents);
 		
@@ -50,7 +73,8 @@ class ExtProg{
 			}
 			catch(Exception $e){
 				throw new Exception('Ошибка в XML ответе из 1с, содержание: '.$contents.', ошибка: '.$e->getMessage());
-			}			
+			}
+			
 			if ($xml['status']=='false'){
 				$e = (string) $xml->error;
 				throw new Exception($e);

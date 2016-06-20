@@ -1624,7 +1624,8 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 				SUM(
 					COALESCE(o.total,0)+
 					CASE
-					WHEN o.deliv_type='by_supplier'::delivery_types THEN
+					WHEN o.deliv_type='by_supplier'::delivery_types
+					AND coalesce(o.deliv_add_cost_to_product,FALSE)=FALSE THEN
 						COALESCE(o.deliv_total,0)
 					ELSE 0
 					END

@@ -352,6 +352,13 @@ function RepSales_View(id,options){
 			"filterControl":new EditMoney(uuid(),{}),
 			"agg":true			
 			},
+			{"id":"doc_deliv_total",
+			"name":"Стоимость доставки",
+			"filtered":null,
+			"filterControl":new EditMoney(uuid(),{}),
+			"agg":true			
+			},
+			
 			{"id":"client_debt_days",
 			"name":"Просроченная дебиторская задолженность (дни)",
 			"filtered":null,
