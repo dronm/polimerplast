@@ -152,10 +152,10 @@
 	<td align="center">
 	<xsl:choose>
 		<xsl:when test="node()='t'">
-			нет<!--<img src="img/bool/true.png"/>-->
+			есть<!--<img src="img/bool/true.png"/>-->
 		</xsl:when>
 		<xsl:otherwise>
-			есть<!--<img src="img/bool/false.png"/>-->
+			нет<!--<img src="img/bool/false.png"/>-->
 		</xsl:otherwise>
 	</xsl:choose>
 	</td>

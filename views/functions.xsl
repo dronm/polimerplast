@@ -21,7 +21,7 @@
 			<xsl:text>&#160;</xsl:text>
 		</xsl:when>
 		<xsl:otherwise>
-			<xsl:value-of select="format-number($val,'##0.00')"/>
+			<xsl:value-of select="format-number($val,'##0,00')"/>
 		</xsl:otherwise>		
 	</xsl:choose>
 </xsl:template>
@@ -54,7 +54,7 @@
 			<xsl:text>&#160;</xsl:text>
 		</xsl:when>
 		<xsl:otherwise>
-			<xsl:value-of select="format-number( round(1000*$val) div 1000 ,'##0.000')"/>
+			<xsl:value-of select="format-number( round(1000*$val) div 1000 ,'##0,000')"/>
 		</xsl:otherwise>		
 	</xsl:choose>
 </xsl:template>

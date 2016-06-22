@@ -468,6 +468,8 @@ extend(Client_Controller,ControllerDb);
 	pm.addParam(new FieldString("contract_period",options));
 	pm.addParam(new FieldString("terms",options));
 	pm.addParam(new FieldBool("banned",options));
+	pm.addParam(new FieldString("client_activity_descr",options));
+	pm.addParam(new FieldBool("login_allowed",options));
 }
 
 			Client_Controller.prototype.addGetObject = function(){

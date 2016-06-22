@@ -96,6 +96,26 @@ class ClientList_Model extends ModelSQL{
 		));
 		$this->addField($f_banned);
 
+		$f_client_activity_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		,"client_activity_descr"
+		,array(
+		
+			'id'=>"client_activity_descr"
+				
+		
+		));
+		$this->addField($f_client_activity_descr);
+
+		$f_login_allowed=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		,"login_allowed"
+		,array(
+		
+			'id'=>"login_allowed"
+				
+		
+		));
+		$this->addField($f_login_allowed);
+
 		
 		
 		

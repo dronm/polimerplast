@@ -45,7 +45,7 @@ function MailForSendingList_View(id,options){
 				
 	row.addElement(new GridDbHeadCell(id+"_col_sent_date_time_descr",{"value":"Отправка",
 		"readBind":{"valueFieldId":"sent_date_time_descr"},
-		"sortable":true,"sort":"desc","sortCol":"sent_date_time",
+		"sortable":true,"sortCol":"sent_date_time",
 		"colAttrs":{"align":"center"}
 		}));
 		
