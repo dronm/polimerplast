@@ -213,6 +213,8 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 		$params = new ParamsSQL($pm,$this->getDbLink());
 		$params->addAll();
 		
+		$this->check_state($doc_id,"'waiting_for_us','waiting_for_client','waiting_for_payment','producing','produced','closed','canceled','canceled_by_sales_manager','canceled_by_client'");
+		
 		//проверка числа статусов
 		$link = $this->getDbLink();
 		$ar = $link->query_first(sprintf(
