@@ -10,6 +10,7 @@ CREATE OR REPLACE VIEW sms_client_on_produced AS
 			ARRAY[
 				ROW('user',u.name_full::text)::template_value,
 				ROW('client',cl.name_full::text)::template_value,
+				ROW('order',o.number::text)::template_value,
 				ROW('vm',o.total_volume::text)::template_value,
 				ROW('wt',o.total_weight::text)::template_value			
 			],

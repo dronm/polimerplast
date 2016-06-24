@@ -9,6 +9,7 @@ CREATE OR REPLACE VIEW sms_client_on_deliv AS
 		sms_templates_text(
 			ARRAY[
 				ROW('user',u.name_full::text)::template_value,
+				ROW('order',o.number::text)::template_value,
 				ROW('client',cl.name_full::text)::template_value,
 				ROW('driver',dr.name::text)::template_value,
 				ROW('tel',dr.cel_phone::text)::template_value,

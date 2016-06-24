@@ -9,6 +9,7 @@ CREATE OR REPLACE VIEW sms_client_on_leave_prod AS
 		sms_templates_text(
 			ARRAY[
 				ROW('user',o.deliv_responsable::text)::template_value,
+				ROW('order',o.number::text)::template_value,
 				ROW('client',cl.name_full::text)::template_value,
 				ROW('driver',dr.name::text)::template_value,
 				ROW('plate',v.plate::text)::template_value,

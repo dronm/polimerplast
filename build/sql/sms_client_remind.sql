@@ -10,6 +10,7 @@ CREATE OR REPLACE VIEW sms_client_remind AS
 			ARRAY[
 				ROW('user',o.deliv_responsable::text)::template_value,
 				ROW('client',cl.name_full::text)::template_value,
+				ROW('order',o.number::text)::template_value,
 				ROW('driver',dr.name::text)::template_value,
 				ROW('plate',v.plate::text)::template_value,
 				ROW('period',dlvh.h_from::text||'-'::text||dlvh.h_to::text)::template_value,
