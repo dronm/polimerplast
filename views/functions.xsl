@@ -21,7 +21,13 @@
 			<xsl:text>&#160;</xsl:text>
 		</xsl:when>
 		<xsl:otherwise>
-			<xsl:value-of select="format-number($val,'##0.00')"/>
+			<!--<xsl:value-of select="format-number($val,'##0.00')"/>-->
+			<xsl:call-template name="string-replace-all">
+				<xsl:with-param name="text" select="format-number($val,'##0.00')"/>
+				<xsl:with-param name="replace" select="'.'"/>
+				<xsl:with-param name="by" select="','"/>
+			</xsl:call-template>																					
+			
 		</xsl:otherwise>		
 	</xsl:choose>
 </xsl:template>
@@ -54,7 +60,13 @@
 			<xsl:text>&#160;</xsl:text>
 		</xsl:when>
 		<xsl:otherwise>
-			<xsl:value-of select="format-number( round(1000*$val) div 1000 ,'##0,000')"/>
+			<xsl:call-template name="string-replace-all">
+				<xsl:with-param name="text" select="format-number( round(1000*$val) div 1000 ,'##0.000')"/>
+				<xsl:with-param name="replace" select="'.'"/>
+				<xsl:with-param name="by" select="','"/>
+			</xsl:call-template>																					
+		
+			<!--<xsl:value-of select="format-number( round(1000*$val) div 1000 ,'##0.000')"/>-->
 		</xsl:otherwise>		
 	</xsl:choose>
 </xsl:template>

@@ -336,6 +336,8 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 				$params->getDbVal('pack_in_price'):'NULL';
 			$price_edit = (!is_null($pm->getParamValue('price_edit')))?
 				$params->getDbVal('price_edit'):'NULL';
+			$price = (!is_null($pm->getParamValue('price')))?
+				$params->getDbVal('price'):'NULL';
 		
 			$ar = $this->getDbLink()->query_first(
 			sprintf(
@@ -349,7 +351,8 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 					coalesce(%s,p.measure_unit_id) AS measure_unit_id,
 					coalesce(%s,p.pack_exists) AS pack_exists,
 					coalesce(%s,p.pack_in_price) AS pack_in_price,
-					coalesce(%s,p.price_edit) AS price_edit
+					coalesce(%s,p.price_edit) AS price_edit,
+					coalesce(%s,p.price) AS price
 				FROM doc_orders_t_tmp_products p
 				WHERE p.login_id=%d AND p.line_number=%d
 			)
@@ -365,7 +368,7 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 				(SELECT t.pack_in_price FROM prod t),
 				%s,
 				(SELECT t.price_edit FROM prod t),
-				%f
+				(SELECT t.price FROM prod t)
 				)
 			AS (
 				base_quant numeric,
@@ -383,12 +386,12 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 			$pack_exists,
 			$pack_in_price,
 			$price_edit,
+			$price,
 			$_SESSION['LOGIN_ID'],
 			$params->getDbVal('old_line_number'),
 			$params->getDbVal('warehouse_id'),
 			$params->getDbVal('client_id'),
-			$params->getDbVal('deliv_to_third_party'),
-			$params->getDbVal('price')
+			$params->getDbVal('deliv_to_third_party')
 			));
 		
 			if (is_array($ar)&&count($ar)){
