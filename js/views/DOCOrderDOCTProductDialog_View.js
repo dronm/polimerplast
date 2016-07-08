@@ -280,14 +280,14 @@ DOCOrderDOCTProductDialog_View.prototype.onGetProductAttrs = function(model){
 		}
 		});
 	this.bindControl(ctrl,{"modelId":model_id,
-		"valueFieldId":"measure_unit_descr",
-		"keyFieldIds":["measure_unit_id"]},
+		"valueFieldId":"base_measure_unit_descr",
+		"keyFieldIds":["base_measure_unit_id"]},
 		{"valueFieldId":null,"keyFieldIds":["measure_unit_id"]}
 	);
-	var main_measure_unit_id = model.getFieldValue("main_measure_unit_id");
+	var main_measure_unit_id = model.getFieldValue("order_measure_unit_id");
 	if (main_measure_unit_id!=undefined){
 		ctrl.setFieldValue("id",main_measure_unit_id);
-		ctrl.setValue(model.getFieldValue("main_measure_unit_descr"));
+		ctrl.setValue(model.getFieldValue("order_measure_unit_descr"));
 	}
 	sub_cont.addElement(ctrl);	
 	cont.addElement(sub_cont);	

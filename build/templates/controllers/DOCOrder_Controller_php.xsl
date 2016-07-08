@@ -401,10 +401,12 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 							
 			//Отметка о печати если напечатал производство
 			if ($_SESSION['role_id']=='production'){
+				
 				$link->query(
 				"UPDATE doc_orders SET printed=TRUE
 				WHERE id IN (SELECT h.id FROM (".$h_q.") AS h)"
 				);
+				
 			}
 			$link->query('COMMIT');
 		}

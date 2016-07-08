@@ -37,8 +37,9 @@
 <xsl:template match="model[@id='head']/row">
 <xsl:variable name="doc_id" select="id"/>
 
+
 <xsl:if test="position() &gt; 1">
-<span class="pagebreak"/>
+<span class="pagebreak"></span>
 </xsl:if>
 
 <div class="doc_order_print_order_store">

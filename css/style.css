@@ -72,6 +72,17 @@ td.deliv_period div.deliv_order{
 	display:block;	
 	display:inline;	
 }
+
+td.deliv_period div.on_way{
+	background-color:#ffff66;
+}
+td.deliv_period div.unloading{
+	background-color:#99ff33;
+}
+td.deliv_period div.closed{
+	background-color:#33cc33;
+}
+
 td.deliv_period div.dragging{
 	font-size:100%;
 	font-weight:bolder;

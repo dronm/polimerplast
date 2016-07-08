@@ -91,7 +91,8 @@ DelivAssignedOrderGridDb.prototype.onGetData = function(resp){
 			"client_dest_descr":model.getFieldValue("o_client_dest_descr"),
 			"product_str":model.getFieldValue("o_product_str"),
 			"vm":toFloat(model.getFieldValue("o_vm")),
-			"wt":toFloat(model.getFieldValue("o_wt"))
+			"wt":toFloat(model.getFieldValue("o_wt")),
+			"state":model.getFieldValue("o_state")
 		}
 		
 		/*Если изменился город
@@ -165,7 +166,7 @@ DelivAssignedOrderGridDb.prototype.onGetData = function(resp){
 			var perc_w = Math.round(order_inf.wt/vh_wt*100);
 			var order_percent = (perc_v>perc_w)? perc_v:perc_w;									
 			var cont = new Control(uuid(),"div",{
-				"className":"deliv_order",
+				"className":"deliv_order "+order_inf.state,
 				"value":order_inf.number+" ("+order_percent+"%)",
 				"attrs":{
 					"order_inf":array2json(order_inf),

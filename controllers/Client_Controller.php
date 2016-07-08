@@ -20,7 +20,7 @@ require_once(FRAME_WORK_PATH.'basic_classes/ParamsSQL.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ModelSQL.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLInt.php');
 require_once('User_Controller.php');
-require_once('models/ClientDebtList_Model.php');
+require_once(dirname(__FILE__).'/../models/ClientDebtList_Model.php');
 
 class Client_Controller extends ControllerSQL{
 

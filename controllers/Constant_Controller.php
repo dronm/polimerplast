@@ -78,33 +78,39 @@ class Constant_Controller extends ControllerSQL{
 
 		
 	}
-	public function get_values(){
+	
+	/*
+	@param array $idList
+	returns ModelSQL
+	*/
+	public function getConstantValueModel(&$idList){
 		$link = $this->getDbLink();
-		$model = new ModelSQL($link,array('id'=>'ConstantList_Model'));
+		$model = new ModelSQL($link,array('id'=>'ConstantValueList_Model'));
 		$model->addField(new FieldSQL($link,null,null,'id',DT_STRING));
-		$model->addField(new FieldSQL($link,null,null,'val',DT_STRING));	
-		
-		$pm = $this->getPublicMethod('get_values');
-		$id_list = $pm->getParamValue('id_list');
+		$model->addField(new FieldSQL($link,null,null,'val',DT_STRING));		
+
 		$q = '';
-		if (isset($id_list)){
-			$ids = explode(',',$id_list);
-			foreach($ids as $id) {
-				if ($q!=''){
-					$q.=' UNION ALL ';
-				}			
-				$q.=sprintf("SELECT
-				'%s' AS id,val::text
-				FROM const_%s",
-				$id,$id);
-			}
+		foreach($idList as $id) {
+			$q.= ($q!='')? ' UNION ALL ':'';
+			$q.= sprintf("SELECT '%s' AS id,val::text FROM const_%s", $id,$id);
 		}
+		
 		$model->setSelectQueryText($q);
 		$model->select(false,null,null,
 			null,null,null,null,null,TRUE);
+			
+		return $model;
 		//
-		$this->addModel($model);					
 	}
+	
+	public function get_values($pm){
+		$id_list = $pm->getParamValue('id_list');
+		if (isset($id_list)){
+			$model = $this->getConstantValueModel(explode(',',$id_list));
+			$this->addModel($model);
+		}
+	}
+	
 	public function set_value($pm){
 		$link = $this->getDbLinkMaster();
 		$link->query(sprintf(

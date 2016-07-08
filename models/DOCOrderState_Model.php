@@ -2,6 +2,7 @@
 
 require_once(FRAME_WORK_PATH.'basic_classes/ModelSQL.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLInt.php');
+require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLString.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLEnum.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLDateTime.php');
 
@@ -65,6 +66,37 @@ class DOCOrderState_Model extends ModelSQL{
 		
 		));
 		$this->addField($f_user_id);
+
+		$f_tracker_id=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		,"tracker_id"
+		,array(
+		
+			'length'=>15,
+			'id'=>"tracker_id"
+				
+		
+		));
+		$this->addField($f_tracker_id);
+
+		$f_client_zone=new FieldSQlGeometry($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		,"client_zone"
+		,array(
+		
+			'id'=>"client_zone"
+				
+		
+		));
+		$this->addField($f_client_zone);
+
+		$f_production_zone=new FieldSQlGeometry($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		,"production_zone"
+		,array(
+		
+			'id'=>"production_zone"
+				
+		
+		));
+		$this->addField($f_production_zone);
 
 		
 		
