@@ -69,3 +69,30 @@ extend(Constant_Controller,ControllerDb);
 }
 
 		
+Constant_Controller.prototype.value_cache;
+Constant_Controller.prototype.readValues = function(struc){
+	this.value_cache=this.value_cache || {};
+	var pm = this.getPublicMethodById("get_values");
+	var id_list = "";
+	for (var id in struc){
+		if (this.value_cache[id]){
+			struc[id]=this.value_cache[id];
+		}
+		else{
+			id_list+=(id_list=="")? "":",";
+			id_list+=id;
+		}
+	}
+	if (id_list.length){
+		pm.setParamValue("id_list",id_list);
+		//alert(this.getQueryString(pm));
+		this.runPublicMethod("get_values",{},true,
+		function(resp){
+			var model = resp.getModelById("ConstantValueList_Model");
+			model.setActive(true);
+			while (model.getNextRow()){
+				struc[model.getFieldById("id").getValue()] = model.getFieldById("val").getValue();
+			}
+		},this,null);
+	}
+}	

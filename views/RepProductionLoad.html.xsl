@@ -77,6 +77,7 @@
 				<td class="total">Итого</td>
 				<xsl:for-each select="//row[generate-id() =
 				generate-id(key('products',product_id/.)[1])]">
+					<xsl:sort select="product_descr/."/>
 					<td align="right">
 					<xsl:call-template name="format_quant">
 						<xsl:with-param name="val" select="sum(key('products',product_id/.)/quant/.)"/>

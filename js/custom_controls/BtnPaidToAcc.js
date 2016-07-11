@@ -14,7 +14,11 @@ function BtnPaidToAcc(options){
 	options.caption = "==>>ПКО";
 	options.attrs = options.attrs||{};
 	options.attrs.title = "Создать ПКО в бухгалтерии по оплаченным заявкам.";
+	
+	var self = this;
 	options.onClick = function(){
+		self.setEnabled(false);
+		
 		var contr = new DOCOrder_Controller(new ServConnector(HOST_NAME));
 		contr.run("paid_to_acc",{
 			"async":true,
@@ -24,7 +28,11 @@ function BtnPaidToAcc(options){
 				if (m.getNextRow()){
 					WindowMessage.show({
 						"text":m.getFieldValue("mes"),
-						"type":WindowMessage.TP_NOTE}
+						"type":WindowMessage.TP_NOTE,
+						"callBack":function(){
+							self.setEnabled(true);
+						}
+						}
 					);					
 				}
 			},

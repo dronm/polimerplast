@@ -284,11 +284,13 @@ DOCOrderDOCTProductDialog_View.prototype.onGetProductAttrs = function(model){
 		"keyFieldIds":["base_measure_unit_id"]},
 		{"valueFieldId":null,"keyFieldIds":["measure_unit_id"]}
 	);
-	var main_measure_unit_id = model.getFieldValue("order_measure_unit_id");
-	if (main_measure_unit_id!=undefined){
-		ctrl.setFieldValue("id",main_measure_unit_id);
-		ctrl.setValue(model.getFieldValue("order_measure_unit_descr"));
+	
+	var base_measure_unit_id = model.getFieldValue("base_measure_unit_id");
+	if (base_measure_unit_id!=undefined){
+		ctrl.setFieldValue("id",base_measure_unit_id);
+		ctrl.setValue(model.getFieldValue("base_measure_unit_descr"));
 	}
+	
 	sub_cont.addElement(ctrl);	
 	cont.addElement(sub_cont);	
 
@@ -560,7 +562,6 @@ DOCOrderDOCTProductDialog_View.prototype.setTotals = function(struc){
 	this.m_totSumCtrl.setValue(struc.total);
 }
 DOCOrderDOCTProductDialog_View.prototype.setMethodParams = function(pm,checkRes){	
-	debugger;
 	DOCOrderDOCTProductDialog_View.superclass.setMethodParams.call(this,pm,checkRes);
 	
 	if (this.m_measureCheckText!=undefined
