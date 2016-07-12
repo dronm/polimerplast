@@ -151,7 +151,7 @@
 <xsl:template match="model[@id='products']/row/pack_exists">
 	<td align="center">
 	<xsl:choose>
-		<xsl:when test="node()='t'">
+		<xsl:when test="node()='true'">
 			есть<!--<img src="img/bool/true.png"/>-->
 		</xsl:when>
 		<xsl:otherwise>

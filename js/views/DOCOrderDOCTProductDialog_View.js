@@ -279,18 +279,20 @@ DOCOrderDOCTProductDialog_View.prototype.onGetProductAttrs = function(model){
 			}
 		}
 		});
+	//var mu_descr = (this.m_isNew)? "base_measure_unit_descr":"measure_unit_descr";
+	//var mu_id = (this.m_isNew)? "base_measure_unit_id":"measure_unit_id";
 	this.bindControl(ctrl,{"modelId":model_id,
-		"valueFieldId":"base_measure_unit_descr",
-		"keyFieldIds":["base_measure_unit_id"]},
+		"valueFieldId":"measure_unit_descr",
+		"keyFieldIds":["measure_unit_id"]},
 		{"valueFieldId":null,"keyFieldIds":["measure_unit_id"]}
 	);
-	
-	var base_measure_unit_id = model.getFieldValue("base_measure_unit_id");
-	if (base_measure_unit_id!=undefined){
-		ctrl.setFieldValue("id",base_measure_unit_id);
-		ctrl.setValue(model.getFieldValue("base_measure_unit_descr"));
+	if (this.m_isNew){
+		var base_measure_unit_id = model.getFieldValue("base_measure_unit_id");
+		if (base_measure_unit_id!=undefined){
+			ctrl.setFieldValue("id",base_measure_unit_id);
+			ctrl.setValue(model.getFieldValue("base_measure_unit_descr"));
+		}
 	}
-	
 	sub_cont.addElement(ctrl);	
 	cont.addElement(sub_cont);	
 
