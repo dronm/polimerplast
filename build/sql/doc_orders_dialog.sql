@@ -75,7 +75,8 @@ CREATE OR REPLACE VIEW doc_orders_dialog AS
 		d.city_route_distance,
 		d.country_route_distance,
 		
-		d.destination_to_ttn
+		d.destination_to_ttn,
+		d.total_pack
 		
 	FROM doc_orders AS d
 	LEFT JOIN clients AS cl ON cl.id=d.client_id

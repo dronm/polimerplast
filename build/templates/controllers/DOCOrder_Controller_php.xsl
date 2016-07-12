@@ -1632,7 +1632,8 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 					AND coalesce(o.deliv_add_cost_to_product,FALSE)=FALSE THEN
 						COALESCE(o.deliv_total,0)
 					ELSE 0
-					END
+					END+
+					COALESCE(o.total_pack,0)
 				) AS total,
 				
 				(SELECT u.ext_id FROM u) AS user_ref
