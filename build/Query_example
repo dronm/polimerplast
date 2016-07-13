@@ -1,100 +1,17 @@
-WITH
-detail AS (
-SELECT
-	firms.name::text AS firm_descr,
-	firms.ext_id::text AS firm_ext_id,
-	clients.name::text AS client_descr,
-	client_activities.name::text AS client_activity_descr,
-	doc_orders.number::text AS doc_orders_number,
-	sum(doc_orders_t_products.weight) AS doct_weight
-FROM doc_orders_t_products
-LEFT JOIN doc_orders ON doc_orders.id=doc_orders_t_products.doc_id
-LEFT JOIN firms ON firms.id=doc_orders.firm_id
-LEFT JOIN clients ON clients.id=doc_orders.client_id
-LEFT JOIN client_activities ON client_activities.id=clients.client_activity_id
-WHERE (doc_orders.date_time >= '2016-05-30 00:00:00') AND(doc_orders.date_time <= '2016-05-30 23:59:59')
-AND doc_orders.delivery_fact_date IS NOT NULL
-GROUP BY
-	firms.name,
-	firms.ext_id,
-	clients.name,
-	client_activities.name,
-	doc_orders_number
-),
-
-sub AS (
-	/*Group 1*/
-	(
-	SELECT
-		detail.firm_descr,
-		detail.firm_ext_id,
-		''::text AS client_descr,
-		''::text AS client_activity_descr,
-		''::text AS doc_orders_number,
-		SUM(detail.doct_weight) AS doct_weight,
-		1 AS sys_level_val,
-		4 AS sys_level_count
-	FROM detail
-	GROUP BY 
-		detail.firm_descr,
-		detail.firm_ext_id
-	ORDER BY detail.firm_descr
-	)
-
-	/*Group 2*/
-	UNION
-	(
-	SELECT
-		detail.firm_descr,
-		detail.firm_ext_id,
-		detail.client_descr,
-		detail.client_activity_descr,
-		''::text AS doc_orders_number,
-		SUM(detail.doct_weight) AS doct_weight,
-		2 AS sys_level_val,
-		4 AS sys_level_count
-	FROM detail
-	GROUP BY 
-		detail.firm_descr,
-		detail.firm_ext_id,
-		detail.client_descr,
-		detail.client_activity_descr
-	ORDER BY detail.firm_descr,detail.client_descr	
-	)
-
-	/*Group 3*/
-	UNION
-	(
-	SELECT
-		detail.firm_descr,
-		detail.firm_ext_id,
-		detail.client_descr,
-		detail.client_activity_descr,
-		detail.doc_orders_number,
-		SUM(detail.doct_weight) AS doct_weight,
-		3 AS sys_level_val,
-		4 AS sys_level_count
-	FROM detail
-	GROUP BY 
-		detail.firm_descr,
-		detail.firm_ext_id,
-		detail.client_descr,
-		detail.client_activity_descr,
-		detail.doc_orders_number
-	ORDER BY detail.firm_descr,detail.client_descr,detail.doc_orders_number
-	)
-	
-)
-
+ЗАКРЫТЬ ЗАЯВКИ СО СТАТУСОМ shipped
+insert into doc_orders_states
+(doc_orders_id,date_time,state)
 (
-SELECT * FROM sub
-ORDER BY sub.firm_descr,sub.client_descr,sub.doc_orders_number
+SELECT
+	s.id,s.date_time+'1 second'::interval,'closed'
+FROM	
+(
+SELECT DISTINCT ON (doc_orders_id)
+       doc_orders_id AS id, state,date_time
+FROM   doc_orders_states
+ORDER  BY doc_orders_id,date_time DESC
+) AS s
+WHERE s.state = 'shipped'
 )
 
-UNION ALL
-SELECT ''::text, ''::text, ''::text, ''::text, ''::text,
-sum(sub.doct_weight) AS doct_weight,
-0 AS sys_level_val,
-4 AS sys_level_count
-FROM sub
 
