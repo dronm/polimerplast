@@ -2593,35 +2593,36 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 			$items=NULL;
 			DOCOrder_Controller::docDataForExt(
 				$link,$doc_id,$head,$items);				
+
+			$ar = $link->query_first(sprintf(
+			"SELECT
+				cl.email_sert,
+				cl.pay_type,
+				h.deliv_type,
+				u.email
+			FROM doc_orders AS h
+			LEFT JOIN clients cl ON cl.id=h.client_id
+			LEFT JOIN users u ON u.id=h.client_user_id
+			WHERE h.id=%d",$doc_id)
+			);		
+			
+			//по самовывозу статус меняем на закрыт!!!
+			$this->add_state($doc_id,
+				($ar['deliv_type']=='by_client')? 'closed':'shipped'
+				);
+		
 			
 			/* Если в безе уже есть отметка о реализации из 1с - значит отгрузка уже была!!!
 			и все смс/емайлы отправлялись, просто был обрыв и браузер об этом не знает,
 			в этом случае ничего не делаем!!!
 			*/
 			if (!strlen($head['ext_ship_id'])){
-			
 				//Паспорт качества
 				$sert_tmp_file = NULL;
-				$ar = $link->query_first(sprintf(
-				"SELECT
-					cl.email_sert,
-					cl.pay_type,
-					h.deliv_type,
-					u.email
-				FROM doc_orders AS h
-				LEFT JOIN clients cl ON cl.id=h.client_id
-				LEFT JOIN users u ON u.id=h.client_user_id
-				WHERE h.id=%d",$doc_id)
-				);		
 				$this->makePassport($link,$doc_id);
 				if ($ar['email_sert']=='t'){
 					$sert_tmp_file = $this->dump_passport_to_file($doc_id);
 				}
-			
-				//по самовывозу статус меняем на закрыт!!!
-				$this->add_state($doc_id,
-					($ar['deliv_type']=='by_client')? 'closed':'shipped'
-					);
 			
 				//SMS снабженцу
 				$link->query(sprintf(
@@ -2659,23 +2660,27 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 				$doc_id
 				));
 			
-				if ($ar['pay_type']!='cash'){
-					//документа на email с печатями
-					$ttn_attrs = $l->query_first(sprintf(
-						"SELECT * FROM doc_orders_ttn
-						WHERE doc_id=%d",
-					$doc_id
-					));		
+			}			
 			
-					$tmp_file = ExtProg::print_shipment(
-							$ttn_attrs['ext_ship_id'],
-							$ttn_attrs,
-							$_SESSION['user_ext_id'],
-							0
-					);
-				
-					$_SESSION['ship_doc_'.$doc_id] = $tmp_file;
-				
+			if ($ar['pay_type']!='cash'){
+				//документа на email с печатями
+				$ttn_attrs = $l->query_first(sprintf(
+					"SELECT * FROM doc_orders_ttn
+					WHERE doc_id=%d",
+				$doc_id
+				));		
+		
+				$tmp_file = ExtProg::print_shipment(
+						$ttn_attrs['ext_ship_id'],
+						$ttn_attrs,
+						$_SESSION['user_ext_id'],
+						0
+				);
+			
+				$_SESSION['ship_doc_'.$doc_id] = $tmp_file;
+			
+				//Только если еще не отправляли
+				if (!strlen($head['ext_ship_id'])){
 					$attch = array($tmp_file);
 					if (!is_null($sert_tmp_file)){
 						array_push($attch,$sert_tmp_file);
@@ -2687,7 +2692,8 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 						'shipment'
 					);
 				}
-			}			
+			}
+			
 			$link->query('COMMIT');
 		}
 		catch(Exception $e){
@@ -2708,6 +2714,9 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 			downloadFile($tmp_file);
 			unlink($tmp_file);
 			unset($_SESSION['ship_doc_'.$doc_id]);
+		}
+		else{
+			throw new Exception("Печатные формы не сформированы!");
 		}
 	}
 	public function print_ship_docs($pm){
