@@ -93,13 +93,10 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 		}
 		parent::insert($pm);		
 	}	
-	private function add_state($doc_id,$state){		
+	private function add_state($doc_id, $state){		
 		$this->getDbLinkMaster()->query(sprintf(
 		"INSERT INTO doc_orders_states
-		(doc_orders_id,
-			date_time,
-			state,
-			user_id)
+		(doc_orders_id, date_time, state, user_id)
 		VALUES (
 			%d,
 			now()::timestamp without time zone,
@@ -1183,18 +1180,35 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 				cl.email_sert,
 				cl.pay_type,
 				h.deliv_type,
-				u.email
+				u.email,
+				vh.tracker_id,
+				dest.zone_center AS client_zone,
+				w.zone AS production_zone
 			FROM doc_orders AS h
 			LEFT JOIN clients cl ON cl.id=h.client_id
 			LEFT JOIN users u ON u.id=h.client_user_id
+			LEFT JOIN deliveries dlv ON dlv.doc_order_id = h.id
+			LEFT JOIN client_destinations dest ON dest.id = h.deliv_destination_id
+			LEFT JOIN warehouses w ON w.id = h.warehouse_id			
+			LEFT JOIN vehicles vh ON vh.id = dlv.vehicle_id
 			WHERE h.id=%d",$doc_id)
 			);		
 			
-			//по самовывозу статус меняем на закрыт!!!
-			$this->add_state($doc_id,
-				($ar['deliv_type']=='by_client')? 'closed':'shipped'
-				);
-		
+			/*по самовывозу статус - closed
+			Если нет трэкера (нет распределения по авто) или нет зоны клиента или нет нашей зоны завода - closed
+			во всех остальных случаях - shipped
+			*/	
+			if ($ar['deliv_type']=='by_client'){
+				$new_state = 'closed';
+			}		
+			else if ($ar['deliv_type']!='by_client'
+			&amp;&amp; (!$ar['tracker_id'] || !$ar['client_zone'] || !$ar['production_zone'])){
+				$new_state = 'closed';
+			}
+			else{
+				$new_state = 'shipped';
+			}
+			$this->add_state($doc_id,$new_state);
 			
 			/* Если в безе уже есть отметка о реализации из 1с - значит отгрузка уже была!!!
 			и все смс/емайлы отправлялись, просто был обрыв и браузер об этом не знает,

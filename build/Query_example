@@ -1,4 +1,4 @@
-ЗАКРЫТЬ ЗАЯВКИ СО СТАТУСОМ shipped
+--ЗАКРЫТЬ ЗАЯВКИ СО СТАТУСОМ shipped
 insert into doc_orders_states
 (doc_orders_id,date_time,state)
 (

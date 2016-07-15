@@ -19,31 +19,28 @@ BEGIN
 		
 	ELSIF (TG_WHEN='BEFORE' AND TG_OP='INSERT') THEN
 		IF NEW.state='shipped'::order_states THEN
-			--BEGIN
-				--setting vehicle_states_data tracker id and client_zone
-				SELECT
-					vh.tracker_id,
-					ST_Buffer(dest.zone_center::geography,const_client_geo_zone_radius_m_val())::geometry,
-					w.zone
-				INTO
-					NEW.tracker_id,
-					NEW.client_zone,
-					NEW.production_zone
-				
-				FROM deliveries dlv
-				LEFT JOIN vehicles vh ON vh.id = dlv.vehicle_id
-				LEFT JOIN doc_orders o ON o.id = dlv.doc_order_id
-				LEFT JOIN client_destinations dest ON dest.id = o.deliv_destination_id
-				LEFT JOIN warehouses w ON w.id = o.warehouse_id
-				WHERE
-					dlv.doc_order_id = NEW.doc_orders_id
-					AND dest.zone_center IS NOT NULL
-					AND const_client_geo_zone_radius_m_val()>0
-					AND vh.tracker_id IS NOT NULL
-					AND vh.tracker_id<>''
-				;
-			--EXCEPTION WHEN others THEN
-			--END;
+			--setting vehicle_states_data tracker id and client_zone
+			SELECT
+				vh.tracker_id,
+				ST_Buffer(dest.zone_center::geography,const_client_geo_zone_radius_m_val())::geometry,
+				w.zone
+			INTO
+				NEW.tracker_id,
+				NEW.client_zone,
+				NEW.production_zone
+			
+			FROM deliveries dlv
+			LEFT JOIN vehicles vh ON vh.id = dlv.vehicle_id
+			LEFT JOIN doc_orders o ON o.id = dlv.doc_order_id
+			LEFT JOIN client_destinations dest ON dest.id = o.deliv_destination_id
+			LEFT JOIN warehouses w ON w.id = o.warehouse_id
+			WHERE
+				dlv.doc_order_id = NEW.doc_orders_id
+				AND dest.zone_center IS NOT NULL
+				AND const_client_geo_zone_radius_m_val()>0
+				AND vh.tracker_id IS NOT NULL
+				AND vh.tracker_id<>''
+			;
 		END IF;
 		
 		RETURN NEW;
