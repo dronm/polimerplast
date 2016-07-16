@@ -18,16 +18,17 @@
 		<script>
 			var HOST_NAME = '<xsl:value-of select="/document/model[@id='ModelVars']/row/basePath"/>';
 			
-			function setError(errStr){
-				var n = nd("errorReporter");
-				n.innerHTML=errStr;
-				DOMHandler.addClass(n,"alert alert-danger");
-				
-				DOMHandler.removeClass(nd("submit_login"),"disabled");
-			}
-			
 			//<![CDATA[
 			function pageLoad(){
+				function setError(errStr){
+					var n = nd("errorReporter");
+					n.innerHTML=errStr;
+					DOMHandler.addClass(n,"alert alert-danger");
+				
+					DOMHandler.removeClass(nd("submit_login"),"disabled");
+				}
+			
+			
 				DOMHandler.removeClass(nd("submit_login"),"disabled");
 				nd("submit_login").onclick = function(e){
 					var er_ctrl = nd("errorReporter");

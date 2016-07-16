@@ -720,7 +720,8 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 				read_only_states.push("waiting_for_client");
 			}
 			
-			if (read_only_states.indexOf(this.m_curState)>=0){
+			//if (read_only_states.indexOf(this.m_curState)>=0){
+			if ($.inArray(this.m_curState,read_only_states)>=0){
 				this.setEnabled(false);
 				this.m_ctrlCancel.setEnabled(true);
 				this.m_ctrlOk.setEnabled(true);				
