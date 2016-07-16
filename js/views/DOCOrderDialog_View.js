@@ -840,7 +840,12 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 	var wh_id = this.m_wareHCtrl.getFieldValue();
 	var dest_id = this.m_clientDestCtrl.getFieldValue();
 	var cost_opt_id = this.m_delivCostOptCtrl.getFieldValue();
-	if (wh_id&&dest_id&&cost_opt_id){
+	if (wh_id && dest_id && cost_opt_id){
+		this.m_wareHCtrl.setEnabled(false);
+		this.m_clientDestCtrl.setEnabled(false);
+		this.m_delivCostOptCtrl.setEnabled(false);
+		this.getErrorControl().setValue("");
+		
 		var self = this;
 		var contr = new DOCOrder_Controller(new ServConnector(HOST_NAME));
 		contr.run("calc_deliv_cost",{
@@ -848,7 +853,12 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 				"cost_opt_id":cost_opt_id,
 				"client_destination_id":dest_id,
 				"include_route":"0"},
-			"errControl":this.getErrorControl(),
+			"err":function(resp,errCode,errStr){
+				self.getErrorControl().setValue(errStr);
+				self.m_wareHCtrl.setEnabled(true);
+				self.m_clientDestCtrl.setEnabled(true);
+				self.m_delivCostOptCtrl.setEnabled(true);				
+			},
 			"func":function(resp){
 				var m = resp.getModelById("calc_deliv_cost");
 				m.setActive(true);
@@ -863,6 +873,11 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 					self.m_delivCost.setValue(parseFloat(m.getFieldValue("total_cost")).toFixed(2)*v_cnt);
 					self.updateDistanceInf();
 					self.recalcProductPrices();
+					
+					self.m_wareHCtrl.setEnabled(true);
+					self.m_clientDestCtrl.setEnabled(true);
+					self.m_delivCostOptCtrl.setEnabled(true);
+					
 				}
 			}
 		});
@@ -874,10 +889,12 @@ DOCOrderDialog_View.prototype.recalcProductPrices = function(){
 	if (this.m_clientCtrl){
 		cl_id = this.m_clientCtrl.getFieldValue();
 	}
-	if (wh_id&&
-	(!this.m_clientCtrl||(this.m_clientCtrl&&cl_id)
-	)
+	if (wh_id && (!this.m_clientCtrl || (this.m_clientCtrl&&cl_id) )
 	){
+		this.m_wareHCtrl.setEnabled(false);
+		this.m_clientCtrl.setEnabled(false);
+		this.getErrorControl().setValue("");
+		
 		var self = this;
 		var contr = new DOCOrder_Controller(new ServConnector(HOST_NAME));
 		contr.run("recalc_product_prices",{
@@ -888,11 +905,17 @@ DOCOrderDialog_View.prototype.recalcProductPrices = function(){
 				"deliv_to_third_party":this.m_toThirdPartyCtrl.getValue(),
 				"deliv_add_cost_to_product":this.m_delivAddToCostCtrl.getValue()
 			},
-			"errControl":this.getErrorControl(),
+			"err":function(resp,errCode,errStr){
+				self.getErrorControl().setValue(errStr);
+				self.m_wareHCtrl.setEnabled(true);
+				self.m_clientCtrl.setEnabled(true);
+			},
 			"func":function(resp){
 				if (self.m_productDetails.onRefresh){
 					self.m_productDetails.onRefresh();
 				}
+				self.m_wareHCtrl.setEnabled(true);
+				self.m_clientCtrl.setEnabled(true);				
 				self.refreshProdTotals();
 			}
 		});
