@@ -47,7 +47,7 @@ class ViewBase extends ViewHTMLXSLT {
 		<!-- custom vars-->
 		$this->getVarModel()->insert();
 		$this->setVarValue('scriptId',$script_id);
-		$this->setVarValue('basePath',BASE_PATH);
+		$this->setVarValue('basePath','http://'.$_SERVER['HTTP_HOST'].'/'.APP_NAME.'/');//BASE_PATH
 		
 		if (isset($_SESSION['role_id'])){
 			$this->setVarValue('role_id',$_SESSION['role_id']);

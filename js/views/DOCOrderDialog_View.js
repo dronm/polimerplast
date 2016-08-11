@@ -648,6 +648,7 @@ DOCOrderDialog_View.prototype.onFirmSelected = function(){
 				if (m.getNextRow()){
 					self.m_wareHCtrl.setValue(m.getFieldValue('warehouse_descr'));
 					self.m_wareHCtrl.setFieldValue("id",m.getFieldValue('warehouse_id'));
+					self.onWarehouseSelected();
 				}
 			}
 		});

@@ -6861,3 +6861,249 @@
 16/07/2016 05:07 Building permissions.
 16/07/2016 05:07 Building database script.
 16/07/2016 05:07 Building documentation.
+16/07/2016 05:07 Project files are pushed to the server.
+18/07/2016 02:07 Building php controller User_Controller.php
+18/07/2016 02:07 Building js controller User_Controller.js
+18/07/2016 02:07 Building php controller Constant_Controller.php
+18/07/2016 02:07 Building js controller Constant_Controller.js
+18/07/2016 02:07 Building php controller Enum_Controller.php
+18/07/2016 02:07 Building js controller Enum_Controller.js
+18/07/2016 02:07 Building php controller Firm_Controller.php
+18/07/2016 02:07 Building js controller Firm_Controller.js
+18/07/2016 02:07 Building php controller Warehouse_Controller.php
+18/07/2016 02:07 Building js controller Warehouse_Controller.js
+18/07/2016 02:07 Building php controller Product_Controller.php
+18/07/2016 02:07 Building js controller Product_Controller.js
+18/07/2016 02:07 Building php controller ProductCustomSizePrice_Controller.php
+18/07/2016 02:07 Building js controller ProductCustomSizePrice_Controller.js
+18/07/2016 02:07 Building php controller ProductWarehouse_Controller.php
+18/07/2016 02:07 Building js controller ProductWarehouse_Controller.js
+18/07/2016 02:07 Building php controller MeasureUnit_Controller.php
+18/07/2016 02:07 Building js controller MeasureUnit_Controller.js
+18/07/2016 02:07 Building php controller ProductMeasureUnit_Controller.php
+18/07/2016 02:07 Building js controller ProductMeasureUnit_Controller.js
+18/07/2016 02:07 Building php controller Client_Controller.php
+18/07/2016 02:07 Building js controller Client_Controller.js
+18/07/2016 02:07 Building php controller ClientContract_Controller.php
+18/07/2016 02:07 Building js controller ClientContract_Controller.js
+18/07/2016 02:07 Building php controller ClientUser_Controller.php
+18/07/2016 02:07 Building js controller ClientUser_Controller.js
+18/07/2016 02:07 Building php controller ClientPriceList_Controller.php
+18/07/2016 02:07 Building js controller ClientPriceList_Controller.js
+18/07/2016 02:07 Building php controller ClientPriceListProduct_Controller.php
+18/07/2016 02:07 Building js controller ClientPriceListProduct_Controller.js
+18/07/2016 02:07 Building php controller ClientPriceListClient_Controller.php
+18/07/2016 02:07 Building js controller ClientPriceListClient_Controller.js
+18/07/2016 02:07 Building php controller ProductionCity_Controller.php
+18/07/2016 02:07 Building js controller ProductionCity_Controller.js
+18/07/2016 02:07 Building php controller DOCOrder_Controller.php
+18/07/2016 02:07 Building js controller DOCOrder_Controller.js
+18/07/2016 02:07 Building php controller DOCOrderDOCTProduct_Controller.php
+18/07/2016 02:07 Building js controller DOCOrderDOCTProduct_Controller.js
+18/07/2016 02:07 Building php controller DOCOrderDOCTCustSurvey_Controller.php
+18/07/2016 02:07 Building js controller DOCOrderDOCTCustSurvey_Controller.js
+18/07/2016 02:07 Building php controller DeliveryPeriod_Controller.php
+18/07/2016 02:07 Building js controller DeliveryPeriod_Controller.js
+18/07/2016 02:07 Building php controller ProductionState_Controller.php
+18/07/2016 02:07 Building js controller ProductionState_Controller.js
+18/07/2016 02:07 Building php controller Kladr_Controller.php
+18/07/2016 02:07 Building js controller Kladr_Controller.js
+18/07/2016 02:07 Building php controller CustomerSurveyQuestion_Controller.php
+18/07/2016 02:07 Building js controller CustomerSurveyQuestion_Controller.js
+18/07/2016 02:07 Building php controller CustomerSurvey_Controller.php
+18/07/2016 02:07 Building js controller CustomerSurvey_Controller.js
+18/07/2016 02:07 Building php controller Payment_Controller.php
+18/07/2016 02:07 Building js controller Payment_Controller.js
+18/07/2016 02:07 Building php controller ReportVariant_Controller.php
+18/07/2016 02:07 Building js controller ReportVariant_Controller.js
+18/07/2016 02:07 Building php controller Report_Controller.php
+18/07/2016 02:07 Building js controller Report_Controller.js
+18/07/2016 02:07 Building php controller Delivery_Controller.php
+18/07/2016 02:07 Building js controller Delivery_Controller.js
+18/07/2016 02:07 Building php controller Driver_Controller.php
+18/07/2016 02:07 Building js controller Driver_Controller.js
+18/07/2016 02:07 Building php controller Carrier_Controller.php
+18/07/2016 02:07 Building js controller Carrier_Controller.js
+18/07/2016 02:07 Building php controller Vehicle_Controller.php
+18/07/2016 02:07 Building js controller Vehicle_Controller.js
+18/07/2016 02:07 Building php controller ClientDestination_Controller.php
+18/07/2016 02:07 Building js controller ClientDestination_Controller.js
+18/07/2016 02:07 Building php controller SMSTemplate_Controller.php
+18/07/2016 02:07 Building js controller SMSTemplate_Controller.js
+18/07/2016 02:07 Building php controller EmailTemplate_Controller.php
+18/07/2016 02:07 Building js controller EmailTemplate_Controller.js
+18/07/2016 02:07 Building php controller DelivCostOpt_Controller.php
+18/07/2016 02:07 Building js controller DelivCostOpt_Controller.js
+18/07/2016 02:07 Building php controller DelivCost_Controller.php
+18/07/2016 02:07 Building js controller DelivCost_Controller.js
+18/07/2016 02:07 Building php controller Holiday_Controller.php
+18/07/2016 02:07 Building js controller Holiday_Controller.js
+18/07/2016 02:07 Building php controller ClientDebtPeriod_Controller.php
+18/07/2016 02:07 Building js controller ClientDebtPeriod_Controller.js
+18/07/2016 02:07 Building php controller DeliveryHour_Controller.php
+18/07/2016 02:07 Building js controller DeliveryHour_Controller.js
+18/07/2016 02:07 Building php controller ClientActivity_Controller.php
+18/07/2016 02:07 Building js controller ClientActivity_Controller.js
+18/07/2016 02:07 Building php controller SertType_Controller.php
+18/07/2016 02:07 Building js controller SertType_Controller.js
+18/07/2016 02:07 Building php controller SertTypeAttr_Controller.php
+18/07/2016 02:07 Building js controller SertTypeAttr_Controller.js
+18/07/2016 02:07 Building php controller TrackerServer_Controller.php
+18/07/2016 02:07 Building js controller TrackerServer_Controller.js
+18/07/2016 02:07 Building php controller Tracker_Controller.php
+18/07/2016 02:07 Building js controller Tracker_Controller.js
+18/07/2016 02:07 Building php controller UserWarehouse_Controller.php
+18/07/2016 02:07 Building js controller UserWarehouse_Controller.js
+18/07/2016 02:07 Building php controller SMSForSending_Controller.php
+18/07/2016 02:07 Building js controller SMSForSending_Controller.js
+18/07/2016 02:07 Building php controller MailForSending_Controller.php
+18/07/2016 02:07 Building js controller MailForSending_Controller.js
+18/07/2016 02:07 Building php controller ProductGroup_Controller.php
+18/07/2016 02:07 Building js controller ProductGroup_Controller.js
+18/07/2016 02:07 Building php controller ProjectManager_Controller.php
+18/07/2016 02:07 Building js controller ProjectManager_Controller.js
+18/07/2016 02:07 Building php model ConstantList_Model_php.xsl
+18/07/2016 02:07 Building php model Firm_Model_php.xsl
+18/07/2016 02:07 Building php model FirmList_Model_php.xsl
+18/07/2016 02:07 Building php model ClientActivity_Model_php.xsl
+18/07/2016 02:07 Building php model ClientActivityList_Model_php.xsl
+18/07/2016 02:07 Building php model Client_Model_php.xsl
+18/07/2016 02:07 Building php model ClientList_Model_php.xsl
+18/07/2016 02:07 Building php model ClientDialog_Model_php.xsl
+18/07/2016 02:07 Building php model ClientComplete_Model_php.xsl
+18/07/2016 02:07 Building php model ClientContract_Model_php.xsl
+18/07/2016 02:07 Building php model ClientContractList_Model_php.xsl
+18/07/2016 02:07 Building php model ClientDestination_Model_php.xsl
+18/07/2016 02:07 Building php model ClientDestinationList_Model_php.xsl
+18/07/2016 02:07 Building php model ClientDestinationDialog_Model_php.xsl
+18/07/2016 02:07 Building php model ProductionCity_Model_php.xsl
+18/07/2016 02:07 Building php model ProductionCityList_Model_php.xsl
+18/07/2016 02:07 Building php model ProductionCityDialog_Model_php.xsl
+18/07/2016 02:07 Building php model Warehouse_Model_php.xsl
+18/07/2016 02:07 Building php model WarehouseList_Model_php.xsl
+18/07/2016 02:07 Building php model WarehouseDialog_Model_php.xsl
+18/07/2016 02:07 Building php model User_Model_php.xsl
+18/07/2016 02:07 Building php model UserList_Model_php.xsl
+18/07/2016 02:07 Building php model UserDialog_Model_php.xsl
+18/07/2016 02:07 Building php model ClientUserList_Model_php.xsl
+18/07/2016 02:07 Building php model MeasureUnit_Model_php.xsl
+18/07/2016 02:07 Building php model MeasureUnitList_Model_php.xsl
+18/07/2016 02:07 Building php model MeasureUnitDialog_Model_php.xsl
+18/07/2016 02:07 Building php model DeliveryPeriod_Model_php.xsl
+18/07/2016 02:07 Building php model Driver_Model_php.xsl
+18/07/2016 02:07 Building php model DriverList_Model_php.xsl
+18/07/2016 02:07 Building php model Carrier_Model_php.xsl
+18/07/2016 02:07 Building php model TrackerServer_Model_php.xsl
+18/07/2016 02:07 Building php model Tracker_Model_php.xsl
+18/07/2016 02:07 Building php model TrackerList_Model_php.xsl
+18/07/2016 02:07 Building php model Vehicle_Model_php.xsl
+18/07/2016 02:07 Building php model VehicleList_Model_php.xsl
+18/07/2016 02:07 Building php model VehicleDialog_Model_php.xsl
+18/07/2016 02:07 Building php model VehicleSelectList_Model_php.xsl
+18/07/2016 02:07 Building php model SatisfSurveyItem_Model_php.xsl
+18/07/2016 02:07 Building php model SertType_Model_php.xsl
+18/07/2016 02:07 Building php model SertTypeAttr_Model_php.xsl
+18/07/2016 02:07 Building php model SertTypeAttrList_Model_php.xsl
+18/07/2016 02:07 Building php model ProductGroup_Model_php.xsl
+18/07/2016 02:07 Building php model ProductGroupList_Model_php.xsl
+18/07/2016 02:07 Building php model Product_Model_php.xsl
+18/07/2016 02:07 Building php model ProductList_Model_php.xsl
+18/07/2016 02:07 Building php model ProductFilterList_Model_php.xsl
+18/07/2016 02:07 Building php model ProductDialog_Model_php.xsl
+18/07/2016 02:07 Building php model ProductCustomSizePrice_Model_php.xsl
+18/07/2016 02:07 Building php model ProductMeasureUnit_Model_php.xsl
+18/07/2016 02:07 Building php model ProductMeasureUnitList_Model_php.xsl
+18/07/2016 02:07 Building php model ProductWarehouse_Model_php.xsl
+18/07/2016 02:07 Building php model ProductWarehouseList_Model_php.xsl
+18/07/2016 02:07 Building php model DOCOrder_Model_php.xsl
+18/07/2016 02:07 Building php model DOCOrderLink_Model_php.xsl
+18/07/2016 02:07 Building php model DOCOrderState_Model_php.xsl
+18/07/2016 02:07 Building php model DOCOrderHeadHistory_Model_php.xsl
+18/07/2016 02:07 Building php model DOCOrderProductHistory_Model_php.xsl
+18/07/2016 02:07 Building php model DOCOrderProdPassport_Model_php.xsl
+18/07/2016 02:07 Building php model DOCOrderNewList_Model_php.xsl
+18/07/2016 02:07 Building php model DOCOrderCurrentList_Model_php.xsl
+18/07/2016 02:07 Building php model DOCOrderCurrentForClientList_Model_php.xsl
+18/07/2016 02:07 Building php model DOCOrderCurrentForProductionList_Model_php.xsl
+18/07/2016 02:07 Building php model DOCOrderClosedList_Model_php.xsl
+18/07/2016 02:07 Building php model DOCOrderDialog_Model_php.xsl
+18/07/2016 02:07 Building php model DOCOrderDivisDialog_Model_php.xsl
+18/07/2016 02:07 Building php model DOCOrderCustSurveyDialog_Model_php.xsl
+18/07/2016 02:07 Building php model DOCOrderShipmentDialog_Model_php.xsl
+18/07/2016 02:07 Building php model ClientPriceList_Model_php.xsl
+18/07/2016 02:07 Building php model ClientPriceListList_Model_php.xsl
+18/07/2016 02:07 Building php model ClientPriceListDialog_Model_php.xsl
+18/07/2016 02:07 Building php model ClientPriceListProduct_Model_php.xsl
+18/07/2016 02:07 Building php model ClientPriceListClient_Model_php.xsl
+18/07/2016 02:07 Building php model ClientPriceListClientList_Model_php.xsl
+18/07/2016 02:07 Building php model ClientPriceListClientSelect_Model_php.xsl
+18/07/2016 02:07 Building php model DOCOrderDOCTProduct_Model_php.xsl
+18/07/2016 02:07 Building php model DOCOrderDOCTProductList_Model_php.xsl
+18/07/2016 02:07 Building php model DOCOrderDOCTProductDialog_Model_php.xsl
+18/07/2016 02:07 Building php model DOCOrderDOCTFProduct_Model_php.xsl
+18/07/2016 02:07 Building php model DOCOrderDOCTCustSurvey_Model_php.xsl
+18/07/2016 02:07 Building php model DOCOrderDOCTCustSurveyList_Model_php.xsl
+18/07/2016 02:07 Building php model DOCOrderDOCTFCustSurvey_Model_php.xsl
+18/07/2016 02:07 Building php model OrderChange_Model_php.xsl
+18/07/2016 02:07 Building php model CustomerSurveyQuestion_Model_php.xsl
+18/07/2016 02:07 Building php model ProductionState_Model_php.xsl
+18/07/2016 02:07 Building php model DeliveryHour_Model_php.xsl
+18/07/2016 02:07 Building php model DeliveryVehicle_Model_php.xsl
+18/07/2016 02:07 Building php model Delivery_Model_php.xsl
+18/07/2016 02:07 Building php model DeliveryExtraVehicle_Model_php.xsl
+18/07/2016 02:07 Building php model DeliveryDeletedVehicle_Model_php.xsl
+18/07/2016 02:07 Building php model VehicleState_Model_php.xsl
+18/07/2016 02:07 Building php model MailForSending_Model_php.xsl
+18/07/2016 02:07 Building php model MailForSendingList_Model_php.xsl
+18/07/2016 02:07 Building php model MailForSendingAttachment_Model_php.xsl
+18/07/2016 02:07 Building php model SMSForSending_Model_php.xsl
+18/07/2016 02:07 Building php model SMSForSendingList_Model_php.xsl
+18/07/2016 02:07 Building php model RepProductionLoad_Model_php.xsl
+18/07/2016 02:07 Building php model RepSale_Model_php.xsl
+18/07/2016 02:07 Building php model RepPriceListTuning_Model_php.xsl
+18/07/2016 02:07 Building php model PayOrderList_Model_php.xsl
+18/07/2016 02:07 Building php model ClientDebtPeriod_Model_php.xsl
+18/07/2016 02:07 Building php model ClientDebtPeriodList_Model_php.xsl
+18/07/2016 02:07 Building php model ReportVariant_Model_php.xsl
+18/07/2016 02:07 Building php model ReportVariantList_Model_php.xsl
+18/07/2016 02:07 Building php model DOCOrderCancelCause_Model_php.xsl
+18/07/2016 02:07 Building php model SMSTemplate_Model_php.xsl
+18/07/2016 02:07 Building php model SMSTemplateList_Model_php.xsl
+18/07/2016 02:07 Building php model EmailTemplate_Model_php.xsl
+18/07/2016 02:07 Building php model EmailTemplateList_Model_php.xsl
+18/07/2016 02:07 Building php model DelivDistanceCache_Model_php.xsl
+18/07/2016 02:07 Building php model DelivCostOpt_Model_php.xsl
+18/07/2016 02:07 Building php model DelivCostOptList_Model_php.xsl
+18/07/2016 02:07 Building php model DelivCost_Model_php.xsl
+18/07/2016 02:07 Building php model DelivCostList_Model_php.xsl
+18/07/2016 02:07 Building php model ClientPaySchedule_Model_php.xsl
+18/07/2016 02:07 Building php model ClientPayScheduleList_Model_php.xsl
+18/07/2016 02:07 Building php model ClientDebt_Model_php.xsl
+18/07/2016 02:07 Building php model ClientDebtList_Model_php.xsl
+18/07/2016 02:07 Building php model UserWarehouse_Model_php.xsl
+18/07/2016 02:07 Building php model UserWarehouseList_Model_php.xsl
+18/07/2016 02:07 Building php model Holiday_Model_php.xsl
+18/07/2016 02:07 Building php model HolidayList_Model_php.xsl
+18/07/2016 02:07 Building php model TelPrefix_Model_php.xsl
+18/07/2016 02:07 Building menu MainMenu_Model_client_php.xsl
+18/07/2016 02:07 Building menu MainMenu_Model_sales_manager_php.xsl
+18/07/2016 02:07 Building menu MainMenu_Model_production_php.xsl
+18/07/2016 02:07 Building menu MainMenu_Model_marketing_php.xsl
+18/07/2016 02:07 Building menu MainMenu_Model_boss_php.xsl
+18/07/2016 02:07 Building menu MainMenu_Model_admin_php.xsl
+18/07/2016 02:07 Building base view.
+18/07/2016 02:07 Building permissions.
+18/07/2016 02:07 Building database script.
+18/07/2016 02:07 Building documentation.
+19/07/2016 09:07 Building base view.
+19/07/2016 09:07 Building permissions.
+19/07/2016 09:07 Building database script.
+19/07/2016 09:07 Building documentation.
+19/07/2016 09:07 Building base view.
+19/07/2016 09:07 Building permissions.
+19/07/2016 09:07 Building database script.
+19/07/2016 09:07 Building documentation.
+19/07/2016 09:07 Building base view.
+19/07/2016 09:07 Building permissions.
+19/07/2016 09:07 Building database script.
+19/07/2016 09:07 Building documentation.
