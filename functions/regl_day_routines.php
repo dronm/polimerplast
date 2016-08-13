@@ -48,4 +48,22 @@ while ($ar = $dbLink->fetch_array($id)){
 	);
 
 }
+
+/******************** Закрытие не закрытых заявок за 24 часа**************************/
+$dbLink->query("INSERT INTO doc_orders_states
+	(doc_orders_id,date_time,state)
+	(
+		SELECT
+			s.id,s.date_time+'1 second'::interval,'closed'
+		FROM	
+		(
+		SELECT DISTINCT ON (doc_orders_id)
+		       doc_orders_id AS id, state,date_time
+		FROM   doc_orders_states
+		ORDER  BY doc_orders_id,date_time DESC
+		) AS s
+		WHERE (s.state = 'shipped' OR s.state = 'on_way')
+			AND (s.date_time+'24 hours'::interval) < now()
+	)"
+);
 ?>

@@ -63,12 +63,12 @@ function DOCOrderDialog_View(id,options){
 	cont_r = new ControlContainer(uuid(),"div",{"className":"row"});
 	
 	//статус
-	var ctrl_cont = new ControlContainer(uuid(),"div",{"className":bs_col+4});
-	var ctrl = new Control(uuid(),"span",{"value":"Статус:","className":"lbl"});
+	var ctrl_cont = new ControlContainer(uuid(),"div",{"className":bs_col+12});
+	var ctrl = new Control(uuid(),"span",{"value":"Статус:","className":bs_col+2});
 	ctrl_cont.addElement(ctrl);	
 	var ctrl = new Control(id+"_state","span",
 		{"value":"Формирование новой заявки",
-		"className":"edit_cont","enabled":"false"
+		"className":"old_state_descr","enabled":"false"
 		}
 	);		
 	this.bindControl(ctrl,

@@ -148,7 +148,7 @@ function DOCOrderBaseList_View(id,options){
 	}
 	row.addElement(new GridDbHeadCell(id+"_col_date_time_descr",{
 		"value":"Дата пдч.","readBind":{"valueFieldId":"date_time_descr"},
-		"sortable":true,"sort":"asc","sortCol":"date_time,number",
+		"sortable":true,"sort":"desc","sortCol":"date_time,number",
 		"colAttrs":{"align":"center","nowrap":"nowrap"}
 		}));		
 	row.addElement(new GridDbHeadCell(id+"_col_client_id",{
@@ -226,7 +226,7 @@ function DOCOrderBaseList_View(id,options){
 			}));					
 		
 		row.addElement(new GridDbHeadCell(id+"_col_ext_ship_num",{
-			"value":"№ реал.","readBind":{"valueFieldId":"ext_ship_num"},			"sortable":true,
+			"value":"№ реал.","readBind":{"valueFieldId":"ext_ship_num"},"sortable":true,
 			"colAttrs":{"align":"center"}
 			}));					
 	}

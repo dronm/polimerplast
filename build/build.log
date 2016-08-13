@@ -7107,3 +7107,9 @@
 19/07/2016 09:07 Building permissions.
 19/07/2016 09:07 Building database script.
 19/07/2016 09:07 Building documentation.
+11/08/2016 02:08 Version file is created. Version: 1.0037
+11/08/2016 02:08 JScripts are minified. File count: 389
+11/08/2016 02:08 Version closed.
+11/08/2016 02:08 Building SQL update script.
+11/08/2016 02:08 Copying all modified SQL scripts to update directory.
+11/08/2016 02:08 Project files are pushed to the server.
