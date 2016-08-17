@@ -3090,7 +3090,7 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 			
 			while ($ar = $lmast->fetch_array($q_id)){
 				$ids.=(($ids=='')? '':',').$ar['order_ids'];
-				$numbers.=(($numbers=='')? '':',').$ar['order_numbers'];
+				$numbers.=(($numbers=='')? '':', ').$ar['order_numbers'];
 				
 				array_push($firm_client_ar,
 					array(
