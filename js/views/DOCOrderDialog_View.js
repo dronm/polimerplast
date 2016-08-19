@@ -142,7 +142,7 @@ function DOCOrderDialog_View(id,options){
 	var firm_wh_vis = (SERV_VARS.ROLE_ID!="client");
 	//Организация
 	this.m_FirmCtrl = new FirmEditObject("firm_id",id+"_firm",false,
-		null,{visible:firm_wh_vis});
+		null,{visible:firm_wh_vis,required:firm_wh_vis});
 	this.bindControl(this.m_FirmCtrl,
 		{"modelId":model_id,"valueFieldId":"firm_descr","keyFieldIds":["firm_id"]},
 		{"valueFieldId":null,"keyFieldIds":["firm_id"]});	

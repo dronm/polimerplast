@@ -28,7 +28,7 @@ function FirmEditObject(fieldId,controlId,inLine,defaultId,opts){
 		options[opt] = opts[opt];
 	}
 	options.attrs=options.attrs||{};
-	options.attrs.required="required";
+	//options.attrs.required="required";
 	
 	if (inLine==undefined || (inLine!=undefined && !inLine)){
 		options["labelCaption"] = "Организация:";
