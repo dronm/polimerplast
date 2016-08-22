@@ -130,6 +130,9 @@ class Product_Controller extends ControllerSQL{
 		$param = new FieldExtBool('pack_not_free'
 				,array());
 		$pm->addParam($param);
+		$param = new FieldExtBool('pack_full_package_only'
+				,array());
+		$pm->addParam($param);
 		$param = new FieldExtBool('extra_pay_for_abnormal_size'
 				,array());
 		$pm->addParam($param);
@@ -312,6 +315,10 @@ class Product_Controller extends ControllerSQL{
 			));
 			$pm->addParam($param);
 		$param = new FieldExtBool('pack_not_free'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtBool('pack_full_package_only'
 				,array(
 			));
 			$pm->addParam($param);

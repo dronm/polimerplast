@@ -246,6 +246,12 @@ extend(Product_Controller,ControllerDb);
 	
 	options = {};
 	
+	var param = new FieldBool("pack_full_package_only",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
 	var param = new FieldBool("extra_pay_for_abnormal_size",options);
 	
 	pm.addParam(param);
@@ -559,6 +565,13 @@ extend(Product_Controller,ControllerDb);
 	options = {};
 	
 	var param = new FieldBool("pack_not_free",options);
+	
+	pm.addParam(param);
+	
+	
+	options = {};
+	
+	var param = new FieldBool("pack_full_package_only",options);
 	
 	pm.addParam(param);
 	

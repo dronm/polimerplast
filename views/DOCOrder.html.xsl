@@ -69,16 +69,28 @@
 		<tr>
 			<td><xsl:value-of select="dimen"/></td>
 			<td>
-				<xsl:call-template name="q_to_whole">
-					<xsl:with-param name="val" select="quant_order_measure_unit"/>
-				</xsl:call-template>
-			<xsl:value-of select="order_measure_unit_descr"/>
+				<xsl:choose>
+				<xsl:when test="measure_unit_descr = order_measure_unit_descr">
+					<xsl:call-template name="q_to_whole">
+						<!-- quant_order_measure_unit -->
+						<xsl:with-param name="val" select="quant"/>
+					</xsl:call-template>
+					<xsl:value-of select="concat(' ',measure_unit_descr)"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:call-template name="q_to_whole">
+						<xsl:with-param name="val" select="quant_order_measure_unit"/>
+					</xsl:call-template>
+					<xsl:value-of select="concat(' ',order_measure_unit_descr)"/>
+				
+				</xsl:otherwise>
+				</xsl:choose>
 			</td>
 			<td>
 				<xsl:call-template name="q_to_whole">
 					<xsl:with-param name="val" select="quant_base_measure_unit"/>
 				</xsl:call-template>																					
-			<xsl:value-of select="base_measure_unit_descr"/>			
+			<xsl:value-of select="concat(' ',base_measure_unit_descr)"/>
 			</td>	
 			
 			<xsl:if test="$pack_exists">

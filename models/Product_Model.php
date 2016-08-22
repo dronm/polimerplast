@@ -386,6 +386,16 @@ class Product_Model extends ModelSQL{
 		));
 		$this->addField($f_pack_not_free);
 
+		$f_pack_full_package_only=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		,"pack_full_package_only"
+		,array(
+		
+			'id'=>"pack_full_package_only"
+				
+		
+		));
+		$this->addField($f_pack_full_package_only);
+
 		$f_extra_pay_for_abnormal_size=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"extra_pay_for_abnormal_size"
 		,array(

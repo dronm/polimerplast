@@ -365,6 +365,8 @@ function ProductDialog_View(id,options){
 	//sub_cont.addElement(new Control(null,"span",{"value":"баз.ед."}));
 	cont.addElement(sub_cont);
 	//***
+	
+	/*!!!Убрали кратно упаковкам!!!
 	ctrl = new EditCheckBox(id+"_pack_full_package_only",
 		{"labelCaption":"Отпуск только кратно упаковке:","name":"pack_full_package_only",
 		"buttonClear":false,"tableLayout":false,"labelAlign":"left"}
@@ -373,6 +375,7 @@ function ProductDialog_View(id,options){
 		"valueFieldId":"pack_full_package_only","keyFieldIds":null},
 	{"valueFieldId":"pack_full_package_only","keyFieldIds":null});	
 	cont.addElement(ctrl);
+	*/
 	
 	cont_m.addElement(cont);
 	this.addControl(cont_m);
