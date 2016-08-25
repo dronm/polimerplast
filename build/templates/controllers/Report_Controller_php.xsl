@@ -52,7 +52,8 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 					t.mes_height
 				) AS product_descr,
 				*/
-				SUM(round(t.quant_base_measure_unit*p.base_measure_unit_vol_m,4)) AS quant,
+				--SUM(round(t.quant_base_measure_unit*p.base_measure_unit_vol_m,4)) AS quant,
+				SUM(t.quant_base_measure_unit) AS quant,
 				d.warehouse_id
 			FROM doc_orders_t_products AS t
 			LEFT JOIN doc_orders AS d ON d.id=t.doc_id

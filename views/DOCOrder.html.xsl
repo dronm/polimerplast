@@ -69,27 +69,24 @@
 		<tr>
 			<td><xsl:value-of select="dimen"/></td>
 			<td>
-				<!--
-				<xsl:choose>
-				<xsl:when test="measure_unit_descr = order_measure_unit_descr">
-					<xsl:call-template name="q_to_whole">
-						<xsl:with-param name="val" select="quant"/>
-					</xsl:call-template>
-					<xsl:value-of select="concat(' ',measure_unit_descr)"/>
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:call-template name="q_to_whole">
-						<xsl:with-param name="val" select="quant_order_measure_unit"/>
-					</xsl:call-template>
-					<xsl:value-of select="concat(' ',order_measure_unit_descr)"/>
+				<xsl:variable name="q">
+					<xsl:choose>
+					<xsl:when test="measure_unit_descr = order_measure_unit_descr">
+						<xsl:value-of select="quant"/>
+					</xsl:when>
+					<xsl:when test="(quant_order_measure_unit - round(quant_order_measure_unit)) &lt; 0.001">
+						<xsl:value-of select="round(quant_order_measure_unit)"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="quant_order_measure_unit"/>
+					</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>	
 				
-				</xsl:otherwise>
-				</xsl:choose>
-				-->
 				<xsl:call-template name="q_to_whole">
-					<xsl:with-param name="val" select="quant"/>
+					<xsl:with-param name="val" select="$q"/>
 				</xsl:call-template>
-				<xsl:value-of select="concat(' ',measure_unit_descr)"/>
+				<xsl:value-of select="concat(' ',order_measure_unit_descr)"/>
 				
 			</td>
 			<td>
