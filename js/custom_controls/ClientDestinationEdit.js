@@ -111,11 +111,18 @@ ClientDestinationEdit.prototype.openForm = function(keys){
 		"readController":new ClientDestination_Controller(new ServConnector(HOST_NAME)),
 		"clientId":this.m_pm.getParamValue(this.m_paramId),
 		"onClose":function(){
+			self.onRefresh();			
+		
+			if (self.m_extView.m_lastInsertedId){
+				//есть последний вставленный ид - спозиционируемся на него
+				self.setByFieldId(self.m_extView.m_lastInsertedId);
+			}
+		
 			self.m_extForm.close();
 			self.m_extView.removeDOM();
 			delete self.m_extView;
 			delete self.m_extForm;
-			self.onRefresh();
+			
 			self.setFocus();		
 		}
 		});

@@ -29,7 +29,8 @@ CREATE OR REPLACE VIEW client_destinations_list AS
 				END		
 			],
 		',') AS address
-	FROM client_destinations AS cd;
+	FROM client_destinations AS cd
+	ORDER BY address;
 
 ALTER TABLE client_destinations_list OWNER TO polimerplast;
 
