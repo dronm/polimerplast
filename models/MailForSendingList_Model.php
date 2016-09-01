@@ -158,6 +158,16 @@ class MailForSendingList_Model extends ModelSQL{
 		));
 		$this->addField($f_sent_date_time);
 
+		$f_send_error=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		,"send_error"
+		,array(
+		
+			'id'=>"send_error"
+				
+		
+		));
+		$this->addField($f_send_error);
+
 		$f_email_type=new FieldSQlEnum($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"email_type"
 		,array(

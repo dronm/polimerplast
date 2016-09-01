@@ -82,7 +82,7 @@ class EmailSender {
 					$mail->SMTPDebug 		= FALSE;
 					$mail->CharSet			='UTF-8';				
 					$mail->Host  			= $smtpHost;
-					$mail->Port				= $smtpPort;
+					$mail->Port			= $smtpPort;
 					$mail->SMTPAuth			= TRUE;
 					$mail->AuthType			= 'LOGIN';
 					$mail->Username			= $smtpUser;
@@ -95,7 +95,7 @@ class EmailSender {
 					$mail->addAddress($row['to_addr'],$row['to_name']);
 					$mail->AddReplyTo($row['reply_addr'],$row['reply_name']);
 					$mail->Subject			= $row['subject'];
-					$mail->Body				= $row['body'];
+					$mail->Body			= $row['body'];
 				}
 				
 				$mail_files = array();				
@@ -117,33 +117,40 @@ class EmailSender {
 		$emailId,$emailMessage,$mailFiles,$delFiles){			
 		//sending
 		if ($emailMessage){
-			if(!$emailMessage->Send()){				
-				throw new Exception("Error: ".$emailMessage->ErrorInfo."\n");
+			$send_res = TRUE;
+			$send_error = NULL;
+			try{
+				$send_res = $emailMessage->Send();
+				if (!$send_res){
+					$send_error = "'".$emailMessage->ErrorInfo."'";
+				}
 			}
-			else{
-				try{
-					$dbLink->query("BEGIN");
-					$dbLink->query(
-					"UPDATE mail_for_sending
-					SET
-						sent=TRUE,
-						sent_date_time=now()::timestamp
-					WHERE id=".$emailId);
+			catch(Exception $e){
+				$send_res = FALSE;
+				$send_error = "'".$e->getMessage()."'";
+			}
+			
+			try{
+				
+				$dbLink->query(
+				"UPDATE mail_for_sending
+				SET
+					sent=TRUE,
+					sent_date_time=now()::timestamp,
+					send_error = ".$send_error."
 					
-					if (count($mailFiles)&&$delFiles){
-						foreach ($mailFiles as $file_name){
-							if (file_exists($file_name)){
-								unlink($file_name);
-							}
+				WHERE id=".$emailId);
+				
+				if ($send_res && count($mailFiles) && $delFiles){
+					foreach ($mailFiles as $file_name){
+						if (file_exists($file_name)){
+							unlink($file_name);
 						}
 					}
-					$dbLink->query("COMMIT");
 				}
-				catch(Exception $e){
-					$dbLink->query("ROLLBACK");
-					throw $e;
-				}
-			}		
+			}
+			catch(Exception $e){
+			}
 		}
 	}
 }

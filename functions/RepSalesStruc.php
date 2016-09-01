@@ -374,8 +374,8 @@ $field_resolver =
 		
 		//Своевременное выполнение
 		"doc_in_time" => array(
-			"fieldExprWhere"=>"(doc_orders.delivery_plan_date <= doc_orders.delivery_fact_date::date)",
-			"fieldExpr"=>"(CASE WHEN doc_orders.delivery_plan_date <= doc_orders.delivery_fact_date::date THEN 'Своевременное' ELSE 'Опаздание' END)",
+			"fieldExprWhere"=>"(doc_orders.delivery_plan_date >= doc_orders.delivery_fact_date::date)",
+			"fieldExpr"=>"(CASE WHEN doc_orders.delivery_plan_date >= doc_orders.delivery_fact_date::date THEN 'Своевременное' ELSE 'Опаздание' END)",
 			"table"=>"doc_orders"
 		),
 		"doc_overlimit" => array(

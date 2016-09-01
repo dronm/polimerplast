@@ -48,6 +48,11 @@ function MailForSendingList_View(id,options){
 		"sortable":true,"sortCol":"sent_date_time",
 		"colAttrs":{"align":"center"}
 		}));
+
+	row.addElement(new GridDbHeadCell(id+"_col_send_error",{"value":"Ошибки отправки",
+		"readBind":{"valueFieldId":"send_error"}
+		}));
+		
 		
 	head.addElement(row);
 	

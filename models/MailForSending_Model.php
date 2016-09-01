@@ -171,6 +171,16 @@ class MailForSending_Model extends ModelSQL{
 		));
 		$this->addField($f_email_type);
 
+		$f_send_error=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		,"send_error"
+		,array(
+		
+			'id'=>"send_error"
+				
+		
+		));
+		$this->addField($f_send_error);
+
 		
 		
 		

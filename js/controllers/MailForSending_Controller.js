@@ -40,6 +40,7 @@ extend(MailForSending_Controller,ControllerDb);
 	pm.addParam(new FieldString("subject",options));
 	pm.addParam(new FieldBool("sent",options));
 	pm.addParam(new FieldDateTime("sent_date_time",options));
+	pm.addParam(new FieldText("send_error",options));
 	pm.addParam(new FieldEnum("email_type",options));
 }
 

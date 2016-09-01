@@ -31,7 +31,7 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 		$res = array();
 		ExtProg::order($head,$items,$res);
 		
-		if (!isset($head['ext_order_id'])){
+		if (!isset($head['ext_order_id']) &amp;&amp; isset($res['orderRef'])){
 			//Отметка о счете
 			$link->query(sprintf(
 			"UPDATE doc_orders
@@ -44,17 +44,20 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 			$docId
 			));
 		}
-		//Печатная форма счета из 1с
-		$tmp_file = ExtProg::print_order($res['orderRef'],$_SESSION['user_ext_id'],1);
 		
-		//отправить по мылу счет
-		$mail_id = PPEmailSender::addEMail(
-			$link,
-			sprintf("email_text_order(%d)",$docId),
-			array($tmp_file),
-			'order'
-			);
-	
+		//Печатная форма счета из 1с
+		$ref = DOCOrder_Controller::getExtRef($link,$docId,'ext_order_id');
+		if (!is_null($ref)){			
+			$tmp_file = ExtProg::print_order($ref,$_SESSION['user_ext_id'],1);
+		
+			//отправить по мылу счет
+			$mail_id = PPEmailSender::addEMail(
+				$link,
+				sprintf("email_text_order(%d)",$docId),
+				array($tmp_file),
+				'order'
+				);
+		}	
 	}
 	
 	public function insert(){
