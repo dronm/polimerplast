@@ -15,6 +15,9 @@ function DOCOrderNewList_View(id,options){
 	options.title = "Новые заявки";
 	options.readModelId = "DOCOrderNewList_Model";
 	options.readMethodId = "get_new_list";
+	
+	options.state = true;
+	
 	options.commands = new GridCommands(id+"_grid_cmd",{
 		"noPrint":true,"noInsert":true,"noDelete":true
 		});	
