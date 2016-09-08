@@ -4539,7 +4539,8 @@ else{var m=resp.getModelById("head_history");m.setActive(true);while(m.getNextRo
 var ctrl=this.getDataControl(id+"_"+f_id);if(ctrl&&ctrl.control&&ctrl.control.m_node){DOMHandler.addClass(ctrl.control.m_node,"field_changed");ctrl.control.setAttr("old_field_val",m.getFieldValue("old_val"));}}
 var m=resp.getModelById("DOCOrderDialog_Model",true);if(m.getNextRow()){this.m_curState=m.getFieldValue("state");var read_only_states=["producing","produced","shipped","loading","on_way","unloading","closed","canceled","canceled_by_sales_manager","canceled_by_client"];if(SERV_VARS.ROLE_ID=="client"){read_only_states.push("waiting_for_us");}
 else{read_only_states.push("waiting_for_client");}
-if($.inArray(this.m_curState,read_only_states)>=0){this.setEnabled(false);this.m_ctrlCancel.setEnabled(true);this.m_ctrlOk.setEnabled(true);this.getViewControl(this.getId()+"_delivery_plan_date").setEnabled(true);this.getViewControl(this.getId()+"_sales_manager_comment").setEnabled(true);this.getViewControl(this.getId()+"_deliv_responsable_tel").setEnabled(true);this.getViewControl(this.getId()+"_tel").setEnabled(true);}
+if($.inArray(this.m_curState,read_only_states)>=0){this.setEnabled(false);this.m_ctrlCancel.setEnabled(true);this.m_ctrlOk.setEnabled(true);this.getViewControl(this.getId()+"_delivery_plan_date").setEnabled(true);if(SERV_VARS.ROLE_ID!="client"){this.getViewControl(this.getId()+"_sales_manager_comment").setEnabled(true);}
+this.getViewControl(this.getId()+"_deliv_responsable_tel").setEnabled(true);this.getViewControl(this.getId()+"_tel").setEnabled(true);}
 else{var new_cap;if(SERV_VARS.ROLE_ID=="client"){if(this.m_curState=="waiting_for_client"){new_cap="Согласовать";}
 else{new_cap="Изменить";}}
 else{if(this.m_curState=="waiting_for_us"||this.m_curState=="new"){new_cap="Согласовать";}

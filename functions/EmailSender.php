@@ -118,7 +118,7 @@ class EmailSender {
 		//sending
 		if ($emailMessage){
 			$send_res = TRUE;
-			$send_error = NULL;
+			$send_error = 'null';
 			try{
 				$send_res = $emailMessage->Send();
 				if (!$send_res){

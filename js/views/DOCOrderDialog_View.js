@@ -725,9 +725,11 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 			if ($.inArray(this.m_curState,read_only_states)>=0){
 				this.setEnabled(false);
 				this.m_ctrlCancel.setEnabled(true);
-				this.m_ctrlOk.setEnabled(true);				
+				this.m_ctrlOk.setEnabled(true);								
 				this.getViewControl(this.getId()+"_delivery_plan_date").setEnabled(true);
-				this.getViewControl(this.getId()+"_sales_manager_comment").setEnabled(true);
+				if (SERV_VARS.ROLE_ID!="client"){
+					this.getViewControl(this.getId()+"_sales_manager_comment").setEnabled(true);
+				}
 				this.getViewControl(this.getId()+"_deliv_responsable_tel").setEnabled(true);
 				this.getViewControl(this.getId()+"_tel").setEnabled(true);				
 			}
