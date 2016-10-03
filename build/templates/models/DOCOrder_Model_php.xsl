@@ -76,7 +76,9 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 					$this->getFieldById('client_id')->getValueForDb()
 				));
 				if (is_array($ar)&amp;&amp;count($ar)&gt;0){
-					$state = ($ar['pay_type']=='with_delay')? 'producing':'waiting_for_payment';
+					//$state = ($ar['pay_type']=='with_delay')? 'producing':'waiting_for_payment';
+					//По Новому ТЗ от ноября 2016 в производство ТОЛЬКО через кнопку!!!
+					$state = 'waiting_for_payment';
 				}
 			}
 		

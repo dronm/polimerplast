@@ -4,6 +4,7 @@ require_once(FRAME_WORK_PATH.'basic_classes/ModelSQL.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLInt.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLString.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLText.php');
+require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLFloat.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLBool.php');
 
 class ClientList_Model extends ModelSQL{
@@ -135,6 +136,28 @@ class ClientList_Model extends ModelSQL{
 		
 		));
 		$this->addField($f_def_warehouse_id);
+
+		$f_def_debt=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		,"def_debt"
+		,array(
+		
+			'length'=>19,
+			'id'=>"def_debt"
+				
+		
+		));
+		$this->addField($f_def_debt);
+
+		$f_debt_total=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		,"debt_total"
+		,array(
+		
+			'length'=>19,
+			'id'=>"debt_total"
+				
+		
+		));
+		$this->addField($f_debt_total);
 
 		
 		

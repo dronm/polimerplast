@@ -498,6 +498,8 @@ extend(Client_Controller,ControllerDb);
 	pm.addParam(new FieldBool("login_allowed",options));
 	pm.addParam(new FieldInt("def_firm_id",options));
 	pm.addParam(new FieldInt("def_warehouse_id",options));
+	pm.addParam(new FieldFloat("def_debt",options));
+	pm.addParam(new FieldFloat("debt_total",options));
 }
 
 			Client_Controller.prototype.addGetObject = function(){

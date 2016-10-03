@@ -35,8 +35,8 @@
 			var CONST_CONTROLS ={};
 			
 			function copy_app(){
-				window.open('<xsl:value-of select="/document/model[@id='ModelVars']/row/basePath"/>',"Полимерпласт","fullScreen=1,width="+screen.width+",height="+screen.height);
-				return false;
+				var win = window.open('<xsl:value-of select="/document/model[@id='ModelVars']/row/basePath"/>',"_blank");
+				win.focus();
 			}
 			
 			function getLocation() {

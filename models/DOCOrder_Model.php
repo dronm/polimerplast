@@ -650,7 +650,9 @@ class DOCOrder_Model extends ModelSQLDOC{
 					$this->getFieldById('client_id')->getValueForDb()
 				));
 				if (is_array($ar)&&count($ar)>0){
-					$state = ($ar['pay_type']=='with_delay')? 'producing':'waiting_for_payment';
+					//$state = ($ar['pay_type']=='with_delay')? 'producing':'waiting_for_payment';
+					//По Новому ТЗ от ноября 2016 в производство ТОЛЬКО через кнопку!!!
+					$state = 'waiting_for_payment';
 				}
 			}
 		

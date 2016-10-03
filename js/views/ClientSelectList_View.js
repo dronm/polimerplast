@@ -100,7 +100,8 @@ function ClientSelectList_View(id,options){
 		"filter":filter,
 		"refreshInterval":0,
 		"onSelect":options.onSelect,
-		"rowSelect":true
+		"rowSelect":true,
+		"extraFields":options.extraFields
 		}
 	));
 	

@@ -352,7 +352,8 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		$q = '';
 		foreach($res as $rec){			
 			$par->add('clientRef',DT_STRING,$rec['clientRef']);
-			$par->add('debt',DT_FLOAT,$rec['debt']);
+			//$par->add('debt',DT_STRING,$rec['debt']);//DT_FLOAT
+			$debt_total = floatval($rec['debt']);
 			
 			//client
 			$client_ar = $link->query_first(sprintf(
@@ -372,6 +373,10 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 						WHERE t.ext_id=%s",
 						$par->getDbVal('firmRef'))
 					);
+					if (!count($ar) || !isset($ar['id'])){
+						//нет такой фирмы
+						continue;
+					}
 					$firm_ids[$rec['firmRef']] = $ar['id'];
 				}
 				
@@ -379,7 +384,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 				"SELECT * FROM pay_def_debt(%d,%d,%f)",
 				$firm_ids[$rec['firmRef']],
 				$client_ar['id'],
-				$par->getDbVal('debt')
+				$debt_total
 				));
 				
 				$debt_cnt = 0;
@@ -396,7 +401,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 					$days,$days,
 					$debt_ar['total'],
 					$days,
-					$par->getDbVal('debt')
+					$debt_total
 					);
 				}
 				
@@ -406,7 +411,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 					$q.= sprintf("(%d,%d,NULL,0,0,%f)",
 					$firm_ids[$rec['firmRef']],
 					$client_ar['id'],
-					$par->getDbVal('debt')
+					$debt_total
 					);					
 				}
 			}
