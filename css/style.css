@@ -3,6 +3,15 @@
 	height:30%;
 	margin-left:50px;
 }
+#logo_main{
+	width:243px;
+	height:31px;
+	margin-left:50px;
+	position:absolute;
+	top:0px;
+	right:100px;
+}
+
 .invisible{
 	display:none;
 }
@@ -273,4 +282,24 @@ tr.level_10{
 	font-weight:bolder;
 	font-size:bigger;
 	color:red;
+}
+
+#MainView_DOCOrderNewList_View_cnt{
+	font-size:100%;
+	margin-left:10px;
+}
+
+.flashit{
+	-webkit-animation: flash linear 1s infinite;
+	animation: flash linear 1s infinite;
+}
+@-webkit-keyframes flash {
+	0% { opacity: 1; } 
+	50% { opacity: .1; } 
+	100% { opacity: 1; }
+}
+@keyframes flash {
+	0% { opacity: 1; } 
+	50% { opacity: .1; } 
+	100% { opacity: 1; }
 }

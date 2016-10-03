@@ -160,10 +160,51 @@
 		</div>
 	</div>
 	<div style="display:inline-block;width:25%;padding-left:10px;">
-		<h4>Отрывной талон №<xsl:value-of select="number"/> от <xsl:value-of select="date_descr"/></h4>
-		<br></br>
-		<h4>Количество: <xsl:value-of select="sum(//document/model[@id='products']/row/quant)"/></h4>
-		<br></br>
+		<h5>Отрывной талон №<xsl:value-of select="number"/> от <xsl:value-of select="date_descr"/></h5>
+		<table style="font-size:80%;">
+			<thead>
+				<tr>
+					<th>№</th>
+					<th>Продукция</th>
+					<th>Кол-во</th>
+				</tr>
+			</thead>
+			<tbody>
+				<xsl:for-each select="/document/model[@id='products']/row">	
+					<tr>
+						<xsl:apply-templates select="line_number"/>	
+						<xsl:apply-templates select="dimen"/>	
+						<td align="right">
+							<xsl:call-template name="format_quant">
+								<xsl:with-param name="val" select="quant_order_measure_unit/node()"/>
+							</xsl:call-template>
+							<xsl:value-of select="concat(' ',order_measure_unit_descr/node())"/>
+						</td>
+						
+					</tr>				
+				</xsl:for-each>
+				
+				<xsl:if test="deliv_type='by_supplier' and deliv_add_cost_to_product!='t'">
+					<!-- ДОСТАВКА -->
+					<tr>
+						<td align="center"><xsl:value-of select="count(/document/model[@id='products']/row)+1"/></td>
+						<td>Доставка</td>
+						<td align="right">1 шт.</td>				
+					</tr>
+				</xsl:if>
+			</tbody>
+			<tfoot align="right" style="font-weight:bolder;font-size:120%;border:none;">
+				<tr>
+					<td colspan="2" style="border:none;">Объем в баз.ед.:</td>
+					<td style="border:none;">
+						<xsl:call-template name="format_quant">
+							<xsl:with-param name="val" select="total_quant"/>
+						</xsl:call-template>												
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+		
 		<br></br>
 		<br></br>
 		<div>Отпустил _________________</div>

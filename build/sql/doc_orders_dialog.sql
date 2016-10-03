@@ -65,7 +65,7 @@ CREATE OR REPLACE VIEW doc_orders_dialog AS
 		d.deliv_send_sms,
 		d.deliv_responsable_tel,
 		d.tel,
-		d.deliv_total,
+		coalesce(d.deliv_total,0) AS deliv_total,
 		d.deliv_total_edit,
 		format_money(d.deliv_total) AS deliv_total_descr,
 		d.deliv_add_cost_to_product,
@@ -76,7 +76,7 @@ CREATE OR REPLACE VIEW doc_orders_dialog AS
 		d.country_route_distance,
 		
 		d.destination_to_ttn,
-		d.total_pack
+		coalesce(d.total_pack,0) AS total_pack
 		
 	FROM doc_orders AS d
 	LEFT JOIN clients AS cl ON cl.id=d.client_id

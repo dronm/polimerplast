@@ -19,7 +19,7 @@ function DOCOrderNewList_View(id,options){
 	options.state = true;
 	
 	options.commands = new GridCommands(id+"_grid_cmd",{
-		"noPrint":true,"noInsert":true,"noDelete":true
+		"noPrint":true,"noInsert":true
 		});	
 	DOCOrderNewList_View.superclass.constructor.call(this,
 		id,options);
@@ -47,5 +47,37 @@ function DOCOrderNewList_View(id,options){
 		
 		this.m_grid.setPopUpMenu(popup_menu);
 	}
+	
+	this.m_gridOnGetData = this.m_grid.onGetData;
+	
+	var self = this;
+	this.m_grid.onGetData = function(resp){
+		self.m_gridOnGetData.call(self.m_grid,resp);
+		
+		var m = resp.getModelById("DOCOrderNewList_Model",true);
+		
+		var node;
+		if (!self.m_cntCtrl){
+			self.m_cntCtrl = new Control("MainView_DOCOrderNewList_View_cnt","mark",{"className":"badge"});
+			self.m_cntCtrl.toDOM(nd("MainView_DOCOrderNewList_View_title"));						
+			self.m_prevCnt = m.getRowCount();
+		}
+		var cnt = m.getRowCount();
+		self.m_cntCtrl.setValue(cnt);
+		
+		if (cnt!=self.m_prevCnt){
+		
+			self.m_prevCnt = cnt;
+			DOMHandler.addClass(self.m_cntCtrl.getNode(),"flashit")
+			
+			setTimeout(function(){
+				DOMHandler.removeClass(self.m_cntCtrl.getNode(),"flashit");
+			}, 5000);			
+		}		
+	}
+	
 }
 extend(DOCOrderNewList_View,DOCOrderBaseList_View);
+
+DOCOrderNewList_View.prototype.m_cntCtrl;
+DOCOrderNewList_View.prototype.m_prevCnt;

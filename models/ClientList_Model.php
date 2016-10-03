@@ -116,6 +116,26 @@ class ClientList_Model extends ModelSQL{
 		));
 		$this->addField($f_login_allowed);
 
+		$f_def_firm_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		,"def_firm_id"
+		,array(
+		
+			'id'=>"def_firm_id"
+				
+		
+		));
+		$this->addField($f_def_firm_id);
+
+		$f_def_warehouse_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		,"def_warehouse_id"
+		,array(
+		
+			'id'=>"def_warehouse_id"
+				
+		
+		));
+		$this->addField($f_def_warehouse_id);
+
 		
 		
 		

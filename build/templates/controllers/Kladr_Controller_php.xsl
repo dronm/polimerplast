@@ -18,6 +18,22 @@
 <xsl:template match="controller"><![CDATA[<?php]]>
 <xsl:call-template name="add_requirements"/>
 
+<!--
+SELECT 
+	k.code,
+	k.name,
+	k.socr,
+	(SELECT t.name FROM kladr AS t WHERE t.code LIKE '72000000000__') AS region_descr,
+	(SELECT t.name FROM kladr AS t WHERE t.code = substr(k.code,1,5)||'00000000') AS region_descr
+FROM kladr AS k
+WHERE 
+	lower(k.name) LIKE 'тюме%'
+	AND substr(k.code,1,2)='72'
+	AND NOT k.code LIKE substr(k.code,1,2)||'___00000000'
+ORDER BY code,name
+LIMIT 5
+-->
+
 class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 	const COMPLETE_RES_COUNT=5;
 	
@@ -129,24 +145,24 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		$dbLink = $this->getDbLink();
 		$pattern = $dbLink->escape_string($pm->getParamValue('pattern'));
 		$region_code = substr($dbLink->escape_string($pm->getParamValue('region_code')),0,2);		
-		if (!$region_code||!is_numeric($region_code)){
+		if (!$region_code || !is_numeric($region_code)){
 			throw new Exception('Не задан регион!');
 		}		
 		
 		$raion_code_str = $dbLink->escape_string($pm->getParamValue('raion_code'));
 		$raion_code = substr($raion_code_str,2,3);
-		if (!strlen($raion_code)||$raion_code_str=='null'){
+		if (!strlen($raion_code) || $raion_code_str=='null'){
 			$raion_code = '000';
 		}		
 		$naspunkt_code = substr($dbLink->escape_string($pm->getParamValue('naspunkt_code')),5,3);
 		$gorod_code = substr($dbLink->escape_string($pm->getParamValue('gorod_code')),5,3);
-		if ((!$naspunkt_code||!is_numeric($naspunkt_code))&amp;&amp;(!$gorod_code||!is_numeric($gorod_code))){
+		if ((!$naspunkt_code || !is_numeric($naspunkt_code)) &amp;&amp; (!$gorod_code || !is_numeric($gorod_code))){
 			throw new Exception('Не задан ни город ни населенный пункт!');
 		}
-		else if (!$naspunkt_code||!is_numeric($naspunkt_code)){
+		else if (!$naspunkt_code || !is_numeric($naspunkt_code)){
 			$naspunkt_code='000';
 		}
-		else if (!$gorod_code||!is_numeric($gorod_code)){
+		else if (!$gorod_code || !is_numeric($gorod_code)){
 			$gorod_code='000';
 		}		
 		$q = sprintf("SELECT 
@@ -165,7 +181,32 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 			Kladr_Controller::COMPLETE_RES_COUNT);
 		//throw new Exception($q);
 		$this->addNewModel($q);
-	}				
+	}
+	
+	public function get_from_naspunkt($pm){
+		$dbLink = $this->getDbLink();
+		$pattern = $dbLink->escape_string($pm->getParamValue('pattern'));
+		
+		if ($_REQUEST['count']){
+			$count = intval($_REQUEST['count']); 
+		}
+		else{
+			$count = Kladr_Controller::COMPLETE_RES_COUNT;
+		}
+		
+		if ($_REQUEST['from']){
+			$from = intval($_REQUEST['from']); 
+		}
+		else{
+			$from = 0;
+		}
+		
+		$q = sprintf("SELECT * FROM kladr_naspunkt WHERE lower(name) LIKE '%s%%' OFFSET %d LIMIT %d",
+			$pattern,
+			$from,$count);
+		$this->addNewModel($q);
+	}	
+					
 	public function query_first($q,&amp;$res){
 		$res = $this->getDbLink()->query_first($q);
 	}

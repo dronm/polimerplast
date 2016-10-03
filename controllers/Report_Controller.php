@@ -19,6 +19,8 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLString.php');
 
 require_once('models/RepProductionLoad_Model.php');
 require_once('models/RepSale_Model.php');
+require_once('models/NaspunktCostList_Model.php');
+
 require_once('functions/ExtProg.php');
 require_once('common/downloader.php');
 
@@ -65,6 +67,46 @@ class Report_Controller extends ControllerSQL{
 		$this->addPublicMethod($pm);
 
 			
+		$pm = new PublicMethod('naspunkt_cost');
+		
+				
+	$opts=array();
+	
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtString('cond_fields',$opts));
+	
+				
+	$opts=array();
+	
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtString('cond_vals',$opts));
+	
+				
+	$opts=array();
+	
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtString('cond_sgns',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('cond_ic',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('templ',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('field_sep',$opts));
+	
+			
+		$this->addPublicMethod($pm);
+
+			
+			
 		$pm = new PublicMethod('client_balance');
 		
 				
@@ -84,6 +126,12 @@ class Report_Controller extends ControllerSQL{
 	
 		$opts['required']=TRUE;				
 		$pm->addParam(new FieldExtInt('firm_id',$opts));
+	
+				
+	$opts=array();
+	
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtString('file_type',$opts));
 	
 			
 		$this->addPublicMethod($pm);
@@ -529,12 +577,30 @@ class Report_Controller extends ControllerSQL{
 			$params->getVal('date_from'),
 			$params->getVal('date_to'),
 			$ar['client_ref'],
-			$ar['firm_ref']
+			$ar['firm_ref'],
+			'',
+			$params->getVal('file_type')
 		);
 		ob_clean();
 		downloadFile($tmp_file);
 		unlink($tmp_file);
 	}
+	
+	public function naspunkt_cost($pm){
+		$link = $this->getDbLink();
+		$model = new NaspunktCostList_Model($link);
+		$where = $this->conditionFromParams($pm,$model);
+		
+		$q = sprintf("SELECT * FROM naspunkt_costs WHERE city_id=%d",
+		$where->getFieldValueForDb('city_id','=')
+		);
+		//throw new Exception($q);
+		
+		$model->query($q);
+		$this->addModel($model);
+		
+	}
+	
 
 }
 ?>

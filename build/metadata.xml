@@ -2,8 +2,8 @@
 <metadata debug="TRUE" owner="polimerplast" dataSchema="public">
 	<versions>	
 		<version dateOpen="2016-06-07 07:05" dateClose="2016-06-07 11:06:25">1.0021</version>
-		<lastBuild>2016-09-09 08:56:10</lastBuild>		
-	<version dateOpen="2016-06-07 11:06:56"/><version dateOpen="2016-06-07 11:06:57" dateClose="2016-06-07 14:06:30">1.0022</version><version dateOpen="2016-06-07 14:06:32" dateClose="2016-06-07 16:06:31">1.0023</version><version dateOpen="2016-06-07 16:06:32" dateClose="2016-06-08 10:06:07">1.0024</version><version dateOpen="2016-06-08 10:06:42" dateClose="2016-06-08 13:06:31">1.0025</version><version dateOpen="2016-06-08 14:06:25" dateClose="2016-06-09 15:06:33">1.0026</version><version dateOpen="2016-06-09 17:06:49" dateClose="2016-06-09 17:06:52">1.0027</version><version dateOpen="2016-06-09 17:06:52" dateClose="2016-06-09 21:06:53">1.0027</version><version dateOpen="2016-06-09 21:06:53" dateClose="2016-06-10 12:06:17">1.0028</version><version dateOpen="2016-06-10 12:06:18" dateClose="2016-06-11 14:06:03">1.0029</version><version dateOpen="2016-06-16 23:06:13" dateClose="2016-06-20 14:06:32">1.0030</version><version dateOpen="2016-06-20 14:06:33" dateClose="2016-06-22 15:06:50">1.0031</version><version dateOpen="2016-06-24 09:06:55" dateClose="2016-07-08 14:07:21">1.0032</version><version dateOpen="2016-07-08 14:07:21" dateClose="2016-07-12 12:07:59">1.0033</version><version dateOpen="2016-07-12 12:07:59" dateClose="2016-07-13 16:07:12">1.0034</version><version dateOpen="2016-07-13 18:07:15" dateClose="2016-07-15 18:07:34">1.0035</version><version dateOpen="2016-07-16 08:07:56" dateClose="2016-07-16 17:07:58">1.0036</version><version dateOpen="2016-07-16 17:07:59" dateClose="2016-08-11 14:08:53">1.0037</version><version dateOpen="2016-08-13 11:08:41" dateClose="2016-08-13 11:08:43">1.0038</version><version dateOpen="2016-08-17 16:08:54" dateClose="2016-08-17 18:08:02">1.0039</version><version dateOpen="2016-08-19 11:08:12" dateClose="2016-08-19 11:08:12">1.0040</version><version dateOpen="2016-08-22 15:08:35" dateClose="2016-08-22 15:08:35">1.0041</version><version dateOpen="2016-08-22 17:08:03" dateClose="2016-08-22 18:08:14">1.0042</version><version dateOpen="2016-08-23 16:08:42" dateClose="2016-08-25 13:08:24">1.0043</version><version dateOpen="2016-08-25 15:08:58" dateClose="2016-08-25 15:08:59">1.0044</version><version dateOpen="2016-08-25 16:08:08" dateClose="2016-08-25 16:08:09">1.0045</version><version dateOpen="2016-09-01 07:09:51" dateClose="2016-09-01 12:09:55">1.0046</version><version dateOpen="2016-09-08 17:09:56" dateClose="2016-09-08 17:09:56">1.0047</version><version dateOpen="2016-09-08 18:09:06" dateClose="2016-09-08 18:09:06">1.0048</version><version dateOpen="2016-09-09 08:09:55" dateClose="2016-09-09 08:09:56">1.0049</version></versions>	
+		<lastBuild>2016-10-03 16:09:07</lastBuild>		
+	<version dateOpen="2016-06-07 11:06:56"/><version dateOpen="2016-06-07 11:06:57" dateClose="2016-06-07 14:06:30">1.0022</version><version dateOpen="2016-06-07 14:06:32" dateClose="2016-06-07 16:06:31">1.0023</version><version dateOpen="2016-06-07 16:06:32" dateClose="2016-06-08 10:06:07">1.0024</version><version dateOpen="2016-06-08 10:06:42" dateClose="2016-06-08 13:06:31">1.0025</version><version dateOpen="2016-06-08 14:06:25" dateClose="2016-06-09 15:06:33">1.0026</version><version dateOpen="2016-06-09 17:06:49" dateClose="2016-06-09 17:06:52">1.0027</version><version dateOpen="2016-06-09 17:06:52" dateClose="2016-06-09 21:06:53">1.0027</version><version dateOpen="2016-06-09 21:06:53" dateClose="2016-06-10 12:06:17">1.0028</version><version dateOpen="2016-06-10 12:06:18" dateClose="2016-06-11 14:06:03">1.0029</version><version dateOpen="2016-06-16 23:06:13" dateClose="2016-06-20 14:06:32">1.0030</version><version dateOpen="2016-06-20 14:06:33" dateClose="2016-06-22 15:06:50">1.0031</version><version dateOpen="2016-06-24 09:06:55" dateClose="2016-07-08 14:07:21">1.0032</version><version dateOpen="2016-07-08 14:07:21" dateClose="2016-07-12 12:07:59">1.0033</version><version dateOpen="2016-07-12 12:07:59" dateClose="2016-07-13 16:07:12">1.0034</version><version dateOpen="2016-07-13 18:07:15" dateClose="2016-07-15 18:07:34">1.0035</version><version dateOpen="2016-07-16 08:07:56" dateClose="2016-07-16 17:07:58">1.0036</version><version dateOpen="2016-07-16 17:07:59" dateClose="2016-08-11 14:08:53">1.0037</version><version dateOpen="2016-08-13 11:08:41" dateClose="2016-08-13 11:08:43">1.0038</version><version dateOpen="2016-08-17 16:08:54" dateClose="2016-08-17 18:08:02">1.0039</version><version dateOpen="2016-08-19 11:08:12" dateClose="2016-08-19 11:08:12">1.0040</version><version dateOpen="2016-08-22 15:08:35" dateClose="2016-08-22 15:08:35">1.0041</version><version dateOpen="2016-08-22 17:08:03" dateClose="2016-08-22 18:08:14">1.0042</version><version dateOpen="2016-08-23 16:08:42" dateClose="2016-08-25 13:08:24">1.0043</version><version dateOpen="2016-08-25 15:08:58" dateClose="2016-08-25 15:08:59">1.0044</version><version dateOpen="2016-08-25 16:08:08" dateClose="2016-08-25 16:08:09">1.0045</version><version dateOpen="2016-09-01 07:09:51" dateClose="2016-09-01 12:09:55">1.0046</version><version dateOpen="2016-09-08 17:09:56" dateClose="2016-09-08 17:09:56">1.0047</version><version dateOpen="2016-09-08 18:09:06" dateClose="2016-09-08 18:09:06">1.0048</version><version dateOpen="2016-09-09 08:09:55" dateClose="2016-09-09 08:09:56">1.0049</version><version dateOpen="2016-09-30 14:09:31" dateClose="2016-10-03 16:10:09">1.0050</version></versions>	
 	<globalFilters>
 		<field id="client_id"/>
 	</globalFilters>
@@ -87,6 +87,12 @@
 			<value id="city" descr="город"/>
 			<value id="country" descr="межгород"/>
 		</enum>		
+		
+		<enum id="acc_pko_types">
+			<value id="cash" descr="наличными"/>
+			<value id="bank" descr="картой"/>
+		</enum>		
+		
 	</enums>
 	<models>
 		<model id="ConstantList" parent="ModelSQL" dataTable="constants_list_view" virtual="TRUE">
@@ -162,6 +168,8 @@
 			<field id="show_delivery_tab" dataType="Bool" defaultValue="true"/>
 			<field id="ext_id" dataType="String" length="36"/>
 			<field id="client_activity_id" dataType="Int" refTable="client_activity_types" refField="id"/>
+			<field id="def_firm_id" dataType="Int" refTable="firms" refField="id"/>
+			<field id="def_warehouse_id" dataType="Int" refTable="warehouses" refField="id"/>
 			
 			<index id="clients_name_index" unique="TRUE">
 				<expression>lower(name)</expression>
@@ -181,6 +189,8 @@
 			<field id="banned" dataType="Bool"/>
 			<field id="client_activity_descr" dataType="String"/>
 			<field id="login_allowed" dataType="Bool"/>
+			<field id="def_firm_id" dataType="Int"/>
+			<field id="def_warehouse_id" dataType="Int"/>			
 		</model>
 		<model id="ClientDialog" parent="ModelSQL" dataTable="client_dialog" virtual="TRUE">
 			<field id="id" dataType="Int" primaryKey="TRUE"/>
@@ -189,6 +199,8 @@
 			<field id="occupation" dataType="Text"/>
 			<field id="inn" dataType="String"/>
 			<field id="banned" dataType="Bool"/>
+			<field id="def_firm_id" dataType="Int"/>
+			<field id="def_warehouse_id" dataType="Int"/>
 		</model>
 		<model id="ClientComplete" parent="ModelSQL" dataTable="clients_complete" virtual="TRUE">
 			<field id="id" dataType="Int" primaryKey="TRUE"/>
@@ -1539,6 +1551,64 @@
 			</defaultOrder>		
 			<field id="id" primaryKey="TRUE" dataType="Int"/>
 		</model>		
+		<model id="Naspunkt" parent="ModelSQL" dataTable="naspunkts" virtual="FALSE">
+			<defaultOrder>
+				<field id="name"/>
+			</defaultOrder>
+			<field id="id" dataType="Int" primaryKey="TRUE" autoInc="TRUE" required="TRUE"/>
+			<field id="city_id" dataType="Int" refField="id" refTable="production_cities"/>
+			<field id="name" dataType="String" length="100"/>
+			<field id="distance" dataType="Int"/>
+		</model>
+		<model id="NaspunktList" parent="ModelSQL" dataTable="naspunkt_list" virtual="FALSE">
+			<field id="id" dataType="Int" primaryKey="TRUE" autoInc="TRUE" required="TRUE" sysCol="TRUE"/>
+			<field id="city_id" dataType="Int" refField="id" refTable="production_cities" sysCol="TRUE"/>
+			<field id="city_descr" dataType="String" alias="Город"/>
+			<field id="name" dataType="String" alias="Наименование"/>			
+			<field id="distance" dataType="Int" alias="Расстояние (км.)"/>
+		</model>
+		
+		<model id="NaspunktCostList" parent="ModelSQL" dataTable="naspunkt_costs" virtual="TRUE">
+			<field id="city_id" dataType="Int" refField="id" refTable="production_cities"/>
+			<field id="city_descr" dataType="String" alias="Город"/>
+			<field id="name" dataType="String" alias="Наименование"/>
+			<field id="deliv_cost_opt_id" dataType="Int" sysCol="TRUE"/>
+			<field id="deliv_cost_opt_descr" dataType="String" alias="Категория"/>
+			<field id="distance" dataType="Int" alias="Расстояние (км.)"/>
+			<field id="cost" dataType="Float" length="19" precision="2" alias="Стоимость"/>				
+		</model>
+		
+		<model id="DOCOrderPrintSeq" parent="ModelSQL" dataTable="doc_order_prints_seq" virtual="FALSE">
+			<field id="doc_id" dataType="Int" refField="id" refTable="doc_orders"/>
+			<field id="cnt" dataType="Int"/>
+		</model>
+
+		<model id="AccPKO" parent="ModelSQL" dataTable="acc_pkos" virtual="FALSE">
+			<field id="id" dataType="Int" primaryKey="TRUE" autoInc="TRUE"/>
+			<field id="date_time" dataType="DateTime"/>
+			<field id="acc_pko_type" dataType="Enum" enumId="acc_pko_types"/>
+			<field id="total" dataType="Float" length="15" precision="2"/>
+			<field id="order_list" dataType="Text"/>
+			<field id="order_ids" dataType="Text"/>
+			
+			<index id="acc_pkos_date_time_idx">
+				<field id="date_time"/>
+			</index>												
+			<index id="acc_pkos_acc_pko_type_idx">
+				<field id="acc_pko_type"/>
+			</index>												
+			
+		</model>
+		<model id="AccPKOList" parent="ModelSQL" dataTable="acc_pko_list" virtual="TRUE">
+			<field id="id" dataType="Int" primaryKey="TRUE" autoInc="TRUE" sysCol="TRUE"/>
+			<field id="date_time" dataType="DateTime" sysCol="TRUE"/>
+			<field id="date_time_descr" dataType="String" alias="Дата"/>
+			<field id="acc_pko_type" dataType="Enum" enumId="acc_pko_types" sysCol="TRUE"/>
+			<field id="acc_pko_type_descr" dataType="String" alias="Тип ПКО"/>
+			<field id="total" dataType="Float" length="15" precision="2" alias="Сумма"/>
+			<field id="order_list" dataType="Text" alias="Заявки"/>
+		</model>
+		
 	</models>
 	<constants>
 		<constant id="client_geo_zone_radius_m" name="Радиус (метры) геозон клиентов" descr="Геозона клиента представляет из себя окружность, которая строится на основании точки на карте, поставленной клиентом, и радиуса в метрах, заданного данной величиной" dataType="Int" defaultValue="50"/>
@@ -1863,6 +1933,10 @@
 				<field id="doc_id" dataType="Int" required="TRUE"/>
 				<field id="templ" dataType="String"/>
 			</publicMethod>				
+			<publicMethod id="download_print">
+				<field id="doc_id" dataType="Int" required="TRUE"/>
+			</publicMethod>				
+			
 			<publicMethod id="get_print_check">
 				<field id="doc_id" dataType="Int" required="TRUE"/>
 				<field id="templ" dataType="String"/>
@@ -2072,6 +2146,13 @@
 				<field id="gorod_code" dataType="String"/>
 				<field id="pattern" length="40" required="TRUE" dataType="String"/>
 			</publicMethod>			
+			<publicMethod id="get_from_naspunkt">
+				<field id="region_code" dataType="String"/>
+				<field id="pattern" length="40" required="TRUE" dataType="String"/>
+				<field id="from" dataType="Int"/>
+				<field id="count" dataType="Int"/>
+			</publicMethod>			
+			
 		</controller>
 		<controller id="CustomerSurveyQuestion" parentId="ControllerSQL" state="TRUE">
 			<publicMethod id="insert" modelId="CustomerSurveyQuestion"/>
@@ -2109,10 +2190,20 @@
 				<field id="templ" dataType="String"/>
 				<field id="field_sep" dataType="String"/>
 			</publicMethod>
+			<publicMethod id="naspunkt_cost" modelId="NaspunktCostList">
+				<field id="cond_fields" dataType="String" required="TRUE"/>
+				<field id="cond_vals" dataType="String" required="TRUE"/>
+				<field id="cond_sgns" dataType="String" required="TRUE"/>
+				<field id="cond_ic" dataType="String"/>
+				<field id="templ" dataType="String"/>
+				<field id="field_sep" dataType="String"/>
+			</publicMethod>
+			
 			<publicMethod id="client_balance">
 				<field id="date_from" dataType="Date" required="TRUE"/>
 				<field id="date_to" dataType="Date" required="TRUE"/>
 				<field id="firm_id" dataType="Int" required="TRUE"/>
+				<field id="file_type" dataType="String" required="TRUE"/>
 			</publicMethod>			
 			<publicMethod id="sales">
 				<field id="cond_fields" dataType="String" required="TRUE"/>
@@ -2355,6 +2446,17 @@
 			<publicMethod id="apply_patch"/>
 			<publicMethod id="apply_sql"/>			
 		</controller>
+		<controller id="Naspunkt" parentId="ControllerSQL" state="TRUE">
+			<publicMethod id="insert" modelId="Naspunkt"/>
+			<publicMethod id="update" modelId="Naspunkt"/>
+			<publicMethod id="delete" modelId="Naspunkt"/>
+			<publicMethod id="get_list" modelId="NaspunktList"/>
+			<publicMethod id="get_object" modelId="NaspunktList"/>
+		</controller>				
+		<controller id="AccPKO" parentId="ControllerSQL" state="TRUE">
+			<publicMethod id="get_list" modelId="AccPKOList"/>
+			<publicMethod id="get_object" modelId="AccPKOList"/>
+		</controller>				
 		
 	</controllers>
 	
@@ -2440,7 +2542,10 @@
 		<allow controllerId="Kladr" methodId="get_naspunkt_list" roleId="client"/>
 		<allow controllerId="Kladr" methodId="get_gorod_list" roleId="client"/>
 		<allow controllerId="Kladr" methodId="get_ulitsa_list" roleId="client"/>
-		<allow controllerId="Report" methodId="client_balance" roleId="client"/>		
+		<allow controllerId="Kladr" methodId="get_from_naspunkt" roleId="client"/>
+		<allow controllerId="Report" methodId="client_balance" roleId="client"/>
+		<allow controllerId="Report" methodId="naspunkt_cost" roleId="client"/>				
+		<allow controllerId="ProductionCity" methodId="get_list" roleId="client"/>
 		<!--<allow controllerId="Report" methodId="current_position_all" roleId="client"/>		
 		-->
 		
@@ -2458,6 +2563,7 @@
 		<item viewId="DOCOrderList_View" descr="Заявки" default="TRUE"/>
 		<item viewId="PaymentList_View" descr="Платежи"/>		
 		<item viewId="Delivery_View" descr="Доставки"/>
+		<item viewId="RepNaspunktCost_View" descr="Стоимость доставки по нас. пунктам"/>
 		<item viewId="UserAccount_View" descr="Учетная запись"/>
 	</mainMenu>
 	<mainMenu roleId="sales_manager">
@@ -2693,7 +2799,7 @@
 		
 		<jsScript file="controlsBS/CurrentDateTime.js"/>		
 		
-		<jsScript file="controlsBS/Kladr_View.js"/>		
+		<jsScript file="controlsBS/Kladr2_View.js"/>		
 		
 		<jsScript file="controlsBS/FileLoader.js"/>		
 		
@@ -2882,6 +2988,10 @@
 		<jsScript file="views/Holiday_View.js"/>
 		<jsScript file="views/HolidayInline_View.js"/>
 		<jsScript file="views/ClientDebt_View.js"/>
+		<jsScript file="views/NaspunktList_View.js"/>
+		<jsScript file="views/NaspunktInline_View.js"/>
+		<jsScript file="views/RepNaspunktCost_View.js"/>
+		<jsScript file="views/AccPKOList_View.js"/>
 		
 		<jsScript file="custom_controls/UnregClientCheck.js"/>
 		<jsScript file="custom_controls/ClientAttrs.js"/>
@@ -2942,7 +3052,7 @@
 		<jsScript file="extra/DragnDrop/dragMaster.js"/>
 		<jsScript file="extra/DragnDrop/helpers.js"/>
 		
-	<jsScript file="controllers/ProductGroup_Controller.js"/><jsScript file="controllers/ProjectManager_Controller.js"/></jsScripts>
+	<jsScript file="controllers/ProductGroup_Controller.js"/><jsScript file="controllers/ProjectManager_Controller.js"/><jsScript file="controllers/Naspunkt_Controller.js"/><jsScript file="controllers/AccPKO_Controller.js"/></jsScripts>
 	
 	<cssScripts>
 		<cssScript file="bootstrap.min.css" compressed="TRUE" standalone="TRUE"/>

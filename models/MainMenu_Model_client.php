@@ -11,6 +11,8 @@ class MainMenu_Model_client extends Model{
 		
 		<item viewId="Delivery_View" descr="Доставки" default=""/>
 		
+		<item viewId="RepNaspunktCost_View" descr="Стоимость доставки по нас. пунктам" default=""/>
+		
 		<item viewId="UserAccount_View" descr="Учетная запись" default=""/>
 		
 		</model>';

@@ -89,8 +89,7 @@ function DOCOrderDOCTShipmentList_View(id,options){
 		"pagination":null,
 		"commandPanel":new GridCommands(id+"_cmd",{
 			"noInsert":true,"noCopy":true,
-			"noPrint":true,"noRefresh":true,
-			"noDelete":true}),
+			"noPrint":true,"noRefresh":true}),
 		"rowCommandPanelClass":null,
 		"filter":null,
 		"refreshInterval":0,

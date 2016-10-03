@@ -120,6 +120,12 @@ class Client_Controller extends ControllerSQL{
 		$param = new FieldExtInt('client_activity_id'
 				,array());
 		$pm->addParam($param);
+		$param = new FieldExtInt('def_firm_id'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtInt('def_warehouse_id'
+				,array());
+		$pm->addParam($param);
 		
 		$pm->addParam(new FieldExtInt('ret_id'));
 		
@@ -252,6 +258,14 @@ class Client_Controller extends ControllerSQL{
 			));
 			$pm->addParam($param);
 		$param = new FieldExtInt('client_activity_id'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtInt('def_firm_id'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtInt('def_warehouse_id'
 				,array(
 			));
 			$pm->addParam($param);

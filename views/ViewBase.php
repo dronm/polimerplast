@@ -231,7 +231,7 @@ class ViewBase extends ViewHTMLXSLT {
 		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/CurrentDateTime.js'));		
 		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/Kladr_View.js'));		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/Kladr2_View.js'));		
 		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/FileLoader.js'));		
 		
@@ -420,6 +420,10 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/Holiday_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/HolidayInline_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientDebt_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/NaspunktList_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/NaspunktInline_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/RepNaspunktCost_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/AccPKOList_View.js'));
 		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/UnregClientCheck.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/ClientAttrs.js'));
@@ -476,7 +480,7 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'extra/DragnDrop/dragMaster.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'extra/DragnDrop/helpers.js'));
 		
-	$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ProductGroup_Controller.js'));$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ProjectManager_Controller.js'));			
+	$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ProductGroup_Controller.js'));$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ProjectManager_Controller.js'));$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/Naspunkt_Controller.js'));$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/AccPKO_Controller.js'));			
 			if (isset($_SESSION['scriptId'])){
 				$script_id = $_SESSION['scriptId'];
 			}

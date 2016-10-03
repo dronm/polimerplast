@@ -220,6 +220,18 @@ extend(Client_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
+	options = {};
+	
+	var param = new FieldInt("def_firm_id",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldInt("def_warehouse_id",options);
+	
+	pm.addParam(param);
+	
 	pm.addParam(new FieldInt("ret_id",{}));
 	
 	
@@ -444,6 +456,20 @@ extend(Client_Controller,ControllerDb);
 	pm.addParam(param);
 	
 	
+	options = {};
+	
+	var param = new FieldInt("def_firm_id",options);
+	
+	pm.addParam(param);
+	
+	
+	options = {};
+	
+	var param = new FieldInt("def_warehouse_id",options);
+	
+	pm.addParam(param);
+	
+	
 	
 }
 
@@ -470,6 +496,8 @@ extend(Client_Controller,ControllerDb);
 	pm.addParam(new FieldBool("banned",options));
 	pm.addParam(new FieldString("client_activity_descr",options));
 	pm.addParam(new FieldBool("login_allowed",options));
+	pm.addParam(new FieldInt("def_firm_id",options));
+	pm.addParam(new FieldInt("def_warehouse_id",options));
 }
 
 			Client_Controller.prototype.addGetObject = function(){

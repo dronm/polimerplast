@@ -32,6 +32,7 @@ function DOCOrder_Controller(servConnector){
 	this.add_before_open();
 	this.add_get_actions();
 	this.add_get_print();
+	this.add_download_print();
 	this.add_get_print_check();
 	this.add_set_ready();
 	this.add_get_shipment();
@@ -1039,6 +1040,16 @@ extend(DOCOrder_Controller,ControllerDb);
 			
 }
 				
+			DOCOrder_Controller.prototype.add_download_print = function(){
+	var pm = this.addMethodById('download_print');
+	
+				
+		pm.addParam(new FieldInt("doc_id"));
+	
+			
+}
+				
+			
 			DOCOrder_Controller.prototype.add_get_print_check = function(){
 	var pm = this.addMethodById('get_print_check');
 	

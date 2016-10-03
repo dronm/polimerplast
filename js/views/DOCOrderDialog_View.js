@@ -26,6 +26,27 @@ function DOCOrderDialog_View(id,options){
 		});
 	}
 	
+	if (SERV_VARS.ROLE_ID=="sales_manager" || SERV_VARS.ROLE_ID=="admin"){
+		this.m_downloadPrintCtrl = new ButtonCmd(id+"btnCancel",
+				{"caption":"Счет",
+				"enabled":false,
+				"onClick":function(){
+					self.onDownloadOrder();
+				},
+				"attrs":{
+					"title":"сохранить печатную форму счета"}
+			}
+		);
+		options.cmdControls = [this.m_downloadPrintCtrl];
+	}
+	else if (SERV_VARS.ROLE_ID=="production"){
+		this.m_passToProdCtrl = new BtnPassToProduction({
+			"grid":null,
+			"className":"btn btn-primary btn-cmd",
+			"enabled":false});
+		options.cmdControls = [this.m_passToProdCtrl];	
+	}
+		
 	DOCOrderDialog_View.superclass.constructor.call(this,
 		id,options);
 	
@@ -168,6 +189,7 @@ function DOCOrderDialog_View(id,options){
 			"onSelected":function(){
 				self.onClientSelected();
 			},
+			"extraFields":["def_firm_id","def_warehouse_id"],
 			"winObj":options.winObj
 			});
 		this.bindControl(this.m_clientCtrl,
@@ -578,8 +600,11 @@ DOCOrderDialog_View.prototype.setClientId = function(clientId,setPopFirm){
 	//Табличная часть
 	this.m_productDetails.setClientId(clientId);
 	
+	//значения по умолчанию
+	
+	
 	//организация
-	if (setPopFirm&&this.m_FirmCtrl.getFieldValue()){	
+	if (setPopFirm && this.m_FirmCtrl.getFieldValue()){	
 		//console.log("setPopFirm="+setPopFirm);
 		var self = this;
 		var contr = new Client_Controller(new ServConnector(HOST_NAME));
@@ -774,6 +799,14 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 			}
 			this.m_savedVehCount = toInt(m.getFieldValue("deliv_vehicle_count"));
 		}
+		
+		if (this.m_downloadPrintCtrl){
+			this.m_downloadPrintCtrl.setEnabled(true);
+		}
+		if (this.m_passToProdCtrl){
+			this.m_passToProdCtrl.setEnabled(true);
+			this.m_passToProdCtrl.m_grid = this.m_productDetails.getGridControl()
+		}
 	}
 }
 DOCOrderDialog_View.prototype.toDOM = function(parent){
@@ -956,6 +989,8 @@ DOCOrderDialog_View.prototype.setMethodParams = function(pm,checkRes){
 		checkRes.modif = true;
 	}
 }
+
+/*
 DOCOrderDialog_View.prototype.writeData = function(){	
 	if (this.m_productDetails.getLineCount()==0){
 		this.getErrorControl().setValue("Список продукции пустой!");
@@ -964,6 +999,8 @@ DOCOrderDialog_View.prototype.writeData = function(){
 		DOCOrderDialog_View.superclass.writeData.call(this);
 	}
 }
+*/
+
 DOCOrderDialog_View.prototype.onWriteOk = function(resp){	
 	DOCOrderDialog_View.superclass.onWriteOk.call(this,resp);
 	if (this.m_currentGrid&&this.m_currentGrid.m_rendered){
@@ -1067,4 +1104,16 @@ DOCOrderDialog_View.prototype.getFormWidth = function(){
 }
 DOCOrderDialog_View.prototype.getFormHeight = function(){
 	return ( (SERV_VARS.ROLE_ID=="client")? "700":"1010");
+}
+
+DOCOrderDialog_View.prototype.onDownloadOrder = function(){
+	var contr = new DOCOrder_Controller(new ServConnector(HOST_NAME));
+	var meth = contr.getPublicMethodById("download_print");
+	meth.setParamValue("doc_id",this.getDataControl(this.getId()+"_id").control.getValue());
+
+	var form = $('<form></form>').attr('action', "index.php").attr('method', 'post');
+	for (var id in meth.m_params){
+		form.append($("<input></input>").attr('type', 'hidden').attr('name', id).attr('value', meth.m_params[id].getValue()));
+	}
+	form.appendTo('body').submit().remove();
 }

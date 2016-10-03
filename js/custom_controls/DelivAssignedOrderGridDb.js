@@ -165,9 +165,19 @@ DelivAssignedOrderGridDb.prototype.onGetData = function(resp){
 			var perc_v = Math.round(order_inf.vm/vh_vm*100);
 			var perc_w = Math.round(order_inf.wt/vh_wt*100);
 			var order_percent = (perc_v>perc_w)? perc_v:perc_w;									
+			
+			var self = this;
 			var cont = new Control(uuid(),"div",{
 				"className":"deliv_order "+order_inf.state,
 				"value":order_inf.number+" ("+order_percent+"%)",
+				"events":{"click":function(e){					
+					e = EventHandler.fixMouseEvent(e);					
+					var order_inf = DOMHandler.getAttr(e.target,"order_inf");
+					if (order_inf){
+						var vals = json2obj(order_inf);
+						self.openOrder(vals.id);
+					}
+				}},
 				"attrs":{
 					"order_inf":array2json(order_inf),
 					"style":"width:"+order_percent+"%",
@@ -224,10 +234,81 @@ DelivAssignedOrderGridDb.prototype.onGetData = function(resp){
 }
 DelivAssignedOrderGridDb.prototype.filterToDOM = function(parent){
 }
+
+DelivAssignedOrderGridDb.prototype.openOrder = function(docId){
+	if (this.m_map){
+		DOMHandler.addClass(this.m_map.getNode(),"hidden");
+	}
+	
+	this.setGlobalWait(true);
+	
+	var con = new ServConnector(HOST_NAME);
+	var contr = new DOCOrder_Controller(con);
+	
+	var self = this;
+	if (!this.m_orderView)this.m_orderView = {};
+	if (!this.m_orderWin)this.m_orderWin = {};
+	
+	if (this.m_orderView[docId]){
+		this.getErrorControl().setValue("Заявка уже редактируется!");
+		return;
+	}
+	
+	this.m_orderView[docId] = new DOCOrderDialog_View(
+		this.getId()+"EditView:"+docId,
+		{"onClose":function(res){
+			
+			self.m_orderView[docId].removeDOM();
+			delete self.m_orderView[docId];
+			
+			//external window
+			self.m_orderWin[docId].m_closeMode = res;
+			self.m_orderWin[docId].close();
+			delete self.m_orderWin[docId];
+			
+			if (self.m_map){
+				exists = false;
+				for(var w in self.m_orderWin){
+					if (self.m_orderWin[w]){
+						exists = true;
+						break;
+					}
+				}
+				if (!exists) DOMHandler.removeClass(self.m_map.getNode(),"hidden");
+			}
+		},
+		"readController":contr,
+		"readModelId":"DOCOrderDialog_Model",
+		"connect":con,
+		"errorControl":this.getErrorControl(),
+		"winObj":this.m_winObj
+		}
+	);
+
+	var pm = contr.getPublicMethodById("get_object");
+	this.m_orderView[docId].setReadIdValue("id",docId);		
+	
+	//external window
+	this.m_orderWin[docId] = new WIN_CLASS({
+		"view":this.m_orderView[docId],
+		"title":this.m_orderView[docId].getFormCaption()+":Редактирование",
+		"width":this.m_orderView[docId].getFormWidth(),
+		"height":this.m_orderView[docId].getFormHeight()		
+	});
+	this.m_orderWin[docId].open();
+	
+	this.m_orderView[docId].readData(true);	
+	this.m_orderView[docId].m_beforeOpen(contr,false,false);	
+	this.m_orderView[docId].toDOM(this.m_orderWin[docId].getContentParent());
+	
+	this.setGlobalWait(false);	
+	
+}
+
 DelivAssignedOrderGridDb.prototype.selectRow = function(newRow,oldRow){
 	DelivAssignedOrderGridDb.superclass.selectRow.call(this,newRow,oldRow);
 	
-	if (this.m_selectedRowKeys&&this.m_map){
+	if (this.m_selectedRowKeys && this.m_map){
 		var id = json2obj(this.m_selectedRowKeys).id;		
 		this.m_map.setCurVehicleId(id);
 	}

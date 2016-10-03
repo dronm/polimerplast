@@ -252,7 +252,7 @@ class ExtProg{
 				'stamp'=>$stamp),
 			$xml,TRUE);
 	}			
-	public static function print_balance($from,$to,$clientRef,$firmRef,$userExtRef=''){
+	public static function print_balance($from,$to,$clientRef,$firmRef,$userExtRef='',$fileType='pdf'){
 		$xml=null;
 		return ExtProg::send_query('print_balance',
 			array(
@@ -261,7 +261,8 @@ class ExtProg{
 				'firm_ref'=>$firmRef,
 				'client_ref'=>$clientRef,
 				'user_ref'=>$userExtRef,
-				),$xml,TRUE);
+				'file_type'=>$fileType
+			),$xml,TRUE,$fileType);
 	}	
 	public static function paid_to_acc($firm_totals){
 		$xml=null;

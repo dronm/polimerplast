@@ -41,6 +41,8 @@ function Catalogs_View(id,options){
 	this.addItem({"caption":"Автомобили","viewClassId":VehicleList_View,"id":"VehicleList_View"});
 	this.addItem({"caption":"Ценовые категории","viewClassId":DelivCostOptList_View,"id":"DelivCostOptList_View"});
 	this.addItem({"caption":"Тарифы по доставке","viewClassId":DelivCostList_View,"id":"DelivCostList_View"});
+	this.addItem({"caption":"Расстояние до нас. пунктов","viewClassId":NaspunktList_View,"id":"NaspunktList_View"});
+	this.addItem({"caption":"Стоимость доставки по нас.пунктам","viewClassId":RepNaspunktCost_View,"id":"RepNaspunktCost_View"});
 	
 	this.addItem({"caption":"Серверы трекеров","viewClassId":TrackerServerList_View,"id":"TrackerServerList_View"});
 	this.addItem({"caption":"Трекеры","viewClassId":TrackerList_View,"id":"TrackerList_View"});
@@ -55,5 +57,7 @@ function Catalogs_View(id,options){
 	this.addItem({"caption":"Константы","viewClassId":ConstantList_View,"id":"ConstantList_View"});
 	
 	this.addItem({"caption":"Долги клиентов","viewClassId":ClientDebt_View,"id":"ClientDebt_View"});
+	
+	this.addItem({"caption":"ПКО","viewClassId":AccPKOList_View,"id":"AccPKOList_View"});
 }
 extend(Catalogs_View,ViewMenu);

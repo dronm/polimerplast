@@ -164,7 +164,7 @@ function DOCOrderBaseList_View(id,options){
 			}));		
 	}
 	row.addElement(new GridDbHeadCell(id+"_col_delivery_plan_date_descr",{
-		"value":"План.дата вып.","readBind":{"valueFieldId":"delivery_plan_date_descr"},
+		"value":"Дата вып.","readBind":{"valueFieldId":"delivery_plan_date_descr"},
 		"sortable":true,"sortCol":"delivery_plan_date,number",
 		"colAttrs":{"align":"center","nowrap":"nowrap"}
 		}));		

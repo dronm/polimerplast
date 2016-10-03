@@ -17,6 +17,7 @@ function Report_Controller(servConnector){
 	
 	//methods
 	this.add_production_load();
+	this.add_naspunkt_cost();
 	this.add_client_balance();
 	this.add_sales();
 	
@@ -47,6 +48,31 @@ extend(Report_Controller,ControllerDb);
 			
 }
 
+			Report_Controller.prototype.add_naspunkt_cost = function(){
+	var pm = this.addMethodById('naspunkt_cost');
+	
+				
+		pm.addParam(new FieldString("cond_fields"));
+	
+				
+		pm.addParam(new FieldString("cond_vals"));
+	
+				
+		pm.addParam(new FieldString("cond_sgns"));
+	
+				
+		pm.addParam(new FieldString("cond_ic"));
+	
+				
+		pm.addParam(new FieldString("templ"));
+	
+				
+		pm.addParam(new FieldString("field_sep"));
+	
+			
+}
+
+			
 			Report_Controller.prototype.add_client_balance = function(){
 	var pm = this.addMethodById('client_balance');
 	
@@ -58,6 +84,9 @@ extend(Report_Controller,ControllerDb);
 	
 				
 		pm.addParam(new FieldInt("firm_id"));
+	
+				
+		pm.addParam(new FieldString("file_type"));
 	
 			
 }

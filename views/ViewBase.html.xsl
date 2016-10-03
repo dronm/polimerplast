@@ -34,6 +34,19 @@
 			var NEW_CLIENT_CHECK;
 			var CONST_CONTROLS ={};
 			
+			function copy_app(){
+				window.open('<xsl:value-of select="/document/model[@id='ModelVars']/row/basePath"/>',"Полимерпласт","fullScreen=1,width="+screen.width+",height="+screen.height);
+				return false;
+			}
+			
+			function getLocation() {
+			    if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(function(pos){
+					console.log("lat="+pos.coords.latitude+" lon="+pos.coords.longitude);
+				});
+			    }
+			}
+						
 			function pageLoad(){
 				
 				window.onerror = function(msg,url,line,col,error) {
@@ -50,6 +63,8 @@
 				
 				BS_COL = ("col-"+$('#users-device-size').find('div:visible').first().attr('id')+"-");
 				
+				//getLocation();
+				
 				WIN_CLASS = WindowFormDD;//ChildForm;
 				CONSTANTS = new Constant_Controller(new ServConnector(HOST_NAME));
 				CONSTANT_VALS = {
@@ -60,6 +75,7 @@
 					"map_default_lon":null
 					};
 				CONSTANTS.readValues(CONSTANT_VALS);
+				//console.log("lat="+CONSTANT_VALS.map_default_lat)
 				
 				var self = this;
 				onViewClose = function(res){					
@@ -85,9 +101,9 @@
 		</script>
 	</head>
 	<body onload="pageLoad();" class="layout_2_1 blue3">
-		<div class="page-header">
-			<img id="logo" src="{$BASE_PATH}img/logo.png"/>
-		</div>		
+		<!-- class="page-header" -->
+		<a href="#" onclick="copy_app();"><img id="logo_main" src="{$BASE_PATH}img/logo.png"/></a>		
+		
 		<ul id="mainMenu" class="nav nav-tabs">		
 		</ul>
 		<div id="content" class="panel-group">

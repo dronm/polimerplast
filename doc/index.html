@@ -16,6 +16,9 @@
 <div class="section-title">Контроллеры</div>
 <ul>
 <li>
+<a href="#AccPKO_Controller">AccPKO_Controller</a>
+</li>
+<li>
 <a href="#Carrier_Controller">Carrier_Controller</a>
 </li>
 <li>
@@ -101,6 +104,9 @@
 </li>
 <li>
 <a href="#MeasureUnit_Controller">MeasureUnit_Controller</a>
+</li>
+<li>
+<a href="#Naspunkt_Controller">Naspunkt_Controller</a>
 </li>
 <li>
 <a href="#Payment_Controller">Payment_Controller</a>
@@ -537,6 +543,24 @@
 <li>
 <a href="#TelPrefix_Model">TelPrefix_Model</a>
 </li>
+<li>
+<a href="#Naspunkt_Model">Naspunkt_Model</a>
+</li>
+<li>
+<a href="#NaspunktList_Model">NaspunktList_Model</a>
+</li>
+<li>
+<a href="#NaspunktCostList_Model">NaspunktCostList_Model</a>
+</li>
+<li>
+<a href="#DOCOrderPrintSeq_Model">DOCOrderPrintSeq_Model</a>
+</li>
+<li>
+<a href="#AccPKO_Model">AccPKO_Model</a>
+</li>
+<li>
+<a href="#AccPKOList_Model">AccPKOList_Model</a>
+</li>
 </ul>
 <div class="section-title">Перечисления</div>
 <ul>
@@ -573,9 +597,23 @@
 <li>
 <a href="#deliv_cost_types">deliv_cost_types</a>
 </li>
+<li>
+<a href="#acc_pko_types">acc_pko_types</a>
+</li>
 </ul>
 </div>
 <div class="content">
+<div id="AccPKO_Controller" class="content_box">
+<h1>AccPKO_Controller</h1>
+<div class="content_item">
+<p class="big"></p>
+<p>Методы:</p>
+<h2>get_list</h2>
+<a href="#AccPKOList_Model">Модель: AccPKOList_Model</a>
+<h2>get_object</h2>
+<a href="#AccPKOList_Model">Модель: AccPKOList_Model</a>
+</div>
+</div>
 <div id="Carrier_Controller" class="content_box">
 <h1>Carrier_Controller</h1>
 <div class="content_item">
@@ -1348,6 +1386,17 @@
 <p>Тип:String</p>
 <p>Обязательное:
 								Нет</p>
+</div>
+</div>
+<h2>download_print</h2>
+<p>Параметры:</p>
+<div class="content_item content_item2">
+<h3>doc_id</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Тип:Int</p>
+<p>Обязательное:
+								Да</p>
 </div>
 </div>
 <h2>get_print_check</h2>
@@ -2477,6 +2526,39 @@
 <p>Длина:40</p>
 </div>
 </div>
+<h2>get_from_naspunkt</h2>
+<p>Параметры:</p>
+<div class="content_item content_item2">
+<h3>region_code</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Тип:String</p>
+<p>Обязательное:
+								Нет</p>
+</div>
+<h3>pattern</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Тип:String</p>
+<p>Обязательное:
+								Да</p>
+<p>Длина:40</p>
+</div>
+<h3>from</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Тип:Int</p>
+<p>Обязательное:
+								Нет</p>
+</div>
+<h3>count</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Тип:Int</p>
+<p>Обязательное:
+								Нет</p>
+</div>
+</div>
 </div>
 </div>
 <div id="MailForSending_Controller" class="content_box">
@@ -2503,6 +2585,23 @@
 <a href="#MeasureUnitList_Model">Модель: MeasureUnitList_Model</a>
 <h2>get_object</h2>
 <a href="#MeasureUnitDialog_Model">Модель: MeasureUnitDialog_Model</a>
+</div>
+</div>
+<div id="Naspunkt_Controller" class="content_box">
+<h1>Naspunkt_Controller</h1>
+<div class="content_item">
+<p class="big"></p>
+<p>Методы:</p>
+<h2>insert</h2>
+<a href="#Naspunkt_Model">Модель: Naspunkt_Model</a>
+<h2>update</h2>
+<a href="#Naspunkt_Model">Модель: Naspunkt_Model</a>
+<h2>delete</h2>
+<a href="#Naspunkt_Model">Модель: Naspunkt_Model</a>
+<h2>get_list</h2>
+<a href="#NaspunktList_Model">Модель: NaspunktList_Model</a>
+<h2>get_object</h2>
+<a href="#NaspunktList_Model">Модель: NaspunktList_Model</a>
 </div>
 </div>
 <div id="Payment_Controller" class="content_box">
@@ -2715,6 +2814,8 @@
 <p>Методы:</p>
 <h2>production_load</h2>
 <a href="#RepProductionLoad_Model">Модель: RepProductionLoad_Model</a>
+<h2>naspunkt_cost</h2>
+<a href="#NaspunktCostList_Model">Модель: NaspunktCostList_Model</a>
 <h2>client_balance</h2>
 <p>Параметры:</p>
 <div class="content_item content_item2">
@@ -2736,6 +2837,13 @@
 <p></p>
 <div class="content_item content_item3">
 <p>Тип:Int</p>
+<p>Обязательное:
+								Да</p>
+</div>
+<h3>file_type</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Тип:String</p>
 <p>Обязательное:
 								Да</p>
 </div>
@@ -3096,6 +3204,96 @@
 <a href="#WarehouseList_Model">Модель: WarehouseList_Model</a>
 </div>
 </div>
+<div id="AccPKO_Model" class="content_box">
+<h1>AccPKO_Model</h1>
+<div class="content_item">
+<p>Поля:</p>
+<h2>id</h2>
+<div>Тип:Int</div>
+<div>Первичный ключ:TRUE</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>date_time</h2>
+<div>Тип:DateTime</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>acc_pko_type</h2>
+<div>Тип:Enum</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>total</h2>
+<div>Тип:Float</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:15</div>
+<div>Точность:2</div>
+<h2>order_list</h2>
+<div>Тип:Text</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>order_ids</h2>
+<div>Тип:Text</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+</div>
+</div>
+<div id="AccPKOList_Model" class="content_box">
+<h1>AccPKOList_Model</h1>
+<div class="content_item">
+<p>Поля:</p>
+<h2>id</h2>
+<div>Тип:Int</div>
+<div>Первичный ключ:TRUE</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>date_time</h2>
+<div>Тип:DateTime</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>date_time_descr</h2>
+<div>Тип:String</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>acc_pko_type</h2>
+<div>Тип:Enum</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>acc_pko_type_descr</h2>
+<div>Тип:String</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>total</h2>
+<div>Тип:Float</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:15</div>
+<div>Точность:2</div>
+<h2>order_list</h2>
+<div>Тип:Text</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+</div>
+</div>
 <div id="Carrier_Model" class="content_box">
 <h1>Carrier_Model</h1>
 <div class="content_item">
@@ -3293,6 +3491,18 @@
 <div>Длина:36</div>
 <div>Точность:</div>
 <h2>client_activity_id</h2>
+<div>Тип:Int</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>def_firm_id</h2>
+<div>Тип:Int</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>def_warehouse_id</h2>
 <div>Тип:Int</div>
 <div>Первичный ключ:</div>
 <div>Обязательное:</div>
@@ -3826,6 +4036,18 @@
 <div>Обязательное:</div>
 <div>Длина:</div>
 <div>Точность:</div>
+<h2>def_firm_id</h2>
+<div>Тип:Int</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>def_warehouse_id</h2>
+<div>Тип:Int</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
 </div>
 </div>
 <div id="ClientList_Model" class="content_box">
@@ -3888,6 +4110,18 @@
 <div>Точность:</div>
 <h2>login_allowed</h2>
 <div>Тип:Bool</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>def_firm_id</h2>
+<div>Тип:Int</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>def_warehouse_id</h2>
+<div>Тип:Int</div>
 <div>Первичный ключ:</div>
 <div>Обязательное:</div>
 <div>Длина:</div>
@@ -5838,6 +6072,24 @@
 <div>Точность:</div>
 </div>
 </div>
+<div id="DOCOrderPrintSeq_Model" class="content_box">
+<h1>DOCOrderPrintSeq_Model</h1>
+<div class="content_item">
+<p>Поля:</p>
+<h2>doc_id</h2>
+<div>Тип:Int</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>cnt</h2>
+<div>Тип:Int</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+</div>
+</div>
 <div id="DOCOrderProdPassport_Model" class="content_box">
 <h1>DOCOrderProdPassport_Model</h1>
 <div class="content_item">
@@ -6831,6 +7083,120 @@
 <div>Первичный ключ:</div>
 <div>Обязательное:</div>
 <div>Длина:25</div>
+<div>Точность:</div>
+</div>
+</div>
+<div id="Naspunkt_Model" class="content_box">
+<h1>Naspunkt_Model</h1>
+<div class="content_item">
+<p>Поля:</p>
+<h2>id</h2>
+<div>Тип:Int</div>
+<div>Первичный ключ:TRUE</div>
+<div>Обязательное:TRUE</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>city_id</h2>
+<div>Тип:Int</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>name</h2>
+<div>Тип:String</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:100</div>
+<div>Точность:</div>
+<h2>distance</h2>
+<div>Тип:Int</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+</div>
+</div>
+<div id="NaspunktCostList_Model" class="content_box">
+<h1>NaspunktCostList_Model</h1>
+<div class="content_item">
+<p>Поля:</p>
+<h2>city_id</h2>
+<div>Тип:Int</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>city_descr</h2>
+<div>Тип:String</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>name</h2>
+<div>Тип:String</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>deliv_cost_opt_id</h2>
+<div>Тип:Int</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>deliv_cost_opt_descr</h2>
+<div>Тип:String</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>distance</h2>
+<div>Тип:Int</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>cost</h2>
+<div>Тип:Float</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:19</div>
+<div>Точность:2</div>
+</div>
+</div>
+<div id="NaspunktList_Model" class="content_box">
+<h1>NaspunktList_Model</h1>
+<div class="content_item">
+<p>Поля:</p>
+<h2>id</h2>
+<div>Тип:Int</div>
+<div>Первичный ключ:TRUE</div>
+<div>Обязательное:TRUE</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>city_id</h2>
+<div>Тип:Int</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>city_descr</h2>
+<div>Тип:String</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>name</h2>
+<div>Тип:String</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>distance</h2>
+<div>Тип:Int</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
 <div>Точность:</div>
 </div>
 </div>
@@ -9232,6 +9598,17 @@
 <div>Обязательное:</div>
 <div>Длина:</div>
 <div>Точность:</div>
+</div>
+</div>
+<div id="acc_pko_types" class="content_box">
+<h1>acc_pko_types</h1>
+<div class="content_item">
+<p class="big"></p>
+<p>Значения:</p>
+<h2>cash</h2>
+<div>Описание:наличными</div>
+<h2>bank</h2>
+<div>Описание:картой</div>
 </div>
 </div>
 <div id="contract_states" class="content_box">

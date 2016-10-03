@@ -1359,15 +1359,53 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 		$l = $this->getDbLink();
 		$params = new ParamsSQL($pm,$l);
 		$params->setValidated("doc_id",DT_INT);
-		$ref = self::getExtRef($l,$params->getParamById('doc_id'),'ext_order_id');
+		
+		$doc_id = $params->getParamById('doc_id');
+		
+		$ref = self::getExtRef($l,$doc_id,'ext_order_id');
 		if (is_null($ref)){
 			throw new Exception("Счет не выписан!");
 		}
-		$tmp_file = ExtProg::print_order($ref,$_SESSION['user_ext_id']);
+		$tmp_file = ExtProg::print_order($ref, $_SESSION['user_ext_id']);
+		
 		ob_clean();
 		downloadFile($tmp_file,'application/pdf','inline;');
 		unlink($tmp_file);
 	}
+	
+	public function download_print($pm){
+		$l = $this->getDbLink();
+		$params = new ParamsSQL($pm,$l);
+		$params->setValidated("doc_id",DT_INT);
+		
+		$doc_id = $params->getParamById('doc_id');
+		
+		$ar = $l->query_first(sprintf("SELECT
+				'№' || o.number || ' ' || f.name AS file_name,
+				o.ext_order_id
+			FROM doc_orders AS o
+			LEFT JOIN firms AS f ON f.id = o.firm_id
+			WHERE o.id=%d",
+			$doc_id
+		));
+		
+		if (is_null($ar['ext_order_id'])){
+			throw new Exception("Счет не выписан!");
+		}
+		$tmp_file = ExtProg::print_order($ar['ext_order_id'], $_SESSION['user_ext_id']);
+		
+		//Переименование с индексом
+		$ar_seq = $this->getDbLinkMaster()->query_first(sprintf("SELECT doc_orders_inc_print(%d) AS ind",$doc_id));
+		
+		$path_parts = pathinfo($tmp_file);
+		$new_tmp_file =  $path_parts['dirname'].'/'.$ar['file_name'].' '.$ar_seq['ind'];
+		rename($tmp_file,$new_tmp_file);
+		
+		ob_clean();
+		downloadFile($new_tmp_file);
+		unlink($new_tmp_file);
+	}
+	
 	public function print_torg12($pm){
 		$l = $this->getDbLink();
 		$params = new ParamsSQL($pm,$l);
@@ -1680,6 +1718,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 					array(
 						'total'=>$ar['total'],
 						'numbers'=>$ar['order_numbers'],
+						'ids'=>$ar['order_ids'],
 						'user_ref'=>$ar['user_ref'],
 						'firm_ref'=>$ar['firm_ref'],
 						'client_ref'=>$ar['client_ref'],
@@ -1691,7 +1730,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 			if (strlen($ids)){
 				//1c
 				ExtProg::paid_to_acc($firm_client_ar);
-				
+								
 				$lmast->query(sprintf("UPDATE doc_orders
 				SET
 					acc_pko=TRUE,
@@ -1701,9 +1740,24 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 						ELSE 0
 						END,
 					acc_pko_date = now()
-				WHERE id IN (%s)",$ids));
+				WHERE id IN (%s)",$ids));				
 				
 				$res_to_client = 'Сформирован ПКО по следующим заявкам: '.$numbers;
+				
+				$ins_q = '';
+				foreach($firm_client_ar as $firm_client){
+					$ins_q.= ($ins_q=='')? '':',';
+					$ins_q.= sprintf(
+						"('cash'::acc_pko_types,%f,'%s',ARRAY[%s])",
+						$firm_client['total'],$firm_client['numbers'],$firm_client['ids']
+					);
+				}
+				
+				$lmast->query(
+					"INSERT INTO acc_pkos
+					(acc_pko_type,total,order_list,order_ids) VALUES ".$ins_q
+				);
+				
 			}
 			else{
 				$res_to_client = 'Нет заявок для формирования ПКО!';

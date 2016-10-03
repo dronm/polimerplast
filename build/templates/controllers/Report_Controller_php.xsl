@@ -22,6 +22,8 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLString.php');
 
 require_once('models/RepProductionLoad_Model.php');
 require_once('models/RepSale_Model.php');
+require_once('models/NaspunktCostList_Model.php');
+
 require_once('functions/ExtProg.php');
 require_once('common/downloader.php');
 
@@ -419,12 +421,30 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 			$params->getVal('date_from'),
 			$params->getVal('date_to'),
 			$ar['client_ref'],
-			$ar['firm_ref']
+			$ar['firm_ref'],
+			'',
+			$params->getVal('file_type')
 		);
 		ob_clean();
 		downloadFile($tmp_file);
 		unlink($tmp_file);
 	}
+	
+	public function naspunkt_cost($pm){
+		$link = $this->getDbLink();
+		$model = new NaspunktCostList_Model($link);
+		$where = $this->conditionFromParams($pm,$model);
+		
+		$q = sprintf("SELECT * FROM naspunkt_costs WHERE city_id=%d",
+		$where->getFieldValueForDb('city_id','=')
+		);
+		//throw new Exception($q);
+		
+		$model->query($q);
+		$this->addModel($model);
+		
+	}
+	
 </xsl:template>
 
 </xsl:stylesheet>
