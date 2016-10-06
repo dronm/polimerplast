@@ -12,7 +12,7 @@
 function BtnPriceTune(options){	
 	options = options||{};
 	var self = this;
-	var id = "btn_price_tune";
+	var id = uuid();//"btn_price_tune";
 	options.caption = "Пересчет прайсов";
 	options.attrs={"title":"открыть пересчет прайсов"};
 	options.onClick=function(){

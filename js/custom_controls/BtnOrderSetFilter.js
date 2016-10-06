@@ -10,7 +10,7 @@
 
 /* constructor */
 function BtnOrderSetFilter(options){	
-	var id = "btn_order_set_filter";
+	var id = uuid();
 	options.caption = "Фильтр";
 	options.attrs={"title":"открыть фильтр"};
 	options.onClick = function(){		

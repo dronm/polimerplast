@@ -25,8 +25,8 @@
 <xsl:template match="model[@id='head']/row">
 <!-- style="border-bottom:1px dotted black;" -->
 <div style="display:inline-block;width:100%;">
-	<div style="display:inline-block;width:60%;border-right:1px dotted black;padding-right:10px;">
-		<h3>Товарный чек № <xsl:value-of select="number"/> от <xsl:value-of select="date_descr"/></h3>
+	<div style="display:inline-block;width:70%;border-right:1px dotted black;padding-right:10px;">
+		<h5>Товарный чек № <xsl:value-of select="number"/> от <xsl:value-of select="date_descr"/></h5>
 		<!--
 		<div>Организация:<xsl:value-of select="firm_descr"/></div>
 		<div>Склад:<xsl:value-of select="warehouse_descr"/></div>
@@ -159,8 +159,8 @@
 			<span style="float:right;margin-right:50px;">Подпись ___________________</span>
 		</div>
 	</div>
-	<div style="display:inline-block;width:38%;padding-left:10px;vertical-align:top">
-		<h3>Отрывной талон №<xsl:value-of select="number"/> от <xsl:value-of select="date_descr"/></h3>
+	<div style="display:inline-block;width:25%;padding-left:10px;vertical-align:top">
+		<h5>Отрывной талон №<xsl:value-of select="number"/> от <xsl:value-of select="date_descr"/></h5>
 		<table style="font-size:100%;">
 			<thead>
 				<tr>

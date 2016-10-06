@@ -9,6 +9,7 @@ require_once(FRAME_WORK_PATH.'basic_classes/ModelJavaScript.php');
 			require_once('models/MainMenu_Model_production.php');
 			require_once('models/MainMenu_Model_marketing.php');
 			require_once('models/MainMenu_Model_boss.php');
+			require_once('models/MainMenu_Model_representative.php');
 		
 class ViewBase extends ViewHTMLXSLT {	
 	public function __construct($name){

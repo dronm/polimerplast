@@ -5,6 +5,7 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLInt.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLString.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLFloat.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLDateTime.php');
+require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLBool.php');
 
 class DOCOrderCurrentList_Model extends ModelSQL{
 	
@@ -13,7 +14,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		
 		$this->setDbName("public");
 		
-		$this->setTableName("doc_orders_current_list");
+		$this->setTableName("doc_orders_all_list");
 		
 		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"id"
@@ -305,6 +306,16 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		
 		));
 		$this->addField($f_total_volume);
+
+		$f_is_current=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		,"is_current"
+		,array(
+		
+			'id'=>"is_current"
+				
+		
+		));
+		$this->addField($f_is_current);
 
 		
 		

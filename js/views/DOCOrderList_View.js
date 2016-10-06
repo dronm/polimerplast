@@ -17,17 +17,15 @@ function DOCOrderList_View(id,options){
 	DOCOrderList_View.superclass.constructor.call(this,
 		id,options);
 	
-	var cont = new ControlContainer("Orders_cmd","div",{"className":"panel_cmd"});
+	var self = this;
+	this.m_evToggleNewOrders = function(){
+		self.toggleGridView(self.m_ctrlViewNewOrders);
+	};
+	this.m_evToggleOrders = function(){
+		self.toggleGridView(self.m_ctrlViewOrders);
+	};
 	
-	//Справочники
-	/*
-	if (SERV_VARS.ROLE_ID=="sales_manager"
-	||SERV_VARS.ROLE_ID=="boss"
-	||SERV_VARS.ROLE_ID=="admin"
-	){
-		cont.addElement(new BtnCatalogs({}));
-	}
-	*/
+	var cont = new ControlContainer("Orders_cmd","div",{"className":"panel_cmd"});
 	
 	//date&&time
 	cont.addElement(new CurrentDateTime("current_date",{
@@ -47,16 +45,21 @@ function DOCOrderList_View(id,options){
 	||SERV_VARS.ROLE_ID=="boss"
 	||SERV_VARS.ROLE_ID=="admin"
 	){
-		var cont = new ControlContainer(id+"_cont_new_orders","div",{"className":"panel panel-default"});
+		var cont = new ControlContainer(id+"_cont_new_orders","div",{
+			"className":"panel panel-default"
+			});
 		
 		//сами заявки
-		var view_new = new DOCOrderNewList_View(id+"_DOCOrderNewList_View",
+		this.m_ctrlViewNewOrders = new DOCOrderNewList_View(id+"_DOCOrderNewList_View",
 			{"client":(SERV_VARS.ROLE_ID!="client"),
+			"className":(CONSTANT_VALS.newOrdersCallapsed)? "collapse":"",
+			"noAutoRefresh":false,
+			"refreshInterval":(CONSTANT_VALS.newOrdersCallapsed)? 0:CONSTANT_VALS.db_controls_refresh_sec*1000,
 			"warehouse":true,
 			"total":true
 			}
 		);		
-		cont.addElement(view_new);
+		cont.addElement(this.m_ctrlViewNewOrders);
 		
 		this.addElement(cont);
 	}
@@ -69,7 +72,7 @@ function DOCOrderList_View(id,options){
 	||SERV_VARS.ROLE_ID=="production"
 	||SERV_VARS.ROLE_ID=="marketing"
 	){
-		var view = new DOCOrderCurrentList_View(id+"_DOCOrderCurrentList_View",
+		this.m_ctrlViewOrders = new DOCOrderCurrentList_View(id+"_DOCOrderCurrentList_View",
 			{
 				"client":(SERV_VARS.ROLE_ID!="client"),
 				"products":true,
@@ -94,20 +97,25 @@ function DOCOrderList_View(id,options){
 					||SERV_VARS.ROLE_ID=="boss"
 					||SERV_VARS.ROLE_ID=="admin"
 					||SERV_VARS.ROLE_ID=="production"
-				)
+				),
+				
+				"className":(CONSTANT_VALS.ordersCallapsed)? "collapse":"",
+				"noAutoRefresh":CONSTANT_VALS.ordersCallapsed,
+				"refreshInterval":(CONSTANT_VALS.ordersCallapsed)? 0:CONSTANT_VALS.db_controls_refresh_sec*1000,				
 
 			}
 		);	
 		var cont = new ControlContainer(id+"_cont_current_orders","div",{"className":"panel panel-default"});
 		
-		if (view_new){
-			view_new.m_grid.m_currentGrid = view.m_grid;
+		if (this.m_ctrlViewNewOrders){
+			this.m_ctrlViewNewOrders.m_grid.m_currentGrid = this.m_ctrlViewOrders.m_grid;
 		}
 		
-		cont.addElement(view);
+		cont.addElement(this.m_ctrlViewOrders);
 		this.addElement(cont);
 	}
 	
+	/*
 	//closed DOCOrders
 	if (SERV_VARS.ROLE_ID=="client"
 	||SERV_VARS.ROLE_ID=="sales_manager"
@@ -155,5 +163,45 @@ function DOCOrderList_View(id,options){
 		cont.addElement(view);
 		this.addElement(cont);
 	}
+	*/
 }
 extend(DOCOrderList_View,ViewList);
+
+DOCOrderList_View.prototype.toDOM = function(parent){
+	DOCOrderList_View.superclass.toDOM.call(this,parent);
+	
+	if (SERV_VARS.ROLE_ID!="client" && SERV_VARS.ROLE_ID!="production"){
+		EventHandler.addEvent(nd("MainView_DOCOrderNewList_View_title"), "click",this.m_evToggleNewOrders);
+	
+		EventHandler.addEvent(nd("MainView_DOCOrderCurrentList_View_title"), "click",this.m_evToggleOrders);
+	}
+}
+
+DOCOrderList_View.prototype.removeDOM = function(){
+	if (SERV_VARS.ROLE_ID!="client" && SERV_VARS.ROLE_ID!="production"){
+		EventHandler.removeEvent(nd("MainView_DOCOrderNewList_View_title"), "click",this.m_evToggleNewOrders);
+		EventHandler.removeEvent(nd("MainView_DOCOrderCurrentList_View_title"), "click",this.m_evToggleOrders);
+	}
+	
+	DOCOrderList_View.superclass.removeDOM.call(this);		
+}
+
+DOCOrderList_View.prototype.toggleGridView = function(gridView){
+	var callapsed = DOMHandler.hasClass(gridView.m_node,"collapse");
+	if (callapsed){
+		DOMHandler.removeClass(gridView.m_node,"collapse");
+		gridView.m_grid.setRefreshInterval(CONSTANT_VALS.db_controls_refresh_sec*1000);
+		gridView.m_grid.onRefresh();
+	}
+	else{
+		gridView.m_grid.setRefreshInterval(0);
+		DOMHandler.addClass(gridView.m_node,"collapse");
+	}
+	if (gridView.getId()=="MainView_DOCOrderCurrentList_View"){
+		CONSTANT_VALS.ordersCallapsed = !callapsed;
+	}
+	else{
+		CONSTANT_VALS.newOrdersCallapsed = !callapsed;
+	}
+}
+

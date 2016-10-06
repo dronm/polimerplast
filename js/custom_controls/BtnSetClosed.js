@@ -10,7 +10,7 @@
 
 /* constructor */
 function BtnSetClosed(options){	
-	var id = "btn_order_set_closed";
+	var id = uuid();
 	options.caption = "В архив";
 	options.attrs={"title":"перевести заявку в статус 'закрыта'"};
 	options.onClick = function(){

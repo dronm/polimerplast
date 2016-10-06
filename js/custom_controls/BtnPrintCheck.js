@@ -10,7 +10,7 @@
 
 /* constructor */
 function BtnPrintCheck(options){	
-	var id = "btn_order_print_check";
+	var id = uuid();
 	options.caption = "Чек";
 	options.attrs={"title":"распечатать заявку"};
 	options.onClick = function(){

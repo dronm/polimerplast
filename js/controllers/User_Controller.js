@@ -60,7 +60,7 @@ extend(User_Controller,ControllerDb);
 	options = {};
 	options["alias"]="роль";
 	param = new FieldEnum("role_id",options);
-	options["values"] = 'admin,client,sales_manager,production,marketing,boss';
+	options["values"] = 'admin,client,sales_manager,production,marketing,boss,representative';
 	
 	pm.addParam(param);
 	
@@ -150,7 +150,7 @@ extend(User_Controller,ControllerDb);
 	options = {};
 	options["alias"]="роль";
 	param = new FieldEnum("role_id",options);
-	options["values"] = 'admin,client,sales_manager,production,marketing,boss';
+	options["values"] = 'admin,client,sales_manager,production,marketing,boss,representative';
 	
 	pm.addParam(param);
 	

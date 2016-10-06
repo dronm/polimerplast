@@ -10,7 +10,7 @@
 
 /* constructor */
 function BtnRefreshClientDebts(options){	
-	var id = "btn_order_set_closed";
+	var id = uuid();
 	options.caption = "Обновить из 1с";
 	options.attrs={"title":"Обновить долги из базы 1с"};
 	options.onClick = function(){

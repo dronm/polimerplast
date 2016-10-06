@@ -11,7 +11,7 @@
 /* constructor */
 function BtnOrderDivis(options){	
 	var self = this;
-	var id = "btn_order_devis";
+	var id = uuid();
 	options.caption = "Разделить";
 	options.attrs={"title":"разделить заявку"};
 	options.onClick=function(){

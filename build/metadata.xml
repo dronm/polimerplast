@@ -2,8 +2,8 @@
 <metadata debug="TRUE" owner="polimerplast" dataSchema="public">
 	<versions>	
 		<version dateOpen="2016-06-07 07:05" dateClose="2016-06-07 11:06:25">1.0021</version>
-		<lastBuild>2016-10-03 19:22:00</lastBuild>		
-	<version dateOpen="2016-06-07 11:06:56"/><version dateOpen="2016-06-07 11:06:57" dateClose="2016-06-07 14:06:30">1.0022</version><version dateOpen="2016-06-07 14:06:32" dateClose="2016-06-07 16:06:31">1.0023</version><version dateOpen="2016-06-07 16:06:32" dateClose="2016-06-08 10:06:07">1.0024</version><version dateOpen="2016-06-08 10:06:42" dateClose="2016-06-08 13:06:31">1.0025</version><version dateOpen="2016-06-08 14:06:25" dateClose="2016-06-09 15:06:33">1.0026</version><version dateOpen="2016-06-09 17:06:49" dateClose="2016-06-09 17:06:52">1.0027</version><version dateOpen="2016-06-09 17:06:52" dateClose="2016-06-09 21:06:53">1.0027</version><version dateOpen="2016-06-09 21:06:53" dateClose="2016-06-10 12:06:17">1.0028</version><version dateOpen="2016-06-10 12:06:18" dateClose="2016-06-11 14:06:03">1.0029</version><version dateOpen="2016-06-16 23:06:13" dateClose="2016-06-20 14:06:32">1.0030</version><version dateOpen="2016-06-20 14:06:33" dateClose="2016-06-22 15:06:50">1.0031</version><version dateOpen="2016-06-24 09:06:55" dateClose="2016-07-08 14:07:21">1.0032</version><version dateOpen="2016-07-08 14:07:21" dateClose="2016-07-12 12:07:59">1.0033</version><version dateOpen="2016-07-12 12:07:59" dateClose="2016-07-13 16:07:12">1.0034</version><version dateOpen="2016-07-13 18:07:15" dateClose="2016-07-15 18:07:34">1.0035</version><version dateOpen="2016-07-16 08:07:56" dateClose="2016-07-16 17:07:58">1.0036</version><version dateOpen="2016-07-16 17:07:59" dateClose="2016-08-11 14:08:53">1.0037</version><version dateOpen="2016-08-13 11:08:41" dateClose="2016-08-13 11:08:43">1.0038</version><version dateOpen="2016-08-17 16:08:54" dateClose="2016-08-17 18:08:02">1.0039</version><version dateOpen="2016-08-19 11:08:12" dateClose="2016-08-19 11:08:12">1.0040</version><version dateOpen="2016-08-22 15:08:35" dateClose="2016-08-22 15:08:35">1.0041</version><version dateOpen="2016-08-22 17:08:03" dateClose="2016-08-22 18:08:14">1.0042</version><version dateOpen="2016-08-23 16:08:42" dateClose="2016-08-25 13:08:24">1.0043</version><version dateOpen="2016-08-25 15:08:58" dateClose="2016-08-25 15:08:59">1.0044</version><version dateOpen="2016-08-25 16:08:08" dateClose="2016-08-25 16:08:09">1.0045</version><version dateOpen="2016-09-01 07:09:51" dateClose="2016-09-01 12:09:55">1.0046</version><version dateOpen="2016-09-08 17:09:56" dateClose="2016-09-08 17:09:56">1.0047</version><version dateOpen="2016-09-08 18:09:06" dateClose="2016-09-08 18:09:06">1.0048</version><version dateOpen="2016-09-09 08:09:55" dateClose="2016-09-09 08:09:56">1.0049</version><version dateOpen="2016-09-30 14:09:31" dateClose="2016-10-03 16:10:09">1.0050</version><version dateOpen="2016-10-03 16:10:27" dateClose="2016-10-03 23:10:36">1.0051</version></versions>	
+		<lastBuild>2016-10-06 16:59:48</lastBuild>		
+	<version dateOpen="2016-06-07 11:06:56"/><version dateOpen="2016-06-07 11:06:57" dateClose="2016-06-07 14:06:30">1.0022</version><version dateOpen="2016-06-07 14:06:32" dateClose="2016-06-07 16:06:31">1.0023</version><version dateOpen="2016-06-07 16:06:32" dateClose="2016-06-08 10:06:07">1.0024</version><version dateOpen="2016-06-08 10:06:42" dateClose="2016-06-08 13:06:31">1.0025</version><version dateOpen="2016-06-08 14:06:25" dateClose="2016-06-09 15:06:33">1.0026</version><version dateOpen="2016-06-09 17:06:49" dateClose="2016-06-09 17:06:52">1.0027</version><version dateOpen="2016-06-09 17:06:52" dateClose="2016-06-09 21:06:53">1.0027</version><version dateOpen="2016-06-09 21:06:53" dateClose="2016-06-10 12:06:17">1.0028</version><version dateOpen="2016-06-10 12:06:18" dateClose="2016-06-11 14:06:03">1.0029</version><version dateOpen="2016-06-16 23:06:13" dateClose="2016-06-20 14:06:32">1.0030</version><version dateOpen="2016-06-20 14:06:33" dateClose="2016-06-22 15:06:50">1.0031</version><version dateOpen="2016-06-24 09:06:55" dateClose="2016-07-08 14:07:21">1.0032</version><version dateOpen="2016-07-08 14:07:21" dateClose="2016-07-12 12:07:59">1.0033</version><version dateOpen="2016-07-12 12:07:59" dateClose="2016-07-13 16:07:12">1.0034</version><version dateOpen="2016-07-13 18:07:15" dateClose="2016-07-15 18:07:34">1.0035</version><version dateOpen="2016-07-16 08:07:56" dateClose="2016-07-16 17:07:58">1.0036</version><version dateOpen="2016-07-16 17:07:59" dateClose="2016-08-11 14:08:53">1.0037</version><version dateOpen="2016-08-13 11:08:41" dateClose="2016-08-13 11:08:43">1.0038</version><version dateOpen="2016-08-17 16:08:54" dateClose="2016-08-17 18:08:02">1.0039</version><version dateOpen="2016-08-19 11:08:12" dateClose="2016-08-19 11:08:12">1.0040</version><version dateOpen="2016-08-22 15:08:35" dateClose="2016-08-22 15:08:35">1.0041</version><version dateOpen="2016-08-22 17:08:03" dateClose="2016-08-22 18:08:14">1.0042</version><version dateOpen="2016-08-23 16:08:42" dateClose="2016-08-25 13:08:24">1.0043</version><version dateOpen="2016-08-25 15:08:58" dateClose="2016-08-25 15:08:59">1.0044</version><version dateOpen="2016-08-25 16:08:08" dateClose="2016-08-25 16:08:09">1.0045</version><version dateOpen="2016-09-01 07:09:51" dateClose="2016-09-01 12:09:55">1.0046</version><version dateOpen="2016-09-08 17:09:56" dateClose="2016-09-08 17:09:56">1.0047</version><version dateOpen="2016-09-08 18:09:06" dateClose="2016-09-08 18:09:06">1.0048</version><version dateOpen="2016-09-09 08:09:55" dateClose="2016-09-09 08:09:56">1.0049</version><version dateOpen="2016-09-30 14:09:31" dateClose="2016-10-03 16:10:09">1.0050</version><version dateOpen="2016-10-03 16:10:27" dateClose="2016-10-03 23:10:36">1.0051</version><version dateOpen="2016-10-03 23:10:36" dateClose="2016-10-06 16:10:59">1.0052</version></versions>	
 	<globalFilters>
 		<field id="client_id"/>
 	</globalFilters>
@@ -15,6 +15,7 @@
 			<value id="production" descr="Производственный отдел"/>
 			<value id="marketing" descr="Маркетолог"/>
 			<value id="boss" descr="Руководитель"/>
+			<value id="representative" descr="Представитель"/>
 		</enum>
 		<enum id="doc_types">
 			<value id="order" descr="Заявка покупателя"/>
@@ -831,7 +832,7 @@
 			<field id="state_descr" dataType="String"/>
 			<globalFilter id="client_id"/>
 		</model>
-		<model id="DOCOrderCurrentList" parent="ModelSQL" dataTable="doc_orders_current_list" virtual="TRUE">
+		<model id="DOCOrderCurrentList" parent="ModelSQL" dataTable="doc_orders_all_list" virtual="TRUE">
 			<field id="id" dataType="Int" primaryKey="TRUE"/>
 			<field id="number" dataType="String"/>
 			<field id="date_time" dataType="DateTime"/>
@@ -861,9 +862,10 @@
 			<field id="cust_surv_date_time" dataType="String"/>
 			<field id="cust_surv_date_time_descr" dataType="String"/>
 			<field id="total_volume" dataType="String"/>
+			<field id="is_current" dataType="Bool"/>
 			<globalFilter id="client_id"/>
 		</model>
-		<model id="DOCOrderCurrentForClientList" parent="ModelSQL" dataTable="doc_orders_current_for_client_list" virtual="TRUE">
+		<model id="DOCOrderCurrentForClientList" parent="ModelSQL" dataTable="doc_orders_all_for_client_list" virtual="TRUE">
 			<field id="id" dataType="Int" primaryKey="TRUE"/>
 			<field id="number" dataType="String"/>
 			<field id="date_time" dataType="DateTime"/>
@@ -890,9 +892,10 @@
 			<field id="printed" dataType="String"/>
 			<field id="customer_survey_date" dataType="String"/>
 			<field id="customer_survey_date_descr" dataType="String"/>
+			<field id="is_current" dataType="Bool"/>
 			<globalFilter id="client_id"/>
 		</model>
-		<model id="DOCOrderCurrentForProductionList" parent="ModelSQL" dataTable="doc_orders_current_for_production_list" virtual="TRUE">
+		<model id="DOCOrderCurrentForProductionList" parent="ModelSQL" dataTable="doc_orders_all_for_production_list" virtual="TRUE">
 			<field id="id" dataType="Int" primaryKey="TRUE"/>
 			<field id="number" dataType="String"/>
 			<field id="date_time" dataType="DateTime"/>
@@ -918,6 +921,7 @@
 			<field id="printed" dataType="String"/>
 			<field id="cust_surv_date_time" dataType="String"/>
 			<field id="cust_surv_date_time" dataType="String"/>
+			<field id="is_current" dataType="Bool"/>
 			<globalFilter id="client_id"/>
 		</model>
 		
@@ -2474,11 +2478,13 @@
 		<allow controllerId="all" methodId="all" roleId="sales_manager"/>
 		<allow controllerId="all" methodId="all" roleId="production"/>
 		<allow controllerId="all" methodId="all" roleId="marketing"/>
+		<allow controllerId="all" methodId="all" roleId="representative"/>
 
 		<revoke controllerId="DOCOrder" methodId="set_not_paid" roleId="boss"/>
 		<revoke controllerId="DOCOrder" methodId="set_not_paid" roleId="sales_manager"/>
 		<revoke controllerId="DOCOrder" methodId="set_not_paid" roleId="production"/>
 		<revoke controllerId="DOCOrder" methodId="set_not_paid" roleId="marketing"/>
+		<revoke controllerId="DOCOrder" methodId="set_not_paid" roleId="representative"/>
 		
 		<!-- client role -->
 		<allow controllerId="User" methodId="get_list" roleId="client"/>
@@ -2598,6 +2604,14 @@
 		<item viewId="RepSales_View" descr="Отчетность"/>
 		<item viewId="UserAccount_View" descr="Учетная запись"/>
 	</mainMenu>	
+	<mainMenu roleId="representative">
+		<item viewId="DOCOrderList_View" descr="Заявки" default="TRUE"/>
+		<item viewId="DOCOrderList_View" descr="Заявки в производстве"/>
+		<item viewId="ClientList_View" descr="Клиенты"/>
+		<item viewId="Delivery_View" descr="Доставки"/>
+		<item viewId="UserAccount_View" descr="Учетная запись"/>
+	</mainMenu>	
+	
 	<mainMenu roleId="admin">
 		<item viewId="DOCOrderList_View" descr="Заявки" default="TRUE"/>
 		<item viewId="Catalogs_View" descr="Справочники"/>

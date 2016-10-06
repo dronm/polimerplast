@@ -10,7 +10,7 @@
 
 /* constructor */
 function BtnOrderUnsetFilter(options){	
-	var id = "btn_order_unset_filter";
+	var id = uuid();
 	options.caption = "Сбросить";
 	options.attrs={"title":"сбросить фильтр"};
 	options.onClick = function(){

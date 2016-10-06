@@ -36,16 +36,16 @@ DOCOrderGridDb.prototype.onGetData = function(resp){
 				"wait":1,
 				"onHover":function(event){					
 					this.popup(
-						'<div><span class="behind_plan">&nbsp;&nbsp;&nbsp;</span> - опаздание</div>'+
-						'<div><span class="waiting_for_us">&nbsp;&nbsp;&nbsp;</span> - согласование Полимерпласт</div>'+
-						'<div><span class="waiting_for_client">&nbsp;&nbsp;&nbsp;</span> - на согласовании у клиента</div>'+
-						'<div><span class="waiting_for_payment">&nbsp;&nbsp;&nbsp;</span> - ожидает оплаты материалов</div>'+
-						'<div><span class="producing">&nbsp;&nbsp;&nbsp;</span> - в производстве</div>'+
-						'<div><span class="produced">&nbsp;&nbsp;&nbsp;</span> - готова</div>'+
-						'<div><span class="shipped">&nbsp;&nbsp;&nbsp;</span> - отгружена</div>'+
-						'<div><span class="loading">&nbsp;&nbsp;&nbsp;</span> - на погрузке</div>'+
-						'<div><span class="on_way">&nbsp;&nbsp;&nbsp;</span> - доставка клиенту</div>'+
-						'<div><span class="unloading">&nbsp;&nbsp;&nbsp;</span> - разгрузка у клиента</div>',
+						'<div><span class="color-sample behind_plan">&nbsp;&nbsp;&nbsp;</span> - опаздание</div>'+
+						'<div><span class="color-sample waiting_for_us">&nbsp;&nbsp;&nbsp;</span> - согласование Полимерпласт</div>'+
+						'<div><span class="color-sample waiting_for_client">&nbsp;&nbsp;&nbsp;</span> - на согласовании у клиента</div>'+
+						'<div><span class="color-sample waiting_for_payment">&nbsp;&nbsp;&nbsp;</span> - ожидает оплаты материалов</div>'+
+						'<div><span class="color-sample producing">&nbsp;&nbsp;&nbsp;</span> - в производстве</div>'+
+						'<div><span class="color-sample produced">&nbsp;&nbsp;&nbsp;</span> - готова</div>'+
+						'<div><span class="color-sample shipped">&nbsp;&nbsp;&nbsp;</span> - отгружена</div>'+
+						'<div><span class="color-sample loading">&nbsp;&nbsp;&nbsp;</span> - на погрузке</div>'+
+						'<div><span class="color-sample on_way">&nbsp;&nbsp;&nbsp;</span> - доставка клиенту</div>'+
+						'<div><span class="color-sample unloading">&nbsp;&nbsp;&nbsp;</span> - разгрузка у клиента</div>',
 						{"title":"Расшифровка статусов","className":"OrderInfPopOver"}
 						);
 				}

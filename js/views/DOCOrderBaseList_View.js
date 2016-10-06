@@ -12,6 +12,7 @@
 /* constructor */
 function DOCOrderBaseList_View(id,options){
 	options = options || {};
+	
 	DOCOrderBaseList_View.superclass.constructor.call(this,
 		id,options);
 	
@@ -22,6 +23,28 @@ function DOCOrderBaseList_View(id,options){
 	if (options.filter){
 		filter = new GridFilter(id+"_filter",{noUnsetControl:false});
 		//CustomGridFilter
+		
+		//Типы заявок: текущий или все		
+		filter.addFilterControl(new EditRadioGroup(id+"_filter_current_all",
+			{//"labelCaption":"Показывать заявки:",
+			"editContClassName":"input-group "+get_bs_col()+"3",
+			"elements":[
+				new EditRadio("current_all:current",{
+					"descr":"Только текущие заявки",
+					"value":"true",
+					"name":"orders_type_filter",
+					"editContClassName":"input-group "+get_bs_col()+"1",
+					"attrs":{"checked":"checked"}}),
+				new EditRadio("current_all:all",{
+					"descr":"Все заявки",
+					"value":"undefined",
+					"name":"orders_type_filter",
+					"editContClassName":"input-group "+get_bs_col()+"1"
+					})
+				]
+			})
+		,{"sign":"e","valueFieldId":"is_current"});
+		
 		
 		//Номер наш
 		filter.addFilterControl(new EditString(id+"_filter_number",
@@ -131,6 +154,17 @@ function DOCOrderBaseList_View(id,options){
 			filter.addFilterControl(customer_survey_date_period_ctrl.getControlTo(),
 			{"sign":"le","valueFieldId":"cust_surv_date_time"});				
 		}
+
+		//планируемая дата выполнения
+		var plan_date_period_ctrl = new EditPeriodDateTime(id+"_filter_plan_date",{
+			"labelCaptionFrom":"Период планируемых дат выполнения:",
+			"labelCaptionTo":"-",
+			"tableLayout":false
+			});
+		filter.addFilterControl(plan_date_period_ctrl.getControlFrom(),
+		{"sign":"ge","valueFieldId":"delivery_plan_date"});
+		filter.addFilterControl(plan_date_period_ctrl.getControlTo(),
+		{"sign":"le","valueFieldId":"delivery_plan_date"});				
 		
 	}
 		
@@ -265,6 +299,7 @@ function DOCOrderBaseList_View(id,options){
 	}
 	
 	head.addElement(row);
+	
 	this.m_grid=new DOCOrderGridDb(id+"_grid",
 		{"head":head,
 		"body":new GridBody(),
@@ -274,15 +309,18 @@ function DOCOrderBaseList_View(id,options){
 		"readModelId":options.readModelId,
 		"editViewClass":DOCOrderDialog_View,
 		"editInline":false,
+		
 		"pagination":options.pagination,
+		
 		"commandPanel":options.commands,
 		"rowCommandPanelClass":null,
 		"filter":filter,
-		"refreshInterval":(options.refreshInterval==undefined)? CONSTANT_VALS.db_controls_refresh_sec*1000:0,
+		"refreshInterval":options.refreshInterval,
+		"noAutoRefresh":options.noAutoRefresh,
 		"onSelect":options.onSelect,
 		"rowSelect":true,
 		"fieldValueToRowClass":"state",
-		"editWinClass":WIN_CLASS,
+		//"editWinClass":WIN_CLASS,
 		"fixedHeader":true
 		}
 	);

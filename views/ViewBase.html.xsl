@@ -38,7 +38,7 @@
 				var win = window.open('<xsl:value-of select="/document/model[@id='ModelVars']/row/basePath"/>',"_blank");
 				win.focus();
 			}
-			
+			/*
 			function getLocation() {
 			    if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(pos){
@@ -46,7 +46,7 @@
 				});
 			    }
 			}
-						
+			*/			
 			function pageLoad(){
 				
 				window.onerror = function(msg,url,line,col,error) {
@@ -76,6 +76,11 @@
 					};
 				CONSTANTS.readValues(CONSTANT_VALS);
 				//console.log("lat="+CONSTANT_VALS.map_default_lat)
+				console.log("grid_rows_per_page_count="+CONSTANT_VALS.grid_rows_per_page_count)
+				
+				//defaults
+				CONSTANT_VALS.newOrdersCallapsed = true;
+				CONSTANT_VALS.ordersCallapsed = false;
 				
 				var self = this;
 				onViewClose = function(res){					
@@ -86,13 +91,12 @@
 				};
 				
 			<xsl:apply-templates select="/document/model[@id='MainMenu_Model']"/>
-			<!--
+			
 			<xsl:if test="/document/model[@id='MainMenu_Model']/item[@default='TRUE']">
 			onItemClick(<xsl:value-of select="/document/model[@id='MainMenu_Model']/item[@default='TRUE']/@viewId"/>);
 			</xsl:if>
-			-->
+			
 			if (SERV_VARS.ROLE_ID=="sales_manager"){
-				//debugger;
 				NEW_CLIENT_CHECK = new UnregClientCheck(CONSTANT_VALS.new_client_check_sec);
 				
 			}
@@ -160,9 +164,11 @@ item.toDOM(nd("mainMenu"));
 <xsl:template match="model[@id='MainMenu_Model']/item">
 var opts={"caption":"<xsl:value-of select="@descr"/>",
 	"viewClassId":<xsl:value-of select="@viewId"/>,
+	<!--
 	<xsl:if test="@default='TRUE'">
 	"defItem":true,
 	</xsl:if>
+	-->
 	"onClick":onItemClick,
 	"onClickContext":this};
 var item = new TabMenuItem('it'+<xsl:value-of select="position()"/>,opts);

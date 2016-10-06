@@ -40,7 +40,7 @@ class ClientUser_Controller extends ControllerSQL{
 			));
 		$pm->addParam($param);
 		
-				$param = new FieldExtEnum('role_id',',','admin,client,sales_manager,production,marketing,boss'
+				$param = new FieldExtEnum('role_id',',','admin,client,sales_manager,production,marketing,boss,representative'
 				,array(
 				'alias'=>'роль'
 			));
@@ -107,7 +107,7 @@ class ClientUser_Controller extends ControllerSQL{
 			));
 			$pm->addParam($param);
 		
-				$param = new FieldExtEnum('role_id',',','admin,client,sales_manager,production,marketing,boss'
+				$param = new FieldExtEnum('role_id',',','admin,client,sales_manager,production,marketing,boss,representative'
 				,array(
 			
 				'alias'=>'роль'

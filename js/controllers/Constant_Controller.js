@@ -86,7 +86,7 @@ Constant_Controller.prototype.readValues = function(struc){
 	if (id_list.length){
 		pm.setParamValue("id_list",id_list);
 		//alert(this.getQueryString(pm));
-		this.runPublicMethod("get_values",{},true,
+		this.runPublicMethod("get_values",{},false,
 		function(resp){
 			var model = resp.getModelById("ConstantValueList_Model");
 			model.setActive(true);

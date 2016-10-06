@@ -120,6 +120,7 @@ tr.for_select{
 .MainView_grid{
 	height:30em;
 }
+/*
 .MainView_DOCOrderCurrentList_View_grid{
 	height:100em;
 }
@@ -129,7 +130,7 @@ tr.for_select{
 .MainView_DOCOrderNewList_View_grid{
 	height:15em;
 }
-
+*/
 .modal {
   text-align: center;
 }
@@ -197,9 +198,11 @@ tr.waiting_for_us td[field_id="number"],span.waiting_for_us{
 tr.waiting_for_client td[field_id="number"],span.waiting_for_client{
 	background-color:#99f0e5;
 }
+/*
 tr.waiting_for_payment td[field_id="number"],span.waiting_for_payment{
 	background-color:#FDB071;
 }
+*/
 tr.producing td[field_id="number"],span.producing{
 	background-color:#FBE569;
 }
@@ -212,6 +215,11 @@ tr.shipped td[field_id="number"],span.shipped{
 }
 tr.behind_plan td[field_id="number"],span.behind_plan{
 	background-color:#ff9875;
+}
+
+.color-sample{
+	border:1px solid black;
+	margin:2px 2px;
 }
 
 td.uponMe{
@@ -302,4 +310,24 @@ tr.level_10{
 	0% { opacity: 1; } 
 	50% { opacity: .1; } 
 	100% { opacity: 1; }
+}
+
+.pagination-pages{
+	margin-left:15px;;
+}
+.pagination-page{
+	cursor:pointer;
+	margin:5px 5px;
+}
+
+.pagination-page-cur{
+	font-size:110%;
+	cursor:default;
+}
+
+#MainView_DOCOrderNewList_View_title{
+	cursor:pointer;
+}
+#MainView_DOCOrderCurrentList_View_title{
+	cursor:pointer;
 }

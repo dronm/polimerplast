@@ -1685,7 +1685,7 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 		);		
 		
 		//Отметка о печати если напечатал производство
-		if ($_SESSION['role_id']=='production'){
+		if ($_SESSION['role_id']=='production' || $_SESSION['role_id']=='representative'){
 			$this->getDbLinkMaster()->query(sprintf(
 				"UPDATE doc_orders SET printed=true
 				WHERE id=%d",
@@ -1826,7 +1826,7 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 			$this->addModel($model);			
 							
 			//Отметка о печати если напечатал производство
-			if ($_SESSION['role_id']=='production'){
+			if ($_SESSION['role_id']=='production' || $_SESSION['role_id']=='representative'){
 				
 				$link->query(
 				"UPDATE doc_orders SET printed=TRUE
@@ -2821,7 +2821,7 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 		if (is_null($ar['ext_order_id'])){
 			throw new Exception("Счет не выписан!");
 		}
-		$tmp_file = ExtProg::print_order($ar['ext_order_id'], $_SESSION['user_ext_id']);
+		$tmp_file = ExtProg::print_order($ar['ext_order_id'], $_SESSION['user_ext_id'],1);
 		
 		//Переименование с индексом
 		$ar_seq = $this->getDbLinkMaster()->query_first(sprintf("SELECT doc_orders_inc_print(%d) AS ind",$doc_id));

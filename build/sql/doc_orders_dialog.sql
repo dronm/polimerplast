@@ -88,11 +88,12 @@ CREATE OR REPLACE VIEW doc_orders_dialog AS
 	LEFT JOIN (
 		SELECT
 			t.client_id,
+			t.firm_id,
 			sum(t.debt_total) AS debt_total,
 			sum(t.def_debt) AS def_debt
 		FROM client_debts AS t
-		GROUP BY t.client_id
-	) cld ON cld.client_id = d.client_id
+		GROUP BY t.client_id,t.firm_id
+	) cld ON cld.client_id = d.client_id AND cld.firm_id = d.firm_id
 	
 	LEFT JOIN users AS u ON u.id=d.user_id
 	LEFT JOIN firms AS f ON f.id=d.firm_id

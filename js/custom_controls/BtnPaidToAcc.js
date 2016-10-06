@@ -10,7 +10,7 @@
 
 /* constructor */
 function BtnPaidToAcc(options){	
-	id = "btn_paid_to_acc";
+	id = uuid();
 	options.caption = "==>>ПКО1";
 	options.attrs = options.attrs||{};
 	options.attrs.title = "Создать ПКО в бухгалтерии по оплаченным заявкам.";
