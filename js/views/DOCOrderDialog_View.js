@@ -1192,7 +1192,7 @@ DOCOrderDialog_View.prototype.changeDelivType = function(){
 	
 }
 DOCOrderDialog_View.prototype.getFormWidth = function(){
-	return "800";
+	return "1000";
 }
 DOCOrderDialog_View.prototype.getFormHeight = function(){
 	return ( (SERV_VARS.ROLE_ID=="client")? "700":"1010");

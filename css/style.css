@@ -6,10 +6,9 @@
 #logo_main{
 	width:243px;
 	height:31px;
-	margin-left:50px;
 	position:absolute;
-	top:0px;
-	right:100px;
+	top:5px;
+	right:130px;
 }
 
 .invisible{

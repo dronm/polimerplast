@@ -139,6 +139,12 @@ DOCOrderGridDb.prototype.initEditViewObj = function(contr){
 	if (tt_n){
 		DOMHandler.removeNode(tt_n);
 	}
+	/*
+	var compl_n = nd("tat_table");
+	if (compl_n){
+		DOMHandler.removeNode(compl_n);
+	}
+	*/
 }
 
 DOCOrderGridDb.prototype.onRefresh = function(){

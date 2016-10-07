@@ -105,27 +105,33 @@ ClientDestinationEdit.prototype.openForm = function(keys){
 	this.m_extForm = new WIN_CLASS(this.getId()+"_dest_edit",{"caption":"Адрес клиента",
 		"width":900,"height":1100,
 		"noMinimize":true,"resizable":false});
-	this.m_extForm.open();
+	
 	this.m_extView = new ClientDestinationDialog_View(this.m_id+"_ClientDestinationDialog",
 		{"winObj":this.m_extForm,
 		"readController":new ClientDestination_Controller(new ServConnector(HOST_NAME)),
 		"clientId":this.m_pm.getParamValue(this.m_paramId),
-		"onClose":function(){
+		"onClose":function(res){
+			//console.log("ClientDestinationEdit.prototype.openForm view destroy")
 			self.onRefresh();			
 		
 			if (self.m_extView.m_lastInsertedId){
 				//есть последний вставленный ид - спозиционируемся на него
-				self.setByFieldId(self.m_extView.m_lastInsertedId);
+				self.setByFieldId(self.m_extView.m_lastInsertedId);			
 			}
-		
-			self.m_extForm.close();
+			
 			self.m_extView.removeDOM();
 			delete self.m_extView;
+
+			self.m_extForm.m_closeMode = res;		
+			self.m_extForm.close();
 			delete self.m_extForm;
 			
 			self.setFocus();		
 		}
 		});
+	this.m_extView.setWinObj(this.m_extForm);
+	this.m_extForm.m_view = this.m_extView;
+	this.m_extForm.open();	
 	
 	this.m_extView.toDOM(this.m_extForm.getContentParent());
 	this.m_extForm.setFocus();		
