@@ -34,17 +34,17 @@ function DOCOrderDialog_View(id,options){
 					self.onDownloadOrder();
 				},
 				"attrs":{
-					"title":"сохранить печатную форму счета"}
+					"title":"сохранить печатную форму счета в файл"}
 			}
 		);
 		options.cmdControls = [this.m_downloadPrintCtrl];
 	}
 	else if (SERV_VARS.ROLE_ID=="production" || SERV_VARS.ROLE_ID=="representative"){
-		this.m_passToProdCtrl = new BtnPassToProduction({
+		this.m_ctrlSetShipped = new BtnSetShipped({
 			"grid":null,
 			"className":"btn btn-primary btn-cmd",
 			"enabled":false});
-		options.cmdControls = [this.m_passToProdCtrl];	
+		options.cmdControls = [this.m_ctrlSetShipped];	
 	}
 		
 	DOCOrderDialog_View.superclass.constructor.call(this,
@@ -865,9 +865,9 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 		if (this.m_downloadPrintCtrl){
 			this.m_downloadPrintCtrl.setEnabled(true);
 		}
-		if (this.m_passToProdCtrl){
-			this.m_passToProdCtrl.setEnabled(true);
-			this.m_passToProdCtrl.m_grid = this.m_productDetails.getGridControl()
+		if (this.m_ctrlSetShipped){
+			this.m_ctrlSetShipped.setEnabled(true);
+			this.m_ctrlSetShipped.m_grid = this.m_productDetails.getGridControl()
 		}
 	}
 }
@@ -1198,7 +1198,7 @@ DOCOrderDialog_View.prototype.getFormHeight = function(){
 	return ( (SERV_VARS.ROLE_ID=="client")? "700":"1010");
 }
 
-DOCOrderDialog_View.prototype.onDownloadOrder = function(){
+DOCOrderDialog_View.prototype.doDownloadOrder = function(){
 	var contr = new DOCOrder_Controller(new ServConnector(HOST_NAME));
 	var meth = contr.getPublicMethodById("download_print");
 	meth.setParamValue("doc_id",this.getDataControl(this.getId()+"_id").control.getValue());
@@ -1208,4 +1208,28 @@ DOCOrderDialog_View.prototype.onDownloadOrder = function(){
 		form.append($("<input></input>").attr('type', 'hidden').attr('name', id).attr('value', meth.m_params[id].getValue()));
 	}
 	form.appendTo('body').submit().remove();
+}
+
+DOCOrderDialog_View.prototype.onDownloadOrder = function(){
+	//сначала запись!!
+	if (this.getModified()){
+		var self = this;
+		WindowQuestion.show({
+			"text":"Для сохранения печатной формы, документ необходимо записать, продолжить?",
+			"callBack":function(res){
+				if (res==WindowQuestion.RES_YES){
+					self.writeData();
+					if (self.m_lastWriteResult){
+						self.doDownloadOrder();
+					}
+				}
+			}
+			});
+		
+	}
+	else{
+		this.doDownloadOrder();
+	}
+	
+	
 }

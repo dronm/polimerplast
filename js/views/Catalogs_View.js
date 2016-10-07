@@ -46,6 +46,7 @@ function Catalogs_View(id,options){
 	
 	this.addItem({"caption":"Серверы трекеров","viewClassId":TrackerServerList_View,"id":"TrackerServerList_View"});
 	this.addItem({"caption":"Трекеры","viewClassId":TrackerList_View,"id":"TrackerList_View"});
+	this.addItem({"caption":"Отчет по стоянкам","viewClassId":RepVehicleStop_View,"id":"RepVehicleStop_View"});
 	
 	this.addItem({"caption":"Шаблоны SMS","viewClassId":SMSTemplateList_View,"id":"SMSTemplateList_View"});
 	this.addItem({"caption":"Шаблоны Email","viewClassId":EmailTemplateList_View,"id":"EmailTemplateList_View"});

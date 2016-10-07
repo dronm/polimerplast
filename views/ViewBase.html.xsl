@@ -76,7 +76,7 @@
 					};
 				CONSTANTS.readValues(CONSTANT_VALS);
 				//console.log("lat="+CONSTANT_VALS.map_default_lat)
-				console.log("grid_rows_per_page_count="+CONSTANT_VALS.grid_rows_per_page_count)
+				//console.log("grid_rows_per_page_count="+CONSTANT_VALS.grid_rows_per_page_count)
 				
 				//defaults
 				CONSTANT_VALS.newOrdersCallapsed = true;

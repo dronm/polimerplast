@@ -17,12 +17,19 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPolygon.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ParamsSQL.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLString.php');
 
+/*
+require_once(FRAME_WORK_PATH.'basic_classes/Model.php');
+require_once(FRAME_WORK_PATH.'basic_classes/Field.php');
+*/
 require_once('models/RepProductionLoad_Model.php');
 require_once('models/RepSale_Model.php');
 require_once('models/NaspunktCostList_Model.php');
+require_once('models/VehicleStopList_Model.php');
 
 require_once('functions/ExtProg.php');
 require_once('common/downloader.php');
+
+require_once('common/geo/YndxReverseCode.php');
 
 class Report_Controller extends ControllerSQL{
 	public function __construct($dbLinkMaster=NULL){
@@ -189,7 +196,47 @@ class Report_Controller extends ControllerSQL{
 	
 			
 		$this->addPublicMethod($pm);
-									
+	
+			
+		$pm = new PublicMethod('vehicle_stops');
+		
+				
+	$opts=array();
+	
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtString('cond_fields',$opts));
+	
+				
+	$opts=array();
+	
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtString('cond_vals',$opts));
+	
+				
+	$opts=array();
+	
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtString('cond_sgns',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('cond_ic',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('templ',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('field_sep',$opts));
+	
+			
+		$this->addPublicMethod($pm);
+
+											
 		
 	}	
 	
@@ -599,6 +646,45 @@ class Report_Controller extends ControllerSQL{
 		$model->query($q);
 		$this->addModel($model);
 		
+	}
+	
+	public function vehicle_stops($pm){
+		$link = $this->getDbLink();
+		
+		$model = new VehicleStopList_Model($link);
+		$where = $this->conditionFromParams($pm,$model);
+		
+		$q = sprintf("SELECT * FROM vehicle_stops(%s,%s,%s,%d)",
+		$where->getFieldValueForDb('date_time','>='),
+		$where->getFieldValueForDb('date_time','<='),
+		$where->getFieldValueForDb('duration','='),
+		$where->getFieldValueForDb('vh_id','=')
+		);
+		throw new Exception($q);
+		
+		$coder = new YndxReverseCode();//new OSMReverseCode();
+		
+		
+		/*
+		$model->addField(new Field('vh_id',DT_STRING));
+		$model->addField(new Field('vh_descr',DT_STRING));
+		$model->addField(new Field('period',DT_STRING));
+		$model->addField(new Field('duration',DT_STRING));
+		$model->addField(new Field('address',DT_STRING));
+		*/
+		$qid = $link->query($q);
+		while ($ar = $link->fetch_array($qid)){
+			$model->insert();
+			$model->vh_id		= $ar['vh_id'];
+			$model->vh_descr	= $ar['vh_descr'];
+			$model->date_time	= $ar['date_time'];
+			$model->date_time_descr	= $ar['date_time_descr'];
+			$model->duration	= $ar['duration'];
+			$model->address 	= $coder->getAddressForCoords($ar['lat'],$ar['lon']);		
+		}
+		
+		
+		$this->addModel($model);		
 	}
 	
 

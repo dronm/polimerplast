@@ -53,6 +53,7 @@ function DOCOrderList_View(id,options){
 		this.m_ctrlViewNewOrders = new DOCOrderNewList_View(id+"_DOCOrderNewList_View",
 			{"client":(SERV_VARS.ROLE_ID!="client"),
 			"className":(CONSTANT_VALS.newOrdersCallapsed)? "collapse":"",
+			"number":true,
 			"noAutoRefresh":false,
 			"refreshInterval":(CONSTANT_VALS.newOrdersCallapsed)? 0:CONSTANT_VALS.db_controls_refresh_sec*1000,
 			"warehouse":true,

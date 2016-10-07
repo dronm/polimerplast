@@ -1374,6 +1374,12 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 	}
 	
 	public function download_print($pm){
+		function remove_invalid_chars($s){
+			$s = str_replace('"','',$s);
+			$s = str_replace("'","'",$s);
+			return $s;
+		}
+	
 		$l = $this->getDbLink();
 		$params = new ParamsSQL($pm,$l);
 		$params->setValidated("doc_id",DT_INT);
@@ -1381,7 +1387,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 		$doc_id = $params->getParamById('doc_id');
 		
 		$ar = $l->query_first(sprintf("SELECT
-				'№' || o.number || ' ' || f.name AS file_name,
+				'№' || o.number || '_' || f.name||'_'|| o.ext_order_num AS file_name,
 				o.ext_order_id
 			FROM doc_orders AS o
 			LEFT JOIN firms AS f ON f.id = o.firm_id
@@ -1398,7 +1404,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 		$ar_seq = $this->getDbLinkMaster()->query_first(sprintf("SELECT doc_orders_inc_print(%d) AS ind",$doc_id));
 		
 		$path_parts = pathinfo($tmp_file);
-		$new_tmp_file =  $path_parts['dirname'].'/'.$ar['file_name'].' '.$ar_seq['ind'];
+		$new_tmp_file =  $path_parts['dirname'].'/'. remove_invalid_chars($ar['file_name']).'_'.$ar_seq['ind'];
 		rename($tmp_file,$new_tmp_file);
 		
 		ob_clean();

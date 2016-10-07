@@ -12,7 +12,7 @@
 /* constructor */
 function VehicleList_View(id,options){
 	options = options || {};
-	options.title = "Автомобили";
+	//options.title = "Автомобили";
 	VehicleList_View.superclass.constructor.call(this,
 		id,options);
 	var head = new GridHead();
@@ -65,3 +65,8 @@ function VehicleList_View(id,options){
 	));
 }
 extend(VehicleList_View,ViewList);
+
+VehicleList_View.prototype.getFormWidth = function(){
+	return "1000";
+}
+

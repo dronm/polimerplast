@@ -228,11 +228,12 @@ td.uponMe{
 	font-weight:bolder;	
 }
 
-tr.modif{
-	background-color:red !important;
+tr.modif td[field_id="line_number"]{
+	background-color:#f45642 !important;
 }
-tr.add{
-	background-color:red !important;
+
+tr.add td[field_id="line_number"]{
+	background-color:#42f4c8 !important;
 }
 .new_client_ref{
 	cursor:pointer;

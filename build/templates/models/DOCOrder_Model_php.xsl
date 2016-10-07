@@ -68,18 +68,21 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 				$state = 'waiting_for_us';
 			}
 			else{
-				/*статус зависит от вида работы
+				//По Новому ТЗ от ноября 2016 в производство ТОЛЬКО через кнопку!!!
+				$state = 'waiting_for_payment';
+			
+				/*ТАК БЫЛО РАНЬШЕ: статус зависит от вида работы
 				с клиентом - нал/предоплата/отсрочка
 				*/
+				/*
 				$ar = $link->query_first(sprintf(
 					"SELECT pay_type FROM clients WHERE id=%d",
 					$this->getFieldById('client_id')->getValueForDb()
 				));
 				if (is_array($ar)&amp;&amp;count($ar)&gt;0){
-					//$state = ($ar['pay_type']=='with_delay')? 'producing':'waiting_for_payment';
-					//По Новому ТЗ от ноября 2016 в производство ТОЛЬКО через кнопку!!!
-					$state = 'waiting_for_payment';
+					$state = ($ar['pay_type']=='with_delay')? 'producing':'waiting_for_payment';
 				}
+				*/
 			}
 		
 			//ВСТАВКА ДОКУМЕНТА

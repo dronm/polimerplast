@@ -129,6 +129,7 @@ class ViewBase extends ViewHTMLXSLT {
 
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/Button.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ButtonCtrl.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ButtonSmall.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ButtonCmd.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ButtonToggle.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ButtonCalc.js'));
@@ -224,6 +225,10 @@ class ViewBase extends ViewHTMLXSLT {
 		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/TabMenuItem.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/MenuItem.js'));
+		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridCommandsEditList.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridList.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/EditList.js'));								
 		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/WaitControl.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ErrorControl.js'));
@@ -425,6 +430,7 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/NaspunktInline_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/RepNaspunktCost_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/AccPKOList_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/RepVehicleStop_View.js'));
 		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/UnregClientCheck.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/ClientAttrs.js'));

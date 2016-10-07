@@ -134,6 +134,11 @@ DOCOrderGridDb.prototype.initEditViewObj = function(contr){
 	DOCOrderGridDb.superclass.initEditViewObj.call(this,contr);
 	
 	this.m_editViewObj.m_currentGrid = this.m_currentGrid;
+	
+	var tt_n = nd("tt");
+	if (tt_n){
+		DOMHandler.removeNode(tt_n);
+	}
 }
 
 DOCOrderGridDb.prototype.onRefresh = function(){
