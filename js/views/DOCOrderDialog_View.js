@@ -611,7 +611,7 @@ DOCOrderDialog_View.prototype.onClickSave = function(){
 }
 
 DOCOrderDialog_View.prototype.setDebts = function(debtTotal,defDebt){	
-	if (!isNaN(debtTotal) && debtTotal!=0){		
+	if (this.m_defDebtInfCtrl && !isNaN(debtTotal) && debtTotal!=0){		
 		this.m_debtInfCtrl.setValue(( (defDebt>0)? "Долг контрагента ":"Наш долг ") + numberFormat( (debtTotal<0)? -debtTotal:debtTotal ,2,",", "'")+" руб.");
 		DOMHandler.setAttr(this.m_debtInfCtrl.getNode(),"class", (defDebt>0)? "text-danger":"text-info");
 		
@@ -623,7 +623,7 @@ DOCOrderDialog_View.prototype.setDebts = function(debtTotal,defDebt){
 			DOMHandler.setAttr(this.m_defDebtInfCtrl.getNode(),"class","hidden");
 		}
 	}
-	else{
+	else if (this.m_defDebtInfCtrl){
 		DOMHandler.setAttr(this.m_defDebtInfCtrl.getNode(),"class","hidden");
 		DOMHandler.setAttr(this.m_debtInfCtrl.getNode(),"class","hidden");
 	}

@@ -1,6 +1,6 @@
 -- View: doc_orders_data_for_ext
 
-DROP VIEW doc_orders_data_for_ext;
+--DROP VIEW doc_orders_data_for_ext;
 
 CREATE OR REPLACE VIEW doc_orders_data_for_ext AS 
 	SELECT

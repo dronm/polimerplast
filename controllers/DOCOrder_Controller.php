@@ -1729,6 +1729,12 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 		
 		$ar = $this->getDbLink()->query_first(sprintf(
 			"SELECT
+				CASE
+					WHEN substring(h.number,1,length(const_new_order_prefix_val()))=const_new_order_prefix_val() THEN
+						'0'|| substring(h.number,length(const_new_order_prefix_val())+1)
+					ELSE
+						h.number					
+				END AS number_for_bar_code,
 				h.*,
 				d.date_time,
 				d.total_weight,
@@ -1751,11 +1757,11 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 		/*
 		Номер документа в баркод всего 13 знаков
 		*/
-		//$barcode_descr = substr('000000000000',1,12-strlen($ar['number'])).$ar['number'];
+		//$barcode_descr = substr('000000000000',1,12-strlen($ar['number_for_bar_code'])).$ar['number_for_bar_code'];
 		//$barcode_descr = $barcode_descr.EAN_check_sum($barcode_descr,13);
 		
-		//$barcode_descr = 'A'.$ar['number'].'A';
-		$barcode_descr = $ar['number'];
+		//$barcode_descr = 'A'.$ar['number_for_bar_code'].'A';
+		$barcode_descr = $ar['number_for_bar_code'];
 		
 		//**** Генерация баркода ****
 		$colorFont = new BCGColor(0, 0, 0);
@@ -1785,7 +1791,7 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 			array_push($fields,new Field($fid,DT_STRING,array('value'=>$fval)));
 		}
 		
-		array_push($fields,new Field('barcode_descr',DT_STRING,array('value'=>$ar['number'])));
+		array_push($fields,new Field('barcode_descr',DT_STRING,array('value'=>$ar['number_for_bar_code'])));
 		array_push($fields,new Field('barcode_img_mime',DT_STRING,array('value'=>'image/png')));
 		array_push($fields,new Field('barcode_img',DT_STRING,array('value'=>base64_encode($contents))));
 		

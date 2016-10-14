@@ -66,8 +66,25 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 		try{	
 			if ($_SESSION['role_id']=='client'){
 				$state = 'waiting_for_us';
+				
+				//Префикс нумерации
+				$num_q = 
+				"SELECT
+					const_new_order_prefix_val() || coalesce(MAX( substr(t.number::varchar,length(const_new_order_prefix_val())+1)::int ),0)+1
+				FROM doc_orders AS t
+				WHERE
+					substr(t.number::varchar,1,length(const_new_order_prefix_val()))=const_new_order_prefix_val()";
+				
 			}
 			else{
+				//Просто номер
+				$num_q = 
+				"SELECT
+					coalesce( MAX(t.number::int),0)+1
+				FROM doc_orders AS t
+				WHERE
+					substr(t.number::varchar,1,length(const_new_order_prefix_val()))&lt;&gt;const_new_order_prefix_val()";
+			
 				//По Новому ТЗ от ноября 2016 в производство ТОЛЬКО через кнопку!!!
 				$state = 'waiting_for_payment';
 			
@@ -92,9 +109,14 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 				sprintf("SELECT %s_before_write(%d,%d)",
 				$this->getTableName(),$_SESSION['LOGIN_ID'],$doc_id)
 			);
+			
 			$link->query(
-				sprintf("UPDATE %s SET processed=%s WHERE id=%d",
-				$this->getTableName(),$this->getFieldById('processed')->getValueForDb(),
+				sprintf("UPDATE %s
+				SET
+					processed = %s,
+					number = (%s)
+				WHERE id=%d",
+				$this->getTableName(),$this->getFieldById('processed')->getValueForDb(),$num_q,
 				$doc_id));			
 			
 			$link->query(

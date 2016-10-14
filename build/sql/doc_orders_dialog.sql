@@ -78,13 +78,14 @@ CREATE OR REPLACE VIEW doc_orders_dialog AS
 		d.destination_to_ttn,
 		coalesce(d.total_pack,0) AS total_pack,
 		
-		cld.debt_total,
-		cld.def_debt
+		(SELECT cld.debt_total FROM client_debts cld WHERE cld.client_id=d.client_id AND cld.firm_id=d.firm_id) debt_total,
+		(SELECT sum(cld.def_debt) FROM client_debts cld WHERE cld.client_id=d.client_id AND cld.firm_id=d.firm_id) def_debt
 		
 		
 	FROM doc_orders AS d
 	LEFT JOIN clients AS cl ON cl.id=d.client_id
 
+	/*
 	LEFT JOIN (
 		SELECT
 			t.client_id,
@@ -94,6 +95,7 @@ CREATE OR REPLACE VIEW doc_orders_dialog AS
 		FROM client_debts AS t
 		GROUP BY t.client_id,t.firm_id,t.debt_total
 	) cld ON cld.client_id = d.client_id AND cld.firm_id = d.firm_id
+	*/
 	
 	LEFT JOIN users AS u ON u.id=d.user_id
 	LEFT JOIN firms AS f ON f.id=d.firm_id

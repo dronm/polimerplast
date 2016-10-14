@@ -1,6 +1,6 @@
 -- View: doc_orders_new_list
 
-DROP VIEW doc_orders_new_list;
+--DROP VIEW doc_orders_new_list;
 
 CREATE OR REPLACE VIEW doc_orders_new_list AS 
 	SELECT

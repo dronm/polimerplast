@@ -336,7 +336,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 			FROM doc_orders AS o
 			LEFT JOIN firms AS f ON f.id=o.firm_id
 			WHERE o.client_id=%d
-			GROUP BY o.firm_id,f.name
+			GROUP BY o.firm_id,f.name,o.client_id
 			ORDER BY cnt DESC LIMIT 1",
 			$client_id
 		),'get_pop_firm');

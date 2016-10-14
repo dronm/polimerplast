@@ -1,11 +1,13 @@
 -- View: doc_orders_list
 
+/*
 DROP VIEW doc_orders_new_list;
 DROP VIEW doc_orders_current_list;
 DROP VIEW doc_orders_current_for_client_list;
 DROP VIEW doc_orders_current_for_production_list;
 DROP VIEW doc_orders_closed_list;
 DROP VIEW doc_orders_list;
+*/
 
 CREATE OR REPLACE VIEW doc_orders_list AS 
 	SELECT 

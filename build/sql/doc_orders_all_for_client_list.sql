@@ -1,6 +1,6 @@
 -- View: doc_orders_all_for_client_list
 
-DROP VIEW doc_orders_all_for_client_list;
+--DROP VIEW doc_orders_all_for_client_list;
 
 CREATE OR REPLACE VIEW doc_orders_all_for_client_list AS 
 	SELECT

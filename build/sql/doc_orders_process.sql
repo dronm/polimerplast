@@ -7,13 +7,14 @@ CREATE OR REPLACE FUNCTION doc_orders_process()
 $BODY$
 BEGIN
 	IF (TG_WHEN='BEFORE' AND TG_OP='INSERT') THEN
+		/*
 		SELECT
 			const_new_order_prefix_val() || coalesce(MAX( substr(t.number::varchar,length(const_new_order_prefix_val())+1)::int ),0)+1
 		INTO NEW.number
 		FROM doc_orders AS t
 		WHERE
 			substr(t.number::varchar,1,length(const_new_order_prefix_val()))=const_new_order_prefix_val();
-		
+		*/
 		NEW.date_time = now()::timestamp without time zone;
 		
 		RETURN NEW;
