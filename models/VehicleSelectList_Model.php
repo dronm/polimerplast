@@ -38,6 +38,18 @@ class VehicleSelectList_Model extends ModelSQL{
 		));
 		$this->addField($f_descr);
 
+		$f_plate=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		,"plate"
+		,array(
+		
+			'alias'=>"Гос.номер"
+		,
+			'id'=>"plate"
+				
+		
+		));
+		$this->addField($f_plate);
+
 		
 		
 		

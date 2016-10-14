@@ -20,7 +20,7 @@ function Delivery_View(id,options){
 	//Period filter
 	this.m_filter = new PeriodFilter("delivery_filter",{
 		"period":"day",
-		"valueFieldId":"date"});
+		"valueFieldId":"delivery_plan_date"});
 	cont.addElement(this.m_filter);
 	this.addElement(cont);
 	

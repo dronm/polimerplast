@@ -23,7 +23,7 @@ require_once(FRAME_WORK_PATH.'basic_classes/Field.php');
 */
 require_once('models/RepProductionLoad_Model.php');
 require_once('models/RepSale_Model.php');
-require_once('models/NaspunktCostList_Model.php');
+//require_once('models/NaspunktCostList_Model.php');
 require_once('models/VehicleStopList_Model.php');
 
 require_once('functions/ExtProg.php');
@@ -240,10 +240,22 @@ class Report_Controller extends ControllerSQL{
 		
 	}	
 	
+
 	public function production_load($pm){
 		$link = $this->getDbLink();
 		$model = new RepProductionLoad_Model($link);
 		$where = $this->conditionFromParams($pm,$model);
+		
+		//список складов
+		$wh_id_list = $where->getFieldValueForDb('warehouse_id_list','=ANY');
+		$wh_id_list = substr($wh_id_list,1,strlen($wh_id_list)-2);
+		$wh_id_ar = explode(',',$wh_id_list);
+		$wh_int = array();
+		foreach($wh_id_ar as $v){
+			array_push($wh_int,intval($v));
+		}
+		$wh_id_list = implode(',',$wh_int);
+		$wh_cond = (count($wh_int)? 'AND w.id = ANY(ARRAY['.$wh_id_list.'])':'');
 		
 		$q = sprintf("SELECT
 				date8_descr(d.delivery_plan_date) AS delivery_plan_date_descr,
@@ -265,7 +277,9 @@ class Report_Controller extends ControllerSQL{
 			LEFT JOIN products AS p ON p.id=t.product_id
 			LEFT JOIN warehouses AS w ON w.id=d.warehouse_id
 			WHERE (delivery_plan_date BETWEEN %s AND %s)
-			AND (%d=0 OR (%d>0 AND w.id=%d))
+			
+			%s
+			
 			AND (SELECT st.state FROM doc_orders_states st
 				WHERE st.doc_orders_id=t.doc_id
 				ORDER BY st.date_time DESC LIMIT 1)='producing'::order_states
@@ -277,9 +291,7 @@ class Report_Controller extends ControllerSQL{
 				d.warehouse_id",
 		$where->getFieldValueForDb('delivery_plan_date','>='),
 		$where->getFieldValueForDb('delivery_plan_date','<='),
-		$where->getFieldValueForDb('warehouse_id','='),
-		$where->getFieldValueForDb('warehouse_id','='),
-		$where->getFieldValueForDb('warehouse_id','=')
+		$wh_cond
 		);
 		//throw new Exception($q);
 		
@@ -654,37 +666,48 @@ class Report_Controller extends ControllerSQL{
 		$model = new VehicleStopList_Model($link);
 		$where = $this->conditionFromParams($pm,$model);
 		
-		$q = sprintf("SELECT * FROM vehicle_stops(%s,%s,%s,%d)",
+		$vh_id_list = $where->getFieldValueForDb('vh_id_list','IN');
+		$vh_id_list = substr($vh_id_list,1,strlen($vh_id_list)-2);
+		$vh_id_ar = explode(',',$vh_id_list);
+		$vh_int = array();
+		foreach($vh_id_ar as $v){
+			array_push($vh_int,intval($v));
+		}
+		$vh_id_list = implode(',',$vh_int);
+		
+		$q = sprintf("SELECT * FROM vehicle_stops(%s,%s,%s,ARRAY[%s])",
 		$where->getFieldValueForDb('date_time','>='),
 		$where->getFieldValueForDb('date_time','<='),
 		$where->getFieldValueForDb('duration','='),
-		$where->getFieldValueForDb('vh_id','=')
+		$vh_id_list
 		);
-		throw new Exception($q);
+		//throw new Exception($q);
 		
 		$coder = new YndxReverseCode();//new OSMReverseCode();
 		
 		
-		/*
-		$model->addField(new Field('vh_id',DT_STRING));
-		$model->addField(new Field('vh_descr',DT_STRING));
-		$model->addField(new Field('period',DT_STRING));
-		$model->addField(new Field('duration',DT_STRING));
-		$model->addField(new Field('address',DT_STRING));
-		*/
+		$m_res = new Model(array('id'=>'VehicleStop_Model'));
+		$m_res->addField(new Field('vh_id',DT_STRING));
+		$m_res->addField(new Field('vh_descr',DT_STRING));
+		$m_res->addField(new Field('date_time',DT_STRING));
+		$m_res->addField(new Field('date_time_descr',DT_STRING));
+		$m_res->addField(new Field('duration',DT_STRING));
+		$m_res->addField(new Field('address',DT_STRING));
+		
 		$qid = $link->query($q);
-		while ($ar = $link->fetch_array($qid)){
-			$model->insert();
-			$model->vh_id		= $ar['vh_id'];
-			$model->vh_descr	= $ar['vh_descr'];
-			$model->date_time	= $ar['date_time'];
-			$model->date_time_descr	= $ar['date_time_descr'];
-			$model->duration	= $ar['duration'];
-			$model->address 	= $coder->getAddressForCoords($ar['lat'],$ar['lon']);		
+		while ($ar = $link->fetch_array($qid)){			
+			$m_res->insert(array(
+				new Field('vh_id',DT_STRING,array('value'=>$ar['vh_id'])),
+				new Field('vh_descr',DT_STRING,array('value'=>$ar['vh_descr'])),
+				new Field('date_time',DT_STRING,array('value'=>$ar['date_time'])),
+				new Field('date_time_descr',DT_STRING,array('value'=>$ar['date_time_descr'])),
+				new Field('duration',DT_STRING,array('value'=>$ar['duration'])),
+				new Field('address',DT_STRING,array('value'=>$coder->getAddressForCoords($ar['lat'],$ar['lon'])))
+			));
 		}
 		
 		
-		$this->addModel($model);		
+		$this->addModel($m_res);		
 	}
 	
 

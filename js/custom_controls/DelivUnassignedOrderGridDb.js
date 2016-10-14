@@ -43,7 +43,7 @@ DelivUnassignedOrderGridRow.prototype.toDOM = function(parent){
 function DelivUnassignedOrderGridDb(id,options){
 	options = options || {};
 	
-	this.m_filterAllOrders = options.filterAllOrders;
+	//this.m_filterAllOrders = options.filterAllOrders;
 	
 	DelivUnassignedOrderGridDb.superclass.constructor.call(this,
 		id,options);		
@@ -55,9 +55,12 @@ DelivUnassignedOrderGridDb.prototype.filterToDOM = function(parent){
 DelivUnassignedOrderGridDb.prototype.getGridRowClass = function(row,model){
 	return DelivUnassignedOrderGridRow;
 }
+
+/*
 DelivUnassignedOrderGridDb.prototype.onRefresh = function(){
 	var pm = this.getController().getPublicMethodById(this.getReadMethodId());
 	pm.setParamValue("all_orders",(this.m_filterAllOrders.getValue()=="true")? "1":"0");
 	
 	DelivUnassignedOrderGridDb.superclass.onRefresh.call(this);
 }
+*/

@@ -37,6 +37,8 @@ require_once('common/barcodegen.1d-php5.v5.2.1/class/BCGDrawing.php');
 require_once('common/barcodegen.1d-php5.v5.2.1/class/BCGcode128.barcode.php');
 
 class DOCOrder_Controller extends ControllerSQLDOC{
+	const ER_WRONG_STATE = 'Заявка в неверном статусе!'; 
+	
 	public function __construct($dbLinkMaster=NULL){
 		parent::__construct($dbLinkMaster);
 			
@@ -47,7 +49,7 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 				'alias'=>'Дата пдч.'
 			));
 		$pm->addParam($param);
-		$param = new FieldExtInt('number'
+		$param = new FieldExtString('number'
 				,array(
 				'alias'=>'Номер'
 			));
@@ -229,7 +231,7 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 				'alias'=>'Дата пдч.'
 			));
 			$pm->addParam($param);
-		$param = new FieldExtInt('number'
+		$param = new FieldExtString('number'
 				,array(
 			
 				'alias'=>'Номер'
@@ -1548,12 +1550,12 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 		LIMIT 1",
 		$docId)
 		);
-		return !(!is_array($ar)||count($ar)==0||$ar['check']=='f');
+		return !(!is_array($ar) || count($ar)==0 || $ar['check']=='f');
 	}
 	
 	private function check_state($docId,$state_list){
 		if (!$this->state_in_list($docId,$state_list)){
-			throw new Exception('Заявка в неверном статусе!');
+			throw new Exception(self::ER_WRONG_STATE);
 		}	
 	}
 	
@@ -1600,32 +1602,54 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 		$params = new ParamsSQL($pm,$this->getDbLink());
 		$params->addAll();
 
-		$this->check_state(
-			$params->getParamById('doc_id'),
-			"'new','waiting_for_us','waiting_for_client','waiting_for_payment'"
-			);
+		$doc_id = $params->getDbVal('doc_id');
+
+		//Проверка статуса
+		$ar = $this->getDbLink()->query_first(sprintf(
+		"SELECT
+			st.state IN ('new','waiting_for_us','waiting_for_client','waiting_for_payment') AS check,
+			(SELECT substr(t.number::text,1,length(const_new_order_prefix_val()))=const_new_order_prefix_val() FROM doc_orders t WHERE t.id=%d) AS number_prefixed
+		FROM doc_orders_states AS st		
+		WHERE st.doc_orders_id=%d
+		ORDER BY st.date_time DESC
+		LIMIT 1",
+		$doc_id,$doc_id
+		));
+		
+		if (!is_array($ar) || count($ar)==0 || $ar['check']=='f'){
+			throw new Exception(self::ER_WRONG_STATE);
+		}
 			
 		$this->getDbLinkMaster()->query('BEGIN');
 		try{			
-			$this->add_state(
-				$params->getDbVal('doc_id'),
-				'producing'
-			);
+			$this->add_state($doc_id, 'producing');
 			
 			//скорректируем дату отгрузки
+			/* КОРРЕКТИРОВКУ ОТМЕНИЛИ
 			$ar = $this->getDbLinkMaster()->query_first(sprintf(
 			"select * FROM deliv_date_calc(%d,now()::date) AS (new_date date,correct boolean)",
-			$params->getDbVal('doc_id')
+			$doc_id
 			));
-			if (is_array($ar)&&count($ar)&&$ar['correct']=='f'){
+			if (is_array($ar) && count($ar) && $ar['correct']=='f'){
 				//обновление даты отгрузки
 				$this->getDbLinkMaster()->query(sprintf(
 				"UPDATE doc_orders SET delivery_plan_date = '%s'::date
 				WHERE id=%d",
 				$ar['new_date'],
-				$params->getDbVal('doc_id')
+				$doc_id
 				));
 			}
+			*/
+			
+			//Присвоим новую нумерацию ТОЛЬКО если текущая с Н
+			if ($ar['number_prefixed'] = 't'){
+				$this->getDbLinkMaster()->query(sprintf(
+				"UPDATE doc_orders
+					SET number = (SELECT coalesce(MAX(t.number::int),0)+1 FROM doc_orders AS t WHERE substr(t.number::varchar,1,1)<>'Н')
+				WHERE id=%d",
+				$doc_id
+				));
+			}			
 			
 			$this->getDbLinkMaster()->query('COMMIT');
 		}
@@ -2833,7 +2857,7 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 		$ar_seq = $this->getDbLinkMaster()->query_first(sprintf("SELECT doc_orders_inc_print(%d) AS ind",$doc_id));
 		
 		$path_parts = pathinfo($tmp_file);
-		$new_tmp_file =  $path_parts['dirname'].'/'. remove_invalid_chars($ar['file_name']).'_'.$ar_seq['ind'];
+		$new_tmp_file =  $path_parts['dirname'].'/'. remove_invalid_chars($ar['file_name']).'_'.$ar_seq['ind'].'.pdf';
 		rename($tmp_file,$new_tmp_file);
 		
 		ob_clean();

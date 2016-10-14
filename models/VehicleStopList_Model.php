@@ -26,6 +26,18 @@ class VehicleStopList_Model extends ModelSQL{
 		));
 		$this->addField($f_vh_id);
 
+		$f_vh_id_list=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		,"vh_id_list"
+		,array(
+		
+			'id'=>"vh_id_list"
+		,
+			'sysCol'=>TRUE
+				
+		
+		));
+		$this->addField($f_vh_id_list);
+
 		$f_vh_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"vh_descr"
 		,array(

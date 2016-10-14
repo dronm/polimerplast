@@ -18,6 +18,7 @@ function DelivUnassignedOrderList_View(id,options){
 	
 	//доп фильтр
 	var self = this;
+	/*
 	this.m_filterAllOrders = new EditCheckBox(id+"_filter_all_orders",{
 		"labelCaption":"Все заявки",
 		"name":"filter_all_orders",
@@ -29,6 +30,87 @@ function DelivUnassignedOrderList_View(id,options){
 		}
 	});
 	this.addElement(this.m_filterAllOrders);
+	*/
+	//fast filter
+	
+	this.m_fastFilter = new GridFastFilter(id+"_fast_filter",{
+		"tagName":"div",
+		"noSetControl":true,
+		"noUnsetControl":true,
+		"noToggleControl":true,
+		"className":"row"
+		});
+	
+	this.m_allOrdersCtrl = new EditRadioGroup(id+"_filter_all_orders",
+		{"className":get_bs_col()+"3",
+		"elements":[
+			new EditRadio("all_orders:current",{
+				"descr":"Текущие",
+				"value":"0",
+				"name":"all_orders",
+				"contClassName":get_bs_col()+"6",
+				"editContClassName":"input-group "+get_bs_col()+"1",
+				"labelClassName":get_bs_col()+"8",					
+				"events":{
+					"click":function(){
+						self.m_fastFilter.refresh();						
+					}
+				},
+				"attrs":{"checked":"checked","initValue":"checked"}}),
+			new EditRadio("current_all:all",{
+				"descr":"Все",
+				"value":"1",
+				"name":"all_orders",
+				"contClassName":get_bs_col()+"6",
+				"editContClassName":"input-group "+get_bs_col()+"1",
+				"labelClassName":get_bs_col()+"8",
+				"events":{
+					"click":function(){
+						self.m_fastFilter.refresh();
+					}
+				},					
+				"attrs":{"initValue":"false"}
+
+				})
+			]
+		});		
+	this.m_fastFilter.addFilterControl(this.m_allOrdersCtrl,{});
+		
+	//НОМЕР
+	this.m_fastFilter.addFilterControl(
+		new EditString(id+"_fast_filter_number",
+			{"labelCaption":"№:",
+			"contClassName":get_bs_col()+"2",
+			"winObj":this.m_winObj,
+			"tableLayout":false
+		})		
+	,{"sign":"lk","valueFieldId":"number","r_wcards":true}
+	);
+	
+	//client
+	this.m_fastFilter.addFilterControl(
+		new EditString(id+"_fast_filter_client_descr",
+			{"labelCaption":"Клиент:",
+			"contClassName":get_bs_col()+"3"
+		})		
+	,{"sign":"lk","valueFieldId":"client_descr","r_wcards":"1","l_wcards":"1","icase":"1"}
+	);
+	
+	//date
+	this.m_fastFilter.addFilterControl(new EditDate(id+"_fast_filter_delivery_plan_date",
+		{"labelCaption":"Дата вып.:",
+		"noClear":false,
+		"editContClassName":"input-group "+get_bs_col()+"8",
+		"contClassName":get_bs_col()+"3",
+		"labelClassName":get_bs_col()+"4",
+		"enabled":false,
+		"onSelected":function(){
+			self.m_fastFilter.refresh();
+		}		
+		})
+		,{"sign":"e","valueFieldId":"delivery_plan_date"}
+	);
+	this.addElement(this.m_fastFilter);
 	
 	var controller = new Delivery_Controller(new ServConnector(HOST_NAME));
 	
@@ -78,7 +160,7 @@ function DelivUnassignedOrderList_View(id,options){
 		"body":new GridBody(),
 		"controller":controller,
 		"readMethodId":"unassigned_orders_list",
-		"readModelId":"unassigned_orders_list",
+		"readModelId":"UnassignedOrderList_Model",
 		"editViewClass":null,
 		"editInline":null,
 		"pagination":null,
@@ -129,6 +211,22 @@ function DelivUnassignedOrderList_View(id,options){
 			
 		}
 	}
+	
+	this.m_grid.m_filterComplete = function(struc){
+		console.log("allOrdersCtrl="+self.m_allOrdersCtrl.getValue());
+		if (self.m_allOrdersCtrl.getValue()=="1"){
+			struc.fields = null;
+			struc.signs = null;
+			struc.vals = null;
+			struc.icase = null;
+			struc.field_sep = "@";
+		}
+		self.m_fastFilter.getParams(struc);
+		
+	}
+
+	this.m_fastFilter.setOnRefresh(this.m_grid.onRefresh);
+	this.m_fastFilter.setClickContext(this.m_grid);		
 		
 	this.addElement(this.m_grid);
 }

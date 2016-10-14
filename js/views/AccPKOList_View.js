@@ -48,7 +48,9 @@ function AccPKOList_View(id,options){
 		"readModelId":"AccPKOList_Model",
 		"editViewClass":WarehouseDialog_View,
 		"editInline":false,
-		"pagination":null,
+		"pagination":new GridPagination(id+":page",
+			{"countPerPage":CONSTANT_VALS.grid_rows_per_page_count}),
+
 		"commandPanel":new GridCommands(id+"_cmd",{"controller":controller,
 			"noInsert":true,"noEdit":true,"noDelete":true,"noCopy":true}),
 		"rowCommandPanelClass":null,

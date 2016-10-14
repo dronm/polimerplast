@@ -33,6 +33,11 @@
 				};
 			var NEW_CLIENT_CHECK;
 			var CONST_CONTROLS ={};
+			var TEMPLATE_PARAMS={};
+			<xsl:for-each select="/document/model[@id='TemplateParamList_Model']/row">
+			TEMPLATE_PARAMS.<xsl:value-of select="template"/> = TEMPLATE_PARAMS.<xsl:value-of select="template"/> || {};
+			TEMPLATE_PARAMS.<xsl:value-of select="template"/>.<xsl:value-of select="param"/> = eval("(" +'<xsl:value-of select="val"/>' + ")");
+			</xsl:for-each>
 			
 			function copy_app(){
 				var win = window.open('<xsl:value-of select="/document/model[@id='ModelVars']/row/basePath"/>',"_blank");

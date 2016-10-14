@@ -12,7 +12,7 @@
 /* constructor */
 function DriverList_View(id,options){
 	options = options || {};
-	options.title = "Водители";
+	//options.title = "Водители";
 	DriverList_View.superclass.constructor.call(this,
 		id,options);
 	

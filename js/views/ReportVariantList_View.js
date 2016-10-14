@@ -12,7 +12,7 @@
 /* constructor */
 function ReportVariantList_View(id,options){
 	options = options || {};
-	options.title = "Варианты отчета";
+	//options.title = "Варианты отчета";
 	ReportVariantList_View.superclass.constructor.call(this,
 		id,options);
 	

@@ -87,7 +87,7 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	options = {};
 	options["alias"]="Номер";
-	var param = new FieldInt("number",options);
+	var param = new FieldString("number",options);
 	
 	pm.addParam(param);
 	
@@ -421,7 +421,7 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	options = {};
 	options["alias"]="Номер";
-	var param = new FieldInt("number",options);
+	var param = new FieldString("number",options);
 	
 	pm.addParam(param);
 	

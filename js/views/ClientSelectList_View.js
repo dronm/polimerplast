@@ -20,7 +20,9 @@ function ClientSelectList_View(id,options){
 	var cont=new ControlContainer("p_cl","div",{"className":"panel"});
 	
 	//filter
-	var filter = new GridFilter(uuid(),{"tagName":"div"});
+	var filter = null;
+	/*
+	new GridFilter(uuid(),{"tagName":"div"});
 	filter.addFilterControl(new EditObject("ClientListFilter_name",
 		{"labelCaption":"Наименование:",
 		"methodId":"complete",
@@ -38,6 +40,23 @@ function ClientSelectList_View(id,options){
 		})
 	,{"sign":"lk","valueFieldId":"name",
 	"icase":true,"l_wcards":true,"r_wcards":true});
+	*/
+	//fast filter
+	this.m_fastFilter = new GridFastFilter(id+"_fast_filter",{
+		"tagName":"div",
+		"noSetControl":true,
+		"noUnsetControl":true,
+		"noToggleControl":true,
+		"className":"row"
+		});
+	//client
+	this.m_fastFilter.addFilterControl(
+		new EditString(id+"_fast_filter_descr",
+			{"labelCaption":"Наименование:",
+			"contClassName":get_bs_col()+"4"
+		})		
+	,{"sign":"lk","valueFieldId":"name","r_wcards":"1","l_wcards":"1","icase":"1"}
+	);
 		
 	var head = new GridHead();
 	var row = new GridRow(id+"_row1");
@@ -81,7 +100,7 @@ function ClientSelectList_View(id,options){
 		
 	head.addElement(row);
 	
-	cont.addElement(new GridDb(id+"_grid",
+	this.m_grid = new GridDb(id+"_grid",
 		{"head":head,
 		"body":new GridBody(),
 		"controller":controller,
@@ -89,7 +108,7 @@ function ClientSelectList_View(id,options){
 		"editViewClass":null,
 		"editInline":null,
 		"pagination":new GridPagination("page_ClientList",
-			{"countPerPage":30}),
+			{"countPerPage":CONSTANT_VALS.grid_rows_per_page_count}),
 		
 		"commandPanel":
 			new GridCommands(id+"_grid_cmd",{
@@ -103,7 +122,17 @@ function ClientSelectList_View(id,options){
 		"rowSelect":true,
 		"extraFields":options.extraFields
 		}
-	));
+	);
+	
+	var self = this;
+	this.m_grid.m_filterComplete = function(struc){
+		self.m_fastFilter.getParams(struc);
+	}
+	this.m_fastFilter.setOnRefresh(this.m_grid.onRefresh);
+	this.m_fastFilter.setClickContext(this.m_grid);		
+
+	cont.addElement(this.m_fastFilter);
+	cont.addElement(this.m_grid);
 	
 	this.addElement(cont);
 }
@@ -114,4 +143,10 @@ ClientSelectList_View.prototype.getFormWidth = function(){
 }
 ClientSelectList_View.prototype.getFormHeight = function(){
 	return "600";
+}
+
+ClientSelectList_View.prototype.toDOM = function(parent){
+	ClientSelectList_View.superclass.toDOM.call(this,parent);
+	
+	this.m_fastFilter.setFocus();	
 }

@@ -1,7 +1,7 @@
 -- View: doc_orders_dialog
 
-DROP VIEW doc_orders_print_h;
-DROP VIEW doc_orders_dialog;
+--DROP VIEW doc_orders_print_h;
+--DROP VIEW doc_orders_dialog;
 
 CREATE OR REPLACE VIEW doc_orders_dialog AS 
 	SELECT
@@ -89,10 +89,10 @@ CREATE OR REPLACE VIEW doc_orders_dialog AS
 		SELECT
 			t.client_id,
 			t.firm_id,
-			sum(t.debt_total) AS debt_total,
+			t.debt_total AS debt_total,
 			sum(t.def_debt) AS def_debt
 		FROM client_debts AS t
-		GROUP BY t.client_id,t.firm_id
+		GROUP BY t.client_id,t.firm_id,t.debt_total
 	) cld ON cld.client_id = d.client_id AND cld.firm_id = d.firm_id
 	
 	LEFT JOIN users AS u ON u.id=d.user_id

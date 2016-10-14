@@ -330,7 +330,9 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 			"SELECT
 				o.firm_id,
 				f.name AS firm_descr,
-				COUNT(*) AS cnt	
+				COUNT(*) AS cnt,
+				(SELECT sum(t.def_debt) FROM client_debts AS t WHERE t.client_id=o.client_id AND t.firm_id=o.firm_id) AS def_debt,
+				(SELECT t.debt_total FROM client_debts AS t WHERE t.client_id=o.client_id AND t.firm_id=o.firm_id) AS debt_total
 			FROM doc_orders AS o
 			LEFT JOIN firms AS f ON f.id=o.firm_id
 			WHERE o.client_id=%d
@@ -338,6 +340,30 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 			ORDER BY cnt DESC LIMIT 1",
 			$client_id
 		),'get_pop_firm');
+	}
+	
+	public function get_debts_on_firm($pm){
+		$params = new ParamsSQL($pm,$this->getDbLink());
+		$params->addAll();
+	
+		if ($_SESSION['role_id']=='client'){
+			$client_id = $_SESSION['client_id'];
+		}
+		else{
+			$client_id = $params->getParamById('client_id');	
+		}
+		
+		$firm_id = $params->getParamById('firm_id');
+		
+		$this->addNewModel(sprintf(
+			"SELECT
+				t.debt_total AS debt_total,
+				sum(t.def_debt) AS def_debt
+			FROM client_debts AS t
+			WHERE t.firm_id = %d AND t.client_id = %d
+			GROUP BY t.debt_total",
+			$firm_id,$client_id
+		),'get_debts_on_firm');	
 	}
 	
 	public function refresh_debts($pm){

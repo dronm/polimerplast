@@ -47,12 +47,13 @@ class DOCOrder_Model extends ModelSQLDOC{
 		));
 		$this->addField($f_date_time);
 
-		$f_number=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		$f_number=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"number"
 		,array(
 		
 			'alias'=>"Номер"
 		,
+			'length'=>10,
 			'id'=>"number"
 				
 		
@@ -911,6 +912,9 @@ class DOCOrder_Model extends ModelSQLDOC{
 					FROM doc_orders_t_tmp_products AS t_tmp
 					FULL JOIN doc_orders_t_products AS t
 						ON t.product_id=t_tmp.product_id AND t.doc_id=%d
+							AND t.mes_height=t_tmp.mes_height
+							AND t.mes_length=t_tmp.mes_length
+							AND t.mes_width=t_tmp.mes_width
 					WHERE t_tmp.login_id=%d AND (%s)
 					",
 					$res['id'],

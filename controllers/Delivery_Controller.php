@@ -25,20 +25,17 @@ class Delivery_Controller extends ControllerSQL{
 		
 				
 	$opts=array();
-	
-		$opts['required']=TRUE;				
+					
 		$pm->addParam(new FieldExtString('cond_fields',$opts));
 	
 				
 	$opts=array();
-	
-		$opts['required']=TRUE;				
+					
 		$pm->addParam(new FieldExtString('cond_vals',$opts));
 	
 				
 	$opts=array();
-	
-		$opts['required']=TRUE;				
+					
 		$pm->addParam(new FieldExtString('cond_sgns',$opts));
 	
 				
@@ -48,8 +45,7 @@ class Delivery_Controller extends ControllerSQL{
 	
 				
 	$opts=array();
-	
-		$opts['required']=TRUE;				
+					
 		$pm->addParam(new FieldExtInt('all_orders',$opts));
 	
 				
@@ -251,25 +247,29 @@ class Delivery_Controller extends ControllerSQL{
 		
 	}	
 	
+
 	public function unassigned_orders_list($pm){
 		if ($_SESSION['role_id']=='client'){
 			throw new Exception("Forbidden!");
 		}
 		
-		$q_cond = '';
-		if ($pm->getParamValue('all_orders')=='0'){
-			$cond = new CondParamsSQL($pm,$this->getDbLink());
-			$d_from = $cond->getValForDb('date','ge',DT_DATETIME);
-			$d_to = $cond->getValForDb('date','le',DT_DATETIME);
-			$q_cond = sprintf(
-			"WHERE delivery_plan_date BETWEEN %s AND %s",
-				$d_from,$d_to);
-		}
+		$m = new UnassignedOrderList_Model($this->getDbLink());
+		
+		$where = $this->conditionFromParams($pm,$m);
 				
-		$this->addNewModel(
-		"SELECT * FROM deliv_unassigned_orders_list ".$q_cond,
-		'unassigned_orders_list');
+		$m->select(FALSE,
+			$where,
+			NULL,
+			NULL,
+			NULL,
+			NULL,
+			NULL,
+			NULL,
+			TRUE);
+		$this->addModel($m);
+		
 	}
+	
 	public function assigned_orders_list($pm){
 		if ($_SESSION['role_id']=='client'){
 			$client_id = $_SESSION['client_id'];
@@ -280,19 +280,19 @@ class Delivery_Controller extends ControllerSQL{
 	
 		//periods
 		$this->addNewModel(
-		"SELECT
-			id,
-			h_from,h_to,
-			h_from::text||'-'||h_to::text AS name
-		FROM delivery_hours
-		ORDER BY h_from",
-		'periods'
-		);
+			"SELECT
+				id,
+				h_from,h_to,
+				h_from::text||'-'||h_to::text AS name
+			FROM delivery_hours
+			ORDER BY h_from",
+		'periods');
+		
 		//orders
 		$cond = new CondParamsSQL($pm,$this->getDbLink());
 		$this->addNewModel(sprintf(
 		"SELECT * FROM deliv_assigned_orders_list(%s,%d)",
-		$cond->getValForDb('date','le',DT_DATE),$client_id),
+		$cond->getValForDb('delivery_plan_date','le',DT_DATE),$client_id),
 		'assigned_orders_list'
 		);
 	}	
@@ -567,6 +567,9 @@ class Delivery_Controller extends ControllerSQL{
 	}
 	public function assigned_orders_for_client($pm){
 		$client_id = $_SESSION['client_id'];
+		if (!$client_id){
+			throw new Exception("Forbidden!");
+		}
 	
 		//orders
 		$cond = new CondParamsSQL($pm,$this->getDbLink());
@@ -574,8 +577,8 @@ class Delivery_Controller extends ControllerSQL{
 		"SELECT * FROM deliv_assigned_orders_for_client t
 		WHERE t.deliv_date BETWEEN %s AND %s
 		AND t.client_id=%d",
-		$cond->getValForDb('date','ge',DT_DATE),
-		$cond->getValForDb('date','le',DT_DATE),
+		$cond->getValForDb('delivery_plan_date','ge',DT_DATE),
+		$cond->getValForDb('delivery_plan_date','le',DT_DATE),
 		$client_id),
 		'assigned_orders_for_client'
 		);

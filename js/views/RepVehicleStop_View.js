@@ -45,6 +45,7 @@ function RepVehicleStop_View(id,options){
 		{"control":period.getControlTo(),
 		"filter":{"sign":"le","valueFieldId":"date_time"}
 		},
+		/*
 		{"control":new VehicleEditObject({
 			"fieldId":"vh_id",
 			"controlId":id+"_vehicle",
@@ -53,6 +54,21 @@ function RepVehicleStop_View(id,options){
 			}),
 		"filter":{"sign":"e","keyFieldIds":["vh_id"]}
 		},
+		*/
+		{"control":new EditList(id+"_vehicle_list",{
+			"labelCaption":"Список ТС:",
+			"editContClassName":"input-group "+get_bs_col()+"3",
+			"editViewControl":new VehicleEditObject(
+				{"fieldId":"vh_id_list",
+				"controlId":"vehicle_list",
+				"inLine":true,
+				"id":id+"_edit",
+				"attrs":{"required":"required"}}
+			)
+			}),
+		"filter":{"sign":"incl","valueFieldId":["vh_id_list"]}
+		},
+		
 		{"control":new EditTime(id+"_duration",{
 			"editContClassName":"input-group "+get_bs_col()+"2",
 			"labelCaption":"Длительность стоянок:",
@@ -61,13 +77,7 @@ function RepVehicleStop_View(id,options){
 			"value":"00:10"
 			}),
 		"filter":{"sign":"e","valueFieldId":"duration"}
-		},
-		{"control":new EditList(id+"_vehicle_list",{
-			//"editClassView":
-			}),
-		"filter":{"sign":"in","valueFieldId":["vh_id"]}
-		}				
-		
+		}		
 	]);
 	
 	this.addCmdMakeReport();

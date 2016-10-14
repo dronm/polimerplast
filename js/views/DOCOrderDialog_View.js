@@ -163,7 +163,13 @@ function DOCOrderDialog_View(id,options){
 	var firm_wh_vis = (SERV_VARS.ROLE_ID!="client");
 	//Организация
 	this.m_FirmCtrl = new FirmEditObject("firm_id",id+"_firm",false,
-		null,{visible:firm_wh_vis,required:firm_wh_vis});
+		null,{visible:firm_wh_vis,required:firm_wh_vis,
+		events:{
+			"change":function(){
+				self.updateDebts();				
+			}
+		}
+		});
 	this.bindControl(this.m_FirmCtrl,
 		{"modelId":model_id,"valueFieldId":"firm_descr","keyFieldIds":["firm_id"]},
 		{"valueFieldId":null,"keyFieldIds":["firm_id"]});	
@@ -187,7 +193,7 @@ function DOCOrderDialog_View(id,options){
 		this.m_clientCtrl = new ClientEditObject("client_id",id+"_client",false,{
 			"noOpen":true,
 			"onSelected":function(){
-				self.onClientSelected();
+				self.onClientSelected(true);
 			},
 			"extraFields":["def_firm_id","def_warehouse_id","def_debt","debt_total"],
 			"winObj":options.winObj
@@ -638,16 +644,23 @@ DOCOrderDialog_View.prototype.setClientId = function(clientId,setPopFirm){
 	//Табличная часть
 	this.m_productDetails.setClientId(clientId);
 	
-	
-	//Взаиморасчеты
+	//значения по умолчанию
 	if (this.m_clientCtrl){
-		this.setDebts(parseFloat(this.m_clientCtrl.getAttr("debt_total")), parseFloat(this.m_clientCtrl.getAttr("def_debt")));
-		
-		//значения по умолчанию
+		this.setDebts(0, 0);
+			
 		var def_firm = this.m_clientCtrl.getAttr("def_firm_id");
 		var def_warehouse = this.m_clientCtrl.getAttr("def_warehouse_id");
 		if (def_firm && def_firm!="null"){
 			this.m_FirmCtrl.setFieldId("firm_id",def_firm);
+			
+			var debt_total = parseFloat(this.m_clientCtrl.getAttr("debt_total"));
+			if (!isNaN(debt_total) && debt_total){
+				this.setDebts(debt_total, parseFloat(this.m_clientCtrl.getAttr("def_debt")) );
+			}
+		}
+		else if (!setPopFirm || this.m_FirmCtrl.getFieldValue()){
+			//нет значений по умолчанию
+			this.updateDebts();
 		}
 		if (def_warehouse && def_warehouse!="null"){
 			this.m_wareHCtrl.setFieldId("warehouse_id",def_warehouse);
@@ -656,8 +669,8 @@ DOCOrderDialog_View.prototype.setClientId = function(clientId,setPopFirm){
 	}
 		
 	//организация
-	if (setPopFirm && this.m_FirmCtrl.getFieldValue()){	
-		//console.log("setPopFirm="+setPopFirm);
+	if (setPopFirm && !this.m_FirmCtrl.getFieldValue()){	
+		console.log("setPopFirm="+setPopFirm);
 		var self = this;
 		var contr = new Client_Controller(new ServConnector(HOST_NAME));
 		contr.run("get_pop_firm",{
@@ -669,6 +682,7 @@ DOCOrderDialog_View.prototype.setClientId = function(clientId,setPopFirm){
 				if (m.getNextRow()){
 					self.m_FirmCtrl.setValue(m.getFieldValue('firm_descr'));
 					self.m_FirmCtrl.setFieldValue("id",m.getFieldValue('firm_id'));
+					self.setDebts(parseFloat(m.getFieldValue('debt_total')), parseFloat(m.getFieldValue('def_debt')));
 					self.onFirmSelected();
 				}
 			}
@@ -1229,7 +1243,41 @@ DOCOrderDialog_View.prototype.onDownloadOrder = function(){
 	}
 	else{
 		this.doDownloadOrder();
+	}		
+}
+
+DOCOrderDialog_View.prototype.updateDebts = function(){
+	//console.log("firm changed");
+	if (!this.m_clientCtrl){
+		return;
 	}
 	
+	var cl_id = this.m_clientCtrl.getFieldValue();	
+	if (!cl_id){
+		return;
+	}
+	var f_id = this.m_FirmCtrl.getFieldValue();
+	
+	var self = this;
+	var contr = new Client_Controller(new ServConnector(HOST_NAME));
+	contr.run("get_debts_on_firm",{
+		"params":{
+			"client_id":cl_id,
+			"firm_id":f_id
+		},
+		"err":function(resp,errCode,errStr){
+			self.getErrorControl().setValue(errStr);
+		},
+		"func":function(resp){
+			var m = resp.getModelById("get_debts_on_firm",true);
+			var debt_total = 0;
+			var def_debt = 0;
+			if (m.getNextRow()){
+				debt_total = parseFloat(m.getFieldValue("debt_total"));
+				def_debt = parseFloat(m.getFieldValue("def_debt"));
+			}
+			self.setDebts(debt_total, def_debt);
+		}
+	});
 	
 }

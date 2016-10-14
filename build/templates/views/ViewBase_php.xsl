@@ -9,6 +9,9 @@
 require_once(FRAME_WORK_PATH.'basic_classes/ViewHTMLXSLT.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ModelStyleSheet.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ModelJavaScript.php');
+
+require_once(USER_MODELS_PATH.'TemplateParamList_Model.php');
+
 <xsl:apply-templates select="metadata/enums/enum[@id='role_types']"/>
 class ViewBase extends ViewHTMLXSLT {	
 	public function __construct($name){
@@ -62,6 +65,7 @@ class ViewBase extends ViewHTMLXSLT {
 		}
 		
 		//Global Filters
+		
 		<!--
 		<xsl:for-each select="/metadata/globalFilters/field">
 		if (isset($_SESSION['global_<xsl:value-of select="@id"/>'])){
@@ -76,6 +80,34 @@ class ViewBase extends ViewHTMLXSLT {
 			$menu_class = 'MainMenu_Model_'.$_SESSION['role_id'];
 			$models['mainMenu'] = new $menu_class();
 		}
+		
+		if (isset($_SESSION['user_id'])){
+			$dbLink = new DB_Sql();
+			$dbLink->persistent=true;
+			$dbLink->appname = APP_NAME;
+			$dbLink->technicalemail = TECH_EMAIL;
+			$dbLink->reporterror = DEBUG;
+			$dbLink->database= DB_NAME;			
+			$dbLink->connect(DB_SERVER,DB_USER,DB_PASSWORD,(defined('DB_PORT'))? DB_PORT:NULL);
+
+			$models['TemplateParamList_Model'] = new TemplateParamList_Model($dbLink);
+			$models['TemplateParamList_Model']->setSelectQueryText(
+				sprintf("SELECT * FROM teplate_params_get_list(''::text,''::text, %d)",
+				$_SESSION['user_id']
+				)		
+			);
+			$models['TemplateParamList_Model']->select(FALSE,
+					NULL,
+					NULL,
+					NULL,
+					NULL,
+					NULL,
+					NULL,
+					NULL,
+					TRUE
+			);
+		}
+		
 		parent::write($models);
 	}	
 }	

@@ -18,8 +18,9 @@ function DOCOrderNewList_View(id,options){
 	
 	options.state = true;
 	
+	options.name = "DOCOrderNewList_View";
 	options.commands = new GridCommands(id+"_grid_cmd",{
-		"noPrint":true,"noInsert":true
+		"noPrint":true,"noInsert":true,"cmdColumnManager":true
 		});	
 	DOCOrderNewList_View.superclass.constructor.call(this,
 		id,options);
@@ -33,6 +34,11 @@ function DOCOrderNewList_View(id,options){
 		//doc cancel state
 		btn = new BtnCancelLastState({"grid":this.m_grid});
 		//this.m_customCommands.addElement(btn);
+		options.commands.addElement(btn);
+		popup_menu.addButton(btn);
+		
+		//to production
+		btn = new BtnPassToProduction({"grid":this.m_grid});
 		options.commands.addElement(btn);
 		popup_menu.addButton(btn);
 		

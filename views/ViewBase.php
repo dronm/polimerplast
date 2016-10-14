@@ -3,6 +3,9 @@ require_once(FRAME_WORK_PATH.'basic_classes/ViewHTMLXSLT.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ModelStyleSheet.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ModelJavaScript.php');
 
+require_once(USER_MODELS_PATH.'TemplateParamList_Model.php');
+
+
 			require_once('models/MainMenu_Model_admin.php');
 			require_once('models/MainMenu_Model_client.php');
 			require_once('models/MainMenu_Model_sales_manager.php');
@@ -210,9 +213,15 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridDbHeadSysCell.js'));
 	
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridFilter.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridFastFilter.js'));		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridFilterDocument.js'));		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GroupFields.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/PopUpMenu.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ViewGridColumnManager.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ViewGridColParam.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ViewGridColOrder.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ViewGridColVisibility.js'));								
+		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/PeriodFilter.js'));
 		
 		
@@ -226,9 +235,10 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/TabMenuItem.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/MenuItem.js'));
 		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridCommandsEditList.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridList.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/EditList.js'));								
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/EditListCommands.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridClient.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/EditList.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ViewInlineGridClientEdit.js'));		
 		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/WaitControl.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ErrorControl.js'));
@@ -487,7 +497,7 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'extra/DragnDrop/dragMaster.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'extra/DragnDrop/helpers.js'));
 		
-	$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ProductGroup_Controller.js'));$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ProjectManager_Controller.js'));$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/Naspunkt_Controller.js'));$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/AccPKO_Controller.js'));			
+	$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ProductGroup_Controller.js'));$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ProjectManager_Controller.js'));$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/Naspunkt_Controller.js'));$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/AccPKO_Controller.js'));$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/TemplateParam_Controller.js'));			
 			if (isset($_SESSION['scriptId'])){
 				$script_id = $_SESSION['scriptId'];
 			}
@@ -523,12 +533,41 @@ class ViewBase extends ViewHTMLXSLT {
 		
 		//Global Filters
 		
+		
 	}
 	public function write(ArrayObject &$models){
 		if (isset($_SESSION['role_id'])){
 			$menu_class = 'MainMenu_Model_'.$_SESSION['role_id'];
 			$models['mainMenu'] = new $menu_class();
 		}
+		
+		if (isset($_SESSION['user_id'])){
+			$dbLink = new DB_Sql();
+			$dbLink->persistent=true;
+			$dbLink->appname = APP_NAME;
+			$dbLink->technicalemail = TECH_EMAIL;
+			$dbLink->reporterror = DEBUG;
+			$dbLink->database= DB_NAME;			
+			$dbLink->connect(DB_SERVER,DB_USER,DB_PASSWORD,(defined('DB_PORT'))? DB_PORT:NULL);
+
+			$models['TemplateParamList_Model'] = new TemplateParamList_Model($dbLink);
+			$models['TemplateParamList_Model']->setSelectQueryText(
+				sprintf("SELECT * FROM teplate_params_get_list(''::text,''::text, %d)",
+				$_SESSION['user_id']
+				)		
+			);
+			$models['TemplateParamList_Model']->select(FALSE,
+					NULL,
+					NULL,
+					NULL,
+					NULL,
+					NULL,
+					NULL,
+					NULL,
+					TRUE
+			);
+		}
+		
 		parent::write($models);
 	}	
 }	

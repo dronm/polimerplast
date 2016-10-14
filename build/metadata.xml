@@ -2,8 +2,8 @@
 <metadata debug="TRUE" owner="polimerplast" dataSchema="public">
 	<versions>	
 		<version dateOpen="2016-06-07 07:05" dateClose="2016-06-07 11:06:25">1.0021</version>
-		<lastBuild>2016-10-07 20:48:18</lastBuild>		
-	<version dateOpen="2016-06-07 11:06:56"/><version dateOpen="2016-06-07 11:06:57" dateClose="2016-06-07 14:06:30">1.0022</version><version dateOpen="2016-06-07 14:06:32" dateClose="2016-06-07 16:06:31">1.0023</version><version dateOpen="2016-06-07 16:06:32" dateClose="2016-06-08 10:06:07">1.0024</version><version dateOpen="2016-06-08 10:06:42" dateClose="2016-06-08 13:06:31">1.0025</version><version dateOpen="2016-06-08 14:06:25" dateClose="2016-06-09 15:06:33">1.0026</version><version dateOpen="2016-06-09 17:06:49" dateClose="2016-06-09 17:06:52">1.0027</version><version dateOpen="2016-06-09 17:06:52" dateClose="2016-06-09 21:06:53">1.0027</version><version dateOpen="2016-06-09 21:06:53" dateClose="2016-06-10 12:06:17">1.0028</version><version dateOpen="2016-06-10 12:06:18" dateClose="2016-06-11 14:06:03">1.0029</version><version dateOpen="2016-06-16 23:06:13" dateClose="2016-06-20 14:06:32">1.0030</version><version dateOpen="2016-06-20 14:06:33" dateClose="2016-06-22 15:06:50">1.0031</version><version dateOpen="2016-06-24 09:06:55" dateClose="2016-07-08 14:07:21">1.0032</version><version dateOpen="2016-07-08 14:07:21" dateClose="2016-07-12 12:07:59">1.0033</version><version dateOpen="2016-07-12 12:07:59" dateClose="2016-07-13 16:07:12">1.0034</version><version dateOpen="2016-07-13 18:07:15" dateClose="2016-07-15 18:07:34">1.0035</version><version dateOpen="2016-07-16 08:07:56" dateClose="2016-07-16 17:07:58">1.0036</version><version dateOpen="2016-07-16 17:07:59" dateClose="2016-08-11 14:08:53">1.0037</version><version dateOpen="2016-08-13 11:08:41" dateClose="2016-08-13 11:08:43">1.0038</version><version dateOpen="2016-08-17 16:08:54" dateClose="2016-08-17 18:08:02">1.0039</version><version dateOpen="2016-08-19 11:08:12" dateClose="2016-08-19 11:08:12">1.0040</version><version dateOpen="2016-08-22 15:08:35" dateClose="2016-08-22 15:08:35">1.0041</version><version dateOpen="2016-08-22 17:08:03" dateClose="2016-08-22 18:08:14">1.0042</version><version dateOpen="2016-08-23 16:08:42" dateClose="2016-08-25 13:08:24">1.0043</version><version dateOpen="2016-08-25 15:08:58" dateClose="2016-08-25 15:08:59">1.0044</version><version dateOpen="2016-08-25 16:08:08" dateClose="2016-08-25 16:08:09">1.0045</version><version dateOpen="2016-09-01 07:09:51" dateClose="2016-09-01 12:09:55">1.0046</version><version dateOpen="2016-09-08 17:09:56" dateClose="2016-09-08 17:09:56">1.0047</version><version dateOpen="2016-09-08 18:09:06" dateClose="2016-09-08 18:09:06">1.0048</version><version dateOpen="2016-09-09 08:09:55" dateClose="2016-09-09 08:09:56">1.0049</version><version dateOpen="2016-09-30 14:09:31" dateClose="2016-10-03 16:10:09">1.0050</version><version dateOpen="2016-10-03 16:10:27" dateClose="2016-10-03 23:10:36">1.0051</version><version dateOpen="2016-10-03 23:10:36" dateClose="2016-10-06 16:10:59">1.0052</version><version dateOpen="2016-10-07 09:10:06" dateClose="2016-10-07 14:10:28">1.0053</version><version dateOpen="2016-10-07 20:10:47" dateClose="2016-10-07 20:10:48">1.0054</version></versions>	
+		<lastBuild>2016-10-14 14:43:30</lastBuild>		
+	<version dateOpen="2016-06-07 11:06:56"/><version dateOpen="2016-06-07 11:06:57" dateClose="2016-06-07 14:06:30">1.0022</version><version dateOpen="2016-06-07 14:06:32" dateClose="2016-06-07 16:06:31">1.0023</version><version dateOpen="2016-06-07 16:06:32" dateClose="2016-06-08 10:06:07">1.0024</version><version dateOpen="2016-06-08 10:06:42" dateClose="2016-06-08 13:06:31">1.0025</version><version dateOpen="2016-06-08 14:06:25" dateClose="2016-06-09 15:06:33">1.0026</version><version dateOpen="2016-06-09 17:06:49" dateClose="2016-06-09 17:06:52">1.0027</version><version dateOpen="2016-06-09 17:06:52" dateClose="2016-06-09 21:06:53">1.0027</version><version dateOpen="2016-06-09 21:06:53" dateClose="2016-06-10 12:06:17">1.0028</version><version dateOpen="2016-06-10 12:06:18" dateClose="2016-06-11 14:06:03">1.0029</version><version dateOpen="2016-06-16 23:06:13" dateClose="2016-06-20 14:06:32">1.0030</version><version dateOpen="2016-06-20 14:06:33" dateClose="2016-06-22 15:06:50">1.0031</version><version dateOpen="2016-06-24 09:06:55" dateClose="2016-07-08 14:07:21">1.0032</version><version dateOpen="2016-07-08 14:07:21" dateClose="2016-07-12 12:07:59">1.0033</version><version dateOpen="2016-07-12 12:07:59" dateClose="2016-07-13 16:07:12">1.0034</version><version dateOpen="2016-07-13 18:07:15" dateClose="2016-07-15 18:07:34">1.0035</version><version dateOpen="2016-07-16 08:07:56" dateClose="2016-07-16 17:07:58">1.0036</version><version dateOpen="2016-07-16 17:07:59" dateClose="2016-08-11 14:08:53">1.0037</version><version dateOpen="2016-08-13 11:08:41" dateClose="2016-08-13 11:08:43">1.0038</version><version dateOpen="2016-08-17 16:08:54" dateClose="2016-08-17 18:08:02">1.0039</version><version dateOpen="2016-08-19 11:08:12" dateClose="2016-08-19 11:08:12">1.0040</version><version dateOpen="2016-08-22 15:08:35" dateClose="2016-08-22 15:08:35">1.0041</version><version dateOpen="2016-08-22 17:08:03" dateClose="2016-08-22 18:08:14">1.0042</version><version dateOpen="2016-08-23 16:08:42" dateClose="2016-08-25 13:08:24">1.0043</version><version dateOpen="2016-08-25 15:08:58" dateClose="2016-08-25 15:08:59">1.0044</version><version dateOpen="2016-08-25 16:08:08" dateClose="2016-08-25 16:08:09">1.0045</version><version dateOpen="2016-09-01 07:09:51" dateClose="2016-09-01 12:09:55">1.0046</version><version dateOpen="2016-09-08 17:09:56" dateClose="2016-09-08 17:09:56">1.0047</version><version dateOpen="2016-09-08 18:09:06" dateClose="2016-09-08 18:09:06">1.0048</version><version dateOpen="2016-09-09 08:09:55" dateClose="2016-09-09 08:09:56">1.0049</version><version dateOpen="2016-09-30 14:09:31" dateClose="2016-10-03 16:10:09">1.0050</version><version dateOpen="2016-10-03 16:10:27" dateClose="2016-10-03 23:10:36">1.0051</version><version dateOpen="2016-10-03 23:10:36" dateClose="2016-10-06 16:10:59">1.0052</version><version dateOpen="2016-10-07 09:10:06" dateClose="2016-10-07 14:10:28">1.0053</version><version dateOpen="2016-10-07 20:10:47" dateClose="2016-10-07 20:10:48">1.0054</version><version dateOpen="2016-10-11 18:10:13" dateClose="2016-10-14 14:10:45">1.0054?</version></versions>	
 	<globalFilters>
 		<field id="client_id"/>
 	</globalFilters>
@@ -519,6 +519,7 @@
 		<model id="VehicleSelectList" parent="ModelSQL" dataTable="vehicles_select_list" virtual="TRUE">
 			<field id="id" dataType="Int" alias="Код" primaryKey="TRUE"/>			
 			<field id="descr" dataType="String" alias="Автомобиль"/>
+			<field id="plate" dataType="String" alias="Гос.номер"/>
 		</model>		
 		
 		<model id="SatisfSurveyItem" parent="ModelSQL" dataTable="satisf_survey_items" virtual="FALSE">
@@ -677,7 +678,7 @@
 			</defaultOrder>		
 			<field id="id" dataType="Int" primaryKey="TRUE" autoInc="TRUE" required="FALSE"/>
 			<field id="date_time" dataType="DateTime" alias="Дата пдч."/>
-			<field id="number" dataType="Int" alias="Номер"/>
+			<field id="number" dataType="String" length="10" alias="Номер"/>
 			<field id="processed" dataType="Bool" alias="Проведен" default="false"/>
 			
 			<field id="client_id" dataType="Int" refTable="clients" refField="id"/>
@@ -1255,7 +1256,7 @@
 			<field id="product_id" dataType="Int" sysCol="TRUE"/>
 			<field id="product_descr" dataType="String" alias="Продукция"/>
 			<field id="quant" dataType="Float" alias="Количество"/>
-			<field id="warehouse_id" dataType="Int" sysCol="TRUE"/>
+			<field id="warehouse_id_list" dataType="String" sysCol="TRUE"/>
 		</model>
 		<model id="RepSale" virtual="TRUE" dataTable="rep_sales" parent="ModelReportSQL">
 			<field id="doc_id" dataType="Int" alias="Код заказа" sysCol="TRUE"/>
@@ -1623,6 +1624,7 @@
 
 		<model id="VehicleStopList" parent="ModelSQL" virtual="TRUE">
 			<field id="vh_id" dataType="Int" sysCol="TRUE"/>
+			<field id="vh_id_list" dataType="String" sysCol="TRUE"/>
 			<field id="vh_descr" dataType="String" alias="ТС"/>
 			<field id="date_time_descr" dataType="String" alias="Дата"/>
 			<field id="date_time" dataType="DateTime" sysCol="TRUE"/>
@@ -1630,6 +1632,45 @@
 			<field id="address" dataType="String" alias="Адрес"/>
 		</model>
 		
+		<model id="TemplateParam" parent="ModelSQL" dataTable="template_params" virtual="FALSE">
+			<field id="id" dataType="Int" primaryKey="TRUE" autoInc="TRUE"/>
+			<field id="template" dataType="String" length="100"/>
+			<field id="user_id" dataType="Int" refTable="users" refField="id" alias="Пользователь"/>
+			<field id="param" dataType="String" length="100"/>
+			<field id="val" dataType="Text"/>
+			
+			<index id="template_params_template_param_idx" unique="TRUE">
+				<field id="template"/>
+				<field id="param"/>
+			</index>															
+			<index id="template_params_user_idx">
+				<field id="user_id"/>
+			</index>															
+			
+		</model>		
+
+		<model id="TemplateParamList" parent="ModelSQL" virtual="TRUE">
+			<field id="id" dataType="Int" sysCol="TRUE"/>
+			<field id="template" dataType="String"/>
+			<field id="param" dataType="String"/>
+			<field id="val" dataType="Text"/>
+		</model>		
+
+		<model id="UnassignedOrderList" parent="ModelSQL" virtual="TRUE" dataTable="deliv_unassigned_orders_list">
+			<field id="id" dataType="Int" sysCol="TRUE"/>
+			<field id="number" dataType="String" alias="Номер"/>
+			<field id="date_time" dataType="DateTime" alias="Дата"/>
+			<field id="delivery_plan_date" dataType="DateTime" sysCol="TRUE"/>
+			<field id="delivery_plan_date_descr" dataType="DateTime" alias="Плановая дата выпуска"/>
+			<field id="client_id" dataType="Int" sysCol="TRUE"/>
+			<field id="client_descr" dataType="String" alias="Клиент"/>
+			<field id="warehouse_descr" dataType="String" alias="Склад"/>
+			<field id="client_dest_descr" dataType="String" alias="Адрес"/>
+			<field id="product_str" dataType="String" alias="Продукция"/>
+			<field id="total_volume" dataType="Float" alias="Объем"/>
+			<field id="total_weight" dataType="Float" alias="Вес"/>
+		</model>		
+
 	</models>
 	<constants>
 		<constant id="client_geo_zone_radius_m" name="Радиус (метры) геозон клиентов" descr="Геозона клиента представляет из себя окружность, которая строится на основании точки на карте, поставленной клиентом, и радиуса в метрах, заданного данной величиной" dataType="Int" defaultValue="50"/>
@@ -1642,6 +1683,7 @@
 		<constant id="wait_days_before_arch" name="Количество дней ожидания до помещения заявки в архив" descr="Сколько дней ждать согласования заявки до помещения в архив" dataType="Int" length="2" defaultValue="5"/>
 		<constant id="main_measure_unit_id" name="Основная единица измерения" descr="Для подстановки по умолчанию в заявку" dataType="Int" refTable="measure_units" refField="id"/>
 		<constant id="product_measure_unit_check_deviat" name="Погрешность при проверке целых единиц измерения" descr="" dataType="Float" length="19" precision="5"/>
+		<constant id="new_order_prefix" name="Префикс новых заявок" descr="" dataType="String" length="3" defaultValue="Н"/>
 	</constants>
 	
 	<controllers>	
@@ -1789,6 +1831,10 @@
 				<field id="inn" dataType="String" length="12" required="TRUE"/>
 			</publicMethod>
 			<publicMethod id="get_pop_firm">
+				<field id="client_id" dataType="Int" required="TRUE"/>
+			</publicMethod>
+			<publicMethod id="get_debts_on_firm">
+				<field id="firm_id" dataType="Int" required="TRUE"/>
 				<field id="client_id" dataType="Int" required="TRUE"/>
 			</publicMethod>
 			<publicMethod id="get_debt_list" modelId="ClientDebtList">
@@ -2248,12 +2294,12 @@
 											
 		</controller>
 		<controller id="Delivery" parentId="ControllerSQL" state="TRUE">
-			<publicMethod id="unassigned_orders_list">
-				<field id="cond_fields" dataType="String" required="TRUE"/>
-				<field id="cond_vals" dataType="String" required="TRUE"/>
-				<field id="cond_sgns" dataType="String" required="TRUE"/>
+			<publicMethod id="unassigned_orders_list" modelId="UnassignedOrderList">
+				<field id="cond_fields" dataType="String"/>
+				<field id="cond_vals" dataType="String"/>
+				<field id="cond_sgns" dataType="String"/>
 				<field id="cond_ic" dataType="String"/>
-				<field id="all_orders" dataType="Int" required="TRUE"/>
+				<field id="all_orders" dataType="Int"/>
 				<field id="field_sep" dataType="String"/>
 			</publicMethod>
 			<publicMethod id="assigned_orders_list">
@@ -2320,6 +2366,7 @@
 			<publicMethod id="get_list" modelId="VehicleList"/>
 			<publicMethod id="get_select_list" modelId="VehicleSelectList"/>
 			<publicMethod id="get_object" modelId="VehicleDialog"/>
+			<publicMethod id="complete" modelId="VehicleSelectList" patternFieldId="plate"/>
 		</controller>						
 		<controller id="ClientDestination" parentId="ControllerSQL" state="TRUE">
 			<publicMethod id="insert" modelId="ClientDestination"/>
@@ -2487,6 +2534,15 @@
 			<publicMethod id="get_list" modelId="AccPKOList"/>
 			<publicMethod id="get_object" modelId="AccPKOList"/>
 		</controller>				
+		
+		<controller id="TemplateParam" parentId="ControllerSQL" state="TRUE" noState="FALSE">
+			<publicMethod id="get_list" modelId="TemplateParamList"/>
+			<publicMethod id="set_value">
+				<field id="template" dataType="String" required="TRUE"/>
+				<field id="param" dataType="String" required="TRUE"/>
+				<field id="val" dataType="Text" required="TRUE"/>
+			</publicMethod>
+		</controller>		
 		
 	</controllers>
 	
@@ -2817,9 +2873,15 @@
 		<jsScript file="controlsBS/GridDbHeadSysCell.js"/>
 	
 		<jsScript file="controlsBS/GridFilter.js"/>
+		<jsScript file="controlsBS/GridFastFilter.js"/>		
 		<jsScript file="controlsBS/GridFilterDocument.js"/>		
 		<jsScript file="controlsBS/GroupFields.js"/>
 		<jsScript file="controlsBS/PopUpMenu.js"/>
+		<jsScript file="controlsBS/ViewGridColumnManager.js"/>
+		<jsScript file="controlsBS/ViewGridColParam.js"/>
+		<jsScript file="controlsBS/ViewGridColOrder.js"/>
+		<jsScript file="controlsBS/ViewGridColVisibility.js"/>								
+		
 		<jsScript file="controlsBS/PeriodFilter.js"/>
 		<!--<jsScript file="controlsBS/DayFilter.js"/>-->
 		
@@ -2833,9 +2895,10 @@
 		<jsScript file="controlsBS/TabMenuItem.js"/>
 		<jsScript file="controlsBS/MenuItem.js"/>
 		
-		<jsScript file="controlsBS/GridCommandsEditList.js"/>
-		<jsScript file="controlsBS/GridList.js"/>
-		<jsScript file="controlsBS/EditList.js"/>								
+		<jsScript file="controlsBS/EditListCommands.js"/>
+		<jsScript file="controlsBS/GridClient.js"/>
+		<jsScript file="controlsBS/EditList.js"/>
+		<jsScript file="controlsBS/ViewInlineGridClientEdit.js"/>		
 		
 		<jsScript file="controlsBS/WaitControl.js"/>
 		<jsScript file="controlsBS/ErrorControl.js"/>
@@ -3098,7 +3161,7 @@
 		<jsScript file="extra/DragnDrop/dragMaster.js"/>
 		<jsScript file="extra/DragnDrop/helpers.js"/>
 		
-	<jsScript file="controllers/ProductGroup_Controller.js"/><jsScript file="controllers/ProjectManager_Controller.js"/><jsScript file="controllers/Naspunkt_Controller.js"/><jsScript file="controllers/AccPKO_Controller.js"/></jsScripts>
+	<jsScript file="controllers/ProductGroup_Controller.js"/><jsScript file="controllers/ProjectManager_Controller.js"/><jsScript file="controllers/Naspunkt_Controller.js"/><jsScript file="controllers/AccPKO_Controller.js"/><jsScript file="controllers/TemplateParam_Controller.js"/></jsScripts>
 	
 	<cssScripts>
 		<cssScript file="bootstrap.min.css" compressed="TRUE" standalone="TRUE"/>

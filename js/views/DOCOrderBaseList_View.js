@@ -17,34 +17,12 @@ function DOCOrderBaseList_View(id,options){
 		id,options);
 	
 	var controller = new DOCOrder_Controller(new ServConnector(HOST_NAME));
+	var self = this;
 	
 	//filter
 	var filter;
 	if (options.filter){
 		filter = new GridFilter(id+"_filter",{noUnsetControl:false});
-		//CustomGridFilter
-		
-		//Типы заявок: текущий или все		
-		filter.addFilterControl(new EditRadioGroup(id+"_filter_current_all",
-			{//"labelCaption":"Показывать заявки:",
-			"editContClassName":"input-group "+get_bs_col()+"3",
-			"elements":[
-				new EditRadio("current_all:current",{
-					"descr":"Только текущие заявки",
-					"value":"true",
-					"name":"orders_type_filter",
-					"editContClassName":"input-group "+get_bs_col()+"1",
-					"attrs":{"checked":"checked"}}),
-				new EditRadio("current_all:all",{
-					"descr":"Все заявки",
-					"value":"undefined",
-					"name":"orders_type_filter",
-					"editContClassName":"input-group "+get_bs_col()+"1"
-					})
-				]
-			})
-		,{"sign":"e","valueFieldId":"is_current"});
-		
 		
 		//Номер наш
 		filter.addFilterControl(new EditString(id+"_filter_number",
@@ -78,35 +56,89 @@ function DOCOrderBaseList_View(id,options){
 		
 		//Завод
 		if (options.warehouse){			
+			/*
 			filter.addFilterControl(new WarehouseEditObject(
 				"warehouse_id",id+"_filter_warehouse",false,null,
 				{"editContClassName":"input-group "+get_bs_col()+"3"}),
 			{"sign":"e","keyFieldIds":["warehouse_id"]});
+			*/
+			filter.addFilterControl(
+				new EditList(id+"_warehouse_id",{
+				"labelCaption":"Список складов:",
+				"editContClassName":"input-group "+get_bs_col()+"3",
+				"editViewControl":new WarehouseEditObject(
+					"warehouse_id",
+					id+"_filter_warehouse",
+					true,null,
+					{"editContClassName":"input-group "+get_bs_col()+"3"}
+				)
+				}),
+			{"sign":"any","valueFieldId":"warehouse_id"});
+			
 		}
 		
 		//Статус
 		if (options.state){
+			/*
 			filter.addFilterControl(new OrderStateEditObject("state",id+"_filter_state",false,null,
 				{"editContClassName":"input-group "+get_bs_col()+"3"})
 			,{"sign":"e","valueFieldId":"state"});
+			*/
+			filter.addFilterControl(
+				new EditList(id+"_state",{
+				"labelCaption":"Список статусов:",
+				"editContClassName":"input-group "+get_bs_col()+"3",
+				"editViewControl":new OrderStateEditObject(
+					"state",
+					id+"_filter_state",
+					true,null,
+					{"editContClassName":"input-group "+get_bs_col()+"3"}
+				)
+				}),
+			{"sign":"any","keyFieldIds":["state"]});			
 		}
 		//Клиент
-		if (options.client){			
+		if (options.client){
+			/*			
 			filter.addFilterControl(new ClientEditObject("client_id",id+"_filter_client",false,
 			{"editContClassName":"input-group "+get_bs_col()+"3"})
 			,{"sign":"e","keyFieldIds":["client_id"]});
+			*/
+			filter.addFilterControl(
+				new EditList(id+"_client_id",{
+				"labelCaption":"Список клиентов:",
+				"editContClassName":"input-group "+get_bs_col()+"3",
+				"editViewControl":new ClientEditObject(
+					"client_id",
+					id+"_filter_client",
+					true,null,
+					{"editContClassName":"input-group "+get_bs_col()+"3"}
+				)
+				}),
+			{"sign":"any","keyFieldIds":["client_id"]});
+			
 		}
 
 		//продукция
 		if (options.products){			
 			//ProductForFilterEditObject
+			/*
 			filter.addFilterControl(new ProductEditObject("product_ids",id+"_filter_products",false)
 			,{"sign":"any","valueFieldId":"product_ids"});
-		
-			/*
-			filter.addFilterControl(new ProductEditObject("product_id",id+"_filter_product",false)
-			,{"sign":"e","valueFieldId":"product_id"});
 			*/
+			filter.addFilterControl(
+				new EditList(id+"_products",{
+				"labelCaption":"Список продукции:",
+				"editContClassName":"input-group "+get_bs_col()+"3",
+				"editViewControl":new ProductEditObject(
+					"product_ids",
+					id+"_filter_products",
+					true,null,
+					{"editContClassName":"input-group "+get_bs_col()+"3"}
+				)
+				}),
+			{"sign":"any","keyFieldIds":["product_ids"]});
+			
 		}
 		
 		//Номер реализ
@@ -167,6 +199,96 @@ function DOCOrderBaseList_View(id,options){
 		{"sign":"le","valueFieldId":"delivery_plan_date"});				
 		
 	}
+	
+	//*****************************************
+	if (options.fast_filter){
+		//fast filter
+		
+		this.m_fastFilter = new GridFastFilter(id+"_fast_filter",{
+			"tagName":"div",
+			"noSetControl":true,
+			"noUnsetControl":true,
+			"noToggleControl":true,
+			"className":"row"
+			});
+		
+		//Текущие/Все
+		//Типы заявок: текущий или все		
+		this.m_fastFilter.addFilterControl(new EditRadioGroup(id+"_filter_current_all",
+			{"className":get_bs_col()+"3",
+			"elements":[
+				new EditRadio("current_all:current",{
+					"descr":"Текущие",
+					"value":"true",
+					"name":"orders_type_filter",
+					"contClassName":get_bs_col()+"6",
+					"editContClassName":"input-group "+get_bs_col()+"1",
+					"labelClassName":get_bs_col()+"8",					
+					"events":{
+						"click":function(){
+							self.m_fastFilter.refresh();
+						}
+					},
+					"attrs":{"checked":"checked","initValue":"checked"}}),
+				new EditRadio("current_all:all",{
+					"descr":"Все",
+					"value":"undefined",
+					"name":"orders_type_filter",
+					"contClassName":get_bs_col()+"6",
+					"editContClassName":"input-group "+get_bs_col()+"1",
+					"labelClassName":get_bs_col()+"8",
+					"events":{
+						"click":function(){
+							self.m_fastFilter.refresh();
+						}
+					},					
+					"attrs":{"initValue":"false"}
+					})
+				]
+			})
+		,{"sign":"e","valueFieldId":"is_current"});
+		
+			
+		//НОМЕР
+		this.m_fastFilter.addFilterControl(
+			new EditString(id+"_fast_filter_number",
+				{"labelCaption":"№:",
+				//"editContClassName":"input-group "+get_bs_col()+"2",
+				"contClassName":get_bs_col()+"2",
+				"winObj":this.m_winObj,
+				"tableLayout":false
+			})		
+		,{"sign":"lk","valueFieldId":"number","r_wcards":true}
+		);
+		
+		if (options.client){
+			//client
+			this.m_fastFilter.addFilterControl(
+				new EditString(id+"_fast_filter_client_descr",
+					{"labelCaption":"Клиент:",
+					//"editContClassName":"input-group "+get_bs_col()+"3",
+					"contClassName":get_bs_col()+"3"
+				})		
+			,{"sign":"lk","valueFieldId":"client_descr","r_wcards":"1","l_wcards":"1","icase":"1"}
+			);
+		}		
+		//date
+		this.m_fastFilter.addFilterControl(new EditDate(id+"_fast_filter_delivery_plan_date",
+			{"labelCaption":"Дата вып.:",
+			"noClear":false,
+			"editContClassName":"input-group "+get_bs_col()+"8",
+			"contClassName":get_bs_col()+"3",
+			"labelClassName":get_bs_col()+"4",
+			"enabled":false,
+			"onSelected":function(){
+				self.m_fastFilter.refresh();
+			}
+			})
+			,{"sign":"e","valueFieldId":"delivery_plan_date"}
+		);
+		//this.addElement(this.m_fastFilter);
+	}
+	//
 		
 	var head = new GridHead();
 	var row = new GridRow(id+"_row1");
@@ -299,8 +421,9 @@ function DOCOrderBaseList_View(id,options){
 	}
 	
 	head.addElement(row);
+		
 	
-	this.m_grid=new DOCOrderGridDb(id+"_grid",
+	this.m_grid = new DOCOrderGridDb(id+"_grid",
 		{"head":head,
 		"body":new GridBody(),
 		"className":"orders",
@@ -321,12 +444,35 @@ function DOCOrderBaseList_View(id,options){
 		"rowSelect":true,
 		"fieldValueToRowClass":"state",
 		//"editWinClass":WIN_CLASS,
-		"fixedHeader":true
+		"fixedHeader":true,
+		"attrs":{"name":options.name}
 		}
 	);
+		
+	if (options.fast_filter){
+		this.m_gridOrigToDOM = this.m_grid.toDOM;
+		this.m_grid.toDOM = function(parent){
+			self.m_fastFilter.toDOM(parent);
+			self.m_gridOrigToDOM.call(self.m_grid,parent);
+		}
+
+		this.m_gridOrigRemoveDOM = this.m_grid.removeDOM;
+		this.m_grid.removeDOM = function(){
+			self.m_fastFilter.removeDOM();
+			self.m_gridOrigRemoveDOM.call(self.m_grid);
+		}
+	
+		this.m_grid.m_filterComplete = function(struc){
+			self.m_fastFilter.getParams(struc);
+		}
+	
+		this.m_fastFilter.setOnRefresh(this.m_grid.onRefresh);
+		this.m_fastFilter.setClickContext(this.m_grid);		
+	}
 	
 	//this.m_customCommands = new ControlContainer(uuid(),"div");
 	//this.addElement(this.m_customCommands);	
+		
 	this.addElement(this.m_grid);
 }
 extend(DOCOrderBaseList_View,ViewList);

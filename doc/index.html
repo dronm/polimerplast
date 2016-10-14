@@ -154,6 +154,9 @@
 <a href="#SertTypeAttr_Controller">SertTypeAttr_Controller</a>
 </li>
 <li>
+<a href="#TemplateParam_Controller">TemplateParam_Controller</a>
+</li>
+<li>
 <a href="#Tracker_Controller">Tracker_Controller</a>
 </li>
 <li>
@@ -564,6 +567,15 @@
 <li>
 <a href="#VehicleStopList_Model">VehicleStopList_Model</a>
 </li>
+<li>
+<a href="#TemplateParam_Model">TemplateParam_Model</a>
+</li>
+<li>
+<a href="#TemplateParamList_Model">TemplateParamList_Model</a>
+</li>
+<li>
+<a href="#UnassignedOrderList_Model">UnassignedOrderList_Model</a>
+</li>
 </ul>
 <div class="section-title">Перечисления</div>
 <ul>
@@ -871,6 +883,24 @@
 <h2>get_pop_firm</h2>
 <p>Параметры:</p>
 <div class="content_item content_item2">
+<h3>client_id</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Тип:Int</p>
+<p>Обязательное:
+								Да</p>
+</div>
+</div>
+<h2>get_debts_on_firm</h2>
+<p>Параметры:</p>
+<div class="content_item content_item2">
+<h3>firm_id</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Тип:Int</p>
+<p>Обязательное:
+								Да</p>
+</div>
 <h3>client_id</h3>
 <p></p>
 <div class="content_item content_item3">
@@ -2042,51 +2072,7 @@
 <p class="big"></p>
 <p>Методы:</p>
 <h2>unassigned_orders_list</h2>
-<p>Параметры:</p>
-<div class="content_item content_item2">
-<h3>cond_fields</h3>
-<p></p>
-<div class="content_item content_item3">
-<p>Тип:String</p>
-<p>Обязательное:
-								Да</p>
-</div>
-<h3>cond_vals</h3>
-<p></p>
-<div class="content_item content_item3">
-<p>Тип:String</p>
-<p>Обязательное:
-								Да</p>
-</div>
-<h3>cond_sgns</h3>
-<p></p>
-<div class="content_item content_item3">
-<p>Тип:String</p>
-<p>Обязательное:
-								Да</p>
-</div>
-<h3>cond_ic</h3>
-<p></p>
-<div class="content_item content_item3">
-<p>Тип:String</p>
-<p>Обязательное:
-								Нет</p>
-</div>
-<h3>all_orders</h3>
-<p></p>
-<div class="content_item content_item3">
-<p>Тип:Int</p>
-<p>Обязательное:
-								Да</p>
-</div>
-<h3>field_sep</h3>
-<p></p>
-<div class="content_item content_item3">
-<p>Тип:String</p>
-<p>Обязательное:
-								Нет</p>
-</div>
-</div>
+<a href="#UnassignedOrderList_Model">Модель: UnassignedOrderList_Model</a>
 <h2>assigned_orders_list</h2>
 <p>Параметры:</p>
 <div class="content_item content_item2">
@@ -3085,6 +3071,40 @@
 <a href="#SertTypeAttr_Model">Модель: SertTypeAttr_Model</a>
 </div>
 </div>
+<div id="TemplateParam_Controller" class="content_box">
+<h1>TemplateParam_Controller</h1>
+<div class="content_item">
+<p class="big"></p>
+<p>Методы:</p>
+<h2>get_list</h2>
+<a href="#TemplateParamList_Model">Модель: TemplateParamList_Model</a>
+<h2>set_value</h2>
+<p>Параметры:</p>
+<div class="content_item content_item2">
+<h3>template</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Тип:String</p>
+<p>Обязательное:
+								Да</p>
+</div>
+<h3>param</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Тип:String</p>
+<p>Обязательное:
+								Да</p>
+</div>
+<h3>val</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Тип:Text</p>
+<p>Обязательное:
+								Да</p>
+</div>
+</div>
+</div>
+</div>
 <div id="Tracker_Controller" class="content_box">
 <h1>Tracker_Controller</h1>
 <div class="content_item">
@@ -3232,6 +3252,8 @@
 <a href="#VehicleSelectList_Model">Модель: VehicleSelectList_Model</a>
 <h2>get_object</h2>
 <a href="#VehicleDialog_Model">Модель: VehicleDialog_Model</a>
+<h2>complete</h2>
+<a href="#VehicleSelectList_Model">Модель: VehicleSelectList_Model</a>
 </div>
 </div>
 <div id="Warehouse_Controller" class="content_box">
@@ -4578,10 +4600,10 @@
 <div>Длина:</div>
 <div>Точность:</div>
 <h2>number</h2>
-<div>Тип:Int</div>
+<div>Тип:String</div>
 <div>Первичный ключ:</div>
 <div>Обязательное:</div>
-<div>Длина:</div>
+<div>Длина:10</div>
 <div>Точность:</div>
 <h2>processed</h2>
 <div>Тип:Bool</div>
@@ -8075,8 +8097,8 @@
 <div>Обязательное:</div>
 <div>Длина:</div>
 <div>Точность:</div>
-<h2>warehouse_id</h2>
-<div>Тип:Int</div>
+<h2>warehouse_id_list</h2>
+<div>Тип:String</div>
 <div>Первичный ключ:</div>
 <div>Обязательное:</div>
 <div>Длина:</div>
@@ -8911,6 +8933,72 @@
 <div>Точность:</div>
 </div>
 </div>
+<div id="TemplateParam_Model" class="content_box">
+<h1>TemplateParam_Model</h1>
+<div class="content_item">
+<p>Поля:</p>
+<h2>id</h2>
+<div>Тип:Int</div>
+<div>Первичный ключ:TRUE</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>template</h2>
+<div>Тип:String</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:100</div>
+<div>Точность:</div>
+<h2>user_id</h2>
+<div>Тип:Int</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>param</h2>
+<div>Тип:String</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:100</div>
+<div>Точность:</div>
+<h2>val</h2>
+<div>Тип:Text</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+</div>
+</div>
+<div id="TemplateParamList_Model" class="content_box">
+<h1>TemplateParamList_Model</h1>
+<div class="content_item">
+<p>Поля:</p>
+<h2>id</h2>
+<div>Тип:Int</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>template</h2>
+<div>Тип:String</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>param</h2>
+<div>Тип:String</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>val</h2>
+<div>Тип:Text</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+</div>
+</div>
 <div id="Tracker_Model" class="content_box">
 <h1>Tracker_Model</h1>
 <div class="content_item">
@@ -8998,6 +9086,84 @@
 <div>Первичный ключ:</div>
 <div>Обязательное:</div>
 <div>Длина:50</div>
+<div>Точность:</div>
+</div>
+</div>
+<div id="UnassignedOrderList_Model" class="content_box">
+<h1>UnassignedOrderList_Model</h1>
+<div class="content_item">
+<p>Поля:</p>
+<h2>id</h2>
+<div>Тип:Int</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>number</h2>
+<div>Тип:String</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>date_time</h2>
+<div>Тип:DateTime</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>delivery_plan_date</h2>
+<div>Тип:DateTime</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>delivery_plan_date_descr</h2>
+<div>Тип:DateTime</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>client_id</h2>
+<div>Тип:Int</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>client_descr</h2>
+<div>Тип:String</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>warehouse_descr</h2>
+<div>Тип:String</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>client_dest_descr</h2>
+<div>Тип:String</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>product_str</h2>
+<div>Тип:String</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>total_volume</h2>
+<div>Тип:Float</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>total_weight</h2>
+<div>Тип:Float</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
 <div>Точность:</div>
 </div>
 </div>
@@ -9515,6 +9681,12 @@
 <div>Обязательное:</div>
 <div>Длина:</div>
 <div>Точность:</div>
+<h2>plate</h2>
+<div>Тип:String</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
 </div>
 </div>
 <div id="VehicleState_Model" class="content_box">
@@ -9559,6 +9731,12 @@
 <p>Поля:</p>
 <h2>vh_id</h2>
 <div>Тип:Int</div>
+<div>Первичный ключ:</div>
+<div>Обязательное:</div>
+<div>Длина:</div>
+<div>Точность:</div>
+<h2>vh_id_list</h2>
+<div>Тип:String</div>
 <div>Первичный ключ:</div>
 <div>Обязательное:</div>
 <div>Длина:</div>

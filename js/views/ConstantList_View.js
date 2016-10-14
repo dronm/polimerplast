@@ -43,7 +43,7 @@ function ConstantList_View(id,options){
 		"editViewClasses":{"def_store":ConstDefStoreInline_View},
 		"editInline":true,
 		"pagination":null,
-		"commandPanel":new GridCommands(null,{"noInsert":true,"noDelete":true}),
+		"commandPanel":new GridCommands(null,{"noInsert":true,"noDelete":true,"noCopy":true}),
 		"rowCommandPanelClass":null,
 		//GridRowCommandsConst
 		"filter":null,

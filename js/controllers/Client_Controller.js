@@ -34,6 +34,7 @@ function Client_Controller(servConnector){
 	this.add_check_on_user_name();
 	this.add_check_on_inn();
 	this.add_get_pop_firm();
+	this.add_get_debts_on_firm();
 	this.add_get_debt_list();
 	this.add_refresh_debts();
 	
@@ -647,6 +648,18 @@ extend(Client_Controller,ControllerDb);
 
 			Client_Controller.prototype.add_get_pop_firm = function(){
 	var pm = this.addMethodById('get_pop_firm');
+	
+				
+		pm.addParam(new FieldInt("client_id"));
+	
+			
+}
+
+			Client_Controller.prototype.add_get_debts_on_firm = function(){
+	var pm = this.addMethodById('get_debts_on_firm');
+	
+				
+		pm.addParam(new FieldInt("firm_id"));
 	
 				
 		pm.addParam(new FieldInt("client_id"));

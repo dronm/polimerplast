@@ -331,3 +331,11 @@ tr.level_10{
 #MainView_DOCOrderCurrentList_View_title{
 	cursor:pointer;
 }
+
+.fast-filter{
+	margin-bottom:5px;
+}
+
+.menuItem{
+	cursor:pointer;
+}

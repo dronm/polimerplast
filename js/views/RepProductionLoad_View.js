@@ -35,12 +35,27 @@ function RepProductionLoad_View(id,options){
 		{"control":period.getControlTo(),
 		"filter":{"sign":"le","valueFieldId":"delivery_plan_date"}
 		},
+		{"control":new EditList(id+"_warehouse_id_list",{
+			"labelCaption":"Список складов:",
+			"editContClassName":"input-group "+get_bs_col()+"3",
+			"editViewControl":new WarehouseEditObject(
+				"warehouse_id_list",
+				"warehouse_id_list",
+				true,null,
+				{"attrs":{"required":"required"}}
+			)
+			}),
+		"filter":{"sign":"any","valueFieldId":["warehouse_id_list"]}
+		}
+		
+		/*
 		{"control":new WarehouseEditObject(
 			"warehouse_id",id+"_warehouse",false,null,{
 				"editContClassName":"input-group "+get_bs_col()+"2"
 			}),
 		"filter":{"sign":"e","keyFieldIds":["warehouse_id"]}
-		}		
+		}
+		*/		
 	]);
 	
 	this.addCmdMakeReport();

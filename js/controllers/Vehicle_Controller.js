@@ -24,6 +24,7 @@ function Vehicle_Controller(servConnector){
 	this.addGetList();
 	this.add_get_select_list();
 	this.addGetObject();
+	this.addComplete();
 	
 }
 extend(Vehicle_Controller,ControllerDb);
@@ -253,6 +254,16 @@ extend(Vehicle_Controller,ControllerDb);
 	
 	var pm = this.getGetObject();
 	pm.addParam(new FieldInt("id",options));
+}
+
+			Vehicle_Controller.prototype.addComplete = function(){
+	Vehicle_Controller.superclass.addComplete.call(this);
+	
+	var options = {};
+	
+	var pm = this.getComplete();
+	pm.addParam(new FieldString("plate",options));
+	pm.getParamById(this.PARAM_ORD_FIELDS).setValue("plate");
 }
 
 		
