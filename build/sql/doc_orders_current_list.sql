@@ -36,7 +36,8 @@ CREATE OR REPLACE VIEW doc_orders_current_list AS
 		d.cust_surv_date_time,
 		d.cust_surv_date_time_descr,
 		d.submit_user_descr,
-		d.paid
+		d.paid,
+		d.paid_by_bank
 	
 	FROM doc_orders_list AS d
 	WHERE

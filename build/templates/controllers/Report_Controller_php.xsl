@@ -50,18 +50,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		$link = $this->getDbLink();
 		$model = new RepProductionLoad_Model($link);
 		$where = $this->conditionFromParams($pm,$model);
-		
-		//список складов
-		$wh_id_list = $where->getFieldValueForDb('warehouse_id_list','=ANY');
-		$wh_id_list = substr($wh_id_list,1,strlen($wh_id_list)-2);
-		$wh_id_ar = explode(',',$wh_id_list);
-		$wh_int = array();
-		foreach($wh_id_ar as $v){
-			$v_i = intval($v);
-			if ($v_i)array_push($wh_int,intval($v_i));
-		}
-		$wh_id_list = implode(',',$wh_int);
-		$wh_cond = (count($wh_int)? 'AND w.id = ANY(ARRAY['.$wh_id_list.'])':'');
+		//throw new Exception('where='.$where->getSQL());
 		
 		$q = sprintf("SELECT
 				date8_descr(d.delivery_plan_date) AS delivery_plan_date_descr,
@@ -82,7 +71,6 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 			LEFT JOIN doc_orders AS d ON d.id=t.doc_id
 			LEFT JOIN products AS p ON p.id=t.product_id
 			LEFT JOIN warehouses AS w ON w.id=d.warehouse_id
-			WHERE (delivery_plan_date BETWEEN %s AND %s)
 			
 			%s
 			
@@ -95,9 +83,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 				product_id,
 				product_descr,
 				d.warehouse_id",
-		$where->getFieldValueForDb('delivery_plan_date','&gt;='),
-		$where->getFieldValueForDb('delivery_plan_date','&lt;='),
-		$wh_cond
+		$where->getSQL()
 		);
 		//throw new Exception($q);
 		

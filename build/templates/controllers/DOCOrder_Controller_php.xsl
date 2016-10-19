@@ -59,6 +59,38 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 		$this->setListModelId('DOCOrderCurrentList_Model');
 		parent::get_list($pm);	
 	}	
+	
+	public function get_current_for_representative_list($pm){
+		$model = new DOCOrderCurrentList_Model($this->getDbLink());
+		
+		$order = $this->orderFromParams($pm,$model);
+		$where = $this->conditionFromParams($pm,$model);
+		if (!$where){
+			$where = new ModelWhereSQL();
+		}
+		$from = null; $count = null;
+		$limit = $this->limitFromParams($pm,$from,$count);
+		$calc_total = ($count>0);
+		if ($from){
+			$model->setListFrom($from);
+		}
+		if ($count){
+			$model->setRowsPerPage($count);
+		}		
+		
+		//Фильтр по списку складов		
+		$field = clone $model->getFieldById('warehouse_id');
+		$field->setValue('('.$_SESSION['warehouse_id_list'].')');
+		$where->addField($field,'IN',NULL,NULL);
+		
+		$model->select(FALSE,$where,$order,
+			$limit,NULL,NULL,NULL,
+			$calc_total,TRUE);
+		//
+		$this->addModel($model);
+		
+	}	
+	
 	public function get_current_for_client_list($pm){
 		$this->setListModelId('DOCOrderCurrentForClientList_Model');
 		parent::get_list($pm);	
@@ -1150,7 +1182,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 			'closed'
 		);
 	}
-	public function update_paid($pm,$paid){
+	public function update_paid($pm,$field,$paid){
 		$params = new ParamsSQL($pm,$this->getDbLink());
 		$params->addAll();
 		
@@ -1164,26 +1196,40 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 				WHERE o.id=%d)",
 		$params->getParamById('doc_id')
 		));
-		if (!is_array($ar)||!count($ar)){
+		if (!is_array($ar) || !count($ar)){
 			throw new Exception("Не нашли клиента!");
 		}
-		if ($ar['pay_type']!='cash'){
+		if ($ar['pay_type'] != 'cash'){
 			throw new Exception(sprintf('Вид оплаты клиента: "%s"!',
 				$ar['pay_type_descr']));
 		}
 		
 		$this->getDbLinkMaster()->query(sprintf(
-		"UPDATE doc_orders SET paid=%s
+		"UPDATE doc_orders SET %s=%s
 		WHERE id=%d",
+		$field,
 		$paid,
-		$params->getParamById('doc_id')
+		$params->getDbVal('doc_id')
 		));
 	}
 	public function set_paid($pm){
-		$this->update_paid($pm,'TRUE');
+		$this->update_paid($pm,'paid','TRUE');
 	}
 	public function set_not_paid($pm){
-		$this->update_paid($pm,'FALSE');
+		$params = new ParamsSQL($pm,$this->getDbLink());
+		$params->addAll();
+	
+		$this->getDbLinkMaster()->query(sprintf(
+		"UPDATE doc_orders
+		SET paid=FALSE,paid_by_bank=FALSE,acc_pko=FALSE,acc_pko_total=0
+		WHERE id=%d",
+		$params->getDbVal('doc_id')
+		));
+	
+	}
+
+	public function set_paid_by_bank($pm){
+		$this->update_paid($pm,'paid_by_bank','TRUE');
 	}
 	
 	public function set_shipped($pm){
@@ -1715,7 +1761,8 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 		$params->getParamById('doc_id')
 		),'get_cancel_cause');		
 	}
-	public function paid_to_acc($pm){
+	
+	private function paidOnPayTypeToAcc($paidField,$accPKOType){
 		$lmast = $this->getDbLinkMaster();
 		$lmast->query("BEGIN");
 		try{
@@ -1749,7 +1796,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 			FROM doc_orders AS o
 			LEFT JOIN firms AS f ON f.id=o.firm_id
 			LEFT JOIN clients AS cl ON cl.id=o.client_id
-			WHERE o.paid=TRUE AND o.acc_pko=FALSE
+			WHERE o.".$paidField."=TRUE AND o.acc_pko=FALSE
 			GROUP BY f.id,f.ext_id,cl.id,cl.ext_id,cl.name,user_ref"
 			);
 			
@@ -1776,7 +1823,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 			
 			if (strlen($ids)){
 				//1c
-				ExtProg::paid_to_acc($firm_client_ar);
+				ExtProg::paid_to_acc($firm_client_ar,$accPKOType);
 								
 				$lmast->query(sprintf("UPDATE doc_orders
 				SET
@@ -1789,13 +1836,21 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 					acc_pko_date = now()
 				WHERE id IN (%s)",$ids));				
 				
-				$res_to_client = 'Сформирован ПКО по следующим заявкам: '.$numbers;
+				$res_to_client = 'Сформирован ПКО';
+				if ($accPKOType=='cash'){
+					$res_to_client.=' по наличному расчету, ';
+				}
+				else{
+					$res_to_client.=' по безналичному расчету, ';
+				}
+				$res_to_client.= 'по следующим заявкам: '.$numbers;
+				
 				
 				$ins_q = '';
 				foreach($firm_client_ar as $firm_client){
 					$ins_q.= ($ins_q=='')? '':',';
 					$ins_q.= sprintf(
-						"('cash'::acc_pko_types,%f,'%s',ARRAY[%s])",
+						"('".$accPKOType."'::acc_pko_types,%f,'%s',ARRAY[%s])",
 						$firm_client['total'],$firm_client['numbers'],$firm_client['ids']
 					);
 				}
@@ -1807,7 +1862,13 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 				
 			}
 			else{
-				$res_to_client = 'Нет заявок для формирования ПКО!';
+				$res_to_client = 'Нет заявок для формирования ПКО';
+				if ($accPKOType=='cash'){
+					$res_to_client.=' по наличному расчету.';
+				}
+				else{
+					$res_to_client.=' по безналичному расчету.';
+				}
 			}
 			$lmast->query("COMMIT");
 		}
@@ -1821,6 +1882,15 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 			'paid_to_acc'
 		);		
 	}
+	
+	public function paid_to_acc($pm){
+		$this->paidOnPayTypeToAcc('paid','cash');
+	}
+	
+	public function paid_by_bank_to_acc($pm){
+		$this->paidOnPayTypeToAcc('paid','bank');
+	}
+	
 	public function divide($pm){
 		$params = new ParamsSQL($pm,$this->getDbLink());
 		$params->addAll();

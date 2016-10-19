@@ -73,7 +73,7 @@ function DOCOrderBaseList_View(id,options){
 					{"editContClassName":"input-group "+get_bs_col()+"3"}
 				)
 				}),
-			{"sign":"any","valueFieldId":"warehouse_id"});
+			{"sign":"incl","valueFieldId":"warehouse_id"});
 			
 		}
 		
@@ -95,7 +95,7 @@ function DOCOrderBaseList_View(id,options){
 					{"editContClassName":"input-group "+get_bs_col()+"3"}
 				)
 				}),
-			{"sign":"any","keyFieldIds":["state"]});			
+			{"sign":"incl","keyFieldIds":["state"]});			
 		}
 		//Клиент
 		if (options.client){
@@ -115,7 +115,7 @@ function DOCOrderBaseList_View(id,options){
 					{"editContClassName":"input-group "+get_bs_col()+"3"}
 				)
 				}),
-			{"sign":"any","keyFieldIds":["client_id"]});
+			{"sign":"incl","keyFieldIds":["client_id"]});
 			
 		}
 
@@ -124,7 +124,7 @@ function DOCOrderBaseList_View(id,options){
 			//ProductForFilterEditObject
 			/*
 			filter.addFilterControl(new ProductEditObject("product_ids",id+"_filter_products",false)
-			,{"sign":"any","valueFieldId":"product_ids"});
+			,{"sign":"incl","valueFieldId":"product_ids"});
 			*/
 			filter.addFilterControl(
 				new EditList(id+"_products",{
@@ -137,7 +137,7 @@ function DOCOrderBaseList_View(id,options){
 					{"editContClassName":"input-group "+get_bs_col()+"3"}
 				)
 				}),
-			{"sign":"any","keyFieldIds":["product_ids"]});
+			{"sign":"overlap","keyFieldIds":["product_ids"]});
 			
 		}
 		
@@ -364,6 +364,10 @@ function DOCOrderBaseList_View(id,options){
 		row.addElement(new GridDbHeadCellBool(id+"_col_paid",{
 			"value":"Оплач.","readBind":{"valueFieldId":"paid"}
 			}));				
+		row.addElement(new GridDbHeadCellBool(id+"_col_paid_by_bank",{
+			"value":"Оплач.(бн)","readBind":{"valueFieldId":"paid_by_bank"}
+			}));				
+			
 	}
 	row.addElement(new GridDbHeadCell(id+"_col_state",{
 		"readBind":{"valueFieldId":"state"},

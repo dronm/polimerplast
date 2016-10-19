@@ -36,6 +36,7 @@ CREATE OR REPLACE VIEW doc_orders_all_for_client_list AS
 		d.cust_surv_date_time,
 		d.cust_surv_date_time_descr,
 		d.paid,
+		d.paid_by_bank,
 		
 		(
 			(d.pay_type='cash' AND d.paid=FALSE)

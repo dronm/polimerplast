@@ -7,11 +7,13 @@ class MainMenu_Model_representative extends Model{
 		
 		<item viewId="DOCOrderList_View" descr="Заявки" default="TRUE"/>
 		
-		<item viewId="DOCOrderList_View" descr="Заявки в производстве" default=""/>
+		<item viewId="DOCOrderProductionList_View" descr="Заявки в производстве" default=""/>
 		
 		<item viewId="ClientList_View" descr="Клиенты" default=""/>
 		
 		<item viewId="Delivery_View" descr="Доставки" default=""/>
+		
+		<item viewId="RepClientDebts_View" descr="Долги клиентов" default=""/>
 		
 		<item viewId="UserAccount_View" descr="Учетная запись" default=""/>
 		

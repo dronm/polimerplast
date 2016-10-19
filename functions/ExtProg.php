@@ -289,10 +289,10 @@ class ExtProg{
 				'file_type'=>$fileType
 			),$xml,TRUE,$fileType);
 	}	
-	public static function paid_to_acc($firm_totals){
+	public static function paid_to_acc($firm_totals,$pkoType){
 		$xml=null;
 		ExtProg::send_query('paid_to_acc',
-			array('head'=>serialize($firm_totals)),
+			array('head'=>serialize($firm_totals),'pkoType'=>$pkoType),
 			$xml);
 	}			
 	

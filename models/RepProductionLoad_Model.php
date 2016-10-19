@@ -75,17 +75,17 @@ class RepProductionLoad_Model extends ModelReportSQL{
 		));
 		$this->addField($f_quant);
 
-		$f_warehouse_id_list=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"warehouse_id_list"
+		$f_warehouse_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		,"warehouse_id"
 		,array(
 		
-			'id'=>"warehouse_id_list"
+			'id'=>"warehouse_id"
 		,
 			'sysCol'=>TRUE
 				
 		
 		));
-		$this->addField($f_warehouse_id_list);
+		$this->addField($f_warehouse_id);
 
 		
 		

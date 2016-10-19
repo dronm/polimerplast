@@ -66,7 +66,7 @@
 					
 			<tr class="{$row_class}">
 			
-				<td align="center"><xsl:value-of select="naspunkt_descr/."/></td>
+				<td align="left"><xsl:value-of select="naspunkt_descr/."/></td>
 				<td align="right"><xsl:value-of select="distance/."/></td>
 				
 				<xsl:for-each select="//row[generate-id() =

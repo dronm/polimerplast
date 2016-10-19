@@ -116,10 +116,11 @@ tr.for_select{
 .scrollable-area{
 	overflow: auto;
 }
+/*
 .MainView_grid{
 	height:30em;
 }
-/*
+
 .MainView_DOCOrderCurrentList_View_grid{
 	height:100em;
 }

@@ -359,6 +359,7 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderBaseList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderNewList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderCurrentList_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderProductionList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderClosedList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderDialog_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderDivisDialog_View.js'));
@@ -454,8 +455,10 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnPassToProduction.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnUpdatePaid.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnSetPaid.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnSetPaidByBank.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnSetNotPaid.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnPaidToAcc.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnPaidByBankToAcc.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnPrint.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnPrintCheck.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnPrintDoc.js'));

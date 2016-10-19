@@ -37,6 +37,7 @@ CREATE OR REPLACE VIEW doc_orders_all_for_production_list AS
 		d.cust_surv_date_time_descr,
 		d.submit_user_descr,
 		d.paid,
+		d.paid_by_bank,
 	
 		(
 			d.state IN ('producing','produced')

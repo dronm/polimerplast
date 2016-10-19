@@ -44,6 +44,7 @@ function DOCOrderList_View(id,options){
 	if (SERV_VARS.ROLE_ID=="sales_manager"
 	||SERV_VARS.ROLE_ID=="boss"
 	||SERV_VARS.ROLE_ID=="admin"
+	||SERV_VARS.ROLE_ID=="representative"
 	){
 		var cont = new ControlContainer(id+"_cont_new_orders","div",{
 			"className":"panel panel-default"
@@ -72,6 +73,7 @@ function DOCOrderList_View(id,options){
 	||SERV_VARS.ROLE_ID=="admin"
 	||SERV_VARS.ROLE_ID=="production"
 	||SERV_VARS.ROLE_ID=="marketing"
+	||SERV_VARS.ROLE_ID=="representative"
 	){
 		this.m_ctrlViewOrders = new DOCOrderCurrentList_View(id+"_DOCOrderCurrentList_View",
 			{
@@ -98,6 +100,7 @@ function DOCOrderList_View(id,options){
 					||SERV_VARS.ROLE_ID=="boss"
 					||SERV_VARS.ROLE_ID=="admin"
 					||SERV_VARS.ROLE_ID=="production"
+					||SERV_VARS.ROLE_ID=="representative"
 				),
 				
 				"className":(CONSTANT_VALS.ordersCallapsed)? "collapse":"",

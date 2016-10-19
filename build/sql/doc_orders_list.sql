@@ -1,11 +1,17 @@
 -- View: doc_orders_list
 
 /*
-DROP VIEW doc_orders_new_list;
 DROP VIEW doc_orders_current_list;
 DROP VIEW doc_orders_current_for_client_list;
 DROP VIEW doc_orders_current_for_production_list;
 DROP VIEW doc_orders_closed_list;
+*/
+
+/*
+DROP VIEW doc_orders_new_list;
+DROP VIEW doc_orders_all_for_client_list;
+DROP VIEW doc_orders_all_for_production_list;
+DROP VIEW doc_orders_all_list;
 DROP VIEW doc_orders_list;
 */
 
@@ -93,7 +99,8 @@ CREATE OR REPLACE VIEW doc_orders_list AS
 		LIMIT 1
 		) AS submit_user_descr,
 		
-		d.paid
+		d.paid,
+		d.paid_by_bank
 				
 		
 	FROM doc_orders AS d

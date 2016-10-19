@@ -542,6 +542,18 @@ class DOCOrder_Model extends ModelSQLDOC{
 		));
 		$this->addField($f_paid);
 
+		$f_paid_by_bank=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		,"paid_by_bank"
+		,array(
+		
+			'defaultValue'=>"FALSE"
+		,
+			'id'=>"paid_by_bank"
+				
+		
+		));
+		$this->addField($f_paid_by_bank);
+
 		$f_acc_pko=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"acc_pko"
 		,array(

@@ -23,6 +23,7 @@ function DOCOrder_Controller(servConnector){
 	this.addDelete();
 	this.add_get_new_list();
 	this.add_get_current_list();
+	this.add_get_current_for_representative_list();
 	this.add_get_current_for_client_list();
 	this.add_get_current_for_production_list();
 	this.add_get_closed_list();
@@ -50,6 +51,8 @@ function DOCOrder_Controller(servConnector){
 	this.add_set_paid();
 	this.add_set_not_paid();
 	this.add_paid_to_acc();
+	this.add_set_paid_by_bank();
+	this.add_paid_by_bank_to_acc();
 	this.add_set_closed();
 	this.add_print_order();
 	this.add_ext_ship_exists();
@@ -365,6 +368,12 @@ extend(DOCOrder_Controller,ControllerDb);
 	options = {};
 	
 	var param = new FieldBool("paid",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldBool("paid_by_bank",options);
 	
 	pm.addParam(param);
 	
@@ -763,6 +772,13 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	options = {};
 	
+	var param = new FieldBool("paid_by_bank",options);
+	
+	pm.addParam(param);
+	
+	
+	options = {};
+	
 	var param = new FieldBool("acc_pko",options);
 	
 	pm.addParam(param);
@@ -910,6 +926,40 @@ extend(DOCOrder_Controller,ControllerDb);
 			
 }
 
+			DOCOrder_Controller.prototype.add_get_current_for_representative_list = function(){
+	var pm = this.addMethodById('get_current_for_representative_list');
+	
+				
+		pm.addParam(new FieldString("cond_fields"));
+	
+				
+		pm.addParam(new FieldString("cond_vals"));
+	
+				
+		pm.addParam(new FieldString("cond_sgns"));
+	
+				
+		pm.addParam(new FieldString("cond_ic"));
+							
+				
+		pm.addParam(new FieldInt("from"));
+	
+				
+		pm.addParam(new FieldInt("count"));
+					
+				
+		pm.addParam(new FieldString("ord_fields"));
+	
+				
+		pm.addParam(new FieldString("ord_directs"));
+					
+				
+		pm.addParam(new FieldString("field_sep"));
+	
+			
+}
+
+			
 			DOCOrder_Controller.prototype.add_get_current_for_client_list = function(){
 	var pm = this.addMethodById('get_current_for_client_list');
 	
@@ -1201,7 +1251,8 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 			
 }
-												
+		
+													
 			DOCOrder_Controller.prototype.add_set_paid = function(){
 	var pm = this.addMethodById('set_paid');
 	
@@ -1225,7 +1276,24 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 			
 }
-															
+		
+
+			DOCOrder_Controller.prototype.add_set_paid_by_bank = function(){
+	var pm = this.addMethodById('set_paid_by_bank');
+	
+				
+		pm.addParam(new FieldInt("doc_id"));
+	
+			
+}
+									
+			DOCOrder_Controller.prototype.add_paid_by_bank_to_acc = function(){
+	var pm = this.addMethodById('paid_by_bank_to_acc');
+	
+			
+}
+		
+																
 			DOCOrder_Controller.prototype.add_set_closed = function(){
 	var pm = this.addMethodById('set_closed');
 	

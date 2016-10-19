@@ -11,9 +11,11 @@
 /* constructor */
 function BtnPaidToAcc(options){	
 	id = uuid();
-	options.caption = "==>>ПКО1";
+	
+	options.glyph = "glyphicon-usd";
+	options.caption = "ПКО (нал)";
 	options.attrs = options.attrs||{};
-	options.attrs.title = "Создать ПКО в бухгалтерии по оплаченным заявкам.";
+	options.attrs.title = "Создать ПКО по оплаченным заявкам (наличный расчет)";
 	
 	var self = this;
 	options.onClick = function(){
