@@ -171,6 +171,13 @@ function RepSales_View(id,options){
 			"filtered":false,
 			"filterControl":new EditCheckBox(uuid(),{})
 			},				
+			{"id":"doc_deliv_pay_bank",
+			"name":"Доставка по безнал.расч.",
+			"agg":false,
+			"filtered":false,
+			"filterControl":new EditCheckBox(uuid(),{})
+			},				
+			
 			{"id":"doc_deliv_destination_descr",
 			"name":"Адрес доставки",
 			"agg":false,
@@ -354,6 +361,12 @@ function RepSales_View(id,options){
 			},
 			{"id":"doc_deliv_total",
 			"name":"Стоимость доставки",
+			"filtered":null,
+			"filterControl":new EditMoney(uuid(),{}),
+			"agg":true			
+			},
+			{"id":"doc_deliv_expenses",
+			"name":"Затраты на доставку",
 			"filtered":null,
 			"filterControl":new EditMoney(uuid(),{}),
 			"agg":true			

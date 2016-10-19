@@ -17,6 +17,8 @@ function VehicleDialog_View(id,options){
 	
 	var model = "VehicleDialog_Model";
 	
+	var self = this;
+	
 	var cont_m=new ControlContainer(uuid(),"div",{className:"row"});
 	
 	var cont=new ControlContainer(uuid(),"div",{className:get_bs_col()+"6"});
@@ -32,16 +34,16 @@ function VehicleDialog_View(id,options){
 		{"valueFieldId":"id","keyFieldIds":null});	
 	cont.addElement(ctrl);
 	
-	ctrl = new EditString(id+"_plate",
+	this.m_plateCtrl = new EditString(id+"_plate",
 		{"attrs":{"maxlength":11,"size":8,"required":"required"},
 		"labelCaption":"Рег.номер:","name":"plate"}
 	);
-	this.bindControl(ctrl,
+	this.bindControl(this.m_plateCtrl,
 		{"modelId":model,
 		"valueFieldId":"plate",
 		"keyFieldIds":null},
 		{"valueFieldId":"plate","keyFieldIds":null});	
-	cont.addElement(ctrl);
+	cont.addElement(this.m_plateCtrl);
 	
 	//
 	ctrl = new EditString(id+"_model",
@@ -113,25 +115,54 @@ function VehicleDialog_View(id,options){
 	);	
 	cont.addElement(ctrl);
 	
-	ctrl = new CarrierEditObject("carrier_id","carrier",false);
-	this.bindControl(ctrl,
+	this.m_carrierCtrl = new CarrierEditObject("carrier_id","carrier",false);
+	this.bindControl(this.m_carrierCtrl,
 		{"modelId":model,
 		"valueFieldId":"carrier_descr",
 		"keyFieldIds":["carrier_id"]},
 		{"modelId":model,
 		"valueFieldId":null,"keyFieldIds":["carrier_id"]}
 	);	
-	cont.addElement(ctrl);
+	cont.addElement(this.m_carrierCtrl);
 	
-	ctrl = new DriverEditObject("driver_id","driver",false);
-	this.bindControl(ctrl,
+	
+	//Driver
+	this.m_driverCtrl = new DriverEditObject("driver_id","driver",false,{
+		"options":{
+			"extraFields":["match_1c"],
+			"onSelected":function(){
+				self.onDriverSelected();
+			},
+			"afterInsert":function(m){
+				self.onDriverInserted(m);
+			},			
+			"winObj":options.winObj,
+			"noInsert":false
+		}
+		});
+	this.bindControl(this.m_driverCtrl,
 		{"modelId":model,
 		"valueFieldId":"driver_descr",
 		"keyFieldIds":["driver_id"]},
 		{"modelId":model,
 		"valueFieldId":null,"keyFieldIds":["driver_id"]}
-	);	
-	cont.addElement(ctrl);
+	);
+	(this.m_driverCtrl.getButtonInsert()).addBind("name",this.m_driverCtrl);
+		
+	cont.addElement(this.m_driverCtrl);
+	
+	
+	this.m_getAttrsBtn = new ButtonCtrl(id+":btn_get_attrs",{
+		"caption":"Заполнить из 1с",
+		"enabled":false,
+		"onClick":function(){
+			self.getDriverAttrs();
+		}
+	});		
+	cont.addElement(this.m_getAttrsBtn);
+
+	this.m_match1CCtrl = new Control(id+":match_1c","span",{});		
+	cont.addElement(this.m_match1CCtrl);
 		
 	//
 	ctrl = new DelivCostOptEdit({
@@ -149,30 +180,30 @@ function VehicleDialog_View(id,options){
 	cont.addElement(ctrl);	
 	
 	//прицеп
-	ctrl = new EditString(id+"_trailer_plate",
+	this.m_trailerPlateCtrl = new EditString(id+"_trailer_plate",
 		{"attrs":{"maxlength":11,"size":8},
 		"labelCaption":"Рег.номер прицепа:","name":"trailer_plate"}
 	);
-	this.bindControl(ctrl,
+	this.bindControl(this.m_trailerPlateCtrl,
 		{"modelId":model,
 		"valueFieldId":"trailer_plate",
 		"keyFieldIds":null},
 		{"valueFieldId":"trailer_plate","keyFieldIds":null}
 	);	
-	cont.addElement(ctrl);
+	cont.addElement(this.m_trailerPlateCtrl);
 	
 	//
-	ctrl = new EditString(id+"_trailer_model",
+	this.m_trailerModelCtrl = new EditString(id+"_trailer_model",
 		{"attrs":{"maxlength":50,"size":20},
 		"labelCaption":"Модель прицепа:","name":"trailer_model"}
 	);
-	this.bindControl(ctrl,
+	this.bindControl(this.m_trailerModelCtrl,
 		{"modelId":model,
 		"valueFieldId":"trailer_model",
 		"keyFieldIds":null},
 		{"valueFieldId":"trailer_model","keyFieldIds":null}
 	);	
-	cont.addElement(ctrl);
+	cont.addElement(this.m_trailerModelCtrl);
 	
 	cont_m.addElement(cont);
 	this.addControl(cont_m);
@@ -194,6 +225,7 @@ function VehicleDialog_View(id,options){
 
 	ctrl = new EditDateTime(id+"_last_tracker_data",
 		{"enabled":false,
+		"editContClassName":"input-group "+get_bs_col()+"4",
 		"labelCaption":"Последние данные:"}
 	);
 	this.bindControl(ctrl,
@@ -207,3 +239,84 @@ function VehicleDialog_View(id,options){
 	this.addElement(cont_m);
 }
 extend(VehicleDialog_View,ViewDialog);
+
+VehicleDialog_View.prototype.getDriverAttrs = function(){
+	var dr_id = this.m_driverCtrl.getFieldValue();
+	if (!dr_id || dr_id=="undefined" || dr_id=="null")return;
+	
+	this.m_getAttrsBtn.setEnabled(false);
+	
+	var self = this;
+	var contr = new Driver_Controller(new ServConnector(HOST_NAME));
+	contr.run("get_veh_attrs",{
+		"params":{"driver_id":dr_id},
+		"err":function(resp,errCode,errStr){
+			self.getErrorControl().setValue(errStr);
+			
+			self.m_getAttrsBtn.setEnabled(true);				
+		},
+		"func":function(resp){
+			var m = resp.getModelById("get_veh_attrs",true);
+			if (m.getNextRow()){
+				self.m_getAttrsBtn.setEnabled(true);
+				self.m_carrierCtrl.setValue(m.getFieldValue('carrier_descr'));
+				self.m_carrierCtrl.setFieldValue("id",m.getFieldValue('carrier_id'));
+				self.m_trailerModelCtrl.setValue(m.getFieldValue('trailer_model'));
+				self.m_trailerPlateCtrl.setValue(m.getFieldValue('trailer_plate'));
+				self.m_plateCtrl.setValue(m.getFieldValue('plate'));
+			}
+		}
+	});
+}
+
+VehicleDialog_View.prototype.setMatch1C = function(v){
+	this.m_getAttrsBtn.setEnabled(v);
+	this.m_match1CCtrl.setValue((v)? " Водитель связан с 1с":" Нет связи водиетля с 1с");
+	if (!v){
+		this.m_match1CCtrl.setAttr("class","text-danger");
+	}
+	else{
+		this.m_match1CCtrl.setAttr("class","text-success");
+	}
+}
+
+VehicleDialog_View.prototype.onGetData = function(resp){
+	VehicleDialog_View.superclass.onGetData.call(this,resp);
+	
+	var match1c = false;
+	var m = resp.getModelById("VehicleDialog_Model",true);
+	if (m.getNextRow()){
+		match1c = (m.getFieldValue("match_1c")=="true");
+	}
+	this.setMatch1C(match1c);
+}
+
+VehicleDialog_View.prototype.onDriverSelected = function(){
+	this.setMatch1C((this.m_driverCtrl.getAttr("match_1c")=="true"));
+}
+VehicleDialog_View.prototype.onDriverInserted = function(){
+	
+	var dr_id = this.m_driverCtrl.getFieldValue("driver_id");
+	if (!dr_id)return;
+	
+	DOMHandler.removeClass(this.m_driverCtrl.getNode(),"error");					
+
+	var self = this;
+	var contr = new Driver_Controller(new ServConnector(HOST_NAME));
+	contr.getPublicMethodById("get_object");
+	contr.run("get_object",{
+		"params":{"id":dr_id},
+		"func":function(resp){
+			var m = resp.getModelById("DriverList_Model",true);
+			if (m.getNextRow()){
+				self.m_driverCtrl.setAttr("match_1c",m.getFieldValue("match_1c"));
+				self.onDriverSelected();
+				if (m.getFieldValue("match_1c")=="true"){					
+					self.getDriverAttrs();
+				}
+			}
+		}
+	});
+	
+}
+

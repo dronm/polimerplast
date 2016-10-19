@@ -57,24 +57,6 @@ CREATE OR REPLACE VIEW doc_orders_all_list AS
 		) AS is_current
 	
 	FROM doc_orders_list AS d
-	/*
-	WHERE
-		(d.pay_type='cash' AND d.paid=FALSE)
-			OR
-			(
-			d.state NOT IN ('new',
-				'waiting_for_client',
-				'waiting_for_us',
-				'shipped',
-				'loading',
-				'on_way',
-				'unloading',
-				'closed',
-				'canceled_by_sales_manager',
-				'canceled_by_client'					
-				)
-			)	
-	*/
 	;
 ALTER TABLE doc_orders_all_list OWNER TO polimerplast;
 

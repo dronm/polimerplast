@@ -1,6 +1,6 @@
 -- View: vehicles_dialog
 
---DROP VIEW vehicles_dialog;
+DROP VIEW vehicles_dialog;
 
 CREATE OR REPLACE VIEW vehicles_dialog AS 
 	SELECT 
@@ -36,7 +36,9 @@ CREATE OR REPLACE VIEW vehicles_dialog AS
 				)
 			ELSE NULL
 		END
-		AS last_tracker_data				
+		AS last_tracker_data,
+		
+		(dr.ext_id IS NOT NULL) AS match_1c
 		
 	FROM vehicles AS v
 	LEFT JOIN production_cities AS pct ON pct.id=v.production_city_id

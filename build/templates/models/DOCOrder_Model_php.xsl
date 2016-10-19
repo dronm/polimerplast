@@ -45,9 +45,21 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 			));
 		}
 		
-		//Печатная форма счета из 1с
-		$ref = DOCOrder_Controller::getExtRef($link,$docId,'ext_order_id');
-		if (!is_null($ref)){			
+		//Печатная форма счета из 1с, если сеть eamil
+		$ar = $link->query_first(sprintf(
+		"SELECT
+			h.ext_order_id,
+			(u.email IS NOT NULL) AS email_exists
+		FROM doc_orders h
+		LEFT JOIN users AS u ON u.id=h.client_user_id
+		WHERE h.id=%d",
+		$docId
+		));
+		if (!is_array($ar) || !count($ar)){
+			throw new Exception("Документ не найден!");
+		}
+		
+		if (!is_null($ref) &amp;&amp; $ar['email_exists']=='t'){			
 			$tmp_file = ExtProg::print_order($ref,$_SESSION['user_ext_id'],1);
 		
 			//отправить по мылу счет
@@ -60,7 +72,7 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 		}	
 	}
 	
-	public function insert(){
+	public function insert($needId){
 		$link = $this->getDbLink();
 		$link->query('BEGIN');
 		try{	
@@ -147,7 +159,7 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 			throw $e;
 		}
 		
-		return $doc_id;
+		return array('id'=>$doc_id);
 	}
 	public function update(){		
 		if ($this->getFieldById('cust_surv_date_time')->getValue()){

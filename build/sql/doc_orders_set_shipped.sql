@@ -296,7 +296,15 @@ BEGIN
 		END AS pay_day,
 		d.client_id,
 		d.firm_id,
-		d.total
+		
+		COALESCE(d.total,0)+
+		CASE
+		WHEN d.deliv_type='by_supplier'::delivery_types
+		AND coalesce(d.deliv_add_cost_to_product,FALSE)=FALSE THEN
+			COALESCE(d.deliv_total,0)
+		ELSE 0
+		END+
+		COALESCE(d.total_pack,0)		
 	INTO
 		v_pay_day,
 		v_client_id,
@@ -312,6 +320,15 @@ BEGIN
 		VALUES
 		(in_doc_id,v_pay_day,v_firm_id,v_client_id,v_total);
 	END IF;
+	
+	--ВЗАИМОРАСЧЕТЫ
+	UPDATE client_debts
+	SET debt_total = debt_total + v_total,
+	    update_date = now()
+	WHERE
+		firm_id = v_firm_id
+		AND client_id = v_client_id
+	;
 	
 	RETURN;
 END;		

@@ -56,6 +56,26 @@ class DOCOrderNewList_Model extends ModelSQL{
 		));
 		$this->addField($f_date_time_descr);
 
+		$f_delivery_plan_date=new FieldSQlDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		,"delivery_plan_date"
+		,array(
+		
+			'id'=>"delivery_plan_date"
+				
+		
+		));
+		$this->addField($f_delivery_plan_date);
+
+		$f_delivery_plan_date_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		,"delivery_plan_date_descr"
+		,array(
+		
+			'id'=>"delivery_plan_date_descr"
+				
+		
+		));
+		$this->addField($f_delivery_plan_date_descr);
+
 		$f_client_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"client_id"
 		,array(

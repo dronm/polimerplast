@@ -16,6 +16,9 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPoint.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPolygon.php');
 require_once('functions/ExtProg.php');
 
+require_once(FRAME_WORK_PATH.'basic_classes/ModelVars.php');
+require_once(FRAME_WORK_PATH.'basic_classes/ParamsSQL.php');
+
 class Driver_Controller extends ControllerSQL{
 	public function __construct($dbLinkMaster=NULL){
 		parent::__construct($dbLinkMaster);
@@ -119,13 +122,40 @@ class Driver_Controller extends ControllerSQL{
 		$this->addPublicMethod($pm);
 		$this->setObjectModelId('DriverList_Model');		
 
+			
+		/* complete  */
+		$pm = new PublicMethod('complete');
+		$pm->addParam(new FieldExtString('pattern'));
+		$pm->addParam(new FieldExtInt('count'));
+		$pm->addParam(new FieldExtInt('ic'));
+		$pm->addParam(new FieldExtInt('mid'));
+		$pm->addParam(new FieldExtString('name'));		
+		$this->addPublicMethod($pm);					
+		$this->setCompleteModelId('DriverList_Model');
+
+			
+		$pm = new PublicMethod('get_veh_attrs');
+		
+				
+	$opts=array();
+	
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtInt('driver_id',$opts));
+	
+			
+		$this->addPublicMethod($pm);
+
 		
 	}	
 	
 	private function check_driver($pm){
-		$ext_ref = ExtProg::getPersonRefOnName($pm->getParamValue('name'));
+		$res = array();
+		$ext_ref = ExtProg::getPersonRefOnName($pm->getParamValue('name'),$res);
 		if ($ext_ref){
 			$pm->setParamValue('ext_id',$ext_ref);
+			if (count($res) && $res['drive_perm'] && strlen($res['drive_perm'])){
+				$pm->setParamValue('drive_perm',$res['drive_perm']);
+			}
 		}		
 	}
 	public function insert($pm){
@@ -135,6 +165,41 @@ class Driver_Controller extends ControllerSQL{
 	public function update($pm){
 		$this->check_driver($pm);
 		parent::update($pm);
+	}
+	
+	public function get_veh_attrs($pm){
+		$p = new ParamsSQL($pm,$this->getDbLink());
+		$p->addAll();
+	
+		$ar = $this->getDbLink()->query_first(sprintf("SELECT ext_id FROM drivers WHERE id=%d",$p->getDbVal('driver_id')));
+		if (!$ar || !is_array($ar) || !count($ar) || !$ar['ext_id']){
+			throw new Exception("Водителя не связан с 1с!");
+		}
+	
+		$res = array();
+		ExtProg::getDriverAttrs($ar['ext_id'],$res);	
+		
+		if ($res['carrier_descr']){
+			$p->add('carrier_descr',DT_STRING,$res['carrier_descr']);
+			$ar = $this->getDbLink()->query_first(sprintf("SELECT id FROM carriers WHERE name=%s",$p->getDbVal('carrier_descr')));
+			if (!$ar || !is_array($ar) || !count($ar)){
+				$this->getDbLinkMaster()->query(sprintf("INSERT INTO carriers (name) VALUES(%s)",$p->getDbVal('carrier_descr')));
+			}else{
+				$res['carrier_id'] = $ar['id'];
+			}
+		}
+		
+		$this->addModel(new ModelVars(
+			array('id'=>'get_veh_attrs',
+				'values'=>array(
+					new Field('plate',DT_STRING,array('value'=>$res['plate'])),
+					new Field('trailer_plate',DT_STRING,array('value'=>$res['trailer_plate'])),
+					new Field('trailer_model',DT_STRING,array('value'=>$res['trailer_model'])),
+					new Field('carrier_id',DT_STRING,array('value'=>$res['carrier_id'])),
+					new Field('carrier_descr',DT_STRING,array('value'=>$res['carrier_descr']))
+				)
+			))
+		);
 	}	
 
 }

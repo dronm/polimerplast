@@ -146,6 +146,7 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ButtonClearObject.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ButtonOpenObject.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ButtonPrint.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ButtonInsertObject.js'));		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/Edit.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/EditString.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/actb.js'));

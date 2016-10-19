@@ -586,6 +586,27 @@ class DOCOrder_Model extends ModelSQLDOC{
 		));
 		$this->addField($f_destination_to_ttn);
 
+		$f_deliv_expenses=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		,"deliv_expenses"
+		,array(
+		
+			'length'=>15,
+			'id'=>"deliv_expenses"
+				
+		
+		));
+		$this->addField($f_deliv_expenses);
+
+		$f_deliv_pay_bank=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		,"deliv_pay_bank"
+		,array(
+		
+			'id'=>"deliv_pay_bank"
+				
+		
+		));
+		$this->addField($f_deliv_pay_bank);
+
 		$order = new ModelOrderSQL();		
 		$this->setDefaultModelOrder($order);		
 		
@@ -620,9 +641,21 @@ class DOCOrder_Model extends ModelSQLDOC{
 			));
 		}
 		
-		//Печатная форма счета из 1с
-		$ref = DOCOrder_Controller::getExtRef($link,$docId,'ext_order_id');
-		if (!is_null($ref)){			
+		//Печатная форма счета из 1с, если сеть eamil
+		$ar = $link->query_first(sprintf(
+		"SELECT
+			h.ext_order_id,
+			(u.email IS NOT NULL) AS email_exists
+		FROM doc_orders h
+		LEFT JOIN users AS u ON u.id=h.client_user_id
+		WHERE h.id=%d",
+		$docId
+		));
+		if (!is_array($ar) || !count($ar)){
+			throw new Exception("Документ не найден!");
+		}
+		
+		if (!is_null($ref) && $ar['email_exists']=='t'){			
 			$tmp_file = ExtProg::print_order($ref,$_SESSION['user_ext_id'],1);
 		
 			//отправить по мылу счет
@@ -635,7 +668,7 @@ class DOCOrder_Model extends ModelSQLDOC{
 		}	
 	}
 	
-	public function insert(){
+	public function insert($needId){
 		$link = $this->getDbLink();
 		$link->query('BEGIN');
 		try{	
@@ -722,7 +755,7 @@ class DOCOrder_Model extends ModelSQLDOC{
 			throw $e;
 		}
 		
-		return $doc_id;
+		return array('id'=>$doc_id);
 	}
 	public function update(){		
 		if ($this->getFieldById('cust_surv_date_time')->getValue()){

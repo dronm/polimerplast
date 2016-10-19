@@ -403,6 +403,12 @@ $field_resolver =
 			"fieldExpr"=>"(CASE WHEN deliv_to_third_party THEN 'Третьим лицам' ELSE 'Не третьим лицам' END)",
 			"table"=>"doc_orders"
 		),
+
+		"doc_deliv_pay_bank" => array(
+			"fieldWhere"=>"deliv_pay_bank",
+			"fieldExpr"=>"(CASE WHEN deliv_pay_bank THEN 'Безн.' ELSE 'Нал.' END)",
+			"table"=>"doc_orders"
+		),
 		
 		"doc_deliv_destination_descr" => array(
 			"field"=>"address",
@@ -565,6 +571,11 @@ $field_resolver =
 		),
 		"doc_deliv_total" => array(
 			"field"=>"deliv_total",
+			"table"=>"doc_orders"
+		),
+
+		"doc_deliv_expenses" => array(
+			"field"=>"deliv_expenses",
 			"table"=>"doc_orders"
 		),
 		

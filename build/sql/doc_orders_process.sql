@@ -43,6 +43,9 @@ BEGIN
 
 		DELETE FROM deliveries
 		WHERE doc_order_id=OLD.id;
+
+		DELETE FROM doc_order_prints_seq
+		WHERE doc_id=OLD.id;
 		
 		/*
 		DELETE FROM doc_orders_states AS st

@@ -1,11 +1,12 @@
 <?php
 	function get_doc_comment($head){
-		$COMMENT = 'web';
+		$COMMENT = '';
 		if (isset($head['client_comment'])){
-			$COMMENT.= ' '.cyr_str_decode($head['client_comment']);
+			$COMMENT = cyr_str_decode($head['client_comment']);
 		}
 		if (isset($head['sales_manager_comment'])){
-			$COMMENT.= ' '.cyr_str_decode($head['sales_manager_comment']);
+			$COMMENT.= ($COMMENT=='')? '':' ';
+			$COMMENT.= cyr_str_decode($head['sales_manager_comment']);
 		}
 		return $COMMENT;
 	}
@@ -54,7 +55,7 @@
 	}
 	function get_1c_date($d,$h=0,$m=0,$s=0){
 		$parts = explode('-',str_replace("\'",'',$d));
-		var_dump($parts);
+		//var_dump($parts);
 		if (count($parts)>=3){
 			$_d = mktime($h,$m,$s,$parts[1],$parts[2],$parts[0]);
 			if ($h==0&&$m==0&&$s==0){
@@ -104,6 +105,86 @@
 		}	
 	}
 
+	function getPersonRefOnDescr(){
+		$descr = $_REQUEST[PAR_NAME];
+		if (!isset($descr)){
+			throw new Exception("Не задано наименование");
+		}
+		$v8 = new COM(COM_OBJ_NAME);
+		$par = cyr_str_decode($descr);
+		$par = str_replace('"','""',$par);
+		$q_obj = $v8->NewObject('Запрос');
+		$q_obj->Текст ='ВЫБРАТЬ Спр.Ссылка КАК ref,ЗначСвойств.Значение КАК drive_perm
+		ИЗ Справочник.ФизическиеЛица КАК Спр
+		ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.ЗначенияСвойствОбъектов КАК ЗначСвойств
+		ПО ЗначСвойств.Объект = Спр.Ссылка И ЗначСвойств.Свойство = &Свойство		
+		ГДЕ Спр.Наименование="'.$par.'"';
+		
+		$sv_drive_perm = $v8->ПланыВидовХарактеристик->СвойстваОбъектов->НайтиПоКоду("00000000005");
+		$q_obj->УстановитьПараметр('Свойство',$sv_drive_perm);
+		
+		$sel = $q_obj->Выполнить()->Выбрать();
+		if ($sel->Следующий()){
+			return sprintf('<ref>%s</ref><drive_perm>%s</drive_perm>',
+				$v8->String($sel->ref->УникальныйИдентификатор()),
+				$v8->String($sel->drive_perm)
+			);
+		}	
+	}
+
+	function getPersonAttrs(){	
+		$ref = $_REQUEST[PAR_DRIVER];
+		if (!isset($ref)){
+			throw new Exception("Не задан водитель");
+		}
+		$v8 = new COM(COM_OBJ_NAME);
+		$q_obj = $v8->NewObject('Запрос');
+		$q_obj->Текст ='ВЫБРАТЬ
+		Знач_plate.Значение КАК plate,
+		Знач_trailer_plate.Значение КАК trailer_plate,
+		Знач_trailer_model.Значение КАК trailer_model,
+		Знач_carrier.Значение КАК carrier_descr
+		
+		ИЗ Справочник.ФизическиеЛица КАК Спр
+		
+		ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.ЗначенияСвойствОбъектов КАК Знач_plate
+		ПО Знач_plate.Объект = Спр.Ссылка И Знач_plate.Свойство = &sv_plate		
+
+		ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.ЗначенияСвойствОбъектов КАК Знач_trailer_plate
+		ПО Знач_trailer_plate.Объект = Спр.Ссылка И Знач_trailer_plate.Свойство = &sv_trailer_plate		
+
+		ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.ЗначенияСвойствОбъектов КАК Знач_trailer_model
+		ПО Знач_trailer_model.Объект = Спр.Ссылка И Знач_trailer_model.Свойство = &sv_trailer_model		
+
+		ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.ЗначенияСвойствОбъектов КАК Знач_carrier
+		ПО Знач_carrier.Объект = Спр.Ссылка И Знач_carrier.Свойство = &sv_carrier		
+		
+		ГДЕ Спр.Ссылка=&ФЛСсылка';
+		
+		$driver_id = $v8->NewObject('УникальныйИдентификатор',$ref);
+		$driver_ref = $v8->Справочники->ФизическиеЛица->ПолучитьСсылку($driver_id);
+		$q_obj->УстановитьПараметр('ФЛСсылка',$driver_ref);
+		
+		$sv_plate = $v8->ПланыВидовХарактеристик->СвойстваОбъектов->НайтиПоКоду("00000000004");
+		$q_obj->УстановитьПараметр('sv_plate',$sv_plate);
+		$sv_trailer_plate = $v8->ПланыВидовХарактеристик->СвойстваОбъектов->НайтиПоКоду("УПП00000004");
+		$q_obj->УстановитьПараметр('sv_trailer_plate',$sv_trailer_plate);
+		$sv_trailer_model = $v8->ПланыВидовХарактеристик->СвойстваОбъектов->НайтиПоКоду("00000000006");
+		$q_obj->УстановитьПараметр('sv_trailer_model',$sv_trailer_model);
+		$sv_carrier = $v8->ПланыВидовХарактеристик->СвойстваОбъектов->НайтиПоКоду("УПП00000002");
+		$q_obj->УстановитьПараметр('sv_carrier',$sv_carrier);
+		
+		$sel = $q_obj->Выполнить()->Выбрать();
+		if ($sel->Следующий()){
+			return sprintf('<plate>%s</plate><trailer_plate>%s</trailer_plate><trailer_model>%s</trailer_model><carrier_descr>%s</carrier_descr>',
+				$v8->String($sel->plate),
+				$v8->String($sel->trailer_plate),
+				$v8->String($sel->trailer_model),
+				$v8->String($sel->carrier_descr)				
+			);
+		}	
+	}
+	
 	function completeSprOnDescr($sprKind){
 		if (!isset($_REQUEST[PAR_TEMPL])){
 			throw new Exception("Не задан шаблон");
@@ -178,7 +259,7 @@
 			}
 		}
 		//ВидВзаиморасчетов
-		$dog->ВестиПоДокументамРасчетовСКонтрагентом = TRUE;
+		$dog->ВестиПоДокументамРасчетовСКонтрагентом = FALSE;
 		
 		$dog->Записать();		
 		return $dog->Ссылка;
@@ -350,7 +431,7 @@
 			$ref = $sel->ref;
 		}
 		else{
-			//создать новой значений
+			//создать новое значение
 			$obj = $v8->Справочники->ЗначенияСвойствОбъектов->СоздатьЭлемент();
 			$obj->Владелец = $svoistvo_type;
 			$obj->Наименование = $svoistvo_val;
@@ -361,6 +442,42 @@
 	}
 	
 	function sale($v8,$head,$items){		
+		//throw new Exception($head['number']);
+		if ($head['number']){
+			//попробуем найти по номеру, вдруг документ уже есть в 1с?!
+			$q_obj = $v8->NewObject('Запрос');
+			$q_obj->Текст ='ВЫБРАТЬ Док.Ссылка,Док.Номер,Счф.Ссылка КАК СчфСсылка,Счф.Номер КАК СчфНомер
+			ИЗ Документ.РеализацияТоваровУслуг КАК Док
+			
+			ЛЕВОЕ СОЕДИНЕНИЕ Документ.СчетФактураВыданный КАК Счф
+			ПО Счф.ДокументОснование = Док.Ссылка
+			
+			ГДЕ Док.webOrderNumber=&webOrderNumber
+			';
+			$q_obj->УстановитьПараметр('webOrderNumber',$head['number']);
+			$sel = $q_obj->Выполнить()->Выбрать();
+			if ($sel->Следующий()){
+				if ($sel->СчфСсылка){
+					$inv_num = cyr_str_encode($sel->СчфНомер);
+					$inv_id = $v8->String($sel->СчфСсылка->УникальныйИдентификатор());
+				}
+				else{
+					$inv_num = '';
+					$inv_id = '';
+				}
+				return sprintf(
+					'<naklRef>%s</naklRef>
+					<naklNum>%s</naklNum>
+					<invRef>%s</invRef>
+					<invNum>%s</invNum>',		
+					$v8->String($sel->Ссылка->УникальныйИдентификатор()),
+					cyr_str_encode($sel->Номер),
+					$inv_id,
+					$inv_num
+				);
+			}
+		}
+	
 		$COMMENT = get_doc_comment($head);
 		
 		$firm_id = $v8->NewObject('УникальныйИдентификатор',$head['firm_ref']);
@@ -376,9 +493,19 @@
 		
 		check_client_buyer($v8,$client_ref);
 		
-		$doc = $v8->Документы->РеализацияТоваровУслуг->СоздатьДокумент();	
-		$doc->Дата						= $head['date'];
+		/* Расширенный комментарий с указанием счета*/
+		$order_num = '';
+		if (isset($head['ext_order_id'])){
+			$order_id = $v8->NewObject('УникальныйИдентификатор',$head['ext_order_id']);
+			$order_ref = $v8->Документы->СчетНаОплатуПокупателю->ПолучитьСсылку($order_id);
+			$order_num = '/'.substr($order_ref->Номер,strlen($order_ref->Номер)-5).' ';
+		}
 		
+		$doc = $v8->Документы->РеализацияТоваровУслуг->СоздатьДокумент();	
+		$doc->Дата								= $head['date'];
+		if ($head['number']){
+			$doc->webOrderNumber				= $head['number'];
+		}
 		$doc->Организация						= $firm_ref;
 		$doc->ОтражатьВБухгалтерскомУчете 		= TRUE;
 		$doc->ОтражатьВНалоговомУчете			= TRUE;
@@ -393,7 +520,7 @@
 		$doc->КурсВзаиморасчетов		= 1;
 		$doc->ВидОперации				= $v8->Перечисления->ВидыОперацийРеализацияТоваров->ПродажаКомиссия;
 		$doc->ВидПередачи				= $v8->Перечисления->ВидыПередачиТоваров->СоСклада;
-		$doc->Комментарий				= $COMMENT;
+		$doc->Комментарий				= 'web '.( ($head['number'])? $head['number']:'').$order_num.$COMMENT;
 		
 		//$doc->Грузоотправитель = ФирмаСсылка;
 		//$doc->Грузополучатель = КлиентСсылка;		
@@ -417,14 +544,15 @@
 			$line->Количество 		= $item['quant'];
 			$line->Коэффициент 		= $line->ЕдиницаИзмерения->Коэффициент;
 			$line->Номенклатура 	= $item_ref;
-			$line->Цена				= $item['price'];
+			//$line->Цена				= $item['price'];
 			$line->Сумма			= $item['total'];
+			$line->Цена				= $line->Сумма/$line->Количество;
 			$line->СтавкаНДС		= $stavka;
 			$line->СуммаНДС			= round(floatval($item['total'])*$nds_percent/(100+$nds_percent),2);
 			
 			$line->СпособСписанияОстаткаТоваров = $v8->Перечисления->СпособыСписанияОстаткаТоваров->СоСклада;
 			$line->СчетДоходовБУ	= $v8->ПланыСчетов->Хозрасчетный->ВыручкаНеОблагаемаяЕНВД;
-			$line->СчетРасходовБУ	= $v8->ПланыСчетов->Хозрасчетный->ПрочиеРасходыНеОблагаемыеЕНВД;
+			$line->СчетРасходовБУ	= $v8->ПланыСчетов->Хозрасчетный->СебестоимостьПродажНеОблагаемаяЕНВД;
 			$line->СчетУчетаБУ		= $v8->ПланыСчетов->Хозрасчетный->ГотоваяПродукция;
 			//$line->ПринадлежностьНоменклатуры = $v8->Перечисления->ПринадлежностьНоменклатуры->Принятый;
 			
@@ -483,6 +611,45 @@
 		$doc->СуммаДокумента = $total;
 		$doc->Записать($v8->РежимЗаписиДокумента->Проведение);
 		
+		//Информация по отгрузке водитель авто
+		$vh_trailer_model_ref = NULL;
+		$vh_trailer_plate_ref = NULL;
+		$driver_ref = NULL;
+		if ($head['vh_trailer_model']||$head['vh_trailer_plate']||$head['driver_ref']){
+			$rec_set = $v8->РегистрыСведений->ЗначенияСвойствОбъектов->СоздатьНаборЗаписей();
+			$rec_set->Отбор->Объект->Установить($doc->Ссылка);
+		}
+		
+		if (isset($head['vh_trailer_model'])){
+			$svoistvo_vh_trailer_model = $v8->ПланыВидовХарактеристик->СвойстваОбъектов->НайтиПоКоду("00000000003");
+			$rec = $rec_set->Добавить();
+			$rec->Объект = $doc->Ссылка;
+			$rec->Свойство = $svoistvo_vh_trailer_model;
+			$rec->Значение = get_svoistvo($v8,$svoistvo_vh_trailer_model,$head['vh_trailer_model']);
+		}
+		if (isset($head['vh_trailer_plate'])){
+			$svoistvo_vh_trailer_plate = $v8->ПланыВидовХарактеристик->СвойстваОбъектов->НайтиПоКоду("00000000009");
+			$rec = $rec_set->Добавить();
+			$rec->Объект = $doc->Ссылка;
+			$rec->Свойство = $svoistvo_vh_trailer_plate;
+			$rec->Значение = get_svoistvo($v8,$svoistvo_vh_trailer_model,$head['vh_trailer_plate']);
+		}
+		
+		$driver_ref = NULL;
+		if (isset($head['driver_ref'])){
+			$driver_id = $v8->NewObject('УникальныйИдентификатор',$head['driver_ref']);
+			$driver_ref = $v8->Справочники->ФизическиеЛица->ПолучитьСсылку($driver_id);
+			$rec = $rec_set->Добавить();
+			$rec->Объект = $doc->Ссылка;
+			$rec->Свойство = $v8->ПланыВидовХарактеристик->СвойстваОбъектов->НайтиПоКоду("00000000008");
+			$rec->Значение = $driver_ref;
+		}
+		if (isset($head['vh_trailer_model'])||isset($head['vh_trailer_plate'])
+		||( isset($head['driver_ref']) && !is_null($driver_ref) ) ){
+			//!!!ОПАСНО МОЖЕН ВСЕ ПОХЕРИТЬ!!!
+			$rec_set->Записать();
+		}
+		
 		//Счет фактура
 		$inv_id = '';
 		$inv_num = '';		
@@ -491,41 +658,6 @@
 			$doc_inv->Заполнить($doc->Ссылка);
 			$doc_inv->Записать($v8->РежимЗаписиДокумента->Проведение);	
 			
-			//Информация по отгрузке водитель авто
-			$vh_trailer_model_ref = NULL;
-			$vh_trailer_plate_ref = NULL;
-			$driver_ref = NULL;
-			if ($head['vh_trailer_model']||$head['vh_trailer_plate']||$head['driver_ref']){
-				$rec_set = $v8->РегистрыСведений->ЗначенияСвойствОбъектов->СоздатьНаборЗаписей();
-			}
-			
-			if (isset($head['vh_trailer_model'])){
-				$svoistvo_vh_trailer_model = $v8->ПланыВидовХарактеристик->СвойстваОбъектов->НайтиПоКоду("00000000003");
-				$rec = $rec_set->Добавить();
-				$rec->Объект = $doc->Ссылка;
-				$rec->Свойство = $svoistvo_vh_trailer_model;
-				$rec->Значение = get_svoistvo($v8,$svoistvo_vh_trailer_model,$head['vh_trailer_model']);
-				//$rec->Записать();			
-			}
-			if (isset($head['vh_trailer_plate'])){
-				$svoistvo_vh_trailer_plate = $v8->ПланыВидовХарактеристик->СвойстваОбъектов->НайтиПоКоду("00000000009");
-				$rec = $rec_set->Добавить();
-				$rec->Объект = $doc->Ссылка;
-				$rec->Свойство = $svoistvo_vh_trailer_plate;
-				$rec->Значение = get_svoistvo($v8,$svoistvo_vh_trailer_model,$head['vh_trailer_plate']);
-				//$rec->Записать();						
-			}
-			if (isset($head['driver_ref'])){
-				$driver_id = $v8->NewObject('УникальныйИдентификатор',$head['driver_ref']);
-				$rec = $rec_set->Добавить();
-				$rec->Объект = $doc->Ссылка;
-				$rec->Свойство = $v8->ПланыВидовХарактеристик->СвойстваОбъектов->НайтиПоКоду("00000000008");
-				$rec->Значение = $v8->Справочники->ФизическиеЛица->ПолучитьСсылку($driver_id);
-				//$rec->Записать();									
-			}
-			if (isset($head['vh_trailer_model'])||isset($head['vh_trailer_plate'])||isset($head['driver_ref'])){
-				$rec_set->Записать();
-			}
 			$inv_id = $v8->String($doc_inv->Ссылка->УникальныйИдентификатор());
 			$inv_num = cyr_str_encode($doc_inv->Номер);
 		}
@@ -542,7 +674,7 @@
 		);
 	}
 	function order($v8,$head,$items){		
-		$COMMENT = get_doc_comment($head);
+		$COMMENT = 'web '.get_doc_comment($head);
 		
 		$firm_id = $v8->NewObject('УникальныйИдентификатор',$head['firm_ref']);
 		
@@ -620,8 +752,9 @@
 			$line->Количество 		= $item['quant'];
 			$line->Коэффициент 		= $line->ЕдиницаИзмерения->Коэффициент;
 			$line->Номенклатура 	= $item_ref;
-			$line->Цена				= $item['price'];
+			//$line->Цена				= $item['price'];
 			$line->Сумма			= $item['total'];
+			$line->Цена				= $line->Сумма/$line->Количество;
 			$line->СтавкаНДС		= $stavka;
 			$line->СуммаНДС			= round(floatval($item['total'])*$nds_percent/(100+$nds_percent),2);
 			
@@ -764,6 +897,7 @@
 			$firm_ref = $firm_ar['firm_ref'];
 			$firm_id = $v8->NewObject('УникальныйИдентификатор',$firm_ref);
 			$firm_ref = $v8->Справочники->Организации->ПолучитьСсылку($firm_id);
+			/*
 			if ($firm_ref->Наименование=='ПФ ПолимерПласт Распопов С.С'){
 				$CLIENT_NAME = 'ИП Распопов С.С. ПФ ПолимерПласт';
 			}
@@ -774,6 +908,10 @@
 				$CLIENT_NAME = 'Физическое лицо';
 			}
 			$client_ref = $v8->Справочники->Контрагенты->НайтиПоНаименованию($CLIENT_NAME);
+			*/
+			$client_ref = $firm_ar['client_ref'];
+			$client_id = $v8->NewObject('УникальныйИдентификатор',$client_ref);			
+			$client_ref = $v8->Справочники->Контрагенты->ПолучитьСсылку($client_id);
 			
 			//Договор
 			$attrs = array();
@@ -830,6 +968,17 @@
 			
 			$doc->Комментарий = 'Заявки покупателей: '.$firm_ar['numbers'].', клиент:'.cyr_str_decode($firm_ar['client_descr']);
 			$doc->Записать($v8->РежимЗаписиДокумента->Запись);
+		}
+	}
+	
+	function del_docs($v8,$ext_order_id,$ext_ship_id){
+		if ($ext_ship_id){
+		}
+		$order_id = $v8->NewObject('УникальныйИдентификатор',$ext_order_id);
+		$order_ref = $v8->Документы->СчетНаОплатуПокупателю->ПолучитьСсылку($order_id);	
+		if (!$order_ref->Пустая()){
+			$ob = $order_ref->ПолучитьОбъект();
+			$ob->Удалить();
 		}
 	}
 ?>

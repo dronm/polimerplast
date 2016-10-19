@@ -392,6 +392,18 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
+	options = {};
+	
+	var param = new FieldFloat("deliv_expenses",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldBool("deliv_pay_bank",options);
+	
+	pm.addParam(param);
+	
 	pm.addParam(new FieldInt("ret_id",{}));
 	
 	
@@ -773,6 +785,20 @@ extend(DOCOrder_Controller,ControllerDb);
 	options = {};
 	
 	var param = new FieldBool("destination_to_ttn",options);
+	
+	pm.addParam(param);
+	
+	
+	options = {};
+	
+	var param = new FieldFloat("deliv_expenses",options);
+	
+	pm.addParam(param);
+	
+	
+	options = {};
+	
+	var param = new FieldBool("deliv_pay_bank",options);
 	
 	pm.addParam(param);
 	

@@ -53,8 +53,17 @@ function DriverList_View(id,options){
 		"filter":null,
 		"refreshInterval":0,
 		"onSelect":options.onSelect,
-		"winObj":options.winObj
+		"winObj":options.winObj,
+		"extraFields":["match_1c"]
 		}
 	));
 }
 extend(DriverList_View,ViewList);
+
+DriverList_View.prototype.getFormWidth = function(){
+	return "1250";
+}
+DriverList_View.prototype.getFormHeight = function(){
+	return "600";
+}
+

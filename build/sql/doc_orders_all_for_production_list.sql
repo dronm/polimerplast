@@ -42,11 +42,6 @@ CREATE OR REPLACE VIEW doc_orders_all_for_production_list AS
 			d.state IN ('producing','produced')
 		) AS is_current
 	FROM doc_orders_list AS d
-	/*
-	WHERE d.state IN ('producing',
-			'produced'
-		)
-	*/
 	;
 ALTER TABLE doc_orders_all_for_production_list OWNER TO polimerplast;
 

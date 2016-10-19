@@ -16,7 +16,7 @@ function DOCOrderBaseList_View(id,options){
 	DOCOrderBaseList_View.superclass.constructor.call(this,
 		id,options);
 	
-	var controller = new DOCOrder_Controller(new ServConnector(HOST_NAME));
+	var controller = options.controller || new DOCOrder_Controller(new ServConnector(HOST_NAME));
 	var self = this;
 	
 	//filter

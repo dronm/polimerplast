@@ -40,6 +40,13 @@
 	*/	
 	define('CMD_GET_PERSON_ON_NAME', 'get_person_on_name');
 
+/*
+	Возвращает атрибуты по врдителю
+	Параметры: ref
+	Возврат: набор атрибутов
+	*/	
+	define('CMD_GET_DRIVER_ATTRS', 'get_driver_attrs');
+	
 	/*
 	Возвращает ссылку на пользователя по имени
 	Параметры: name
@@ -186,6 +193,13 @@
 	Возвращает список долгов клиентов
 	*/		
 	define('CMD_GET_DEBT_LIST', 'get_debt_list');
+
+	/*
+	Удаляет документы
+	Параметры:
+		ext_order_id,ext_ship_id
+	*/		
+	define('CMD_DEL_DOCS', 'del_docs');
 	
 	//********* команды *************
 
@@ -200,6 +214,7 @@
 	define('PAR_DAYS', 'days');
 	define('PAR_DATE', 'date');
 	define('PAR_FIRM', 'firm_ref');
+	define('PAR_DRIVER', 'driver_ref');
 	define('PAR_CLIENT', 'client_ref');
 	define('PAR_WAREHOUSE', 'warehouse_ref');
 	define('PAR_DOC', 'doc_ref');
@@ -350,8 +365,13 @@
 			$xml_body = getSprRefOnDescr('НоменклатурныеГруппы');
 		}		
 		else if ($com==CMD_GET_PERSON_ON_NAME){
-			$xml_body = getSprRefOnDescr('ФизическиеЛица');
+			//$xml_body = getSprRefOnDescr('ФизическиеЛица');
+			$xml_body = getPersonRefOnDescr();
 		}		
+		else if ($com==CMD_GET_DRIVER_ATTRS){
+			$xml_body = getPersonAttrs();
+		}		
+		
 		else if ($com==CMD_GET_USER_ON_NAME){
 			$xml_body = getSprRefOnDescr('Пользователи');
 		}		
@@ -403,7 +423,7 @@
 				$sm = str_replace(',','.',$sm);
 				$sm = floatval($sm);
 				//$v8->String($sel->Сумма)
-				if ($sm>0){
+				if ($sm<>0){
 					$xml_body.='<rec>'.
 						sprintf('<firmRef>%s</firmRef>',
 							$v8->String($sel->firmRef->УникальныйИдентификатор())
@@ -603,12 +623,15 @@
 			$v8 = new COM(COM_OBJ_NAME);
 			$obr = get_ext_obr($v8);
 			$user_ref = ($_REQUEST['user_ref'])? $_REQUEST['user_ref']:'';
+			$file_type = ($_REQUEST['file_type'])? $_REQUEST['file_type']:'pdf';
+			
 			$file = $obr->НайтиСоздатьНапечататьАктСверки(
 				$_REQUEST[PAR_FIRM],
 				$_REQUEST[PAR_CLIENT],
 				$from,
 				$to,
-				$user_ref
+				$user_ref,
+				$file_type
 				);
 			downloadfile($file);
 			unlink($file);
@@ -628,6 +651,10 @@
 			$head = unserialize(stripslashes($_REQUEST[PAR_HEAD]));
 			$v8 = new COM(COM_OBJ_NAME);
 			pko($v8,$head);
+		}
+		else if ($com==CMD_DEL_DOCS){
+			$v8 = new COM(COM_OBJ_NAME);
+			del_docs($v8,$_REQUEST['ext_order_id'],$_REQUEST['ext_ship_id']);
 		}
 	}	
 	catch (Exception $e){

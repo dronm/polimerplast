@@ -41,7 +41,7 @@ class Driver_Model extends ModelSQL{
 		,"drive_perm"
 		,array(
 		
-			'length'=>10,
+			'length'=>20,
 			'id'=>"drive_perm"
 				
 		

@@ -29,7 +29,7 @@ function DOCOrderDialog_View(id,options){
 	if (SERV_VARS.ROLE_ID=="sales_manager" || SERV_VARS.ROLE_ID=="representative" || SERV_VARS.ROLE_ID=="admin"){
 		this.m_downloadPrintCtrl = new ButtonCmd(id+"btnCancel",
 				{"caption":"Счет",
-				"enabled":false,
+				//"enabled":false,
 				"onClick":function(){
 					self.onDownloadOrder();
 				},
@@ -41,7 +41,6 @@ function DOCOrderDialog_View(id,options){
 	}
 	else if (SERV_VARS.ROLE_ID=="production" || SERV_VARS.ROLE_ID=="representative"){
 		this.m_ctrlSetShipped = new BtnSetShipped({
-			"grid":null,
 			"className":"btn btn-primary btn-cmd",
 			"enabled":false});
 		options.cmdControls = [this.m_ctrlSetShipped];	
@@ -338,6 +337,7 @@ function DOCOrderDialog_View(id,options){
 		"fieldId":"deliv_type",
 		"controlId":id+"_deliv_type",
 		"inLine":false,
+		"defaultId":"by_client",
 		"options":{"events":{"change":function(){
 			self.changeDelivType();
 		}}},
@@ -506,6 +506,32 @@ function DOCOrderDialog_View(id,options){
 		{"valueFieldId":"deliv_total","keyFieldIds":null});	
 	sub_cont.addElement(this.m_delivCost);	
 	
+	if (SERV_VARS.ROLE_ID!="client"){
+		//себестоимость
+		this.m_delivExpCtrl = new EditString(id+"_deliv_expenses",
+			{"labelCaption":"Затраты на доставку:","name":"deliv_expenses",		
+			"tableLayout":false,"attrs":{"maxlength":"15"}}
+		);		
+		this.bindControl(this.m_delivExpCtrl,
+			{"modelId":model_id,"valueFieldId":"deliv_expenses","keyFieldIds":null},
+			{"valueFieldId":"deliv_expenses","keyFieldIds":null});	
+		sub_cont.addElement(this.m_delivExpCtrl);				
+		
+		//Оплата по безналу
+		this.m_delivPayBank = new EditCheckBox(id+"_deliv_pay_bank",
+			{"labelCaption":"Оплата за доставку по безналичному расчету","name":"deliv_pay_bank",
+			"buttonClear":false,"labelAlign":"left",
+			"tableLayout":false,		
+			"attrs":{}
+			}
+		);		
+		this.bindControl(this.m_delivPayBank,
+			{"modelId":model_id,"valueFieldId":"deliv_pay_bank","keyFieldIds":null},
+			{"valueFieldId":"deliv_pay_bank","keyFieldIds":null});	
+		sub_cont.addElement(this.m_delivPayBank);		
+		
+	}
+	
 	//Включать стоимость доставки
 	this.m_delivAddToCostCtrl = new EditCheckBox(id+"_deliv_add_cost_to_product",
 		{"labelCaption":"Включать стоимость доставки пропорцилнально в стоимость продукции","name":"deliv_add_cost_to_product",
@@ -612,8 +638,8 @@ DOCOrderDialog_View.prototype.onClickSave = function(){
 
 DOCOrderDialog_View.prototype.setDebts = function(debtTotal,defDebt){	
 	if (this.m_defDebtInfCtrl && !isNaN(debtTotal) && debtTotal!=0){		
-		this.m_debtInfCtrl.setValue(( (defDebt>0)? "Долг контрагента ":"Наш долг ") + numberFormat( (debtTotal<0)? -debtTotal:debtTotal ,2,",", "'")+" руб.");
-		DOMHandler.setAttr(this.m_debtInfCtrl.getNode(),"class", (defDebt>0)? "text-danger":"text-info");
+		this.m_debtInfCtrl.setValue(( (debtTotal>0)? "Долг контрагента ":"Наш долг ") + numberFormat( (debtTotal<0)? -debtTotal:debtTotal ,2,",", "'")+" руб.");
+		DOMHandler.setAttr(this.m_debtInfCtrl.getNode(),"class", (debtTotal>0)? "text-danger":"text-info");
 		
 		if (!isNaN(defDebt) && defDebt){
 			this.m_defDebtInfCtrl.setValue("Просроченный долг "+numberFormat( defDebt,2,",", "'")+" руб.");
@@ -881,10 +907,12 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 		}
 		if (this.m_ctrlSetShipped){
 			this.m_ctrlSetShipped.setEnabled(true);
-			this.m_ctrlSetShipped.m_grid = this.m_productDetails.getGridControl()
+			this.m_ctrlSetShipped.m_keys = {"id":m.getFieldValue("id")};
+			this.m_ctrlSetShipped.m_grid = this.m_currentGrid;
 		}
 	}
 }
+
 DOCOrderDialog_View.prototype.toDOM = function(parent){
 	DOCOrderDialog_View.superclass.toDOM.call(this,parent);
 	
@@ -913,6 +941,8 @@ DOCOrderDialog_View.prototype.toDOM = function(parent){
 	
 	this.setWarehouseId(this.m_wareHCtrl.getFieldValue());
 	this.setToThirdParty(this.m_toThirdPartyCtrl.getValue());
+	
+	this.changeDelivType();
 	/*
 	this.setDelivAddToCost(this.m_delivAddToCostCtrl.getValue());
 	this.setDelivTotal(this.m_delivCost.getValue());
@@ -1109,7 +1139,8 @@ DOCOrderDialog_View.prototype.writeData = function(){
 
 DOCOrderDialog_View.prototype.onWriteOk = function(resp){	
 	DOCOrderDialog_View.superclass.onWriteOk.call(this,resp);
-	if (this.m_currentGrid&&this.m_currentGrid.m_rendered){
+	
+	if (this.m_currentGrid && this.m_currentGrid.m_rendered){
 		this.m_currentGrid.onRefresh();
 	}
 }
@@ -1191,6 +1222,9 @@ DOCOrderDialog_View.prototype.changeDelivType = function(){
 	var vis=(this.m_delivTypeCtrl.getValue()=="by_supplier");
 	this.m_toThirdPartyCtrl.setEnabled(vis);
 	this.m_delivCostOptCtrl.setEnabled(vis);
+	this.m_delivExpCtrl.setEnabled(vis);
+	this.m_delivPayBank.setEnabled(vis);
+	this.m_delivAddToCostCtrl.setEnabled(vis);
 	this.m_DelivPeriodCtrl.setEnabled(vis);
 	this.m_clientDestCtrl.setEnabled(vis);
 	if (vis){
@@ -1213,15 +1247,18 @@ DOCOrderDialog_View.prototype.getFormHeight = function(){
 }
 
 DOCOrderDialog_View.prototype.doDownloadOrder = function(){
-	var contr = new DOCOrder_Controller(new ServConnector(HOST_NAME));
-	var meth = contr.getPublicMethodById("download_print");
-	meth.setParamValue("doc_id",this.getDataControl(this.getId()+"_id").control.getValue());
+	var id = this.getDataControl(this.getId()+"_id").control.getValue();
+	if (id){
+		var contr = new DOCOrder_Controller(new ServConnector(HOST_NAME));
+		var meth = contr.getPublicMethodById("download_print");
+		meth.setParamValue("doc_id",id);
 
-	var form = $('<form></form>').attr('action', "index.php").attr('method', 'post');
-	for (var id in meth.m_params){
-		form.append($("<input></input>").attr('type', 'hidden').attr('name', id).attr('value', meth.m_params[id].getValue()));
+		var form = $('<form></form>').attr('action', "index.php").attr('method', 'post');
+		for (var id in meth.m_params){
+			form.append($("<input></input>").attr('type', 'hidden').attr('name', id).attr('value', meth.m_params[id].getValue()));
+		}
+		form.appendTo('body').submit().remove();
 	}
-	form.appendTo('body').submit().remove();
 }
 
 DOCOrderDialog_View.prototype.onDownloadOrder = function(){
@@ -1232,8 +1269,14 @@ DOCOrderDialog_View.prototype.onDownloadOrder = function(){
 			"text":"Для сохранения печатной формы, документ необходимо записать, продолжить?",
 			"callBack":function(res){
 				if (res==WindowQuestion.RES_YES){
-					self.writeData();
+					if (self.getIsNew()){
+						self.onClickSave();
+					}
+					else{
+						self.onWriteOk();
+					}
 					if (self.m_lastWriteResult){
+						console.log("after save print order");
 						self.doDownloadOrder();
 					}
 				}

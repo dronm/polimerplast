@@ -220,6 +220,18 @@ class VehicleDialog_Model extends ModelSQL{
 		));
 		$this->addField($f_last_tracker_data);
 
+		$f_match_1c=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		,"match_1c"
+		,array(
+		
+			'id'=>"match_1c"
+		,
+			'sysCol'=>TRUE
+				
+		
+		));
+		$this->addField($f_match_1c);
+
 		
 		
 		

@@ -21,7 +21,7 @@ class PPEmailSender extends EmailSender{
 		));
 		
 		$mail_id = NULL;
-		if (is_array($ar)&&count($ar)){
+		if (is_array($ar) && count($ar) && $ar['email']){
 			$mail_id = parent::addEMail(
 				$link,
 				EMAIL_FROM_ADDR,EMAIL_FROM_NAME,

@@ -12,7 +12,7 @@
 /* constructor */
 function CarrierList_View(id,options){
 	options = options || {};
-	options.title = "Перевозчики";
+	//options.title = "Перевозчики";
 	CarrierList_View.superclass.constructor.call(this,
 		id,options);
 	

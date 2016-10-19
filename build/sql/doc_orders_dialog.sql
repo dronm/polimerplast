@@ -78,8 +78,11 @@ CREATE OR REPLACE VIEW doc_orders_dialog AS
 		d.destination_to_ttn,
 		coalesce(d.total_pack,0) AS total_pack,
 		
-		(SELECT cld.debt_total FROM client_debts cld WHERE cld.client_id=d.client_id AND cld.firm_id=d.firm_id) debt_total,
-		(SELECT sum(cld.def_debt) FROM client_debts cld WHERE cld.client_id=d.client_id AND cld.firm_id=d.firm_id) def_debt
+		(SELECT cld.debt_total FROM client_debts cld WHERE cld.client_id=d.client_id AND cld.firm_id=d.firm_id LIMIT 1) debt_total,
+		(SELECT sum(cld.def_debt) FROM client_debts cld WHERE cld.client_id=d.client_id AND cld.firm_id=d.firm_id) def_debt,
+		
+		d.deliv_expenses,
+		d.deliv_pay_bank
 		
 		
 	FROM doc_orders AS d

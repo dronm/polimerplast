@@ -2,8 +2,8 @@
 <metadata debug="TRUE" owner="polimerplast" dataSchema="public">
 	<versions>	
 		<version dateOpen="2016-06-07 07:05" dateClose="2016-06-07 11:06:25">1.0021</version>
-		<lastBuild>2016-10-14 17:20:51</lastBuild>		
-	<version dateOpen="2016-06-07 11:06:56"/><version dateOpen="2016-06-07 11:06:57" dateClose="2016-06-07 14:06:30">1.0022</version><version dateOpen="2016-06-07 14:06:32" dateClose="2016-06-07 16:06:31">1.0023</version><version dateOpen="2016-06-07 16:06:32" dateClose="2016-06-08 10:06:07">1.0024</version><version dateOpen="2016-06-08 10:06:42" dateClose="2016-06-08 13:06:31">1.0025</version><version dateOpen="2016-06-08 14:06:25" dateClose="2016-06-09 15:06:33">1.0026</version><version dateOpen="2016-06-09 17:06:49" dateClose="2016-06-09 17:06:52">1.0027</version><version dateOpen="2016-06-09 17:06:52" dateClose="2016-06-09 21:06:53">1.0027</version><version dateOpen="2016-06-09 21:06:53" dateClose="2016-06-10 12:06:17">1.0028</version><version dateOpen="2016-06-10 12:06:18" dateClose="2016-06-11 14:06:03">1.0029</version><version dateOpen="2016-06-16 23:06:13" dateClose="2016-06-20 14:06:32">1.0030</version><version dateOpen="2016-06-20 14:06:33" dateClose="2016-06-22 15:06:50">1.0031</version><version dateOpen="2016-06-24 09:06:55" dateClose="2016-07-08 14:07:21">1.0032</version><version dateOpen="2016-07-08 14:07:21" dateClose="2016-07-12 12:07:59">1.0033</version><version dateOpen="2016-07-12 12:07:59" dateClose="2016-07-13 16:07:12">1.0034</version><version dateOpen="2016-07-13 18:07:15" dateClose="2016-07-15 18:07:34">1.0035</version><version dateOpen="2016-07-16 08:07:56" dateClose="2016-07-16 17:07:58">1.0036</version><version dateOpen="2016-07-16 17:07:59" dateClose="2016-08-11 14:08:53">1.0037</version><version dateOpen="2016-08-13 11:08:41" dateClose="2016-08-13 11:08:43">1.0038</version><version dateOpen="2016-08-17 16:08:54" dateClose="2016-08-17 18:08:02">1.0039</version><version dateOpen="2016-08-19 11:08:12" dateClose="2016-08-19 11:08:12">1.0040</version><version dateOpen="2016-08-22 15:08:35" dateClose="2016-08-22 15:08:35">1.0041</version><version dateOpen="2016-08-22 17:08:03" dateClose="2016-08-22 18:08:14">1.0042</version><version dateOpen="2016-08-23 16:08:42" dateClose="2016-08-25 13:08:24">1.0043</version><version dateOpen="2016-08-25 15:08:58" dateClose="2016-08-25 15:08:59">1.0044</version><version dateOpen="2016-08-25 16:08:08" dateClose="2016-08-25 16:08:09">1.0045</version><version dateOpen="2016-09-01 07:09:51" dateClose="2016-09-01 12:09:55">1.0046</version><version dateOpen="2016-09-08 17:09:56" dateClose="2016-09-08 17:09:56">1.0047</version><version dateOpen="2016-09-08 18:09:06" dateClose="2016-09-08 18:09:06">1.0048</version><version dateOpen="2016-09-09 08:09:55" dateClose="2016-09-09 08:09:56">1.0049</version><version dateOpen="2016-09-30 14:09:31" dateClose="2016-10-03 16:10:09">1.0050</version><version dateOpen="2016-10-03 16:10:27" dateClose="2016-10-03 23:10:36">1.0051</version><version dateOpen="2016-10-03 23:10:36" dateClose="2016-10-06 16:10:59">1.0052</version><version dateOpen="2016-10-07 09:10:06" dateClose="2016-10-07 14:10:28">1.0053</version><version dateOpen="2016-10-07 20:10:47" dateClose="2016-10-07 20:10:48">1.0054</version><version dateOpen="2016-10-11 18:10:13" dateClose="2016-10-14 14:10:45">1.0054?</version><version dateOpen="2016-10-14 17:10:19" dateClose="2016-10-14 17:10:20">1.0056</version></versions>	
+		<lastBuild>2016-10-19 12:09:08</lastBuild>		
+	<version dateOpen="2016-06-07 11:06:56"/><version dateOpen="2016-06-07 11:06:57" dateClose="2016-06-07 14:06:30">1.0022</version><version dateOpen="2016-06-07 14:06:32" dateClose="2016-06-07 16:06:31">1.0023</version><version dateOpen="2016-06-07 16:06:32" dateClose="2016-06-08 10:06:07">1.0024</version><version dateOpen="2016-06-08 10:06:42" dateClose="2016-06-08 13:06:31">1.0025</version><version dateOpen="2016-06-08 14:06:25" dateClose="2016-06-09 15:06:33">1.0026</version><version dateOpen="2016-06-09 17:06:49" dateClose="2016-06-09 17:06:52">1.0027</version><version dateOpen="2016-06-09 17:06:52" dateClose="2016-06-09 21:06:53">1.0027</version><version dateOpen="2016-06-09 21:06:53" dateClose="2016-06-10 12:06:17">1.0028</version><version dateOpen="2016-06-10 12:06:18" dateClose="2016-06-11 14:06:03">1.0029</version><version dateOpen="2016-06-16 23:06:13" dateClose="2016-06-20 14:06:32">1.0030</version><version dateOpen="2016-06-20 14:06:33" dateClose="2016-06-22 15:06:50">1.0031</version><version dateOpen="2016-06-24 09:06:55" dateClose="2016-07-08 14:07:21">1.0032</version><version dateOpen="2016-07-08 14:07:21" dateClose="2016-07-12 12:07:59">1.0033</version><version dateOpen="2016-07-12 12:07:59" dateClose="2016-07-13 16:07:12">1.0034</version><version dateOpen="2016-07-13 18:07:15" dateClose="2016-07-15 18:07:34">1.0035</version><version dateOpen="2016-07-16 08:07:56" dateClose="2016-07-16 17:07:58">1.0036</version><version dateOpen="2016-07-16 17:07:59" dateClose="2016-08-11 14:08:53">1.0037</version><version dateOpen="2016-08-13 11:08:41" dateClose="2016-08-13 11:08:43">1.0038</version><version dateOpen="2016-08-17 16:08:54" dateClose="2016-08-17 18:08:02">1.0039</version><version dateOpen="2016-08-19 11:08:12" dateClose="2016-08-19 11:08:12">1.0040</version><version dateOpen="2016-08-22 15:08:35" dateClose="2016-08-22 15:08:35">1.0041</version><version dateOpen="2016-08-22 17:08:03" dateClose="2016-08-22 18:08:14">1.0042</version><version dateOpen="2016-08-23 16:08:42" dateClose="2016-08-25 13:08:24">1.0043</version><version dateOpen="2016-08-25 15:08:58" dateClose="2016-08-25 15:08:59">1.0044</version><version dateOpen="2016-08-25 16:08:08" dateClose="2016-08-25 16:08:09">1.0045</version><version dateOpen="2016-09-01 07:09:51" dateClose="2016-09-01 12:09:55">1.0046</version><version dateOpen="2016-09-08 17:09:56" dateClose="2016-09-08 17:09:56">1.0047</version><version dateOpen="2016-09-08 18:09:06" dateClose="2016-09-08 18:09:06">1.0048</version><version dateOpen="2016-09-09 08:09:55" dateClose="2016-09-09 08:09:56">1.0049</version><version dateOpen="2016-09-30 14:09:31" dateClose="2016-10-03 16:10:09">1.0050</version><version dateOpen="2016-10-03 16:10:27" dateClose="2016-10-03 23:10:36">1.0051</version><version dateOpen="2016-10-03 23:10:36" dateClose="2016-10-06 16:10:59">1.0052</version><version dateOpen="2016-10-07 09:10:06" dateClose="2016-10-07 14:10:28">1.0053</version><version dateOpen="2016-10-07 20:10:47" dateClose="2016-10-07 20:10:48">1.0054</version><version dateOpen="2016-10-11 18:10:13" dateClose="2016-10-14 14:10:45">1.0054?</version><version dateOpen="2016-10-14 17:10:19" dateClose="2016-10-14 17:10:20">1.0056</version><version dateOpen="2016-10-19 12:10:08" dateClose="2016-10-19 12:10:15">1.0057</version></versions>	
 	<globalFilters>
 		<field id="client_id"/>
 	</globalFilters>
@@ -411,10 +411,10 @@
 			</defaultOrder>		
 			<field id="id" dataType="Int" primaryKey="TRUE" autoInc="TRUE" required="TRUE"/>
 			<field id="name" dataType="String" length="100"/>
-			<field id="drive_perm" dataType="String" length="10"/>
+			<field id="drive_perm" dataType="String" length="20"/>
 			<field id="cel_phone" dataType="String" length="15"/>
 			<field id="ext_id" dataType="String" length="36"/>
-			<index id="drivers_name_index">
+			<index id="drivers_name_index" unique="TRUE">
 				<expression>lower(name)</expression>
 			</index>						
 		</model>						
@@ -431,8 +431,7 @@
 			<defaultOrder>
 				<field id="name"/>
 			</defaultOrder>		
-			<field id="id" dataType="Int" primaryKey="TRUE" autoInc="TRUE" required="TRUE">
-			</field>
+			<field id="id" dataType="Int" primaryKey="TRUE" autoInc="TRUE" required="TRUE"/>
 			<field id="name" dataType="String" length="100"/>			
 			<index id="carriers_name_index">
 				<expression>lower(name)</expression>
@@ -514,6 +513,7 @@
 			<field id="trailer_plate" dataType="String" alias="Номер прицепа"/>
 			<field id="tracker_id" dataType="String" alias="Трекер"/>
 			<field id="last_tracker_data" dataType="String" alias="Данные с трекера"/>
+			<field id="match_1c" dataType="Bool" sysCol="TRUE"/>
 		</model>		
 		
 		<model id="VehicleSelectList" parent="ModelSQL" dataTable="vehicles_select_list" virtual="TRUE">
@@ -741,6 +741,9 @@
 			
 			<field id="destination_to_ttn" dataType="Bool" defaultValue="FALSE"/>
 			
+			<field id="deliv_expenses" dataType="Float" length="15" precision="2"/>
+			<field id="deliv_pay_bank" dataType="Bool"/>
+			
 			<index id="doc_orders_date_time_index" unique="FALSE">
 				<field id="date_time"/>
 			</index>			
@@ -815,8 +818,10 @@
 		<model id="DOCOrderNewList" parent="ModelSQL" dataTable="doc_orders_new_list" virtual="TRUE">
 			<field id="id" dataType="Int" primaryKey="TRUE"/>
 			<field id="number" dataType="String"/>
-			<field id="date_time" dataType="DateTime"/>
+			<field id="date_time" dataType="DateTime"/>			
 			<field id="date_time_descr" dataType="String"/>
+			<field id="delivery_plan_date" dataType="DateTime"/>
+			<field id="delivery_plan_date_descr" dataType="String"/>
 			<field id="client_id" dataType="Int"/>
 			<field id="client_descr" dataType="String"/>						
 			<field id="product_plan_date" dataType="DateTime"/>
@@ -1515,7 +1520,8 @@
 			<field id="debt_total" dataType="Float" length="15" precision="2" unsigned="FALSE"/>
 			<field id="days" dataType="Int"/>
 			<field id="update_date" dataType="Date"/>			
-			<index id="client_debts_client_idx">
+			<index id="client_debts_firm_client_idx">
+				<field id="firm_id"/>
 				<field id="client_id"/>
 			</index>						
 			
@@ -2351,6 +2357,10 @@
 			<publicMethod id="delete" modelId="Driver"/>
 			<publicMethod id="get_list" modelId="DriverList"/>
 			<publicMethod id="get_object" modelId="DriverList"/>
+			<publicMethod id="complete" modelId="DriverList" patternFieldId="name"/>
+			<publicMethod id="get_veh_attrs">
+				<field id="driver_id" dataType="Int" required="TRUE"/>
+			</publicMethod>
 		</controller>				
 		<controller id="Carrier" parentId="ControllerSQL" state="TRUE">
 			<publicMethod id="insert" modelId="Carrier"/>
@@ -2804,6 +2814,7 @@
 		<jsScript file="controlsBS/ButtonClearObject.js"/>
 		<jsScript file="controlsBS/ButtonOpenObject.js"/>
 		<jsScript file="controlsBS/ButtonPrint.js"/>
+		<jsScript file="controlsBS/ButtonInsertObject.js"/>		
 		<jsScript file="controlsBS/Edit.js"/>
 		<jsScript file="controlsBS/EditString.js"/>
 		<jsScript file="controlsBS/actb.js"/>

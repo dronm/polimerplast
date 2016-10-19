@@ -517,7 +517,7 @@ function DriverEditObject(fieldId,controlId,inLine,opts){
 	options = 
 		{"methodId":"complete",
 		"tableLayout":false,
-		"modelId":"Driver_Model",
+		"modelId":"DriverList_Model",
 		"lookupValueFieldId":"name",
 		"lookupKeyFieldIds":["id"],
 		"keyFieldIds":[fieldId],
@@ -531,6 +531,10 @@ function DriverEditObject(fieldId,controlId,inLine,opts){
 		"value":opts.descr,
 		"attrs":{"required":"required","fkey_driver_id":opts.id||""}
 	};
+	opts.options=opts.options||{};
+	for(var opt in opts.options){
+		options[opt] = opts.options[opt];
+	}				
 	if (inLine==undefined || (inLine!=undefined && !inLine)){
 		options["labelCaption"] = "Водитель:";
 	}

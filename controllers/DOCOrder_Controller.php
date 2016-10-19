@@ -207,6 +207,12 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 		$param = new FieldExtBool('destination_to_ttn'
 				,array());
 		$pm->addParam($param);
+		$param = new FieldExtFloat('deliv_expenses'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtBool('deliv_pay_bank'
+				,array());
+		$pm->addParam($param);
 		
 		$pm->addParam(new FieldExtInt('ret_id'));
 		
@@ -437,6 +443,14 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 			));
 			$pm->addParam($param);
 		$param = new FieldExtBool('destination_to_ttn'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtFloat('deliv_expenses'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtBool('deliv_pay_bank'
 				,array(
 			));
 			$pm->addParam($param);
@@ -1500,6 +1514,15 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 		if (!$where){
 			$where = new ModelWhereSQL();
 		}
+		$from = null; $count = null;
+		$limit = $this->limitFromParams($pm,$from,$count);
+		$calc_total = ($count>0);
+		if ($from){
+			$model->setListFrom($from);
+		}
+		if ($count){
+			$model->setRowsPerPage($count);
+		}		
 		
 		//Фильтр по списку складов		
 		$field = clone $model->getFieldById('warehouse_id');
@@ -1507,8 +1530,8 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 		$where->addField($field,'IN',NULL,NULL);
 		
 		$model->select(FALSE,$where,$order,
-			NULL,NULL,NULL,NULL,
-			FALSE,TRUE);
+			$limit,NULL,NULL,NULL,
+			$calc_total,TRUE);
 		//
 		$this->addModel($model);
 		
@@ -1642,7 +1665,7 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 			*/
 			
 			//Присвоим новую нумерацию ТОЛЬКО если текущая с Н
-			if ($ar['number_prefixed'] = 't'){
+			if ($ar['number_prefixed'] == 't'){
 				$this->getDbLinkMaster()->query(sprintf(
 				"UPDATE doc_orders
 					SET number = (SELECT coalesce(MAX(t.number::int),0)+1 FROM doc_orders AS t WHERE substr(t.number::varchar,1,1)<>'Н')
@@ -2541,20 +2564,22 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 					'number'=>$ar['number']
 					);
 			}
-			array_push($items,array(
-				'product_name'=>$ar['product_name'],
-				'group_name'=>$ar['group_name'],
-				'product_group_ref'=>$ar['product_group_ref'],
-				'mes_length'=>$ar['mes_length'],
-				'mes_width'=>$ar['mes_width'],
-				'mes_height'=>$ar['mes_height'],
-				'measure_unit_ref'=>$ar['measure_unit_ref'],
-				'measure_unit_k'=>$ar['measure_unit_k'],
-				'base_measure_unit_ref'=>$ar['base_measure_unit_ref'],					
-				'quant'=>$ar['quant'],
-				'price'=>$ar['price'],
-				'total'=>$ar['total']
-				));
+			if ($ar['product_name']){
+				array_push($items,array(
+					'product_name'=>$ar['product_name'],
+					'group_name'=>$ar['group_name'],
+					'product_group_ref'=>$ar['product_group_ref'],
+					'mes_length'=>$ar['mes_length'],
+					'mes_width'=>$ar['mes_width'],
+					'mes_height'=>$ar['mes_height'],
+					'measure_unit_ref'=>$ar['measure_unit_ref'],
+					'measure_unit_k'=>$ar['measure_unit_k'],
+					'base_measure_unit_ref'=>$ar['base_measure_unit_ref'],					
+					'quant'=>$ar['quant'],
+					'price'=>$ar['price'],
+					'total'=>$ar['total']
+					));
+			}
 		}
 		$link->free_result($q_id);
 	}
@@ -3287,6 +3312,26 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 		if (!$this->ext_doc_exists($p->getParamById('doc_id'),'ext_order_id')){
 			throw new Exception('Документ счет не выписан!');
 		}
+	}
+	
+	public function delete($pm){
+		$p = new ParamsSQL($pm,$this->getDbLink());
+		$p->addAll();
+	
+		$ar = $this->getDbLink()->query_first(sprintf(
+		"SELECT ext_order_id,ext_ship_id FROM doc_orders WHERE id=%d",
+		$p->getDbVal('id')
+		));
+		
+		if (!$ar || !count($ar)){
+			throw new Exception('Документ не найден!');	
+		}
+	
+		if ($ar['ext_order_id']){
+			ExtProg::del_docs($ar['ext_order_id'],$ar['ext_ship_id']);
+		}
+		
+		parent::delete($pm);
 	}
 	
 

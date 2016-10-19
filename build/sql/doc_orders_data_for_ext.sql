@@ -4,7 +4,9 @@
 
 CREATE OR REPLACE VIEW doc_orders_data_for_ext AS 
 	SELECT
-		t.doc_id,
+		--t.doc_id,
+		h.id AS doc_id,
+		
 		--ШАПКА
 		f.ext_id AS firm_ref,
 		w.ext_id AS warehouse_ref,
@@ -75,8 +77,11 @@ CREATE OR REPLACE VIEW doc_orders_data_for_ext AS
 		h.sales_manager_comment,
 		h.deliv_vehicle_count
 		
-	FROM doc_orders_t_products t
-	LEFT JOIN doc_orders h ON h.id=t.doc_id
+	--FROM doc_orders_t_products t
+	--LEFT JOIN doc_orders h ON h.id=t.doc_id
+	FROM doc_orders h
+	LEFT JOIN doc_orders_t_products t ON t.doc_id=h.id
+	
 	LEFT JOIN products p ON p.id=t.product_id
 	LEFT JOIN firms f ON f.id=h.firm_id
 	LEFT JOIN warehouses w ON w.id=h.warehouse_id

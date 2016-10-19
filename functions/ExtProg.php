@@ -23,7 +23,7 @@ class ExtProg{
 		/*
 		$par_str = '';
 		foreach($params as $name=>$val){
-			$par_str.= '&'.$name.'='.urlencode($val);
+			$par_str.= '&'.$name.'='.$val;
 		}
 		throw new Exception('http://'.HOST_1C.'/API1c.php?cmd='.$cmd.$par_str);
 		set_time_limit($CON_TIMEOUT);
@@ -92,11 +92,26 @@ class ExtProg{
 		ExtProg::send_query('get_firm_on_name',array('name'=>$name),$xml);
 		return (string) $xml->ref[0];
 	}	
-	public static function getPersonRefOnName($name){
+	public static function getPersonRefOnName($name,&$res=NULL){
 		$xml=null;
 		ExtProg::send_query('get_person_on_name',array('name'=>$name),$xml);
+		
+		if (is_array($res)){
+			$res['drive_perm'] = (string) $xml->drive_perm[0];
+		}
+		
 		return (string) $xml->ref[0];
 	}	
+	public static function getDriverAttrs($ref,&$res){
+		$xml=null;
+		ExtProg::send_query('get_driver_attrs',array('driver_ref'=>$ref),$xml);
+		
+		$res['plate'] = (string) $xml->plate[0];
+		$res['trailer_plate'] = (string) $xml->trailer_plate[0];
+		$res['trailer_model'] = (string) $xml->trailer_model[0];
+		$res['carrier_descr'] = (string) $xml->carrier_descr[0];
+	}
+	
 	public static function getUserRefOnName($name){
 		$xml=null;
 		ExtProg::send_query('get_user_on_name',array('name'=>$name),$xml);
@@ -234,6 +249,16 @@ class ExtProg{
 				'stamp'=>$stamp),
 			$xml,TRUE);
 	}		
+	public static function del_docs($ext_order_id,$ext_ship_id){
+		$xml=null;
+		return ExtProg::send_query('del_docs',
+			array('ext_order_id'=>$ext_order_id,
+				'ext_ship_id'=>ext_ship_id
+				),
+			$xml
+		);
+	}		
+	
 	public static function print_shipment($ref,$head,$userExtRef='',$stamp=0){
 		$xml=null;
 		return ExtProg::send_query('print_shipment',

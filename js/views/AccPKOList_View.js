@@ -25,7 +25,8 @@ function AccPKOList_View(id,options){
 		"visible":false
 		}));
 	row.addElement(new GridDbHeadCell(id+"_col_date_time_descr",{"value":"Дата",
-		"readBind":{"valueFieldId":"date_time_descr"},"descrCol":true
+		"readBind":{"valueFieldId":"date_time_descr"},"descrCol":true,
+		"sortable":true,"sort":"desc","sortCol":"date_time"
 		}));
 	row.addElement(new GridDbHeadCell(id+"_col_acc_pko_type_descr",{"value":"Тип",
 		"readBind":{"valueFieldId":"acc_pko_type_descr"}

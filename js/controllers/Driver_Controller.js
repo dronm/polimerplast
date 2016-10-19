@@ -23,6 +23,8 @@ function Driver_Controller(servConnector){
 	this.addDelete();
 	this.addGetList();
 	this.addGetObject();
+	this.addComplete();
+	this.add_get_veh_attrs();
 	
 }
 extend(Driver_Controller,ControllerDb);
@@ -134,6 +136,25 @@ extend(Driver_Controller,ControllerDb);
 	
 	var pm = this.getGetObject();
 	pm.addParam(new FieldInt("id",options));
+}
+
+			Driver_Controller.prototype.addComplete = function(){
+	Driver_Controller.superclass.addComplete.call(this);
+	
+	var options = {};
+	
+	var pm = this.getComplete();
+	pm.addParam(new FieldString("name",options));
+	pm.getParamById(this.PARAM_ORD_FIELDS).setValue("name");
+}
+
+			Driver_Controller.prototype.add_get_veh_attrs = function(){
+	var pm = this.addMethodById('get_veh_attrs');
+	
+				
+		pm.addParam(new FieldInt("driver_id"));
+	
+			
 }
 
 		
