@@ -391,6 +391,7 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ProductionStateList_View.js'));		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ProductionStateInline_View.js'));		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/RepProductionLoad_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/RepClientDebts_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/RepPriceListTuning_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/PayOrderList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/RepClientBalance_View.js'));

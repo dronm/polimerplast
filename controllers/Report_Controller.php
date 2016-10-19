@@ -25,6 +25,7 @@ require_once('models/RepProductionLoad_Model.php');
 require_once('models/RepSale_Model.php');
 //require_once('models/NaspunktCostList_Model.php');
 require_once('models/VehicleStopList_Model.php');
+require_once('models/RepClientDebtList_Model.php');
 
 require_once('functions/ExtProg.php');
 require_once('common/downloader.php');
@@ -236,6 +237,42 @@ class Report_Controller extends ControllerSQL{
 			
 		$this->addPublicMethod($pm);
 
+			
+		$pm = new PublicMethod('client_debts');
+		
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('cond_fields',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('cond_vals',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('cond_sgns',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('cond_ic',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('templ',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('field_sep',$opts));
+	
+			
+		$this->addPublicMethod($pm);
+
 											
 		
 	}	
@@ -252,7 +289,8 @@ class Report_Controller extends ControllerSQL{
 		$wh_id_ar = explode(',',$wh_id_list);
 		$wh_int = array();
 		foreach($wh_id_ar as $v){
-			array_push($wh_int,intval($v));
+			$v_i = intval($v);
+			if ($v_i)array_push($wh_int,intval($v_i));
 		}
 		$wh_id_list = implode(',',$wh_int);
 		$wh_cond = (count($wh_int)? 'AND w.id = ANY(ARRAY['.$wh_id_list.'])':'');
@@ -710,6 +748,25 @@ class Report_Controller extends ControllerSQL{
 		$this->addModel($m_res);		
 	}
 	
+	public function client_debts($pm){
+		$link = $this->getDbLink();
+		
+		$model = new RepClientDebtList_Model($link);
+		$where = $this->conditionFromParams($pm,$model);
+		
+		$model->select(
+			FALSE,
+			$where,
+			NULL,
+			NULL,
+			NULL,
+			NULL,
+			NULL,
+			NULL,
+			TRUE
+		);
+		$this->addModel($model);
+	}	
 
 }
 ?>

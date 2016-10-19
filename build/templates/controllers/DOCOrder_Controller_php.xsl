@@ -1872,6 +1872,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 	}
 	
 	public function delete($pm){
+		/*!!! ДЛЯ ТЕСТИРОВАНИЯ !!!
 		$p = new ParamsSQL($pm,$this->getDbLink());
 		$p->addAll();
 	
@@ -1887,7 +1888,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 		if ($ar['ext_order_id']){
 			ExtProg::del_docs($ar['ext_order_id'],$ar['ext_ship_id']);
 		}
-		
+		*/
 		parent::delete($pm);
 	}
 	

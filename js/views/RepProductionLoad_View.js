@@ -60,6 +60,7 @@ function RepProductionLoad_View(id,options){
 	
 	this.addCmdMakeReport();
 	//this.addCmdExcel();		
+	this.addCmdPrint();
 }
 extend(RepProductionLoad_View,PPViewReport);
 

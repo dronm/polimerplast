@@ -58,6 +58,7 @@ function Catalogs_View(id,options){
 	this.addItem({"caption":"Константы","viewClassId":ConstantList_View,"id":"ConstantList_View"});
 	
 	this.addItem({"caption":"Долги клиентов","viewClassId":ClientDebt_View,"id":"ClientDebt_View"});
+	this.addItem({"caption":"Долги клиентов (отчет)","viewClassId":RepClientDebts_View,"id":"RepClientDebts_View"});
 	
 	this.addItem({"caption":"ПКО","viewClassId":AccPKOList_View,"id":"AccPKOList_View"});
 }

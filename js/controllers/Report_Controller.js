@@ -21,6 +21,7 @@ function Report_Controller(servConnector){
 	this.add_client_balance();
 	this.add_sales();
 	this.add_vehicle_stops();
+	this.add_client_debts();
 	
 }
 extend(Report_Controller,ControllerDb);
@@ -127,6 +128,30 @@ extend(Report_Controller,ControllerDb);
 	
 			Report_Controller.prototype.add_vehicle_stops = function(){
 	var pm = this.addMethodById('vehicle_stops');
+	
+				
+		pm.addParam(new FieldString("cond_fields"));
+	
+				
+		pm.addParam(new FieldString("cond_vals"));
+	
+				
+		pm.addParam(new FieldString("cond_sgns"));
+	
+				
+		pm.addParam(new FieldString("cond_ic"));
+	
+				
+		pm.addParam(new FieldString("templ"));
+	
+				
+		pm.addParam(new FieldString("field_sep"));
+	
+			
+}
+
+			Report_Controller.prototype.add_client_debts = function(){
+	var pm = this.addMethodById('client_debts');
 	
 				
 		pm.addParam(new FieldString("cond_fields"));

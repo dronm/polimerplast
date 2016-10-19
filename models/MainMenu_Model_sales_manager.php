@@ -11,6 +11,8 @@ class MainMenu_Model_sales_manager extends Model{
 		
 		<item viewId="Delivery_View" descr="Доставки" default=""/>
 		
+		<item viewId="RepClientDebts_View" descr="Долги клиентов" default=""/>
+		
 		<item viewId="UserAccount_View" descr="Учетная запись" default=""/>
 		
 		</model>';
