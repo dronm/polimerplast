@@ -11,7 +11,7 @@
 /* constructor */
 function BtnSetPaid(options){	
 
-	options.glyph = "glyphicon-usd";
+	//options.glyph = "glyphicon-usd";
 	options.methodId = "set_paid";
 	options.caption = "Оплата (нал)";
 	options.attrs = options.attrs||{};

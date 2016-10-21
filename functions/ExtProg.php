@@ -18,7 +18,8 @@ class ExtProg{
 	    return $head;
 	}
 	
-	private static function send_query($cmd,$params,&$xml,$fileResp=FALSE,$fileExt='pdf'){
+	/* $fileOpts = array('name',disposition,contentType,toFile boolean)*/
+	private static function send_query($cmd,$params,&$xml,$fileOpts=NULL){
 		$CON_TIMEOUT = 300;		
 		/*
 		$par_str = '';
@@ -60,11 +61,38 @@ class ExtProg{
 		//ответ всегда в ANSI		
 		//throw new Exception($contents);
 		
-		if ($fileResp){
-			//throw new Exception($contents);
-			$f = OUTPUT_PATH.uniqid().'.'.$fileExt;
-			file_put_contents($f,$contents);
-			return $f;
+		if (!is_null($fileOpts) && is_array($fileOpts)){
+			if (!array_key_exists('name',$fileOpts)){
+				$fileOpts['name'] = uniqid().'.pdf';
+			}
+		
+			if (array_key_exists('toFile',$fileOpts) && $fileOpts['toFile']==TRUE){
+				file_put_contents(OUTPUT_PATH.$fileOpts['name'],$contents);
+				return OUTPUT_PATH.$fileOpts['name'];
+			}
+			else{
+				if (!array_key_exists('contentType',$fileOpts)){
+					$p = strpos($fileOpts['name'],'.');
+					if ($p !== FALSE){
+						$ext = substr($fileOpts['name'],$p+1);
+						if (in_array($ext,array('zip','pdf','xls'))){
+							$fileOpts['contentType'] = 'application/'.$ext;
+						}
+					}
+					if (!array_key_exists('contentType',$fileOpts)){
+						$fileOpts['contentType'] = 'application/octet-stream';
+					}
+				}
+				if (!array_key_exists('disposition',$fileOpts)){
+					$fileOpts['disposition'] = 'attachment';
+				}
+				ob_clean();//attachment
+				header("Content-type: ".$fileOpts['contentType']);
+				header("Content-Disposition: ".$fileOpts['disposition']."; filename=\"".$fileOpts['name']."\"");		
+				header("Content-length: ".filesize($contents));
+				header("Cache-control: private");
+				echo $contents;
+			}			
 		}
 		else{
 			$contents=@iconv('Windows-1251','UTF-8',$contents);
@@ -78,8 +106,8 @@ class ExtProg{
 			if ($xml['status']=='false'){
 				$e = (string) $xml->error;
 				throw new Exception($e);
-			}					
-		}
+			}							
+		}		
 	}
 
 	public static function getClientRefOnINN($inn){
@@ -169,7 +197,6 @@ class ExtProg{
 		$struc['found'] = 0;
 		if ($xml->attrs){
 			foreach ($xml->attrs->children() as $attr=>$data) {
-				//throw new Exception($attr);		
 				if ($i==0){
 					$struc['found'] = 1;
 				}
@@ -218,36 +245,36 @@ class ExtProg{
 		$res['orderRef'] = $xml->orderRef;
 		$res['orderNum'] = $xml->orderNum;
 	}
-	public static function print_order($ref,$userExtRef='',$stamp=0){
+	public static function print_order($ref,$userExtRef,$stamp=0,$fileOpts=NULL){
 		$xml=null;
 		return ExtProg::send_query('print_order',
 			array('doc_ref'=>$ref,
 				'stamp'=>$stamp,
 				'user_ref'=>$userExtRef),
-			$xml,TRUE);
+			$xml,$fileOpts);
 	}	
-	public static function print_torg12($ref,$userExtRef='',$stamp=0){
+	public static function print_torg12($ref,$userExtRef='',$stamp=0,$fileOpts=NULL){
 		$xml=null;
 		return ExtProg::send_query('print_torg12',
 			array('doc_ref'=>$ref,
 				'stamp'=>$stamp,
 				'user_ref'=>$userExtRef),
-			$xml,TRUE);
+			$xml,$fileOpts);
 	}	
-	public static function print_invoice($ref,$userExtRef=''){
+	public static function print_invoice($ref,$userExtRef='',$fileOpts=NULL){
 		$xml=null;
 		return ExtProg::send_query('print_invoice',
 			array('doc_ref'=>$ref,
 				'user_ref'=>$userExtRef
-			),$xml,TRUE);
+			),$xml,$fileOpts);
 	}	
-	public static function print_upd($ref,$userExtRef='',$stamp=0){
+	public static function print_upd($ref,$userExtRef='',$stamp=0,$fileOpts=NULL){
 		$xml=null;
 		return ExtProg::send_query('print_upd',
 			array('doc_ref'=>$ref,
 				'user_ref'=>$userExtRef,
 				'stamp'=>$stamp),
-			$xml,TRUE);
+			$xml,$fileOpts);
 	}		
 	public static function del_docs($ext_order_id,$ext_ship_id){
 		$xml=null;
@@ -259,25 +286,25 @@ class ExtProg{
 		);
 	}		
 	
-	public static function print_shipment($ref,$head,$userExtRef='',$stamp=0){
+	public static function print_shipment($ref,$head,$userExtRef='',$stamp=0,$fileOpts=NULL){
 		$xml=null;
 		return ExtProg::send_query('print_shipment',
 			array('doc_ref'=>$ref,
 				'head'=>serialize($head),
 				'user_ref'=>$userExtRef,
 				'stamp'=>$stamp),
-			$xml,TRUE,'zip');
+			$xml,$fileOpts);
 	}			
-	public static function print_ttn($ref,$head,$userExtRef='',$stamp=0){
+	public static function print_ttn($ref,$head,$userExtRef='',$stamp=0,$fileOpts=NULL){
 		$xml=null;
 		return ExtProg::send_query('print_ttn',
 			array('doc_ref'=>$ref,
 				'head'=>serialize($head),
 				'user_ref'=>$userExtRef,
 				'stamp'=>$stamp),
-			$xml,TRUE);
+			$xml,$fileOpts);
 	}			
-	public static function print_balance($from,$to,$clientRef,$firmRef,$userExtRef='',$fileType='pdf'){
+	public static function print_balance($from,$to,$clientRef,$firmRef,$userExtRef='',$fileOpts=NULL){
 		$xml=null;
 		return ExtProg::send_query('print_balance',
 			array(
@@ -287,7 +314,7 @@ class ExtProg{
 				'client_ref'=>$clientRef,
 				'user_ref'=>$userExtRef,
 				'file_type'=>$fileType
-			),$xml,TRUE,$fileType);
+			),$xml,$fileOpts);
 	}	
 	public static function paid_to_acc($firm_totals,$pkoType){
 		$xml=null;

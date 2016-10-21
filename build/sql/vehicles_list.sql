@@ -1,6 +1,6 @@
 -- View: vehicles_list
 
-DROP VIEW vehicles_list;
+--DROP VIEW vehicles_list;
 
 CREATE OR REPLACE VIEW vehicles_list AS 
 	SELECT 

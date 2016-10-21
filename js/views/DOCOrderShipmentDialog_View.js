@@ -128,7 +128,6 @@ DOCOrderShipmentDialog_View.prototype.onClickSave = function(){
 }
 
 DOCOrderShipmentDialog_View.prototype.setMethodParams = function(pm,checkRes){
-	debugger;
 	var contr = this.getWriteController();
 	var m = contr.getPublicMethodById("set_shipped");
 	m.setParamValue("doc_id",this.m_idCtrl.getValue());

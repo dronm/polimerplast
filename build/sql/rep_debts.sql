@@ -33,7 +33,7 @@ CREATE OR REPLACE VIEW rep_debts AS
 				WHERE s1.doc_orders_id=d.id
 				ORDER BY s1.date_time DESC
 				LIMIT 1
-			) NOT IN ('producing','waiting_for_payment')
+			) IN ('produced','shipped','loading','on_way','unloading','closed')
 			AND coalesce((SELECT t.debt_total FROM client_debts t WHERE t.client_id=d.client_id AND t.firm_id=d.firm_id LIMIT 1),0)>0
 			THEN
 				-(d.total+
@@ -55,7 +55,7 @@ CREATE OR REPLACE VIEW rep_debts AS
 				WHERE s1.doc_orders_id=d.id
 				ORDER BY s1.date_time DESC
 				LIMIT 1
-			) IN ('producing','waiting_for_payment')
+			) ='producing'
 			AND coalesce((SELECT t.debt_total FROM client_debts t WHERE t.client_id=d.client_id AND t.firm_id=d.firm_id LIMIT 1),0)<=0
 			THEN
 				(d.total+
@@ -78,7 +78,7 @@ CREATE OR REPLACE VIEW rep_debts AS
 				WHERE s1.doc_orders_id=d.id
 				ORDER BY s1.date_time DESC
 				LIMIT 1
-			) NOT IN ('producing','waiting_for_payment')
+			) IN ('produced','shipped','loading','on_way','unloading','closed')
 			AND coalesce((SELECT t.debt_total FROM client_debts t WHERE t.client_id=d.client_id AND t.firm_id=d.firm_id LIMIT 1),0)>0
 			THEN
 				-(d.total+
@@ -100,7 +100,7 @@ CREATE OR REPLACE VIEW rep_debts AS
 				WHERE s1.doc_orders_id=d.id
 				ORDER BY s1.date_time DESC
 				LIMIT 1
-			) IN ('producing','waiting_for_payment')
+			) ='producing'
 			AND coalesce((SELECT t.debt_total FROM client_debts t WHERE t.client_id=d.client_id AND t.firm_id=d.firm_id LIMIT 1),0)<=0
 			THEN
 				(d.total+

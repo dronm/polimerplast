@@ -11,12 +11,12 @@
 /* constructor */
 function BtnSetPaidByBank(options){	
 
-	options.glyph = "glyphicon-piggy-bank";
+	//options.glyph = "glyphicon-piggy-bank";
 	options.methodId = "set_paid_by_bank";
-	options.caption = "Оплата (безнал)";
+	options.caption = "Оплата (карта)";
 	options.attrs = options.attrs||{};
-	options.attrs.title="Установить признак оплаты (безналичный расчет)";
-	options.resultText = "Установлен признак оплаты по безналичному расчету.";
+	options.attrs.title="Установить признак оплаты (карта)";
+	options.resultText = "Установлен признак оплаты по картам.";
 	
 	BtnSetPaidByBank.superclass.constructor.call(this,
 		"btn_set_paid_by_bank",options);

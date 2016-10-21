@@ -12,10 +12,10 @@
 function BtnPaidByBankToAcc(options){	
 	id = uuid();
 	
-	options.glyph = "glyphicon-piggy-bank";
-	options.caption = "ПКО (безнал)";
+	//options.glyph = "glyphicon-piggy-bank";
+	options.caption = "ПКО (карта)";
 	options.attrs = options.attrs||{};
-	options.attrs.title = "Создать ПКО по оплаченным заявкам (безналичный расчет)";
+	options.attrs.title = "Создать ПКО по оплаченным заявкам (карта)";
 	
 	var self = this;
 	options.onClick = function(){

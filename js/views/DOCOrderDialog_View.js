@@ -27,6 +27,7 @@ function DOCOrderDialog_View(id,options){
 	}
 	
 	if (SERV_VARS.ROLE_ID=="sales_manager" || SERV_VARS.ROLE_ID=="representative" || SERV_VARS.ROLE_ID=="admin"){
+		/*
 		this.m_downloadPrintCtrl = new ButtonCmd(id+"btnCancel",
 				{"caption":"Счет",
 				//"enabled":false,
@@ -38,6 +39,7 @@ function DOCOrderDialog_View(id,options){
 			}
 		);
 		options.cmdControls = [this.m_downloadPrintCtrl];
+		*/
 	}
 	else if (SERV_VARS.ROLE_ID=="production" || SERV_VARS.ROLE_ID=="representative"){
 		this.m_ctrlSetShipped = new BtnSetShipped({
@@ -304,7 +306,7 @@ function DOCOrderDialog_View(id,options){
 	var cont = new ControlContainer(uuid(),"div",{"className":"row"});
 	this.m_clientDestCtrl = new ClientDestinationEdit(id+"_deliv_destination",{
 		"fieldId":"deliv_destination_id",
-		"enabled":(SERV_VARS.ROLE_ID=="client"),
+		//"enabled":(SERV_VARS.ROLE_ID=="client"),
 		"winObj":options.winObj});
 	this.bindControl(this.m_clientDestCtrl,
 		{"modelId":model_id,"valueFieldId":"deliv_destination_descr","keyFieldIds":["deliv_destination_id"]},
@@ -1252,12 +1254,17 @@ DOCOrderDialog_View.prototype.doDownloadOrder = function(){
 		var contr = new DOCOrder_Controller(new ServConnector(HOST_NAME));
 		var meth = contr.getPublicMethodById("download_print");
 		meth.setParamValue("doc_id",id);
+		
+		top.location.href = HOST_NAME+"index.php?"+
+			contr.getQueryString(contr.getPublicMethodById("download_print"));	
 
+		/*
 		var form = $('<form></form>').attr('action', "index.php").attr('method', 'post');
 		for (var id in meth.m_params){
 			form.append($("<input></input>").attr('type', 'hidden').attr('name', id).attr('value', meth.m_params[id].getValue()));
 		}
 		form.appendTo('body').submit().remove();
+		*/
 	}
 }
 

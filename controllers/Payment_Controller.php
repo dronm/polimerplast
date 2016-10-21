@@ -22,11 +22,23 @@ class Payment_Controller extends ControllerSQL{
 			
 		$pm = new PublicMethod('get_schedule');
 		
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('field_sep',$opts));
+	
+			
 		$this->addPublicMethod($pm);
 
 			
 		$pm = new PublicMethod('get_def_debt_details');
 		
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('field_sep',$opts));
+	
+			
 		$this->addPublicMethod($pm);
 
 		

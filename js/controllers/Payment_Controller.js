@@ -25,11 +25,19 @@ extend(Payment_Controller,ControllerDb);
 			Payment_Controller.prototype.add_get_schedule = function(){
 	var pm = this.addMethodById('get_schedule');
 	
+				
+		pm.addParam(new FieldString("field_sep"));
+	
+			
 }
 
 			Payment_Controller.prototype.add_get_def_debt_details = function(){
 	var pm = this.addMethodById('get_def_debt_details');
 	
+				
+		pm.addParam(new FieldString("field_sep"));
+	
+			
 }
 
 		

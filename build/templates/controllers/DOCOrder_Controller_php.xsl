@@ -1237,8 +1237,8 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 		$params = new ParamsSQL($pm,$l);
 		$params->addAll();
 		
-		$doc_id = $params->getParamById('doc_id');
-		
+		$doc_id = $params->getDbVal('doc_id');
+
 		$this->check_state($doc_id,"'produced'");
 		
 		//проверка на запрет
@@ -1259,8 +1259,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 			//ДАННЫЕ ДЛЯ 1С
 			$head=NULL;
 			$items=NULL;
-			DOCOrder_Controller::docDataForExt(
-				$link,$doc_id,$head,$items);				
+			DOCOrder_Controller::docDataForExt($link,$doc_id,$head,$items);				
 
 			$ar = $link->query_first(sprintf(
 			"SELECT
@@ -1359,7 +1358,8 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 						$ttn_attrs['ext_ship_id'],
 						$ttn_attrs,
 						$_SESSION['user_ext_id'],
-						0
+						0,
+						array('toFile'=>true,'name'=>uniqid().'.zip')
 				);
 			
 				$_SESSION['ship_doc_'.$doc_id] = $tmp_file;
@@ -1396,8 +1396,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 		if (isset($_SESSION['ship_doc_'.$doc_id])){
 			$tmp_file = $_SESSION['ship_doc_'.$doc_id];
 			ob_clean();
-			downloadFile($tmp_file);
-			unlink($tmp_file);
+			downloadFile($tmp_file,'application/zip','attachment;','Отгрузочные документы.zip');
 			unset($_SESSION['ship_doc_'.$doc_id]);
 		}
 		else{
@@ -1422,13 +1421,12 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 		if (!$ar['ext_ship_id']){
 			throw new Exception("Накладная не выписана!");
 		}
-		$tmp_file = ExtProg::print_shipment($ar['ext_ship_id'],
-				$ar,
-				$_SESSION['user_ext_id'],
-				0);
-		ob_clean();
-		downloadFile($tmp_file);
-		unlink($tmp_file);
+		ExtProg::print_shipment($ar['ext_ship_id'],
+			$ar,
+			$_SESSION['user_ext_id'],
+			0,
+			array('name'=>'Отгрузочные документы.pdf','disposition'=>'inline')
+		);
 	}
 	
 	public static function getExtRef($link,$docId,$field){
@@ -1453,28 +1451,24 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 		if (is_null($ref)){
 			throw new Exception("Счет не выписан!");
 		}
-		$tmp_file = ExtProg::print_order($ref, $_SESSION['user_ext_id']);
-		
-		ob_clean();
-		downloadFile($tmp_file,'application/pdf','inline;');
-		unlink($tmp_file);
+		ExtProg::print_order($ref, $_SESSION['user_ext_id'],0,
+			array('name'=>'Счет покупателю.pdf','disposition'=>'inline')
+		);
 	}
 	
 	public function download_print($pm){
-		function remove_invalid_chars($s){
-			$s = str_replace('"','',$s);
-			$s = str_replace("'","'",$s);
-			return $s;
-		}
-	
 		$l = $this->getDbLink();
 		$params = new ParamsSQL($pm,$l);
 		$params->setValidated("doc_id",DT_INT);
 		
-		$doc_id = $params->getParamById('doc_id');
+		$doc_id = $params->getDbVal('doc_id');
 		
 		$ar = $l->query_first(sprintf("SELECT
-				'№' || o.number || '_' || f.name||'_'|| o.ext_order_num AS file_name,
+				'№'||o.number || ' ' ||
+					replace(
+						replace(f.name,'".'"'."',''),'''',''
+					)
+				||' '|| o.ext_order_num AS file_name,
 				o.ext_order_id
 			FROM doc_orders AS o
 			LEFT JOIN firms AS f ON f.id = o.firm_id
@@ -1485,18 +1479,14 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 		if (is_null($ar['ext_order_id'])){
 			throw new Exception("Счет не выписан!");
 		}
-		$tmp_file = ExtProg::print_order($ar['ext_order_id'], $_SESSION['user_ext_id'],1);
-		
 		//Переименование с индексом
+		$tmp_file = ExtProg::print_order($ar['ext_order_id'], $_SESSION['user_ext_id'],1,array('toFile'=>TRUE));
+		
 		$ar_seq = $this->getDbLinkMaster()->query_first(sprintf("SELECT doc_orders_inc_print(%d) AS ind",$doc_id));
 		
-		$path_parts = pathinfo($tmp_file);
-		$new_tmp_file =  $path_parts['dirname'].'/'. remove_invalid_chars($ar['file_name']).'_'.$ar_seq['ind'].'.pdf';
-		rename($tmp_file,$new_tmp_file);
-		
 		ob_clean();
-		downloadFile($new_tmp_file);
-		unlink($new_tmp_file);
+		downloadFile($tmp_file, 'application/pdf','attachment;',$ar['file_name'].'_'.$ar_seq['ind']);
+		unlink($tmp_file);
 	}
 	
 	public function print_torg12($pm){
@@ -1507,10 +1497,9 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 		if (is_null($ref)){
 			throw new Exception("Накладная не выписана!");
 		}
-		$tmp_file = ExtProg::print_torg12($ref,$_SESSION['user_ext_id']);
-		ob_clean();
-		downloadFile($tmp_file,'application/pdf','inline;');
-		unlink($f);
+		ExtProg::print_torg12($ref,$_SESSION['user_ext_id'],0,
+			array('name'=>'Торг12.pdf','disposition'=>'inline')
+		);
 	}
 	public function print_invoice($pm){
 		$l = $this->getDbLink();
@@ -1520,10 +1509,9 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 		if (is_null($ref)){
 			throw new Exception("Счет-фактура не выписан!");
 		}
-		$tmp_file = ExtProg::print_invoice($ref,$_SESSION['user_ext_id']);
-		ob_clean();
-		downloadFile($tmp_file,'application/pdf','inline;');
-		unlink($tmp_file);
+		ExtProg::print_invoice($ref,$_SESSION['user_ext_id'],
+			array('name'=>'Торг12.pdf','disposition'=>'inline')
+		);
 	}
 	public function print_upd($pm){
 		$l = $this->getDbLink();
@@ -1533,10 +1521,9 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 		if (is_null($ref)){
 			throw new Exception("Накладная не выписана!");
 		}
-		$tmp_file = ExtProg::print_upd($ref,$_SESSION['user_ext_id']);
-		ob_clean();
-		downloadFile($tmp_file,'application/pdf','inline;');
-		unlink($tmp_file);
+		ExtProg::print_upd($ref,$_SESSION['user_ext_id'],0,
+			array('name'=>'УПД.pdf','disposition'=>'inline')
+		);
 	}
 	public function print_ttn($pm){
 		$l = $this->getDbLink();
@@ -1556,13 +1543,12 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 		if (!$ar['ext_ship_id']){
 			throw new Exception("Накладная не выписана!");
 		}
-		$tmp_file = ExtProg::print_ttn($ar['ext_ship_id'],
-				$ar,
-				$_SESSION['user_ext_id'],
-				0);
-		ob_clean();
-		downloadFile($tmp_file,'application/pdf','inline;');
-		unlink($tmp_file);
+		ExtProg::print_ttn($ar['ext_ship_id'],
+			$ar,
+			$_SESSION['user_ext_id'],
+			0,
+			array('name'=>'ТТН.pdf','disposition'=>'inline')
+		);
 	}
 	
 	private function dump_passport_to_file($docId){
@@ -1796,7 +1782,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 			FROM doc_orders AS o
 			LEFT JOIN firms AS f ON f.id=o.firm_id
 			LEFT JOIN clients AS cl ON cl.id=o.client_id
-			WHERE o.".$paidField."=TRUE AND o.acc_pko=FALSE
+			WHERE o.".$paidField."=TRUE AND coalesce(o.acc_pko,FALSE)=FALSE
 			GROUP BY f.id,f.ext_id,cl.id,cl.ext_id,cl.name,user_ref"
 			);
 			
@@ -1841,7 +1827,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 					$res_to_client.=' по наличному расчету, ';
 				}
 				else{
-					$res_to_client.=' по безналичному расчету, ';
+					$res_to_client.=' по картам, ';
 				}
 				$res_to_client.= 'по следующим заявкам: '.$numbers;
 				
@@ -1867,7 +1853,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 					$res_to_client.=' по наличному расчету.';
 				}
 				else{
-					$res_to_client.=' по безналичному расчету.';
+					$res_to_client.=' по картам.';
 				}
 			}
 			$lmast->query("COMMIT");
@@ -1888,7 +1874,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 	}
 	
 	public function paid_by_bank_to_acc($pm){
-		$this->paidOnPayTypeToAcc('paid','bank');
+		$this->paidOnPayTypeToAcc('paid_by_bank','bank');
 	}
 	
 	public function divide($pm){

@@ -546,14 +546,13 @@ extend(DriverEditObject,EditObject);
 function CarrierEditObject(fieldId,controlId,inLine,opts){
 	opts = opts||{};
 	options = 
-		{"methodId":"complete",
+		{"methodId":"get_list",
 		"tableLayout":false,
 		"modelId":"Carrier_Model",
 		"lookupValueFieldId":"name",
 		"lookupKeyFieldIds":["id"],
 		"keyFieldIds":[fieldId],
 		"controller":new Carrier_Controller(new ServConnector(HOST_NAME)),
-		"minLengthForQuery":1,
 		"objectView":null,
 		"noSelect":false,
 		"noOpen":true,
@@ -568,7 +567,7 @@ function CarrierEditObject(fieldId,controlId,inLine,opts){
 	CarrierEditObject.superclass.constructor.call(this,
 		controlId,options);		
 }
-extend(CarrierEditObject,EditObject);
+extend(CarrierEditObject,EditSelectObject);
 
 function PayTypeEditObject(fieldId,controlId,inLine,defaultId){
 	options =

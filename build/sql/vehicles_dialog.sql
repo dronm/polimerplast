@@ -1,6 +1,6 @@
 -- View: vehicles_dialog
 
-DROP VIEW vehicles_dialog;
+--DROP VIEW vehicles_dialog;
 
 CREATE OR REPLACE VIEW vehicles_dialog AS 
 	SELECT 
