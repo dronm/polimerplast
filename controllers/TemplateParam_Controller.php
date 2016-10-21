@@ -86,6 +86,7 @@ class TemplateParam_Controller extends ControllerSQL{
 		$this->modelGetList($m,$pm);		
 	}
 	*/
+	
 	public function set_value($pm){
 		if (!$_SESSION['user_id']){
 			throw new Exception(self::ERR_NOT_LOGGED);

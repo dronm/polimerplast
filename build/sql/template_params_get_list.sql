@@ -21,7 +21,7 @@ $$
 			1 AS w
 		FROM template_params t1 WHERE
 				( ($1='' AND t1.template IS NOT NULL) OR ($1<>'' AND t1.template::text = $1) )
-				AND t1.user_id=user_id
+				AND t1.user_id=$3
 				AND ($2='' OR ($2<>'' AND t1.param::text = $2) )
 				
 		UNION ALL

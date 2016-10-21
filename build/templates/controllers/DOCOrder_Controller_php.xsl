@@ -1479,14 +1479,15 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 		if (is_null($ar['ext_order_id'])){
 			throw new Exception("Счет не выписан!");
 		}
-		//Переименование с индексом
-		$tmp_file = ExtProg::print_order($ar['ext_order_id'], $_SESSION['user_ext_id'],1,array('toFile'=>TRUE));
-		
+		//Наименование индексом
 		$ar_seq = $this->getDbLinkMaster()->query_first(sprintf("SELECT doc_orders_inc_print(%d) AS ind",$doc_id));
-		
-		ob_clean();
-		downloadFile($tmp_file, 'application/pdf','attachment;',$ar['file_name'].'_'.$ar_seq['ind']);
-		unlink($tmp_file);
+		//$tmp_file = 'toFile'=>TRUE,
+		ExtProg::print_order($ar['ext_order_id'], $_SESSION['user_ext_id'],1,
+			array('name'=>$ar['file_name'].'_'.$ar_seq['ind'].'.pdf')
+		);
+		//ob_clean();
+		//downloadFile($tmp_file,'application/pdf','attachment;');
+		//unlink($tmp_file);
 	}
 	
 	public function print_torg12($pm){
@@ -1928,7 +1929,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 	}
 	
 	public function delete($pm){
-		/*!!! ДЛЯ ТЕСТИРОВАНИЯ !!!
+		/*!!! ДЛЯ ТЕСТИРОВАНИЯ !!!*/
 		$p = new ParamsSQL($pm,$this->getDbLink());
 		$p->addAll();
 	
@@ -1944,7 +1945,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 		if ($ar['ext_order_id']){
 			ExtProg::del_docs($ar['ext_order_id'],$ar['ext_ship_id']);
 		}
-		*/
+		
 		parent::delete($pm);
 	}
 	

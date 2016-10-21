@@ -326,5 +326,11 @@ DOCOrderDivisDialog_View.prototype.onGetData = function(resp){
 				}
 			})
 		}
+		
+		//доступность и надобность категории
+		var ts = (m.getFieldValue("deliv_type")=="by_supplier");
+		this.m_delivCostOptCtrl.setRequired(ts);
+		this.m_delivCostOptCtrl.setEnabled(ts);
 	}
+	
 }

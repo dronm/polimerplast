@@ -27,7 +27,7 @@ function DOCOrderDialog_View(id,options){
 	}
 	
 	if (SERV_VARS.ROLE_ID=="sales_manager" || SERV_VARS.ROLE_ID=="representative" || SERV_VARS.ROLE_ID=="admin"){
-		/*
+		
 		this.m_downloadPrintCtrl = new ButtonCmd(id+"btnCancel",
 				{"caption":"Счет",
 				//"enabled":false,
@@ -39,7 +39,7 @@ function DOCOrderDialog_View(id,options){
 			}
 		);
 		options.cmdControls = [this.m_downloadPrintCtrl];
-		*/
+		
 	}
 	else if (SERV_VARS.ROLE_ID=="production" || SERV_VARS.ROLE_ID=="representative"){
 		this.m_ctrlSetShipped = new BtnSetShipped({
@@ -623,6 +623,7 @@ DOCOrderDialog_View.prototype.getDetailControl = function(controlId){
 DOCOrderDialog_View.prototype.readData = function(async,isCopy){
 	DOCOrderDialog_View.superclass.readData.call(this,false,isCopy);
 }
+/*
 DOCOrderDialog_View.prototype.onClickSave = function(){
 	var cmd_insert = this.getIsNew();
 	if (cmd_insert){
@@ -637,6 +638,7 @@ DOCOrderDialog_View.prototype.onClickSave = function(){
 	this.writeData();
 	this.readData(false);
 }
+*/
 
 DOCOrderDialog_View.prototype.setDebts = function(debtTotal,defDebt){	
 	if (this.m_defDebtInfCtrl && !isNaN(debtTotal) && debtTotal!=0){		
@@ -1270,20 +1272,16 @@ DOCOrderDialog_View.prototype.doDownloadOrder = function(){
 
 DOCOrderDialog_View.prototype.onDownloadOrder = function(){
 	//сначала запись!!
-	if (this.getModified()){
-		var self = this;
+	var is_new = this.getIsNew();
+	if (this.getModified() && !is_new){
+		var self = this;		
 		WindowQuestion.show({
 			"text":"Для сохранения печатной формы, документ необходимо записать, продолжить?",
 			"callBack":function(res){
 				if (res==WindowQuestion.RES_YES){
-					if (self.getIsNew()){
-						self.onClickSave();
-					}
-					else{
-						self.onWriteOk();
-					}
+					//self.onWriteOk();
+					self.writeData(false);
 					if (self.m_lastWriteResult){
-						console.log("after save print order");
 						self.doDownloadOrder();
 					}
 				}
@@ -1292,7 +1290,13 @@ DOCOrderDialog_View.prototype.onDownloadOrder = function(){
 		
 	}
 	else{
-		this.doDownloadOrder();
+		if (is_new){			
+			this.onClickSave();
+		}
+	
+		if (!this.getIsNew()){
+			this.doDownloadOrder();
+		}
 	}		
 }
 

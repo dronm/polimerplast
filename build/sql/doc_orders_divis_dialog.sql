@@ -27,7 +27,10 @@ CREATE OR REPLACE VIEW doc_orders_divis_dialog AS
 		WHERE s1.doc_orders_id=d.id
 		ORDER BY s1.date_time DESC
 		LIMIT 1
-		) AS state
+		) AS state,
+		
+		--нужно для определения надобности заполенения категории цена на доставку
+		d.deliv_type
 		
 	FROM doc_orders AS d
 	LEFT JOIN delivery_periods AS dp ON dp.id=d.deliv_period_id

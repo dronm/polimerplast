@@ -424,17 +424,17 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		$params->getParamById('firm_id')
 		));
 	
-		$tmp_file = ExtProg::print_balance(
+		ExtProg::print_balance(
 			$params->getVal('date_from'),
 			$params->getVal('date_to'),
 			$ar['client_ref'],
 			$ar['firm_ref'],
 			'',
-			$params->getVal('file_type')
+			array(
+				'name'=>'Акт светки.'.$params->getVal('file_type'),
+				'disposition'=>'inline'
+			)			
 		);
-		ob_clean();
-		downloadFile($tmp_file);
-		unlink($tmp_file);
 	}
 	
 	public function naspunkt_cost($pm){
