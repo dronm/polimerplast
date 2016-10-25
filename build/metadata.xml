@@ -2,8 +2,8 @@
 <metadata debug="TRUE" owner="polimerplast" dataSchema="public">
 	<versions>	
 		<version dateOpen="2016-06-07 07:05" dateClose="2016-06-07 11:06:25">1.0021</version>
-		<lastBuild>2016-10-22 00:58:31</lastBuild>		
-	<version dateOpen="2016-06-07 11:06:56"/><version dateOpen="2016-06-07 11:06:57" dateClose="2016-06-07 14:06:30">1.0022</version><version dateOpen="2016-06-07 14:06:32" dateClose="2016-06-07 16:06:31">1.0023</version><version dateOpen="2016-06-07 16:06:32" dateClose="2016-06-08 10:06:07">1.0024</version><version dateOpen="2016-06-08 10:06:42" dateClose="2016-06-08 13:06:31">1.0025</version><version dateOpen="2016-06-08 14:06:25" dateClose="2016-06-09 15:06:33">1.0026</version><version dateOpen="2016-06-09 17:06:49" dateClose="2016-06-09 17:06:52">1.0027</version><version dateOpen="2016-06-09 17:06:52" dateClose="2016-06-09 21:06:53">1.0027</version><version dateOpen="2016-06-09 21:06:53" dateClose="2016-06-10 12:06:17">1.0028</version><version dateOpen="2016-06-10 12:06:18" dateClose="2016-06-11 14:06:03">1.0029</version><version dateOpen="2016-06-16 23:06:13" dateClose="2016-06-20 14:06:32">1.0030</version><version dateOpen="2016-06-20 14:06:33" dateClose="2016-06-22 15:06:50">1.0031</version><version dateOpen="2016-06-24 09:06:55" dateClose="2016-07-08 14:07:21">1.0032</version><version dateOpen="2016-07-08 14:07:21" dateClose="2016-07-12 12:07:59">1.0033</version><version dateOpen="2016-07-12 12:07:59" dateClose="2016-07-13 16:07:12">1.0034</version><version dateOpen="2016-07-13 18:07:15" dateClose="2016-07-15 18:07:34">1.0035</version><version dateOpen="2016-07-16 08:07:56" dateClose="2016-07-16 17:07:58">1.0036</version><version dateOpen="2016-07-16 17:07:59" dateClose="2016-08-11 14:08:53">1.0037</version><version dateOpen="2016-08-13 11:08:41" dateClose="2016-08-13 11:08:43">1.0038</version><version dateOpen="2016-08-17 16:08:54" dateClose="2016-08-17 18:08:02">1.0039</version><version dateOpen="2016-08-19 11:08:12" dateClose="2016-08-19 11:08:12">1.0040</version><version dateOpen="2016-08-22 15:08:35" dateClose="2016-08-22 15:08:35">1.0041</version><version dateOpen="2016-08-22 17:08:03" dateClose="2016-08-22 18:08:14">1.0042</version><version dateOpen="2016-08-23 16:08:42" dateClose="2016-08-25 13:08:24">1.0043</version><version dateOpen="2016-08-25 15:08:58" dateClose="2016-08-25 15:08:59">1.0044</version><version dateOpen="2016-08-25 16:08:08" dateClose="2016-08-25 16:08:09">1.0045</version><version dateOpen="2016-09-01 07:09:51" dateClose="2016-09-01 12:09:55">1.0046</version><version dateOpen="2016-09-08 17:09:56" dateClose="2016-09-08 17:09:56">1.0047</version><version dateOpen="2016-09-08 18:09:06" dateClose="2016-09-08 18:09:06">1.0048</version><version dateOpen="2016-09-09 08:09:55" dateClose="2016-09-09 08:09:56">1.0049</version><version dateOpen="2016-09-30 14:09:31" dateClose="2016-10-03 16:10:09">1.0050</version><version dateOpen="2016-10-03 16:10:27" dateClose="2016-10-03 23:10:36">1.0051</version><version dateOpen="2016-10-03 23:10:36" dateClose="2016-10-06 16:10:59">1.0052</version><version dateOpen="2016-10-07 09:10:06" dateClose="2016-10-07 14:10:28">1.0053</version><version dateOpen="2016-10-07 20:10:47" dateClose="2016-10-07 20:10:48">1.0054</version><version dateOpen="2016-10-11 18:10:13" dateClose="2016-10-14 14:10:45">1.0054?</version><version dateOpen="2016-10-14 17:10:19" dateClose="2016-10-14 17:10:20">1.0056</version><version dateOpen="2016-10-19 12:10:08" dateClose="2016-10-19 12:10:15">1.0057</version><version dateOpen="2016-10-19 13:10:37" dateClose="2016-10-19 13:10:38">1.0058</version><version dateOpen="2016-10-20 00:10:01" dateClose="2016-10-20 00:10:02">1.0059</version><version dateOpen="2016-10-21 08:10:55" dateClose="2016-10-21 08:10:59">1.0060</version><version dateOpen="2016-10-22 00:10:58" dateClose="2016-10-22 00:10:58">1.0061</version></versions>	
+		<lastBuild>2016-10-25 10:54:26</lastBuild>		
+	<version dateOpen="2016-06-07 11:06:56"/><version dateOpen="2016-06-07 11:06:57" dateClose="2016-06-07 14:06:30">1.0022</version><version dateOpen="2016-06-07 14:06:32" dateClose="2016-06-07 16:06:31">1.0023</version><version dateOpen="2016-06-07 16:06:32" dateClose="2016-06-08 10:06:07">1.0024</version><version dateOpen="2016-06-08 10:06:42" dateClose="2016-06-08 13:06:31">1.0025</version><version dateOpen="2016-06-08 14:06:25" dateClose="2016-06-09 15:06:33">1.0026</version><version dateOpen="2016-06-09 17:06:49" dateClose="2016-06-09 17:06:52">1.0027</version><version dateOpen="2016-06-09 17:06:52" dateClose="2016-06-09 21:06:53">1.0027</version><version dateOpen="2016-06-09 21:06:53" dateClose="2016-06-10 12:06:17">1.0028</version><version dateOpen="2016-06-10 12:06:18" dateClose="2016-06-11 14:06:03">1.0029</version><version dateOpen="2016-06-16 23:06:13" dateClose="2016-06-20 14:06:32">1.0030</version><version dateOpen="2016-06-20 14:06:33" dateClose="2016-06-22 15:06:50">1.0031</version><version dateOpen="2016-06-24 09:06:55" dateClose="2016-07-08 14:07:21">1.0032</version><version dateOpen="2016-07-08 14:07:21" dateClose="2016-07-12 12:07:59">1.0033</version><version dateOpen="2016-07-12 12:07:59" dateClose="2016-07-13 16:07:12">1.0034</version><version dateOpen="2016-07-13 18:07:15" dateClose="2016-07-15 18:07:34">1.0035</version><version dateOpen="2016-07-16 08:07:56" dateClose="2016-07-16 17:07:58">1.0036</version><version dateOpen="2016-07-16 17:07:59" dateClose="2016-08-11 14:08:53">1.0037</version><version dateOpen="2016-08-13 11:08:41" dateClose="2016-08-13 11:08:43">1.0038</version><version dateOpen="2016-08-17 16:08:54" dateClose="2016-08-17 18:08:02">1.0039</version><version dateOpen="2016-08-19 11:08:12" dateClose="2016-08-19 11:08:12">1.0040</version><version dateOpen="2016-08-22 15:08:35" dateClose="2016-08-22 15:08:35">1.0041</version><version dateOpen="2016-08-22 17:08:03" dateClose="2016-08-22 18:08:14">1.0042</version><version dateOpen="2016-08-23 16:08:42" dateClose="2016-08-25 13:08:24">1.0043</version><version dateOpen="2016-08-25 15:08:58" dateClose="2016-08-25 15:08:59">1.0044</version><version dateOpen="2016-08-25 16:08:08" dateClose="2016-08-25 16:08:09">1.0045</version><version dateOpen="2016-09-01 07:09:51" dateClose="2016-09-01 12:09:55">1.0046</version><version dateOpen="2016-09-08 17:09:56" dateClose="2016-09-08 17:09:56">1.0047</version><version dateOpen="2016-09-08 18:09:06" dateClose="2016-09-08 18:09:06">1.0048</version><version dateOpen="2016-09-09 08:09:55" dateClose="2016-09-09 08:09:56">1.0049</version><version dateOpen="2016-09-30 14:09:31" dateClose="2016-10-03 16:10:09">1.0050</version><version dateOpen="2016-10-03 16:10:27" dateClose="2016-10-03 23:10:36">1.0051</version><version dateOpen="2016-10-03 23:10:36" dateClose="2016-10-06 16:10:59">1.0052</version><version dateOpen="2016-10-07 09:10:06" dateClose="2016-10-07 14:10:28">1.0053</version><version dateOpen="2016-10-07 20:10:47" dateClose="2016-10-07 20:10:48">1.0054</version><version dateOpen="2016-10-11 18:10:13" dateClose="2016-10-14 14:10:45">1.0054?</version><version dateOpen="2016-10-14 17:10:19" dateClose="2016-10-14 17:10:20">1.0056</version><version dateOpen="2016-10-19 12:10:08" dateClose="2016-10-19 12:10:15">1.0057</version><version dateOpen="2016-10-19 13:10:37" dateClose="2016-10-19 13:10:38">1.0058</version><version dateOpen="2016-10-20 00:10:01" dateClose="2016-10-20 00:10:02">1.0059</version><version dateOpen="2016-10-21 08:10:55" dateClose="2016-10-21 08:10:59">1.0060</version><version dateOpen="2016-10-22 00:10:58" dateClose="2016-10-22 00:10:58">1.0061</version><version dateOpen="2016-10-25 10:10:54" dateClose="2016-10-25 10:10:59">1.0062</version></versions>	
 	<globalFilters>
 		<field id="client_id"/>
 	</globalFilters>
@@ -463,7 +463,7 @@
 		<model id="Vehicle" parent="ModelSQL" dataTable="vehicles" virtual="FALSE">
 			<field id="id" dataType="Int" primaryKey="TRUE" autoInc="TRUE" required="TRUE"/>
 			<field id="model" dataType="String" length="50"/>
-			<field id="plate" dataType="String" length="11"/>
+			<field id="plate" dataType="String" length="20"/>
 			<field id="vol" dataType="Int"/>
 			<field id="employed" dataType="Bool"/>
 			<field id="load_weight_t" dataType="Float" length="10" precision="1"/>
@@ -472,7 +472,7 @@
 			<field id="driver_id" dataType="Int" refTable="drivers" refField="id" required="TRUE"/>
 			<field id="deliv_cost_opt_id" dataType="Int" refTable="deliv_cost_opts" refField="id"/>
 			<field id="trailer_model" dataType="String" length="50"/>
-			<field id="trailer_plate" dataType="String" length="11"/>
+			<field id="trailer_plate" dataType="String" length="20"/>
 			<field id="tracker_id" dataType="String" length="15" refTable="trackers" refField="id"/>			
 			<index id="vehicles_employed" unique="FALSE">
 				<field id="employed"/>
@@ -1275,33 +1275,33 @@
 			<field id="client_login_allowed" dataType="Bool"/>
 			<field id="client_activity_descr" dataType="String"/>
 			<field id="client_pay_type" dataType="String"/>
-			<field id="client_pay_debt_days" dataType="Int"/>
-			<field id="client_pay_ban_on_debt_days" dataType="Int"/>
-			<field id="client_pay_debt_sum" dataType="Float" length="15" precision="2"/>
+			<field id="client_pay_debt_days" dataType="String"/>
+			<field id="client_pay_ban_on_debt_days" dataType="String"/>
+			<field id="client_pay_debt_sum" dataType="String"/>
 			<field id="client_debt_period_days_descr" dataType="String"/>
-			<field id="client_debt_days" dataType="Int"/>
-			<field id="client_debt_total" dataType="Float" length="15" precision="2"/>
+			<field id="client_debt_days" dataType="String"/>
+			<field id="client_debt_total" dataType="String"/>
 			<field id="client_contracts_exist" dataType="Bool"/>
-			<field id="client_contract_end" dataType="Date"/>
+			<field id="client_contract_end" dataType="String"/>
 			
 			<field id="doc_number" dataType="String" alias="Номер заказа"/>
 			
 			<field id="firm_descr" dataType="String" alias="Фирма"/>			
 			<field id="production_city_descr" dataType="String" alias="Город отгрузки"/>
 			
-			<field id="doc_delivery_plan_date" dataType="Date"/>
+			<field id="doc_delivery_plan_date" dataType="String"/>
 			<field id="doc_in_time" dataType="Bool"/>
 			
-			<field id="doc_user_id" dataType="Int"/>
+			<field id="doc_user_id" dataType="String"/>
 			<field id="doc_user_descr" dataType="String" alias="Пользователь"/>
 			<field id="doc_overlimit" dataType="Bool"/>
 			<field id="doc_delivery_type_descr" dataType="String"/>
 			<field id="doc_deliv_to_third_party" dataType="Bool"/>
 			<field id="doc_deliv_destination_descr" dataType="String"/>
 			<field id="doc_deliv_period" dataType="String"/>
-			<field id="doc_warehouse_id" dataType="Int"/>
+			<field id="doc_warehouse_id" dataType="String"/>
 			<field id="doc_warehouse_descr" dataType="String"/>
-			<field id="doc_driver_id" dataType="Int"/>
+			<field id="doc_driver_id" dataType="String"/>
 			<field id="doc_driver_descr" dataType="String"/>
 			<field id="doc_vehicle_id" dataType="String"/>
 			<field id="doc_vehicle_descr" dataType="String"/>
@@ -1315,29 +1315,29 @@
 			<field id="doc_client_comment" dataType="String"/>
 			<field id="doc_customer_survey_question" dataType="String"/>
 			
-			<field id="doc_deliv_total" dataType="Float" length="19" precision="2" alias="Стоимость доставки"/>
+			<field id="doc_deliv_total" dataType="String" alias="Стоимость доставки"/>
 			
 			<field id="doct_product_descr" dataType="String"/>
 			<field id="doct_product_mes" dataType="String"/>
-			<field id="doct_product_mes_length" dataType="Int"/>
-			<field id="doct_product_mes_width" dataType="Int"/>
-			<field id="doct_product_mes_height" dataType="Int"/>
+			<field id="doct_product_mes_length" dataType="String"/>
+			<field id="doct_product_mes_width" dataType="String"/>
+			<field id="doct_product_mes_height" dataType="String"/>
 			<field id="doct_base_measure_id" dataType="String"/>
 			<field id="doct_base_measure_descr" dataType="String"/>
 			<field id="doct_pack_exists" dataType="Bool"/>
 			
-			<field id="doc_city_route_distance" dataType="Int" alias="Киллометраж доставки город"/>
-			<field id="doc_country_route_distance" dataType="Int" alias="Киллометраж доставки межгород"/>
+			<field id="doc_city_route_distance" dataType="String" alias="Киллометраж доставки город"/>
+			<field id="doc_country_route_distance" dataType="String" alias="Киллометраж доставки межгород"/>
 			<field id="doc_coord_count" dataType="Int" alias="Количество согласований"/>
-			<field id="doc_coord_time_sale_dep" dataType="Time" alias="Время согласования ОП"/>
-			<field id="doc_coord_time_client" dataType="Time" alias="Время согласования ОП"/>
-			<field id="doct_quant" dataType="Float" length="19" precision="3" alias="Кол-во в базовых единицах"/>
-			<field id="doct_weight" dataType="Float" length="19" precision="3" alias="Масса"/>
-			<field id="doct_volume" dataType="Float" length="19" precision="3" alias="Объем"/>
-			<field id="doct_total" dataType="Float" length="19" precision="2" alias="Стоимость продукции"/>
-			<field id="client_debt_days" dataType="Int" alias="Просроченная дебиторская задолженность (дни)"/>
-			<field id="client_debt_total" dataType="Float" length="19" precision="2" alias="Просроченная дебиторская задолженность (стоимость)"/>
-			<field id="doc_customer_survey_points" dataType="Int" alias="Баллы опроса"/>
+			<field id="doc_coord_time_sale_dep" dataType="String" alias="Время согласования ОП"/>
+			<field id="doc_coord_time_client" dataType="String" alias="Время согласования ОП"/>
+			<field id="doct_quant" dataType="String" length="19" precision="3" alias="Кол-во в базовых единицах"/>
+			<field id="doct_weight" dataType="String" length="19" precision="3" alias="Масса"/>
+			<field id="doct_volume" dataType="String" length="19" precision="3" alias="Объем"/>
+			<field id="doct_total" dataType="String" length="19" precision="2" alias="Стоимость продукции"/>
+			<field id="client_debt_days" dataType="String" alias="Просроченная дебиторская задолженность (дни)"/>
+			<field id="client_debt_total" dataType="String" length="19" precision="2" alias="Просроченная дебиторская задолженность (стоимость)"/>
+			<field id="doc_customer_survey_points" dataType="String" alias="Баллы опроса"/>
 			
 			<field id="sys_level_val" dataType="String" sysCol="TRUE"/>
 			<field id="sys_level_count" dataType="String" sysCol="TRUE"/>

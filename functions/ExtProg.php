@@ -89,7 +89,7 @@ class ExtProg{
 				ob_clean();//attachment
 				header("Content-type: ".$fileOpts['contentType']);
 				header("Content-Disposition: ".$fileOpts['disposition']."; filename=\"".$fileOpts['name']."\"");		
-				header("Content-length: ".filesize($contents));
+				header("Content-length: ".strlen($contents));
 				header("Cache-control: private");
 				echo $contents;
 			}			
@@ -304,7 +304,7 @@ class ExtProg{
 				'stamp'=>$stamp),
 			$xml,$fileOpts);
 	}			
-	public static function print_balance($from,$to,$clientRef,$firmRef,$userExtRef='',$fileOpts=NULL){
+	public static function print_balance($from,$to,$clientRef,$firmRef,$userExtRef='',$fileType,$fileOpts=NULL){
 		$xml=null;
 		return ExtProg::send_query('print_balance',
 			array(

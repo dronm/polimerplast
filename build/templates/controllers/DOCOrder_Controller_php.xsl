@@ -152,10 +152,12 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 	}
 	
 	private function state_in_list($docId,$state_list){
+	
+		//get_order_states_descr(state) AS state_descr
+		
 		$ar = $this->getDbLink()->query_first(sprintf(
 		"SELECT
-			state IN (".$state_list.") AS check,
-			get_order_states_descr(state) AS state_descr
+			state IN (".$state_list.") AS check			
 		FROM doc_orders_states
 		WHERE doc_orders_id=%d
 		ORDER BY date_time DESC
@@ -1172,15 +1174,42 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 		}
 		$link->free_result($q_id);
 	}
-	public function set_closed($pm){
-		$l = $this->getDbLink();//read-only
-		$params = new ParamsSQL($pm,$l);
-		$params->addAll();
+	
+	public function cancel_order($orderId){
+		$ar = $this->getDbLink()->query_first(sprintf(
+		"SELECT
+			CASE
+				WHEN state IN ('new','waiting_for_us','waiting_for_client','waiting_for_payment','producing','produced') THEN
+					'canceled_by_sales_manager'::order_states
+				WHEN state IN ('closed','canceled','canceled_by_sales_manager','canceled_by_client') THEN
+					NULL
+				ELSE 'closed'::order_states
+			END AS new_state
+		FROM doc_orders_states WHERE doc_orders_id=%d ORDER BY date_time DESC LIMIT 1", $orderId
+		));
 		
+		if (is_array($ar) &amp;&amp; count($ar) &amp;&amp; isset($ar['new_state'])){
+			$this->add_state($docId, $ar['new_state']);
+			//throw new Exception("Setting new state:".$ar['new_state']);
+		}
+		else{
+			throw new Exception(self::ER_WRONG_STATE);
+		}
+	
+	}
+	
+	public function set_closed($pm){		
+		$p = new ParamsSQL($pm,$this->getDbLink());
+		$p->addAll();		
+		
+		$this->cancel_order($p->getDbVal('doc_id'));
+		
+		/*
 		$this->add_state(
 			$params->getParamById('doc_id'),
 			'closed'
 		);
+		*/
 	}
 	public function update_paid($pm,$field,$paid){
 		$params = new ParamsSQL($pm,$this->getDbLink());
@@ -1929,7 +1958,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 	}
 	
 	public function delete($pm){
-		/*!!! ДЛЯ ТЕСТИРОВАНИЯ !!!*/
+		/*!!! ДЛЯ ТЕСТИРОВАНИЯ !!!
 		$p = new ParamsSQL($pm,$this->getDbLink());
 		$p->addAll();
 	
@@ -1944,9 +1973,11 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 	
 		if ($ar['ext_order_id']){
 			ExtProg::del_docs($ar['ext_order_id'],$ar['ext_ship_id']);
-		}
-		
+		}				
+		*/
+	
 		parent::delete($pm);
+		
 	}
 	
 </xsl:template>

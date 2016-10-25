@@ -22,7 +22,9 @@ extend(DOCOrderGridDb,GridDbDOC);
 DOCOrderGridDb.prototype.DETAIL_WAIT = 500;
 
 DOCOrderGridDb.prototype.onGetData = function(resp){
+
 	DOCOrderGridDb.superclass.onGetData.call(this,resp);
+	
 	this.m_toolTips={};
 	this.m_colorToolTips={};
 	var self = this;

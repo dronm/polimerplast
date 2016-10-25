@@ -3,10 +3,7 @@
 require_once(FRAME_WORK_PATH.'basic_classes/ModelReportSQL.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLInt.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLString.php');
-require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLFloat.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLDateTime.php');
-require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLDate.php');
-require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLTime.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLBool.php');
 
 class RepSale_Model extends ModelReportSQL{
@@ -120,7 +117,7 @@ class RepSale_Model extends ModelReportSQL{
 		));
 		$this->addField($f_client_pay_type);
 
-		$f_client_pay_debt_days=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		$f_client_pay_debt_days=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"client_pay_debt_days"
 		,array(
 		
@@ -130,7 +127,7 @@ class RepSale_Model extends ModelReportSQL{
 		));
 		$this->addField($f_client_pay_debt_days);
 
-		$f_client_pay_ban_on_debt_days=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		$f_client_pay_ban_on_debt_days=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"client_pay_ban_on_debt_days"
 		,array(
 		
@@ -140,11 +137,10 @@ class RepSale_Model extends ModelReportSQL{
 		));
 		$this->addField($f_client_pay_ban_on_debt_days);
 
-		$f_client_pay_debt_sum=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		$f_client_pay_debt_sum=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"client_pay_debt_sum"
 		,array(
 		
-			'length'=>15,
 			'id'=>"client_pay_debt_sum"
 				
 		
@@ -161,7 +157,7 @@ class RepSale_Model extends ModelReportSQL{
 		));
 		$this->addField($f_client_debt_period_days_descr);
 
-		$f_client_debt_days=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		$f_client_debt_days=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"client_debt_days"
 		,array(
 		
@@ -171,11 +167,10 @@ class RepSale_Model extends ModelReportSQL{
 		));
 		$this->addField($f_client_debt_days);
 
-		$f_client_debt_total=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		$f_client_debt_total=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"client_debt_total"
 		,array(
 		
-			'length'=>15,
 			'id'=>"client_debt_total"
 				
 		
@@ -192,7 +187,7 @@ class RepSale_Model extends ModelReportSQL{
 		));
 		$this->addField($f_client_contracts_exist);
 
-		$f_client_contract_end=new FieldSQlDate($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		$f_client_contract_end=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"client_contract_end"
 		,array(
 		
@@ -238,7 +233,7 @@ class RepSale_Model extends ModelReportSQL{
 		));
 		$this->addField($f_production_city_descr);
 
-		$f_doc_delivery_plan_date=new FieldSQlDate($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		$f_doc_delivery_plan_date=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"doc_delivery_plan_date"
 		,array(
 		
@@ -258,7 +253,7 @@ class RepSale_Model extends ModelReportSQL{
 		));
 		$this->addField($f_doc_in_time);
 
-		$f_doc_user_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		$f_doc_user_id=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"doc_user_id"
 		,array(
 		
@@ -330,7 +325,7 @@ class RepSale_Model extends ModelReportSQL{
 		));
 		$this->addField($f_doc_deliv_period);
 
-		$f_doc_warehouse_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		$f_doc_warehouse_id=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"doc_warehouse_id"
 		,array(
 		
@@ -350,7 +345,7 @@ class RepSale_Model extends ModelReportSQL{
 		));
 		$this->addField($f_doc_warehouse_descr);
 
-		$f_doc_driver_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		$f_doc_driver_id=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"doc_driver_id"
 		,array(
 		
@@ -480,13 +475,12 @@ class RepSale_Model extends ModelReportSQL{
 		));
 		$this->addField($f_doc_customer_survey_question);
 
-		$f_doc_deliv_total=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		$f_doc_deliv_total=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"doc_deliv_total"
 		,array(
 		
 			'alias'=>"Стоимость доставки"
 		,
-			'length'=>19,
 			'id'=>"doc_deliv_total"
 				
 		
@@ -513,7 +507,7 @@ class RepSale_Model extends ModelReportSQL{
 		));
 		$this->addField($f_doct_product_mes);
 
-		$f_doct_product_mes_length=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		$f_doct_product_mes_length=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"doct_product_mes_length"
 		,array(
 		
@@ -523,7 +517,7 @@ class RepSale_Model extends ModelReportSQL{
 		));
 		$this->addField($f_doct_product_mes_length);
 
-		$f_doct_product_mes_width=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		$f_doct_product_mes_width=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"doct_product_mes_width"
 		,array(
 		
@@ -533,7 +527,7 @@ class RepSale_Model extends ModelReportSQL{
 		));
 		$this->addField($f_doct_product_mes_width);
 
-		$f_doct_product_mes_height=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		$f_doct_product_mes_height=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"doct_product_mes_height"
 		,array(
 		
@@ -573,7 +567,7 @@ class RepSale_Model extends ModelReportSQL{
 		));
 		$this->addField($f_doct_pack_exists);
 
-		$f_doc_city_route_distance=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		$f_doc_city_route_distance=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"doc_city_route_distance"
 		,array(
 		
@@ -585,7 +579,7 @@ class RepSale_Model extends ModelReportSQL{
 		));
 		$this->addField($f_doc_city_route_distance);
 
-		$f_doc_country_route_distance=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		$f_doc_country_route_distance=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"doc_country_route_distance"
 		,array(
 		
@@ -609,7 +603,7 @@ class RepSale_Model extends ModelReportSQL{
 		));
 		$this->addField($f_doc_coord_count);
 
-		$f_doc_coord_time_sale_dep=new FieldSQlTime($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		$f_doc_coord_time_sale_dep=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"doc_coord_time_sale_dep"
 		,array(
 		
@@ -621,7 +615,7 @@ class RepSale_Model extends ModelReportSQL{
 		));
 		$this->addField($f_doc_coord_time_sale_dep);
 
-		$f_doc_coord_time_client=new FieldSQlTime($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		$f_doc_coord_time_client=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"doc_coord_time_client"
 		,array(
 		
@@ -633,7 +627,7 @@ class RepSale_Model extends ModelReportSQL{
 		));
 		$this->addField($f_doc_coord_time_client);
 
-		$f_doct_quant=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		$f_doct_quant=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"doct_quant"
 		,array(
 		
@@ -646,7 +640,7 @@ class RepSale_Model extends ModelReportSQL{
 		));
 		$this->addField($f_doct_quant);
 
-		$f_doct_weight=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		$f_doct_weight=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"doct_weight"
 		,array(
 		
@@ -659,7 +653,7 @@ class RepSale_Model extends ModelReportSQL{
 		));
 		$this->addField($f_doct_weight);
 
-		$f_doct_volume=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		$f_doct_volume=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"doct_volume"
 		,array(
 		
@@ -672,7 +666,7 @@ class RepSale_Model extends ModelReportSQL{
 		));
 		$this->addField($f_doct_volume);
 
-		$f_doct_total=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		$f_doct_total=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"doct_total"
 		,array(
 		
@@ -685,7 +679,7 @@ class RepSale_Model extends ModelReportSQL{
 		));
 		$this->addField($f_doct_total);
 
-		$f_client_debt_days=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		$f_client_debt_days=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"client_debt_days"
 		,array(
 		
@@ -697,7 +691,7 @@ class RepSale_Model extends ModelReportSQL{
 		));
 		$this->addField($f_client_debt_days);
 
-		$f_client_debt_total=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		$f_client_debt_total=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"client_debt_total"
 		,array(
 		
@@ -710,7 +704,7 @@ class RepSale_Model extends ModelReportSQL{
 		));
 		$this->addField($f_client_debt_total);
 
-		$f_doc_customer_survey_points=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		$f_doc_customer_survey_points=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"doc_customer_survey_points"
 		,array(
 		

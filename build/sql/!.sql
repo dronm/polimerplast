@@ -17,16 +17,25 @@ ALTER TABLE client_destinations
   */
   
   
-DROP VIEW doc_orders_data_for_ext;
-DROP VIEW vehicles_dialog;
-DROP VIEW doc_orders_ttn;
-DROP VIEW sms_client_remind;
-DROP VIEW sms_client_change_time;
-DROP VIEW sms_client_on_deliv;
-DROP VIEW sms_client_on_leave_prod;
-DROP VIEW sms_driver_first_deliv;
-DROP VIEW email_text_order_remind;
+select login_id
+FROM doc_orders_t_tmp_products AS tmp
+LEFT JOIN logins ON tmp.login_id=logins.id
+WHERE logins.date_time_out IS NOT NULL OR (logins.date_time_out IS NULL AND (now()-logins.date_time_in)>'24 hours')
+
 DROP VIEW deliv_assigned_orders_for_client;
+DROP VIEW deliv_current_pos_all;
+DROP VIEW doc_orders_data_for_ext;
+DROP VIEW doc_orders_ttn;
+DROP VIEW email_text_order_remind;
+DROP VIEW sms_client_change_time;
+DROP VIEW sms_client_on_leave_prod;
+DROP VIEW sms_client_remind;
+DROP VIEW sms_driver_first_deliv;
+DROP VIEW vehicles_dialog;
+DROP VIEW doc_orders_print_h;
+DROP VIEW doc_orders_dialog;
+DROP VIEW vehicles_list;
+DROP VIEW vehicles_select_list;
 
-ALTER TABLE public.vehicles ALTER COLUMN plate TYPE character varying(11);
-
+ALTER TABLE vehicles ALTER COLUMN plate TYPE varchar(20);
+ALTER TABLE vehicles ALTER COLUMN trailer_plate TYPE varchar(20);

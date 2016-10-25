@@ -64,7 +64,7 @@ function ContractStateEditObject(fieldId,controlId,inLine,defaultId){
 }
 extend(ContractStateEditObject,EditSelectObject);
 
-function ProductionCityEditObject(fieldId,controlId,inLine,defaultId){
+function ProductionCityEditObject(fieldId,controlId,inLine,defaultId,opts){
 	options =
 		{"attrs":{"required":"required"},
 		"tableLayout":false,
@@ -81,6 +81,10 @@ function ProductionCityEditObject(fieldId,controlId,inLine,defaultId){
 		"listView":ProductionCityList_View,
 		"defaultId":(defaultId==undefined)? "undefined":defaultId
 	};
+	opts = opts||{};
+	for(var opt in opts){
+		options[opt] = opts[opt];
+	}				
 	if (inLine==undefined || (inLine!=undefined && !inLine)){
 		options["labelCaption"] = "Город отгрузки:";
 	}	
@@ -187,7 +191,7 @@ function ClientEditObject(fieldId,controlId,inLine,opts){
 }
 extend(ClientEditObject,EditObject);
 
-function ProductEditObject(fieldId,controlId,inLine,defaultId){
+function ProductEditObject(fieldId,controlId,inLine,defaultId,opts){
 	options =
 		{"attrs":{"required":"required"},
 		"tableLayout":false,
@@ -205,6 +209,10 @@ function ProductEditObject(fieldId,controlId,inLine,defaultId){
 		"defaultId":(defaultId==undefined)? "undefined":defaultId,
 		"editContClassName":"input-group "+get_bs_col()+"3"
 	};
+	opts = opts ||{};
+	for(var opt in opts){
+		options[opt] = opts[opt];
+	}						
 	if (inLine==undefined || (inLine!=undefined && !inLine)){
 		options["labelCaption"] = "Продукция:";
 	}	
@@ -271,7 +279,7 @@ function DelivTypeEditObject(opts){
 }
 extend(DelivTypeEditObject,EditSelectObject);
 
-function DeliveryPeriodEditObject(fieldId,controlId,inLine,defaultId){
+function DeliveryPeriodEditObject(fieldId,controlId,inLine,defaultId,opts){
 	options =
 		{"tableLayout":false,
 		"methodId":"get_list",
@@ -287,6 +295,10 @@ function DeliveryPeriodEditObject(fieldId,controlId,inLine,defaultId){
 		"listView":DeliveryPeriodList_View,
 		"defaultId":(defaultId==undefined)? "undefined":defaultId
 	};
+	opts = opts||{};
+	for(var opt in opts){
+		options[opt] = opts[opt];
+	}					
 	if (inLine==undefined || (inLine!=undefined && !inLine)){
 		options["labelCaption"] = "Период:";
 	}	
@@ -362,7 +374,7 @@ OrderWarehouseEditObject.prototype.setProductId = function(productId){
 	this.m_pm.setParamValue("product_id",productId);
 }
 
-function ClientUserEditObject(fieldId,controlId,inLine,defaultId){
+function ClientUserEditObject(fieldId,controlId,inLine,defaultId,opts){
 	var contr = new ClientUser_Controller(new ServConnector(HOST_NAME));
 	this.m_pm = contr.getPublicMethodById(contr.METH_GET_LIST);
 	this.m_pm.setParamValue(contr.PARAM_COND_FIELDS,"client_id");
@@ -385,6 +397,11 @@ function ClientUserEditObject(fieldId,controlId,inLine,defaultId){
 		"defaultId":(defaultId==undefined)? "undefined":defaultId,
 		"noAutoRefresh":true
 	};
+	opts = opts||{};
+	for(var opt in opts){
+		options[opt] = opts[opt];
+	}				
+	
 	if (inLine==undefined || (inLine!=undefined && !inLine)){
 		options["labelCaption"] = "Ответственный:";
 	}	
@@ -460,7 +477,7 @@ function OrderStateEditObject(fieldId,controlId,inLine,defaultId,opts){
 }
 extend(OrderStateEditObject,EditSelectObject);
 
-function UserEditObject(fieldId,controlId,inLine,defaultId){
+function UserEditObject(fieldId,controlId,inLine,defaultId,opts){
 	options =
 		{"attrs":{"required":"required"},
 		"tableLayout":false,
@@ -477,6 +494,10 @@ function UserEditObject(fieldId,controlId,inLine,defaultId){
 		"listView":UserList_View,
 		"defaultId":(defaultId==undefined)? "undefined":defaultId
 	};
+	opts = opts||{};
+	for(var opt in opts){
+		options[opt] = opts[opt];
+	}					
 	if (inLine==undefined || (inLine!=undefined && !inLine)){
 		options["labelCaption"] = "Пользователь:";
 	}	
@@ -569,7 +590,8 @@ function CarrierEditObject(fieldId,controlId,inLine,opts){
 }
 extend(CarrierEditObject,EditSelectObject);
 
-function PayTypeEditObject(fieldId,controlId,inLine,defaultId){
+function PayTypeEditObject(fieldId,controlId,inLine,defaultId,opts){
+	opts = opts||{};
 	options =
 		{"attrs":{"required":"required"},
 		"tableLayout":false,
@@ -587,6 +609,10 @@ function PayTypeEditObject(fieldId,controlId,inLine,defaultId){
 		"methParams":{"id":"payment_types"},
 		"defaultId":(defaultId==undefined)? "undefined":defaultId
 	};
+	for(var opt in opts){
+		options[opt] = opts[opt];
+	}			
+	
 	if (inLine==undefined || (inLine!=undefined && !inLine)){
 		options["labelCaption"] = "Условия оплаты:";
 	}	

@@ -106,6 +106,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		}
 		
 		$FIELD_SEP = ',';
+		$COND_FIELD_MULTY_VAL_SEP = ';';
 		
 		/* структуры отчета для удобства отделены*/
 		require_once('functions/RepSalesStruc.php');
@@ -133,7 +134,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		$it = $base_where->getFieldIterator();
 		while ($it->valid()){
 			$field = $it->current();
-			$base_where_q.=($base_where_q=='')? 'WHERE ':' '.$field['cond'];
+			$base_where_q.=($base_where_q=='')? 'WHERE ':' '.$field['cond'].' ';
 			
 			$f_id = $field['field']->getId();
 			if (!array_key_exists($f_id,$field_resolver)){
@@ -158,10 +159,16 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 				$f_full_id = $field_resolver[$f_id]['table'].'.'.$field_resolver[$f_id]['field'];
 			}				
 			
-			$base_where_q.=sprintf($pat,
+			if ($field['signe']=='IN'){
+				$where_sql = $field['field']->getSQLExpression();
+			}
+			else{
+				$where_sql = $field['field']->getValueForDb();
+			}
+			$base_where_q.= sprintf($pat,
 				$f_full_id,
 				$field['signe'],
-				$field['field']->getValueForDb()
+				$where_sql
 			);
 			
 			//add join
@@ -430,6 +437,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 			$ar['client_ref'],
 			$ar['firm_ref'],
 			'',
+			$params->getVal('file_type'),
 			array(
 				'name'=>'Акт светки.'.$params->getVal('file_type'),
 				'disposition'=>'inline'

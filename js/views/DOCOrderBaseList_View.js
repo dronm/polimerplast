@@ -362,12 +362,19 @@ function DOCOrderBaseList_View(id,options){
 	}
 	if (options.paid){		
 		row.addElement(new GridDbHeadCellBool(id+"_col_paid",{
-			"value":"Оплач.","readBind":{"valueFieldId":"paid"}
+			"value":"Оплач.","getDbValue":function(m,attrs){
+				if (m.getFieldValue("paid")=="true"){
+					attrs.paid="cash";
+					return "Н";
+				}
+				else if (m.getFieldValue("paid_by_bank")=="true"){
+					attrs.paid="bank";
+					return "Б";
+				}				
+			},
+			//"name":"paid"
+			"readBind":{"valueFieldId":"paid"}
 			}));				
-		row.addElement(new GridDbHeadCellBool(id+"_col_paid_by_bank",{
-			"value":"Оплач.(бн)","readBind":{"valueFieldId":"paid_by_bank"}
-			}));				
-			
 	}
 	row.addElement(new GridDbHeadCell(id+"_col_state",{
 		"readBind":{"valueFieldId":"state"},

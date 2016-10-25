@@ -23,7 +23,7 @@ function BtnSetClosed(options){
 				"params":{"doc_id":keys["id"]},
 				"func":function(resp){					
 					WindowMessage.show({
-						"text":"Заявка переведена в статус 'закрыта'.",
+						"text":"Заявка переведена в статус 'закрыта' или 'выполнена'.",
 						"type":WindowMessage.TP_NOTE,
 						"callBack":function(){
 							options.grid.onRefresh();

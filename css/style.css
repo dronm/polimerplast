@@ -340,3 +340,10 @@ tr.level_10{
 .menuItem{
 	cursor:pointer;
 }
+
+td[paid="cash"]{
+	background-color:#d2abfb;
+}
+td[paid="bank"]{
+	background-color:#ff9875;
+}

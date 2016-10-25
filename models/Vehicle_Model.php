@@ -42,7 +42,7 @@ class Vehicle_Model extends ModelSQL{
 		,"plate"
 		,array(
 		
-			'length'=>11,
+			'length'=>20,
 			'id'=>"plate"
 				
 		
@@ -135,7 +135,7 @@ class Vehicle_Model extends ModelSQL{
 		,"trailer_plate"
 		,array(
 		
-			'length'=>11,
+			'length'=>20,
 			'id'=>"trailer_plate"
 				
 		

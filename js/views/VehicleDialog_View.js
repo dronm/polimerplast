@@ -35,7 +35,7 @@ function VehicleDialog_View(id,options){
 	cont.addElement(ctrl);
 	
 	this.m_plateCtrl = new EditString(id+"_plate",
-		{"attrs":{"maxlength":11,"size":8,"required":"required"},
+		{"attrs":{"maxlength":20,"size":8,"required":"required"},
 		"labelCaption":"Рег.номер:","name":"plate"}
 	);
 	this.bindControl(this.m_plateCtrl,
@@ -181,7 +181,7 @@ function VehicleDialog_View(id,options){
 	
 	//прицеп
 	this.m_trailerPlateCtrl = new EditString(id+"_trailer_plate",
-		{"attrs":{"maxlength":11,"size":8},
+		{"attrs":{"maxlength":20,"size":8},
 		"labelCaption":"Рег.номер прицепа:","name":"trailer_plate"}
 	);
 	this.bindControl(this.m_trailerPlateCtrl,

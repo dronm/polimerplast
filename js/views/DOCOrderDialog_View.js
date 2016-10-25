@@ -1282,6 +1282,9 @@ DOCOrderDialog_View.prototype.onDownloadOrder = function(){
 					//self.onWriteOk();
 					self.writeData(false);
 					if (self.m_lastWriteResult){
+						//
+						var contr = new DOCOrder_Controller(new ServConnector(HOST_NAME));
+						self.m_beforeOpen(contr,false,false);
 						self.doDownloadOrder();
 					}
 				}

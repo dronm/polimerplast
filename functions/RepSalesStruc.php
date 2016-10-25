@@ -299,6 +299,7 @@ $field_resolver =
 		
 		"client_descr" => array(
 			"field"=>"name",
+			"fieldWhere"=>"id",
 			"table"=>"clients"
 		),
 		
@@ -384,6 +385,7 @@ $field_resolver =
 		),
 		
 		"doc_user_descr" => array(
+			"fieldWhere"=>"id",
 			"field"=>"name",
 			"table"=>"users"
 		),
@@ -428,6 +430,7 @@ $field_resolver =
 		),
 			
 		"doc_driver_descr" => array(
+			"fieldWhere"=>"driver_id",
 			"field"=>"driver_descr",
 			"table"=>"deliveries_virt"
 		),			
