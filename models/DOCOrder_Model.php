@@ -1,6 +1,6 @@
 <?php
 
-require_once(FRAME_WORK_PATH.'basic_classes/ModelSQLDOC.php');
+require_once(FRAME_WORK_PATH.'basic_classes/ModelSQLDOC20.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLInt.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLString.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLText.php');
@@ -14,7 +14,7 @@ require_once(FRAME_WORK_PATH.'basic_classes/ModelOrderSQL.php');
 require_once('functions/ExtProg.php');
 require_once('functions/PPEmailSender.php');
 
-class DOCOrder_Model extends ModelSQLDOC{
+class DOCOrder_Model extends ModelSQLDOC20{
 	
 	public function __construct($dbLink){
 		parent::__construct($dbLink);
@@ -681,6 +681,8 @@ class DOCOrder_Model extends ModelSQLDOC{
 	}
 	
 	public function insert($needId){
+		$view_id_for_db = "'".$_REQUEST['view_id']."'";
+	
 		$link = $this->getDbLink();
 		$link->query('BEGIN');
 		try{	
@@ -726,8 +728,8 @@ class DOCOrder_Model extends ModelSQLDOC{
 			$ids_ar = $link->query_first($this->getInsertQuery(TRUE));
 			$doc_id = $ids_ar['id'];
 			$link->query(
-				sprintf("SELECT %s_before_write(%d,%d)",
-				$this->getTableName(),$_SESSION['LOGIN_ID'],$doc_id)
+				sprintf("SELECT %s_before_write(%s,%d)",
+				$this->getTableName(),$view_id_for_db,$doc_id)
 			);
 			
 			$link->query(
@@ -774,7 +776,9 @@ class DOCOrder_Model extends ModelSQLDOC{
 			//Маркетолог проводит опрос			
 			parent::update();
 		}
-		else{			
+		else{	
+			$view_id_for_db = "'".$_REQUEST['view_id']."'";
+				
 			$doc_id = $this->getFieldById('id')->getOldValueForDb();
 			$link = $this->getDbLink();
 			
@@ -982,12 +986,12 @@ class DOCOrder_Model extends ModelSQLDOC{
 							AND t.mes_height=t_tmp.mes_height
 							AND t.mes_length=t_tmp.mes_length
 							AND t.mes_width=t_tmp.mes_width
-					WHERE t_tmp.login_id=%d AND (%s)
+					WHERE t_tmp.view_id=%s AND (%s)
 					",
 					$res['id'],
 					$fld,
 					$old_vals,
-					$doc_id,$_SESSION['LOGIN_ID'],$cond
+					$doc_id, $view_id_for_db, $cond
 					);
 					
 					$q = sprintf("INSERT INTO doc_orders_products_history
@@ -1035,8 +1039,8 @@ class DOCOrder_Model extends ModelSQLDOC{
 				
 				//ОБНОВЛЕНИЕ ДОКУМЕНТА
 				$link->query(
-					sprintf("SELECT %s_before_write(%d,%d)",
-					$this->getTableName(),$_SESSION['LOGIN_ID'],
+					sprintf("SELECT %s_before_write(%s,%d)",
+					$this->getTableName(),$view_id_for_db,
 					$this->getFieldById('id')->getOldValue())
 				);
 				$q = $this->getUpdateQuery();

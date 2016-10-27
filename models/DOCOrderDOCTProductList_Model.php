@@ -1,9 +1,10 @@
 <?php
 
-require_once(FRAME_WORK_PATH.'basic_classes/ModelSQLDOCT.php');
+require_once(FRAME_WORK_PATH.'basic_classes/ModelSQLDOCT20.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLInt.php');
+require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLString.php');
 
-class DOCOrderDOCTProductList_Model extends ModelSQLDOCT{
+class DOCOrderDOCTProductList_Model extends ModelSQLDOCT20{
 	
 	public function __construct($dbLink){
 		parent::__construct($dbLink);
@@ -12,16 +13,17 @@ class DOCOrderDOCTProductList_Model extends ModelSQLDOCT{
 		
 		$this->setTableName("doc_orders_t_tmp_products_list");
 		
-		$f_login_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"login_id"
+		$f_view_id=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
+		,"view_id"
 		,array(
 		
 			'primaryKey'=>TRUE,
-			'id'=>"login_id"
+			'length'=>32,
+			'id'=>"view_id"
 				
 		
 		));
-		$this->addField($f_login_id);
+		$this->addField($f_view_id);
 
 		$f_line_number=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
 		,"line_number"

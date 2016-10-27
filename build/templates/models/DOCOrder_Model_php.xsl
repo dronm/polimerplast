@@ -73,6 +73,8 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 	}
 	
 	public function insert($needId){
+		$view_id_for_db = "'".$_REQUEST['view_id']."'";
+	
 		$link = $this->getDbLink();
 		$link->query('BEGIN');
 		try{	
@@ -118,8 +120,8 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 			$ids_ar = $link->query_first($this->getInsertQuery(TRUE));
 			$doc_id = $ids_ar['id'];
 			$link->query(
-				sprintf("SELECT %s_before_write(%d,%d)",
-				$this->getTableName(),$_SESSION['LOGIN_ID'],$doc_id)
+				sprintf("SELECT %s_before_write(%s,%d)",
+				$this->getTableName(),$view_id_for_db,$doc_id)
 			);
 			
 			$link->query(
@@ -166,7 +168,9 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 			//Маркетолог проводит опрос			
 			parent::update();
 		}
-		else{			
+		else{	
+			$view_id_for_db = "'".$_REQUEST['view_id']."'";
+				
 			$doc_id = $this->getFieldById('id')->getOldValueForDb();
 			$link = $this->getDbLink();
 			
@@ -374,12 +378,12 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 							AND t.mes_height=t_tmp.mes_height
 							AND t.mes_length=t_tmp.mes_length
 							AND t.mes_width=t_tmp.mes_width
-					WHERE t_tmp.login_id=%d AND (%s)
+					WHERE t_tmp.view_id=%s AND (%s)
 					",
 					$res['id'],
 					$fld,
 					$old_vals,
-					$doc_id,$_SESSION['LOGIN_ID'],$cond
+					$doc_id, $view_id_for_db, $cond
 					);
 					
 					$q = sprintf("INSERT INTO doc_orders_products_history
@@ -427,8 +431,8 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 				
 				//ОБНОВЛЕНИЕ ДОКУМЕНТА
 				$link->query(
-					sprintf("SELECT %s_before_write(%d,%d)",
-					$this->getTableName(),$_SESSION['LOGIN_ID'],
+					sprintf("SELECT %s_before_write(%s,%d)",
+					$this->getTableName(),$view_id_for_db,
 					$this->getFieldById('id')->getOldValue())
 				);
 				$q = $this->getUpdateQuery();

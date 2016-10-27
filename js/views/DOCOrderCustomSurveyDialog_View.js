@@ -21,13 +21,21 @@ function DOCOrderCustSurveyDialog_View(id,options){
 	var self = this;	
 	this.m_beforeOpen = function(contr,isInsert){
 		var doc_id = 0;
+		
+		self.m_questions.getGridControl().setViewId(self.m_viewId);
+		
 		if (!isInsert){
 			doc_id = self.getDataControl(self.getId()+"_id").control.getValue();
 		}
-		contr.run("before_open",{async:false,params:{"doc_id":doc_id}});
+		contr.run("before_open",{async:false,params:{
+			"doc_id":doc_id,
+			"view_id":self.m_viewId
+			}});
 	}
 	
 	var model_id = "DOCOrderCustSurveyDialog_Model";
+	
+	this.m_viewId = hex_md5(uuid());
 	
 	var cont = new ControlContainer("survey_header","div",{"className":"panel"})
 	
@@ -152,6 +160,8 @@ function DOCOrderCustSurveyDialog_View(id,options){
 		"attrs":{"title":"заполнить вопросами по умолчанию"},
 		"onClick":function(){
 			var contr = new DOCOrder_Controller(new ServConnector(HOST_NAME));
+			var m = contr.getPublicMethodById("fill_cust_surv");
+			m.setParamValue("view_id",this.m_viewId);			
 			contr.run("fill_cust_surv",{
 				"func":function(){
 					self.m_questions.getGridControl().onRefresh();

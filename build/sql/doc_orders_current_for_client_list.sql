@@ -40,7 +40,7 @@ CREATE OR REPLACE VIEW doc_orders_current_for_client_list AS
 	
 	FROM doc_orders_list AS d
 	WHERE
-		(d.pay_type='cash' AND d.paid=FALSE)
+		( d.pay_type='cash' AND coalesce(d.paid,FALSE)=FALSE AND coalesce(d.paid_by_bank,FALSE)=FALSE)
 		OR
 		(
 		d.state NOT IN ('shipped',

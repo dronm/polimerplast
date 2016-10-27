@@ -1,6 +1,6 @@
 <?php
 
-require_once(FRAME_WORK_PATH.'basic_classes/ControllerSQLDOC.php');
+require_once(FRAME_WORK_PATH.'basic_classes/ControllerSQLDOC20.php');
 
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtInt.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtString.php');
@@ -13,6 +13,8 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldExtPassword.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtBool.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPoint.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPolygon.php');
+
+require_once(FRAME_WORK_PATH.'basic_classes/ControllerSQLDOC20.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ParamsSQL.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ModelSQL.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ModelWhereSQL.php');
@@ -35,7 +37,7 @@ require_once('common/barcodegen.1d-php5.v5.2.1/class/BCGDrawing.php');
 //require_once('common/barcodegen.1d-php5.v5.2.1/class/BCGcodabar.barcode.php');
 require_once('common/barcodegen.1d-php5.v5.2.1/class/BCGcode128.barcode.php');
 
-class DOCOrder_Controller extends ControllerSQLDOC{
+class DOCOrder_Controller extends ControllerSQLDOC20{
 	const ER_WRONG_STATE = 'Заявка в неверном статусе!'; 
 	
 	public function __construct($dbLinkMaster=NULL){
@@ -218,10 +220,16 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 		
 		$pm->addParam(new FieldExtInt('ret_id'));
 		
+			$f_params = array();
+			$param = new FieldExtString('view_id'
+			,$f_params);
+		$pm->addParam($param);		
+		
 		
 		$this->addPublicMethod($pm);
 		$this->setInsertModelId('DOCOrder_Model');
 
+			
 			
 		/* update */		
 		$pm = new PublicMethod('update');
@@ -465,10 +473,16 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 			));
 			$pm->addParam($param);
 		
+			$f_params = array();
+			$param = new FieldExtString('view_id'
+			,$f_params);
+		$pm->addParam($param);		
+		
 		
 			$this->addPublicMethod($pm);
 			$this->setUpdateModelId('DOCOrder_Model');
 
+			
 			
 		$pm = new PublicMethod('divide');
 		
@@ -877,6 +891,12 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 	
 		$opts['required']=TRUE;				
 		$pm->addParam(new FieldExtInt('doc_id',$opts));
+	
+				
+	$opts=array();
+	
+		$opts['length']=32;				
+		$pm->addParam(new FieldExtString('view_id',$opts));
 	
 			
 		$this->addPublicMethod($pm);
@@ -2711,7 +2731,7 @@ class DOCOrder_Controller extends ControllerSQLDOC{
 		));
 		
 		if (is_array($ar) && count($ar) && isset($ar['new_state'])){
-			$this->add_state($docId, $ar['new_state']);
+			$this->add_state($orderId, $ar['new_state']);
 			//throw new Exception("Setting new state:".$ar['new_state']);
 		}
 		else{

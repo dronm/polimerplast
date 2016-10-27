@@ -1,9 +1,9 @@
 <?php
 
-require_once(FRAME_WORK_PATH.'basic_classes/ModelSQLDOCT.php');
+require_once(FRAME_WORK_PATH.'basic_classes/ModelSQLDOCT20.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLInt.php');
 
-class DOCOrderDOCTCustSurveyList_Model extends ModelSQLDOCT{
+class DOCOrderDOCTCustSurveyList_Model extends ModelSQLDOCT20{
 	
 	public function __construct($dbLink){
 		parent::__construct($dbLink);

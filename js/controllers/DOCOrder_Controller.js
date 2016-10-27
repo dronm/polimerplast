@@ -415,9 +415,14 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(new FieldInt("ret_id",{}));
 	
+		var options = {};
+						
+		pm.addParam(new FieldString("view_id",options));
+	
 	
 }
 
+			
 			DOCOrder_Controller.prototype.addUpdate = function(){
 	DOCOrder_Controller.superclass.addUpdate.call(this);
 	var param;
@@ -819,9 +824,14 @@ extend(DOCOrder_Controller,ControllerDb);
 	pm.addParam(param);
 	
 	
+		var options = {};
+						
+		pm.addParam(new FieldString("view_id",options));
+	
 	
 }
 
+			
 			DOCOrder_Controller.prototype.add_divide = function(){
 	var pm = this.addMethodById('divide');
 	
@@ -1091,6 +1101,9 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 				
 		pm.addParam(new FieldInt("doc_id"));
+	
+				
+		pm.addParam(new FieldString("view_id"));
 	
 			
 }

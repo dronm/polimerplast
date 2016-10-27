@@ -10,7 +10,12 @@ BEGIN
 		IF NOT doc_orders_t_tmp_products_can_add(NEW.login_id,NEW.product_id) THEN
 			RAISE 'Данный вид продукции невозможно отгрузить с другими видами продукции документа!';
 		END IF;
-		SELECT coalesce(MAX(t.line_number),0)+1 INTO NEW.line_number FROM doc_orders_t_tmp_products AS t WHERE t.login_id = NEW.login_id;
+		
+		
+		SELECT coalesce(MAX(t.line_number),0)+1 INTO NEW.line_number
+		FROM doc_orders_t_tmp_products AS t
+		WHERE (NEW.view_id IS NOT NULL AND t.view_id=NEW.view_id) OR (NEW.view_id IS NULL AND t.login_id=NEW.login_id);
+		
 		RETURN NEW;
 	ELSIF (TG_WHEN='AFTER' AND TG_OP='INSERT') THEN
 		RETURN NEW;

@@ -16,13 +16,23 @@ function DOCOrderDialog_View(id,options){
 	
 	var self = this;	
 	this.m_beforeOpen = function(contr,isInsert,isCopy){
-		var doc_id = 0;
+		var doc_id = 0;		
+		
+		self.m_productDetails.getGridControl().setViewId(self.m_viewId);
+		
+		//self.getDataControl(self.getId()+"_view_id").control.setValue(view_id);
+		//console.log("viewId="+self.getDataControl(self.getId()+"_view_id").control.getValue());
+		
 		//&&!isCopy
 		if (!isInsert){
 			doc_id = self.getDataControl(self.getId()+"_id").control.getValue();
 		}
+		
 		contr.run("before_open",{async:false,
-			params:{"doc_id":doc_id}
+			params:{
+				"doc_id":doc_id,
+				"view_id":self.m_viewId
+			}
 		});
 	}
 	
@@ -70,6 +80,8 @@ function DOCOrderDialog_View(id,options){
 		self.calcDelivCost();
 	};	
 	
+	this.m_viewId = hex_md5(uuid());
+	
 	this.addDataControl(
 		new Edit(id+"_id",{"visible":false,"name":"id","tableLayout":false}),
 		{"modelId":model_id,
@@ -77,7 +89,7 @@ function DOCOrderDialog_View(id,options){
 		"keyFieldIds":null},
 		{"valueFieldId":"id","keyFieldIds":null}
 	);
-	
+
 	var cont_r;
 	var bs_col = get_bs_col();
 	
@@ -1119,27 +1131,30 @@ DOCOrderDialog_View.prototype.setMethodParams = function(pm,checkRes){
 	то ВСЕГДА update!!!
 	*/
 	if (this.m_productDetails.getGridControl().m_modified
-		||(SERV_VARS.ROLE_ID=="client"
-		&&this.m_curState=="waiting_for_client"	
-		)
-		||(SERV_VARS.ROLE_ID!="client"
-		&&this.m_curState=="waiting_for_us"	
-		)		
+		||(SERV_VARS.ROLE_ID=="client" && this.m_curState=="waiting_for_client")
+		||(SERV_VARS.ROLE_ID!="client" && this.m_curState=="waiting_for_us")		
 	){
 		checkRes.modif = true;
 	}
 }
 
-/*
+
 DOCOrderDialog_View.prototype.writeData = function(){	
+	var contr = this.getWriteController();
+	if (!contr)return;
+	contr.getPublicMethodById(this.getWriteMethodId()).setParamValue("view_id",this.m_viewId);
+	
+	DOCOrderDialog_View.superclass.writeData.call(this);
+/*
 	if (this.m_productDetails.getLineCount()==0){
 		this.getErrorControl().setValue("Список продукции пустой!");
 	}
 	else{
 		DOCOrderDialog_View.superclass.writeData.call(this);
 	}
+*/	
 }
-*/
+
 
 DOCOrderDialog_View.prototype.onWriteOk = function(resp){	
 	DOCOrderDialog_View.superclass.onWriteOk.call(this,resp);

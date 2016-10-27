@@ -19,10 +19,13 @@ class DOCOrderDOCTCustSurvey_Controller extends ControllerSQL{
 			
 		/* insert */
 		$pm = new PublicMethod('insert');
-		$param = new FieldExtInt('login_id'
+		$param = new FieldExtString('view_id'
 				,array());
 		$pm->addParam($param);
 		$param = new FieldExtInt('line_number'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtInt('login_id'
 				,array());
 		$pm->addParam($param);
 		$param = new FieldExtInt('customer_survey_question_id'
@@ -43,18 +46,22 @@ class DOCOrderDOCTCustSurvey_Controller extends ControllerSQL{
 		/* update */		
 		$pm = new PublicMethod('update');
 		
-		$pm->addParam(new FieldExtInt('old_login_id',array('required'=>TRUE)));
+		$pm->addParam(new FieldExtString('old_view_id',array('required'=>TRUE)));
 		
 		$pm->addParam(new FieldExtInt('old_line_number',array('required'=>TRUE)));
 		
 		$pm->addParam(new FieldExtInt('old_customer_survey_question_id',array('required'=>TRUE)));
 		
 		$pm->addParam(new FieldExtInt('obj_mode'));
-		$param = new FieldExtInt('login_id'
+		$param = new FieldExtString('view_id'
 				,array(
 			));
 			$pm->addParam($param);
 		$param = new FieldExtInt('line_number'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtInt('login_id'
 				,array(
 			));
 			$pm->addParam($param);
@@ -71,7 +78,7 @@ class DOCOrderDOCTCustSurvey_Controller extends ControllerSQL{
 			));
 			$pm->addParam($param);
 		
-			$param = new FieldExtInt('login_id',array(
+			$param = new FieldExtString('view_id',array(
 			));
 			$pm->addParam($param);
 		
@@ -91,7 +98,7 @@ class DOCOrderDOCTCustSurvey_Controller extends ControllerSQL{
 		/* delete */
 		$pm = new PublicMethod('delete');
 		
-		$pm->addParam(new FieldExtInt('login_id'
+		$pm->addParam(new FieldExtString('view_id'
 		));		
 		
 		$pm->addParam(new FieldExtInt('line_number'

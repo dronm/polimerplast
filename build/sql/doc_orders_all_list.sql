@@ -40,7 +40,7 @@ CREATE OR REPLACE VIEW doc_orders_all_list AS
 		d.paid_by_bank,
 	
 		(
-			(d.pay_type='cash' AND d.paid=FALSE)
+			( d.pay_type='cash' AND coalesce(d.paid,FALSE)=FALSE AND coalesce(d.paid_by_bank,FALSE)=FALSE)
 			OR
 			(
 			d.state NOT IN ('new',

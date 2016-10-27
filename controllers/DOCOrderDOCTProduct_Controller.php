@@ -22,10 +22,13 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 			
 		/* insert */
 		$pm = new PublicMethod('insert');
-		$param = new FieldExtInt('login_id'
+		$param = new FieldExtString('view_id'
 				,array());
 		$pm->addParam($param);
 		$param = new FieldExtInt('line_number'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtInt('login_id'
 				,array());
 		$pm->addParam($param);
 		$param = new FieldExtInt('product_id'
@@ -115,16 +118,20 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 		/* update */		
 		$pm = new PublicMethod('update');
 		
-		$pm->addParam(new FieldExtInt('old_login_id',array('required'=>TRUE)));
+		$pm->addParam(new FieldExtString('old_view_id',array('required'=>TRUE)));
 		
 		$pm->addParam(new FieldExtInt('old_line_number',array('required'=>TRUE)));
 		
 		$pm->addParam(new FieldExtInt('obj_mode'));
-		$param = new FieldExtInt('login_id'
+		$param = new FieldExtString('view_id'
 				,array(
 			));
 			$pm->addParam($param);
 		$param = new FieldExtInt('line_number'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtInt('login_id'
 				,array(
 			));
 			$pm->addParam($param);
@@ -209,7 +216,7 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 			));
 			$pm->addParam($param);
 		
-			$param = new FieldExtInt('login_id',array(
+			$param = new FieldExtString('view_id',array(
 			));
 			$pm->addParam($param);
 		
@@ -240,7 +247,7 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 		/* delete */
 		$pm = new PublicMethod('delete');
 		
-		$pm->addParam(new FieldExtInt('login_id'
+		$pm->addParam(new FieldExtString('view_id'
 		));		
 		
 		$pm->addParam(new FieldExtInt('line_number'
@@ -266,6 +273,13 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 		$pm->addParam(new FieldExtString('ord_directs'));
 		$pm->addParam(new FieldExtString('field_sep'));
 		
+			$f_params = array();
+			
+				$f_params['required']=TRUE;
+			$param = new FieldExtString('view_id'
+			,$f_params);
+		$pm->addParam($param);		
+		
 		$this->addPublicMethod($pm);
 		
 		$this->setListModelId('DOCOrderDOCTProductList_Model');
@@ -275,7 +289,7 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 		$pm = new PublicMethod('get_object');
 		$pm->addParam(new FieldExtInt('browse_mode'));
 		
-		$pm->addParam(new FieldExtInt('login_id'
+		$pm->addParam(new FieldExtString('view_id'
 		));
 		
 		$pm->addParam(new FieldExtInt('line_number'
@@ -290,11 +304,6 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 				
 	$opts=array();
 			
-		$pm->addParam(new FieldExtInt('login_id',$opts));
-	
-				
-	$opts=array();
-			
 		$pm->addParam(new FieldExtInt('line_number',$opts));
 	
 			
@@ -304,6 +313,7 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 	}	
 	
 	public function update($pm){
+	
 		if ($_SESSION['role_id']=='client'){
 			$pm->setParamValue('client_id',$_SESSION['global_client_id']);
 		}		
@@ -353,7 +363,7 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 					coalesce(%s,p.price_edit) AS price_edit,
 					coalesce(%s,p.price) AS price
 				FROM doc_orders_t_tmp_products p
-				WHERE p.login_id=%d AND p.line_number=%d
+				WHERE p.view_id=%s AND p.line_number=%d
 			)
 			SELECT * FROM doc_order_totals(
 				%d,%d,
@@ -386,7 +396,7 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 			$pack_in_price,
 			$price_edit,
 			$price,
-			$_SESSION['LOGIN_ID'],
+			$params->getDbVal('old_view_id'),
 			$params->getDbVal('old_line_number'),
 			$params->getDbVal('warehouse_id'),
 			$params->getDbVal('client_id'),
@@ -414,8 +424,8 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 					(tp.pack_exists AND tp.pack_in_price=FALSE) AS need_pack_price
 				FROM doc_orders_t_tmp_products tp
 				LEFT JOIN products p ON p.id=tp.product_id
-				WHERE tp.login_id=%d AND tp.line_number=%d",
-				$_SESSION['LOGIN_ID'],
+				WHERE tp.view_id=%s AND tp.line_number=%d",
+				$params->getParamById('old_view_id'),
 				$params->getParamById('old_line_number')
 			));
 			if (is_array($ar)&&count($ar)){
@@ -440,7 +450,7 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 							t.mes_height,
 							t.quant
 						FROM doc_orders_t_tmp_products AS t
-						WHERE t.login_id=%d
+						WHERE t.view_id=%s
 							AND t.line_number=%d
 					)				
 					SELECT
@@ -455,7 +465,7 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 						AND tp.mes_length=(SELECT t.mes_length FROM tmp_t t)
 						AND tp.mes_width=(SELECT t.mes_width FROM tmp_t t)
 						AND tp.mes_height=(SELECT t.mes_height FROM tmp_t t)",
-					$_SESSION['LOGIN_ID'],
+					$params->getParamById('old_view_id'),
 					$params->getParamById('old_line_number'),
 					$_SESSION['doc_order_id']
 					));
@@ -518,6 +528,9 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 		parent::insert($pm);
 	}
 	public function get_list($pm){
+		$params = new ParamsSQL($pm,$this->getDbLink());
+		$params->addAll();
+	
 		$this->addNewModel(sprintf(
 		"SELECT
 			t.*,
@@ -536,13 +549,16 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 			--string_to_array(ph.old_vals,',','') AS old_vals			
 			
 		FROM doc_orders_t_tmp_products_list AS t
-		WHERE login_id=%d",
-		$_SESSION['doc_order_id'],
-		$_SESSION['LOGIN_ID']
+		WHERE view_id=%s",
+		$params->getDbVal('doc_order_id'),
+		$params->getDbVal('view_id')
 		),
 		'DOCOrderDOCTProductList_Model');
 	}	
 	public function get_object_for_divis($pm){
+		$params = new ParamsSQL($pm,$this->getDbLink());
+		$params->addAll();
+	
 		$this->addNewModel(sprintf(
 		"SELECT
 			t.*,
@@ -556,11 +572,10 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 			AND d_orig.mes_length=t.mes_length
 			AND d_orig.mes_width=t.mes_width
 			AND d_orig.mes_height=t.mes_height
-		WHERE t.login_id=%d AND t.line_number=%d",
-		$_SESSION['doc_order_id'],
-		$_SESSION['LOGIN_ID'],
-		$pm->getParamValue('line_number')
-		
+		WHERE t.view_id=%s AND t.line_number=%d",
+		$params->getDbVal('doc_order_id'),
+		$params->getDbVal('view_id'),
+		$params->getDbVal('line_number')		
 		),
 		'DOCOrderDOCTProductDialog_Model');
 	}	

@@ -1,7 +1,7 @@
 -- View: doc_orders_current_list
 
--- DROP VIEW doc_orders_current_list;
-
+DROP VIEW doc_orders_current_list;
+/*
 CREATE OR REPLACE VIEW doc_orders_current_list AS 
 	SELECT
 		d.id,
@@ -41,8 +41,8 @@ CREATE OR REPLACE VIEW doc_orders_current_list AS
 	
 	FROM doc_orders_list AS d
 	WHERE
-		(d.pay_type='cash' AND d.paid=FALSE)
-		OR
+		--(d.pay_type='cash' AND d.paid=FALSE)
+		--OR
 		(
 		d.state NOT IN ('new',
 			'waiting_for_client',
@@ -58,4 +58,4 @@ CREATE OR REPLACE VIEW doc_orders_current_list AS
 		)
 	;
 ALTER TABLE doc_orders_current_list OWNER TO polimerplast;
-
+*/

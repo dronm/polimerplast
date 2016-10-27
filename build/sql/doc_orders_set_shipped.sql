@@ -1,10 +1,10 @@
--- Function: doc_orders_set_shipped(integer, integer)
+-- Function: doc_orders_set_shipped(integer, varchar(32))
 
--- DROP FUNCTION doc_orders_set_shipped(integer, integer);
+-- DROP FUNCTION doc_orders_set_shipped(integer, varchar(32));
 
 CREATE OR REPLACE FUNCTION doc_orders_set_shipped(
 		in_doc_id integer,
-		in_login_id integer)
+		in_view_id varchar(32))
   RETURNS void AS
 $BODY$
 DECLARE
@@ -37,7 +37,7 @@ BEGIN
 		p.base_measure_unit_weight_t
 	FROM doc_orders_t_tmp_products AS t
 	LEFT JOIN products p ON t.product_id=p.id
-	WHERE login_id = in_login_id
+	WHERE view_id = in_view_id
 	ORDER BY t.line_number
 	LOOP
 		/*
@@ -335,5 +335,5 @@ END;
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
-ALTER FUNCTION doc_orders_set_shipped(integer, integer)
+ALTER FUNCTION doc_orders_set_shipped(integer, varchar(32))
   OWNER TO polimerplast;

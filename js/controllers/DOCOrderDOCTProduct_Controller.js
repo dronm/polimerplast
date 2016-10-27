@@ -35,13 +35,19 @@ extend(DOCOrderDOCTProduct_Controller,ControllerDb);
 	var pm = this.getInsert();
 	options = {};
 	
-	var param = new FieldInt("login_id",options);
+	var param = new FieldString("view_id",options);
 	
 	pm.addParam(param);
 	
 	options = {};
 	
 	var param = new FieldInt("line_number",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldInt("login_id",options);
 	
 	pm.addParam(param);
 	
@@ -169,12 +175,12 @@ extend(DOCOrderDOCTProduct_Controller,ControllerDb);
 	var pm = this.getUpdate();
 	options = {};
 	
-	var param = new FieldInt("login_id",options);
+	var param = new FieldString("view_id",options);
 	
 	pm.addParam(param);
 	
 	
-	param = new FieldInt("old_login_id",{});
+	param = new FieldString("old_view_id",{});
 	pm.addParam(param);
 	
 	options = {};
@@ -186,6 +192,13 @@ extend(DOCOrderDOCTProduct_Controller,ControllerDb);
 	
 	param = new FieldInt("old_line_number",{});
 	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldInt("login_id",options);
+	
+	pm.addParam(param);
+	
 	
 	options = {};
 	options["alias"]="Продукция";
@@ -326,7 +339,7 @@ extend(DOCOrderDOCTProduct_Controller,ControllerDb);
 	var options = {"required":true};
 	
 	var pm = this.getDelete();
-	pm.addParam(new FieldInt("login_id",options));
+	pm.addParam(new FieldString("view_id",options));
 	pm.addParam(new FieldInt("line_number",options));
 }
 
@@ -335,8 +348,14 @@ extend(DOCOrderDOCTProduct_Controller,ControllerDb);
 	var options = {};
 	
 	var pm = this.getGetList();
-	pm.addParam(new FieldInt("login_id",options));
+	pm.addParam(new FieldString("view_id",options));
 	pm.addParam(new FieldInt("line_number",options));
+		var options = {};
+		
+			options["required"]=true;
+						
+		pm.addParam(new FieldString("view_id",options));
+	
 }
 
 			DOCOrderDOCTProduct_Controller.prototype.addGetObject = function(){
@@ -344,15 +363,12 @@ extend(DOCOrderDOCTProduct_Controller,ControllerDb);
 	var options = {};
 	
 	var pm = this.getGetObject();
-	pm.addParam(new FieldInt("login_id",options));
+	pm.addParam(new FieldString("view_id",options));
 	pm.addParam(new FieldInt("line_number",options));
 }
 
 			DOCOrderDOCTProduct_Controller.prototype.add_get_object_for_divis = function(){
 	var pm = this.addMethodById('get_object_for_divis');
-	
-				
-		pm.addParam(new FieldInt("login_id"));
 	
 				
 		pm.addParam(new FieldInt("line_number"));

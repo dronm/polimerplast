@@ -17,6 +17,8 @@
 
 <xsl:template match="controller"><![CDATA[<?php]]>
 <xsl:call-template name="add_requirements"/>
+
+require_once(FRAME_WORK_PATH.'basic_classes/ControllerSQLDOC20.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ParamsSQL.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ModelSQL.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ModelWhereSQL.php');
@@ -39,7 +41,7 @@ require_once('common/barcodegen.1d-php5.v5.2.1/class/BCGDrawing.php');
 //require_once('common/barcodegen.1d-php5.v5.2.1/class/BCGcodabar.barcode.php');
 require_once('common/barcodegen.1d-php5.v5.2.1/class/BCGcode128.barcode.php');
 
-class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
+class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC20{
 	const ER_WRONG_STATE = 'Заявка в неверном статусе!'; 
 	
 	public function __construct($dbLinkMaster=NULL){
@@ -1189,7 +1191,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 		));
 		
 		if (is_array($ar) &amp;&amp; count($ar) &amp;&amp; isset($ar['new_state'])){
-			$this->add_state($docId, $ar['new_state']);
+			$this->add_state($orderId, $ar['new_state']);
 			//throw new Exception("Setting new state:".$ar['new_state']);
 		}
 		else{
@@ -1280,9 +1282,9 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC{
 		try{
 			//Отгрузка в БД
 			$link->query(sprintf(
-				"SELECT doc_orders_set_shipped(%d,%d)",
+				"SELECT doc_orders_set_shipped(%d,%s)",
 				$doc_id,
-				$_SESSION['LOGIN_ID']
+				$params->getDbVal('view_id')
 			));
 			
 			//ДАННЫЕ ДЛЯ 1С

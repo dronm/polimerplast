@@ -1,7 +1,8 @@
 -- View: doc_orders_closed_list
 
---DROP VIEW doc_orders_closed_list;
+DROP VIEW doc_orders_closed_list;
 
+/*
 CREATE OR REPLACE VIEW doc_orders_closed_list AS 
 	SELECT *		
 	FROM doc_orders_list AS d

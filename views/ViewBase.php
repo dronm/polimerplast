@@ -51,6 +51,7 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'bootstrap-datepicker.min.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'bootstrap-datepicker.ru.min.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'jquery.stickytableheaders.min.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'md5-min.js'));
 	
 		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'extra/JSLib/Keyboard.js'));
@@ -59,7 +60,7 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'extra/JSLib/Textbox.Restriction.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'extra/JSLib/Textbox.MaskEdit.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'extra/JSLib/Textbox.Trim.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'extra/JSLib/Textbox.Tip.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'extra/JSLib/Textbox.Tip.js'));				
 		
 		
 		

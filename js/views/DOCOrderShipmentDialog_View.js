@@ -23,13 +23,21 @@ function DOCOrderShipmentDialog_View(id,options){
 	var self = this;	
 	this.m_beforeOpen = function(contr,isInsert){
 		var doc_id = 0;
+		
+		self.m_items.getGridControl().setViewId(self.m_viewId);
+		
 		if (!isInsert){
 			doc_id = self.getDataControl(self.getId()+"_id").control.getValue();
 		}
-		contr.run("before_open",{async:false,params:{"doc_id":doc_id}});
+		contr.run("before_open",{async:false,params:{
+			"doc_id":doc_id,
+			"view_id":self.m_viewId
+			}});
 	}
 	
 	var model_id = "DOCOrderShipmentDialog_Model";
+	
+	this.m_viewId = hex_md5(uuid());
 	
 	var cont=new ControlContainer(id+"_panel","div",{"className":"row"});
 	
@@ -125,6 +133,14 @@ DOCOrderShipmentDialog_View.prototype.onClickSave = function(){
 	}
 	this.writeData();
 	this.readData(false);
+}
+
+DOCOrderShipmentDialog_View.prototype.writeData = function(){	
+	var contr = this.getWriteController();
+	if (!contr)return;
+	contr.getPublicMethodById(this.getWriteMethodId()).setParamValue("view_id",this.m_viewId);
+	
+	DOCOrderShipmentDialog_View.superclass.writeData.call(this);
 }
 
 DOCOrderShipmentDialog_View.prototype.setMethodParams = function(pm,checkRes){

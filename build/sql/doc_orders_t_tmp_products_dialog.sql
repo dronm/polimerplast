@@ -5,6 +5,7 @@
 CREATE OR REPLACE VIEW doc_orders_t_tmp_products_dialog AS 
 	SELECT 
 		t.login_id,
+		t.view_id,
 		t.line_number,
 		t.product_id,
 		p.name AS product_descr,

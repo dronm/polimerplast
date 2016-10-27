@@ -12,7 +12,7 @@
 function BtnSetClosed(options){	
 	var id = uuid();
 	options.caption = "В архив";
-	options.attrs={"title":"перевести заявку в статус 'закрыта'"};
+	options.attrs={"title":"перевести заявку в статус 'закрыта' или 'выполнена'"};
 	options.onClick = function(){
 		var keys = options.grid.getSelectedNodeKeys();
 		if (keys){

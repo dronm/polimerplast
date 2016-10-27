@@ -34,13 +34,19 @@ extend(DOCOrderDOCTCustSurvey_Controller,ControllerDb);
 	var pm = this.getInsert();
 	options = {};
 	
-	var param = new FieldInt("login_id",options);
+	var param = new FieldString("view_id",options);
 	
 	pm.addParam(param);
 	
 	options = {};
 	
 	var param = new FieldInt("line_number",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldInt("login_id",options);
 	
 	pm.addParam(param);
 	
@@ -72,12 +78,12 @@ extend(DOCOrderDOCTCustSurvey_Controller,ControllerDb);
 	var pm = this.getUpdate();
 	options = {};
 	
-	var param = new FieldInt("login_id",options);
+	var param = new FieldString("view_id",options);
 	
 	pm.addParam(param);
 	
 	
-	param = new FieldInt("old_login_id",{});
+	param = new FieldString("old_view_id",{});
 	pm.addParam(param);
 	
 	options = {};
@@ -89,6 +95,13 @@ extend(DOCOrderDOCTCustSurvey_Controller,ControllerDb);
 	
 	param = new FieldInt("old_line_number",{});
 	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldInt("login_id",options);
+	
+	pm.addParam(param);
+	
 	
 	options = {};
 	
@@ -122,7 +135,7 @@ extend(DOCOrderDOCTCustSurvey_Controller,ControllerDb);
 	var options = {"required":true};
 	
 	var pm = this.getDelete();
-	pm.addParam(new FieldInt("login_id",options));
+	pm.addParam(new FieldString("view_id",options));
 	pm.addParam(new FieldInt("line_number",options));
 	pm.addParam(new FieldInt("customer_survey_question_id",options));
 }
