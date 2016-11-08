@@ -1,8 +1,8 @@
--- Function: doc_orders_t_tmp_products_can_add(in_login_id int, in_product_id int)
+-- Function: doc_orders_t_tmp_products_can_add(in_view_id varchar(32), in_product_id int)
 
--- DROP FUNCTION doc_orders_t_tmp_products_can_add(in_login_id int, in_product_id int);
+-- DROP FUNCTION doc_orders_t_tmp_products_can_add(in_view_id varchar(32), in_product_id int);
 
-CREATE OR REPLACE FUNCTION doc_orders_t_tmp_products_can_add(in_login_id int, in_product_id int)
+CREATE OR REPLACE FUNCTION doc_orders_t_tmp_products_can_add(in_view_id varchar(32), in_product_id int)
   RETURNS boolean AS
 $BODY$
 	SELECT
@@ -15,7 +15,7 @@ $BODY$
 		(
 			((SELECT COALESCE(COUNT(*),0)
 			FROM doc_orders_t_tmp_products AS t
-			WHERE t.login_id=$1)=0)
+			WHERE t.view_id=$1)=0)
 			
 			OR
 			
@@ -25,7 +25,7 @@ $BODY$
 					WHERE pw.product_id = ANY(
 						SELECT t.product_id
 						FROM doc_orders_t_tmp_products AS t
-						WHERE t.login_id=$1
+						WHERE t.view_id=$1
 					)	
 				)
 			)
@@ -34,5 +34,5 @@ $BODY$
 $BODY$
 LANGUAGE sql VOLATILE
   COST 100;
-ALTER FUNCTION doc_orders_t_tmp_products_can_add(in_login_id int, in_product_id int)
+ALTER FUNCTION doc_orders_t_tmp_products_can_add(in_view_id varchar(32), in_product_id int)
   OWNER TO polimerplast;

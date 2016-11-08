@@ -1,5 +1,6 @@
 /*
 DROP function doc_orders_divide(
+	in_view_id varchar(32),
 	in_login_id integer,
 	in_orig_doc_id integer,
 	in_delivery_plan_date date,
@@ -12,6 +13,7 @@ DROP function doc_orders_divide(
 );
 */
 CREATE OR REPLACE FUNCTION doc_orders_divide(
+	in_view_id varchar(32),
 	in_login_id integer,
 	in_orig_doc_id integer,
 	--все реквизиты документа,подлежащие изменению
@@ -105,18 +107,19 @@ BEGIN
 	
 	--Удаление из временной нулевых строк
 	DELETE FROM doc_orders_t_tmp_products
-	WHERE login_id=in_login_id AND coalesce(quant,0)=0;
+	WHERE view_id=in_view_id AND coalesce(quant,0)=0;
   
 	--перенос новой тч в реальную таблицу
-	PERFORM doc_orders_before_write(in_login_id,new_doc_id);
+	PERFORM doc_orders_before_write(in_view_id,new_doc_id);
 
 	--очистка временной таблицы
 	DELETE FROM doc_orders_t_tmp_products
-	WHERE login_id=in_login_id;
+	WHERE view_id=in_view_id;
 
 	--вставка во временную
 	INSERT INTO doc_orders_t_tmp_products
-	(	login_id,
+	(	view_id,
+		login_id,
 		product_id,
 		price,
 		mes_length,
@@ -136,6 +139,7 @@ BEGIN
 	)
 	(
 	SELECT
+		in_view_id,
 		in_login_id,
 		sub.product_id,
 		sub.price,
@@ -225,7 +229,7 @@ BEGIN
 		LEFT JOIN doc_orders_t_products AS t_orig
 			ON t_orig.doc_id=in_orig_doc_id AND t_orig.product_id=t.product_id
 		LEFT JOIN products AS p ON p.id=t.product_id
-		WHERE t.login_id = in_login_id AND t.quant<0
+		WHERE t.view_id = in_view_id AND t.quant<0
 	LOOP
 		IF er_text<>'' THEN
 			er_text = er_text ||', ';
@@ -253,7 +257,7 @@ BEGIN
 	IF (
 		(SELECT sum(coalesce(t.quant,0))
 		FROM doc_orders_t_tmp_products t
-		WHERE t.login_id=in_login_id)=0
+		WHERE t.view_id=in_view_id)=0
 	) THEN	
 		INSERT INTO doc_orders_states
 		(doc_orders_id,date_time,state)
@@ -265,7 +269,7 @@ BEGIN
 	END IF;
 	
 	--перенос в реальную таблицу и итоги
-	PERFORM doc_orders_before_write(in_login_id,in_orig_doc_id);
+	PERFORM doc_orders_before_write(in_view_id,in_orig_doc_id);
 		
 	--отметка о связях
 	INSERT INTO doc_orders_links
@@ -282,6 +286,7 @@ BEGIN
 END;
 $BODY$ LANGUAGE plpgsql;
 ALTER FUNCTION doc_orders_divide(
+	in_view_id varchar(32),
 	in_login_id integer,
 	in_orig_doc_id integer,
 	in_delivery_plan_date date,

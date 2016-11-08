@@ -161,7 +161,7 @@ function DOCOrderCustSurveyDialog_View(id,options){
 		"onClick":function(){
 			var contr = new DOCOrder_Controller(new ServConnector(HOST_NAME));
 			var m = contr.getPublicMethodById("fill_cust_surv");
-			m.setParamValue("view_id",this.m_viewId);			
+			m.setParamValue("view_id",self.m_viewId);			
 			contr.run("fill_cust_surv",{
 				"func":function(){
 					self.m_questions.getGridControl().onRefresh();
@@ -190,7 +190,8 @@ function DOCOrderCustSurveyDialog_View(id,options){
 			"name":"cust_surv_comment",
 			"tableLayout":false,
 			"labelCaption":"Комментарий:",
-			"size":"60px",
+			"editContClassName":"input-group "+get_bs_col()+"8",
+			"labelClassName":"control-label "+get_bs_col()+"2",
 			"rows":"5"});
 	this.bindControl(ctrl,
 		{"modelId":model_id,
@@ -242,3 +243,19 @@ DOCOrderCustSurveyDialog_View.prototype.setMethodParams = function(pm,checkRes){
 	DOCOrderCustSurveyDialog_View.superclass.setMethodParams.call(this,pm,checkRes);
 	checkRes.modif = true;
 }
+
+DOCOrderCustSurveyDialog_View.prototype.getFormWidth = function(){
+	return "1200";
+}
+DOCOrderCustSurveyDialog_View.prototype.getFormHeight = function(){
+	return "1000";
+}
+
+DOCOrderCustSurveyDialog_View.prototype.writeData = function(){	
+	var contr = this.getWriteController();
+	if (!contr)return;
+	contr.getPublicMethodById(this.getWriteMethodId()).setParamValue("view_id",this.m_viewId);
+	
+	DOCOrderCustSurveyDialog_View.superclass.writeData.call(this);
+}
+

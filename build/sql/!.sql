@@ -39,3 +39,20 @@ DROP VIEW vehicles_select_list;
 
 ALTER TABLE vehicles ALTER COLUMN plate TYPE varchar(20);
 ALTER TABLE vehicles ALTER COLUMN trailer_plate TYPE varchar(20);
+
+
+INSERT INTO public.doc_orders_t_products(
+            doc_id, line_number, product_id, quant, price, total, mes_length, 
+            mes_width, mes_height, measure_unit_id, pack_exists, pack_in_price, 
+            quant_base_measure_unit, quant_confirmed_base_measure_unit, volume, 
+            weight, quant_confirmed, price_no_deliv, price_edit, total_pack)
+    VALUES (7144, 1, 15, 6.6, 1230, 8118, 2000, 
+            1000, 30, 5, FALSE, NULL, 
+            6.6, 6.6, 6.6, 
+            0.066, 6.6, NULL, NULL, 0),
+(7144, 2, 15, 32, 1230, 39360, 2000, 
+            1000, 100, 5, FALSE, NULL, 
+            32, 32, 32, 
+            0.32, 32, NULL, NULL, 0)            
+            ;
+

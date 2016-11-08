@@ -145,8 +145,14 @@ extend(DOCOrderDOCTCustSurvey_Controller,ControllerDb);
 	var options = {};
 	
 	var pm = this.getGetList();
-	pm.addParam(new FieldInt("login_id",options));
+	pm.addParam(new FieldString("view_id",options));
 	pm.addParam(new FieldInt("line_number",options));
+		var options = {};
+		
+			options["required"]=true;
+						
+		pm.addParam(new FieldString("view_id",options));
+	
 }
 
 			DOCOrderDOCTCustSurvey_Controller.prototype.addGetObject = function(){
@@ -154,7 +160,7 @@ extend(DOCOrderDOCTCustSurvey_Controller,ControllerDb);
 	var options = {};
 	
 	var pm = this.getGetObject();
-	pm.addParam(new FieldInt("login_id",options));
+	pm.addParam(new FieldString("view_id",options));
 	pm.addParam(new FieldInt("line_number",options));
 }
 

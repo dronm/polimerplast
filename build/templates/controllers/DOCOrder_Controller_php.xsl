@@ -116,6 +116,9 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC20{
 		}		
 		
 		//Фильтр по списку складов		
+		if (!isset($_SESSION['warehouse_id_list'])){
+			throw new Exception("У пользователя не задан список складов!");
+		}
 		$field = clone $model->getFieldById('warehouse_id');
 		$field->setValue('('.$_SESSION['warehouse_id_list'].')');
 		$where->addField($field,'IN',NULL,NULL);
@@ -425,7 +428,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC20{
 		$this->getDbLinkMaster()->query(sprintf(
 			"UPDATE doc_orders SET printed=true
 			WHERE id=%d",
-			$params->getParamById('doc_id'))
+			$params->getDbVal('doc_id'))
 		);
 	}			
 	public function get_print_cnt($pm){
@@ -514,8 +517,15 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC20{
 		$this->addModel($model);
 	}
 	public function fill_cust_surv($pm){
-		$this->getDbLinkMaster()->query(sprintf(
-		"SELECT doc_orders_fill_cust_survey(%d)",$_SESSION['LOGIN_ID']));
+		$params = new ParamsSQL($pm,$this->getDbLink());
+		$params->addAll();
+	
+		//throw new Exception(sprintf(
+		$this->getDbLinkMaster()->query(sprintf(		
+		"SELECT doc_orders_fill_cust_survey(%s,%d)",
+		$params->getDbVal('view_id'),
+		$_SESSION['LOGIN_ID']
+		));
 	}
 	public function get_cust_survey($pm){
 		$model = new DOCOrderCustSurveyDialog_Model($this->getDbLink());
@@ -532,8 +542,10 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC20{
 		$this->addModel($model);		
 	}
 	public function get_divis($pm){
-		$doc_id = $pm->getParamValue('id');
-		
+		$params = new ParamsSQL($pm,$this->getDbLink());
+		$params->addAll();
+		$doc_id = $params->getDbVal('id');
+	
 		$model = new DOCOrderDivisDialog_Model($this->getDbLink());
 		
 		$where = new ModelWhereSQL();
@@ -548,9 +560,10 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC20{
 		$this->addModel($model);		
 		
 		$this->getDbLinkMaster()->query(sprintf(
-		"SELECT doc_orders_before_open(%d,%d)",
-		$_SESSION['LOGIN_ID'],$doc_id
+		"SELECT doc_orders_before_open(%s,%d,%d)",
+		$params->getDbVal('view_id'),$_SESSION['LOGIN_ID'],$doc_id
 		));
+		
 		$_SESSION['doc_order_id'] = $doc_id;
 	}	
 	public function get_shipment($pm){
@@ -570,7 +583,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC20{
 	public function set_ready($pm){	
 		$params = new ParamsSQL($pm,$this->getDbLink());
 		$params->addAll();
-		$doc_id = $params->getParamById('doc_id');
+		$doc_id = $params->getDbVal('doc_id');
 		
 		$this->check_state(
 			$doc_id,
@@ -1049,15 +1062,16 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC20{
 			total_pack = data.total_pack
 		FROM 
 			(SELECT *
-			FROM doc_order_totals_all(%d,%d,%d,%s)
+			FROM doc_order_totals_all(%d,%d,%s,%s)
 			) AS data		
-		WHERE tmp.login_id=%d AND tmp.line_number = data.line_number",
-		$params->getParamById('warehouse_id'),
-		$params->getParamById('client_id'),
-		$_SESSION['LOGIN_ID'],
-		$params->getParamById('deliv_to_third_party'),
-		$_SESSION['LOGIN_ID']
+		WHERE tmp.view_id=%s AND tmp.line_number = data.line_number",
+		$params->getDbVal('warehouse_id'),
+		$params->getDbVal('client_id'),
+		$params->getDbVal('view_id'),
+		$params->getDbVal('deliv_to_third_party'),
+		$params->getDbVal('view_id')
 		));
+		
 		if ($pm->getParamValue('deliv_add_cost_to_product')=='true'){
 			//Распределить пропорционально
 			$deliv_cost = floatval($pm->getParamValue('deliv_cost'));
@@ -1072,17 +1086,17 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC20{
 					(SELECT
 						MAX(line_number)
 					FROM doc_orders_t_tmp_products
-					WHERE login_id=%d) AS last_line,
+					WHERE view_id=%s) AS last_line,
 					(SELECT
 						SUM(total)
 					FROM doc_orders_t_tmp_products
-					WHERE login_id=%d) AS total_total
+					WHERE view_id=%s) AS total_total
 					
 				FROM doc_orders_t_tmp_products
-				WHERE login_id=%d",
-				$_SESSION['LOGIN_ID'],
-				$_SESSION['LOGIN_ID'],
-				$_SESSION['LOGIN_ID']
+				WHERE view_id=%s",
+				$params->getDbVal('view_id'),
+				$params->getDbVal('view_id'),
+				$params->getDbVal('view_id')
 				));
 				$lmast->query("BEGIN");
 				try{
@@ -1100,10 +1114,10 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC20{
 						$lmast->query(sprintf(
 						"UPDATE doc_orders_t_tmp_products
 						SET price=%f,total=%f
-						WHERE login_id=%d AND line_number=%d
+						WHERE view_id=%s AND line_number=%d
 						",
 						$price,$total,
-						$_SESSION['LOGIN_ID'],$ar['line_number']
+						$params->getDbVal('view_id'),$ar['line_number']
 						));
 					}
 					$lmast->query("COMMIT");
@@ -1914,16 +1928,17 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOC20{
 		$params->addAll();
 		
 		$this->getDbLinkMaster()->query(sprintf(
-		"SELECT doc_orders_divide(%s,%d,%s,%s,%d,%d,%d,%f,%s)",
+		"SELECT doc_orders_divide(%s,%d,%d,%s,%s,%d,%d,%d,%f,%s)",
+		$params->getDbVal('view_id'),
 		$_SESSION['LOGIN_ID'],
-		$params->getParamById('main_doc_id'),
-		$params->getParamById('delivery_plan_date'),
-		$params->getParamById('sales_manager_comment'),
-		$params->getParamById('deliv_period_id'),
-		$params->getParamById('deliv_vehicle_count'),
-		$params->getParamById('deliv_cost_opt_id'),
-		$params->getParamById('deliv_total'),
-		$params->getParamById('deliv_total_edit')
+		$params->getDbVal('main_doc_id'),
+		$params->getDbVal('delivery_plan_date'),
+		$params->getDbVal('sales_manager_comment'),
+		$params->getDbVal('deliv_period_id'),
+		$params->getDbVal('deliv_vehicle_count'),
+		$params->getDbVal('deliv_cost_opt_id'),
+		$params->getDbVal('deliv_total'),
+		$params->getDbVal('deliv_total_edit')
 		));		
 	}	
 	private function ext_doc_exists($docId,$field){

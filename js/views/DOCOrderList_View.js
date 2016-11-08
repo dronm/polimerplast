@@ -19,10 +19,10 @@ function DOCOrderList_View(id,options){
 	
 	var self = this;
 	this.m_evToggleNewOrders = function(){
-		self.toggleGridView(self.m_ctrlViewNewOrders);
+		self.toggleGridView(self.m_ctrlViewNewOrders,false);
 	};
 	this.m_evToggleOrders = function(){
-		self.toggleGridView(self.m_ctrlViewOrders);
+		self.toggleGridView(self.m_ctrlViewOrders,true);
 	};
 	
 	var cont = new ControlContainer("Orders_cmd","div",{"className":"panel_cmd"});
@@ -56,7 +56,8 @@ function DOCOrderList_View(id,options){
 			"className":(CONSTANT_VALS.newOrdersCallapsed)? "collapse":"",
 			"number":true,
 			"noAutoRefresh":false,
-			"refreshInterval":(CONSTANT_VALS.newOrdersCallapsed)? 0:CONSTANT_VALS.db_controls_refresh_sec*1000,
+			"refreshInterval":CONSTANT_VALS.db_controls_refresh_sec*1000,
+				//(CONSTANT_VALS.newOrdersCallapsed)? 0:CONSTANT_VALS.db_controls_refresh_sec*1000,
 			"warehouse":true,
 			"total":true
 			}
@@ -190,15 +191,19 @@ DOCOrderList_View.prototype.removeDOM = function(){
 	DOCOrderList_View.superclass.removeDOM.call(this);		
 }
 
-DOCOrderList_View.prototype.toggleGridView = function(gridView){
+DOCOrderList_View.prototype.toggleGridView = function(gridView,toggleAutoRefresh){
 	var callapsed = DOMHandler.hasClass(gridView.m_node,"collapse");
 	if (callapsed){
 		DOMHandler.removeClass(gridView.m_node,"collapse");
-		gridView.m_grid.setRefreshInterval(CONSTANT_VALS.db_controls_refresh_sec*1000);
-		gridView.m_grid.onRefresh();
+		if (toggleAutoRefresh){
+			gridView.m_grid.setRefreshInterval(CONSTANT_VALS.db_controls_refresh_sec*1000);
+			gridView.m_grid.onRefresh();
+		}
 	}
 	else{
-		gridView.m_grid.setRefreshInterval(0);
+		if (toggleAutoRefresh){
+			gridView.m_grid.setRefreshInterval(0);
+		}
 		DOMHandler.addClass(gridView.m_node,"collapse");
 	}
 	if (gridView.getId()=="MainView_DOCOrderCurrentList_View"){

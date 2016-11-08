@@ -416,6 +416,8 @@ extend(DOCOrder_Controller,ControllerDb);
 	pm.addParam(new FieldInt("ret_id",{}));
 	
 		var options = {};
+		
+			options["required"]=true;
 						
 		pm.addParam(new FieldString("view_id",options));
 	
@@ -825,6 +827,8 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	
 		var options = {};
+		
+			options["required"]=true;
 						
 		pm.addParam(new FieldString("view_id",options));
 	
@@ -834,6 +838,9 @@ extend(DOCOrder_Controller,ControllerDb);
 			
 			DOCOrder_Controller.prototype.add_divide = function(){
 	var pm = this.addMethodById('divide');
+	
+				
+		pm.addParam(new FieldString("view_id"));
 	
 				
 		pm.addParam(new FieldInt("main_doc_id"));
@@ -1093,6 +1100,9 @@ extend(DOCOrder_Controller,ControllerDb);
 				
 		pm.addParam(new FieldInt("id"));
 	
+				
+		pm.addParam(new FieldString("view_id"));
+	
 			
 }
 			
@@ -1243,6 +1253,9 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 				
 		pm.addParam(new FieldInt("doc_id"));
+	
+				
+		pm.addParam(new FieldString("view_id"));
 	
 			
 }
@@ -1434,6 +1447,10 @@ extend(DOCOrder_Controller,ControllerDb);
 			DOCOrder_Controller.prototype.add_fill_cust_surv = function(){
 	var pm = this.addMethodById('fill_cust_surv');
 	
+				
+		pm.addParam(new FieldString("view_id"));
+	
+			
 }
 
 			DOCOrder_Controller.prototype.add_set_cancel_cause = function(){
@@ -1447,7 +1464,7 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 			
 }
-																
+
 			DOCOrder_Controller.prototype.add_calc_totals = function(){
 	var pm = this.addMethodById('calc_totals');
 	
@@ -1522,6 +1539,9 @@ extend(DOCOrder_Controller,ControllerDb);
 
 			DOCOrder_Controller.prototype.add_recalc_product_prices = function(){
 	var pm = this.addMethodById('recalc_product_prices');
+	
+				
+		pm.addParam(new FieldString("view_id"));
 	
 				
 		pm.addParam(new FieldInt("warehouse_id"));

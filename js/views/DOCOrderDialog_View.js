@@ -1092,6 +1092,7 @@ DOCOrderDialog_View.prototype.recalcProductPrices = function(){
 		var contr = new DOCOrder_Controller(new ServConnector(HOST_NAME));
 		contr.run("recalc_product_prices",{
 			"params":{
+				"view_id":this.m_viewId,
 				"warehouse_id":wh_id,
 				"client_id":cl_id,
 				"deliv_cost":this.m_delivCost.getValue(),
@@ -1239,10 +1240,12 @@ DOCOrderDialog_View.prototype.updateDistanceInf = function(){
 }
 DOCOrderDialog_View.prototype.changeDelivType = function(){
 	var vis=(this.m_delivTypeCtrl.getValue()=="by_supplier");
-	this.m_toThirdPartyCtrl.setEnabled(vis);
+	this.m_toThirdPartyCtrl.setEnabled(vis);	
 	this.m_delivCostOptCtrl.setEnabled(vis);
-	this.m_delivExpCtrl.setEnabled(vis);
-	this.m_delivPayBank.setEnabled(vis);
+	if (SERV_VARS.ROLE_ID!="client"){
+		this.m_delivExpCtrl.setEnabled(vis);
+		this.m_delivPayBank.setEnabled(vis);
+	}	
 	this.m_delivAddToCostCtrl.setEnabled(vis);
 	this.m_DelivPeriodCtrl.setEnabled(vis);
 	this.m_clientDestCtrl.setEnabled(vis);

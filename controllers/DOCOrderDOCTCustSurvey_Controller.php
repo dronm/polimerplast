@@ -127,6 +127,13 @@ class DOCOrderDOCTCustSurvey_Controller extends ControllerSQL{
 		$pm->addParam(new FieldExtString('ord_directs'));
 		$pm->addParam(new FieldExtString('field_sep'));
 		
+			$f_params = array();
+			
+				$f_params['required']=TRUE;
+			$param = new FieldExtString('view_id'
+			,$f_params);
+		$pm->addParam($param);		
+		
 		$this->addPublicMethod($pm);
 		
 		$this->setListModelId('DOCOrderDOCTCustSurveyList_Model');
@@ -136,7 +143,7 @@ class DOCOrderDOCTCustSurvey_Controller extends ControllerSQL{
 		$pm = new PublicMethod('get_object');
 		$pm->addParam(new FieldExtInt('browse_mode'));
 		
-		$pm->addParam(new FieldExtInt('login_id'
+		$pm->addParam(new FieldExtString('view_id'
 		));
 		
 		$pm->addParam(new FieldExtInt('line_number'

@@ -2,7 +2,7 @@
 DROP function doc_order_totals_all(
 		warehouse_id integer,
 		client_id integer,
-		login_id integer,
+		view_id varchar(32),
 		to_third_party_only boolean
 );
 */
@@ -14,7 +14,7 @@ DROP function doc_order_totals_all(
 CREATE or REPLACE function doc_order_totals_all(
 		warehouse_id integer,
 		client_id integer,
-		login_id integer,
+		view_id varchar(32),
 		to_third_party_only boolean
 )
 	RETURNS TABLE
@@ -121,13 +121,13 @@ SELECT
 	)	
 FROM doc_orders_t_tmp_products t
 WHERE
-	t.login_id=$3
+	t.view_id=$3
 	--AND (t.price_edit=FALSE OR t.price_edit IS NULL);
 $body$
 language sql;
 ALTER function doc_order_totals_all(
 		warehouse_id integer,
 		client_id integer,
-		login_id integer,
+		view_id varchar(32),
 		to_third_party_only boolean
 ) OWNER TO polimerplast;

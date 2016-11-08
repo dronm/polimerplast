@@ -18,6 +18,8 @@ function DOCOrderDivisDialog_View(id,options){
 	
 	DOCOrderDivisDialog_View.superclass.constructor.call(this,
 		id,options);
+	
+	this.m_viewId = hex_md5(uuid());
 		
 	var self = this;	
 	var model_id = "DOCOrderDivisDialog_Model";
@@ -140,6 +142,7 @@ function DOCOrderDivisDialog_View(id,options){
 		}		
 		});	
 	this.addDetailControl(this.m_productDetails,cont);
+	this.m_productDetails.getGridControl().setViewId(this.m_viewId);
 	
 	//Итоговая строка
 	var sub_cont = new ControlContainer(id+"_prod_tot_l","div",{"className":"panel_left"});
@@ -217,8 +220,12 @@ DOCOrderDivisDialog_View.prototype.getDetailControl = function(controlId){
 	return this.m_details.getElementById(controlId);
 }
 DOCOrderDivisDialog_View.prototype.readData = function(async,isCopy){
+	var contr = this.getReadController();
+	contr.getPublicMethodById("get_divis").setParamValue("view_id",this.m_viewId);
+	
 	DOCOrderDivisDialog_View.superclass.readData.call(this,false,isCopy);
 }
+
 DOCOrderDivisDialog_View.prototype.onClickSave = function(){
 	var cmd_insert = this.getIsNew();
 	if (cmd_insert){		
@@ -334,3 +341,12 @@ DOCOrderDivisDialog_View.prototype.onGetData = function(resp){
 	}
 	
 }
+
+DOCOrderDivisDialog_View.prototype.writeData = function(){	
+	var contr = this.getWriteController();
+	if (!contr)return;
+	contr.getPublicMethodById("divide").setParamValue("view_id",this.m_viewId);
+	
+	DOCOrderDivisDialog_View.superclass.writeData.call(this);
+}
+
