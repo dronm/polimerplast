@@ -17,6 +17,7 @@ class EmailTemplate_Controller extends ControllerSQL{
 	public function __construct($dbLinkMaster=NULL){
 		parent::__construct($dbLinkMaster);
 			
+		
 		/* insert */
 		$pm = new PublicMethod('insert');
 		

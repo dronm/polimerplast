@@ -29,6 +29,11 @@ class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@par
 
 <xsl:template match="publicMethod[@id='insert']">
 <xsl:variable name="model_id" select="@modelId"/>
+
+		<xsl:if test="../@processable">
+		$this->setProcessable(TRUE);
+		</xsl:if>
+		
 		/* insert */
 		$pm = new PublicMethod('insert');
 		<xsl:for-each select="/metadata/models/model[@id=$model_id]/field[not(@primaryKey='TRUE' and @autoInc='TRUE')]">

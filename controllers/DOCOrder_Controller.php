@@ -1,6 +1,6 @@
 <?php
 
-require_once(FRAME_WORK_PATH.'basic_classes/ControllerSQLDOC20.php');
+require_once(FRAME_WORK_PATH.'basic_classes/ControllerSQLDOCPl.php');
 
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtInt.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtString.php');
@@ -14,7 +14,8 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldExtBool.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPoint.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPolygon.php');
 
-require_once(FRAME_WORK_PATH.'basic_classes/ControllerSQLDOC20.php');
+require_once(FRAME_WORK_PATH.'basic_classes/ControllerSQLDOCPl.php');
+
 require_once(FRAME_WORK_PATH.'basic_classes/ParamsSQL.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ModelSQL.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ModelWhereSQL.php');
@@ -37,12 +38,13 @@ require_once('common/barcodegen.1d-php5.v5.2.1/class/BCGDrawing.php');
 //require_once('common/barcodegen.1d-php5.v5.2.1/class/BCGcodabar.barcode.php');
 require_once('common/barcodegen.1d-php5.v5.2.1/class/BCGcode128.barcode.php');
 
-class DOCOrder_Controller extends ControllerSQLDOC20{
+class DOCOrder_Controller extends ControllerSQLDOCPl{
 	const ER_WRONG_STATE = 'Заявка в неверном статусе!'; 
 	
 	public function __construct($dbLinkMaster=NULL){
 		parent::__construct($dbLinkMaster);
 			
+		
 		/* insert */
 		$pm = new PublicMethod('insert');
 		$param = new FieldExtDateTime('date_time'
@@ -3555,10 +3557,10 @@ class DOCOrder_Controller extends ControllerSQLDOC20{
 	}
 	
 	public function delete($pm){
-		/*!!! ДЛЯ ТЕСТИРОВАНИЯ !!!
 		$p = new ParamsSQL($pm,$this->getDbLink());
 		$p->addAll();
 	
+		/*!!! ДЛЯ ТЕСТИРОВАНИЯ !!!	
 		$ar = $this->getDbLink()->query_first(sprintf(
 		"SELECT ext_order_id,ext_ship_id FROM doc_orders WHERE id=%d",
 		$p->getDbVal('id')
@@ -3573,8 +3575,10 @@ class DOCOrder_Controller extends ControllerSQLDOC20{
 		}				
 		*/
 	
-		parent::delete($pm);
+		//parent::delete($pm);
 		
+		//Перенос в архив
+		$this->add_state($p->getDbVal('id'), 'closed');
 	}
 	
 

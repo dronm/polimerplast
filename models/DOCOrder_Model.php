@@ -1,6 +1,6 @@
 <?php
 
-require_once(FRAME_WORK_PATH.'basic_classes/ModelSQLDOC20.php');
+require_once(FRAME_WORK_PATH.'basic_classes/ModelSQLDOCPl.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLInt.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLString.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLText.php');
@@ -14,7 +14,7 @@ require_once(FRAME_WORK_PATH.'basic_classes/ModelOrderSQL.php');
 require_once('functions/ExtProg.php');
 require_once('functions/PPEmailSender.php');
 
-class DOCOrder_Model extends ModelSQLDOC20{
+class DOCOrder_Model extends ModelSQLDOCPl{
 	
 	public function __construct($dbLink){
 		parent::__construct($dbLink);

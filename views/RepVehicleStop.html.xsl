@@ -14,7 +14,7 @@
 <xsl:template match="/">
 	<xsl:apply-templates select="document/model[@id='ModelServResponse']"/>	
 	<xsl:apply-templates select="document/model[@id='ModelVars']"/>	
-	<xsl:apply-templates select="document/model[@id='RepVehicleStop_Model']"/>		
+	<xsl:apply-templates select="document/model[@id='VehicleStop_Model']"/>		
 </xsl:template>
 
 <!-- Error -->
@@ -27,7 +27,7 @@
 </xsl:template>
 
 <!-- table -->
-<xsl:template match="model[@id='RepVehicleStop_Model']">
+<xsl:template match="model[@id='VehicleStop_Model']">
 	<table id="RepProductionLoad" class="table table-bordered table-striped">
 		<!-- header -->
 		<thead>
@@ -46,7 +46,7 @@
 	</table>
 </xsl:template>
 
-<xsl:template match="model[@id='RepVehicleStop_Model']/row">
+<xsl:template match="model[@id='VehicleStop_Model']/row">
 	<tr>
 		<td align="center"><xsl:value-of select="vh_descr"/></td>
 		<td align="center"><xsl:value-of select="date_time_descr"/></td>

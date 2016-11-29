@@ -91,7 +91,10 @@ class Constant_Controller extends ControllerSQL{
 		$q = '';
 		foreach($idList as $id) {
 			$q.= ($q!='')? ' UNION ALL ':'';
-			$q.= sprintf("SELECT '%s' AS id,val::text FROM const_%s", $id,$id);
+			$q.= sprintf("SELECT
+				'%s' AS id,
+				const_%s_val()::text AS val,
+				(SELECT c.val_type FROM const_%s c) AS val_type", $id,$id,$id);
 		}
 		
 		$model->setSelectQueryText($q);

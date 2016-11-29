@@ -16,8 +16,8 @@ function DOCOrderDOCTDivisProductList_View(id,options){
 	
 	var head = new GridHead();
 	var row = new GridRow(id+"_row1");
-	row.addElement(new GridDbHeadCell(id+"_col_login_id",{
-		"readBind":{"valueFieldId":"login_id"},"keyCol":true,
+	row.addElement(new GridDbHeadCell(id+"_col_view_id",{
+		"readBind":{"valueFieldId":"view_id"},"keyCol":true,
 		"visible":false,
 		"attrs":{"rowspan":2}
 		}));				

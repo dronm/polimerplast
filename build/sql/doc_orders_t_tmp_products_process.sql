@@ -7,14 +7,16 @@ CREATE OR REPLACE FUNCTION doc_orders_t_tmp_products_process()
 $BODY$
 BEGIN
 	IF (TG_WHEN='BEFORE' AND TG_OP='INSERT') THEN
-		IF NOT doc_orders_t_tmp_products_can_add(NEW.login_id,NEW.product_id) THEN
+		IF NOT doc_orders_t_tmp_products_can_add(NEW.view_id,NEW.product_id) THEN
 			RAISE 'Данный вид продукции невозможно отгрузить с другими видами продукции документа!';
 		END IF;
 		
 		
 		SELECT coalesce(MAX(t.line_number),0)+1 INTO NEW.line_number
 		FROM doc_orders_t_tmp_products AS t
-		WHERE (NEW.view_id IS NOT NULL AND t.view_id=NEW.view_id) OR (NEW.view_id IS NULL AND t.login_id=NEW.login_id);
+		WHERE t.view_id=NEW.view_id;
+		--(NEW.view_id IS NOT NULL AND t.view_id=NEW.view_id)
+		-- OR (NEW.view_id IS NULL AND t.login_id=NEW.login_id);
 		
 		RETURN NEW;
 	ELSIF (TG_WHEN='AFTER' AND TG_OP='INSERT') THEN
@@ -28,7 +30,7 @@ BEGIN
 	ELSIF (TG_WHEN='AFTER' AND TG_OP='DELETE') THEN
 		UPDATE doc_orders_t_tmp_products
 		SET line_number = line_number - 1
-		WHERE login_id=OLD.login_id AND line_number>OLD.line_number;
+		WHERE view_id=OLD.view_id AND line_number>OLD.line_number;
 		RETURN OLD;
 	END IF;
 END;

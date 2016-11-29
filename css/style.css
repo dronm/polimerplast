@@ -347,3 +347,5 @@ td[paid="cash"]{
 td[paid="bank"]{
 	background-color:#ff9875;
 }
+
+.input-group-btn>.glyphicon {margin-top: -1px;}

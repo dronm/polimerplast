@@ -485,7 +485,6 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		
 		$coder = new YndxReverseCode();//new OSMReverseCode();
 		
-		
 		$m_res = new Model(array('id'=>'VehicleStop_Model'));
 		$m_res->addField(new Field('vh_id',DT_STRING));
 		$m_res->addField(new Field('vh_descr',DT_STRING));
@@ -495,15 +494,18 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		$m_res->addField(new Field('address',DT_STRING));
 		
 		$qid = $link->query($q);
-		while ($ar = $link->fetch_array($qid)){			
-			$m_res->insert(array(
+		//throw new Exception($link->num_rows());
+		while ($ar = $link->fetch_array($qid)){
+			//throw new Exception($coder->getAddressForCoords($ar['lat'],$ar['lon']));
+			$row = array(
 				new Field('vh_id',DT_STRING,array('value'=>$ar['vh_id'])),
 				new Field('vh_descr',DT_STRING,array('value'=>$ar['vh_descr'])),
 				new Field('date_time',DT_STRING,array('value'=>$ar['date_time'])),
 				new Field('date_time_descr',DT_STRING,array('value'=>$ar['date_time_descr'])),
 				new Field('duration',DT_STRING,array('value'=>$ar['duration'])),
 				new Field('address',DT_STRING,array('value'=>$coder->getAddressForCoords($ar['lat'],$ar['lon'])))
-			));
+			);			
+			$m_res->insert($row);
 		}
 		
 		

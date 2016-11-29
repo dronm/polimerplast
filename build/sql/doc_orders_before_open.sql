@@ -6,7 +6,7 @@ CREATE OR REPLACE FUNCTION doc_orders_before_open(in_view_id varchar(32), in_log
   RETURNS void AS
 $BODY$
 BEGIN
-	DELETE FROM doc_orders_t_tmp_products WHERE login_id=in_login_id;
+	--DELETE FROM doc_orders_t_tmp_products WHERE login_id=in_login_id;
 	DELETE FROM doc_orders_t_tmp_products WHERE view_id=in_view_id;
 	
 	IF (in_doc_id IS NOT NULL AND in_doc_id>0) THEN
@@ -18,7 +18,7 @@ BEGIN
 		WHERE doc_id=in_doc_id);
 	END IF;
 
-	DELETE FROM doc_orders_t_tmp_cust_surveys WHERE login_id=in_login_id;
+	--DELETE FROM doc_orders_t_tmp_cust_surveys WHERE login_id=in_login_id;
 	DELETE FROM doc_orders_t_tmp_cust_surveys WHERE view_id=in_view_id;
 	
 	IF (in_doc_id IS NOT NULL AND in_doc_id>0) THEN
