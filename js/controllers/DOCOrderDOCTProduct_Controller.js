@@ -373,6 +373,9 @@ extend(DOCOrderDOCTProduct_Controller,ControllerDb);
 				
 		pm.addParam(new FieldInt("line_number"));
 	
+				
+		pm.addParam(new FieldString("view_id"));
+	
 			
 }
 

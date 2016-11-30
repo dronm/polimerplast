@@ -307,6 +307,12 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 			
 		$pm->addParam(new FieldExtInt('line_number',$opts));
 	
+				
+	$opts=array();
+	
+		$opts['length']=32;		
+		$pm->addParam(new FieldExtString('view_id',$opts));
+	
 			
 		$this->addPublicMethod($pm);
 

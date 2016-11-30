@@ -330,6 +330,9 @@ DOCOrderDivisDialog_View.prototype.onGetData = function(resp){
 				"callBack":function(){
 					//self.onCancel();
 					self.setEnabled(false);
+					if (self.m_ctrlCancel){
+						self.m_ctrlCancel.setEnabled(true);
+					}
 				}
 			})
 		}
