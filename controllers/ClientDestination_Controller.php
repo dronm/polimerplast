@@ -476,7 +476,7 @@ class ClientDestination_Controller extends ControllerSQL{
 			$q.=($q=="")? "":", ";
 			$q.=sprintf("(SELECT k.name FROM kladr k WHERE k.code=%s) AS region",$code);
 		}
-		if ($code=$p->getParamById('raion_code')){
+		if ($p->getParamById('raion_code') && ($code=$p->getParamById('raion_code')) ){
 			$q.=($q=="")? "":", ";
 			$q.=sprintf("(SELECT k.name FROM kladr k WHERE k.code=%s) AS raion",$code);
 		}
@@ -496,7 +496,7 @@ class ClientDestination_Controller extends ControllerSQL{
 		$kl_ar = array();
 		if (strlen($q)){
 			$kladr = new Kladr_Controller();
-			$kladr->query_first("SELECT ".$q,$kl_ar);
+			$kl_ar = $kladr->query_first("SELECT ".$q);
 		}
 		
 		$res = array();
@@ -508,9 +508,11 @@ class ClientDestination_Controller extends ControllerSQL{
 				'building'=>$pm->getParamValue('dom'),
 				'korpus'=>$pm->getParamValue('korpus')
 		);
-	
 		get_inf_on_address($addr,$res);
-		
+	
+		if ($res['precision']!="exact" && $res['precision']!="near" & $res['precision']!="street"){
+			throw new Exception("Адрес не найден!");
+		}
 		$this->addNewModel(sprintf(
 		"SELECT %f lon,%f lat",
 		$res['lon_pos'],$res['lat_pos']

@@ -1291,6 +1291,7 @@ DOCOrderDialog_View.prototype.doDownloadOrder = function(){
 DOCOrderDialog_View.prototype.onDownloadOrder = function(){
 	//сначала запись!!
 	var is_new = this.getIsNew();
+	
 	if (this.getModified() && !is_new){
 		var self = this;		
 		WindowQuestion.show({
@@ -1313,6 +1314,9 @@ DOCOrderDialog_View.prototype.onDownloadOrder = function(){
 	else{
 		if (is_new){			
 			this.onClickSave();
+			var contr = new DOCOrder_Controller(new ServConnector(HOST_NAME));
+			this.m_beforeOpen(contr,false,false);
+			
 		}
 	
 		if (!this.getIsNew()){

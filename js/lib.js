@@ -1661,7 +1661,7 @@ val=model.getFieldValue(ctrl_bind.readBind.valueFieldId);ctrl_bind.control.setVa
 else{if(ctrl_bind.control.setFormerValue){if(!isNew){ctrl_bind.control.setFormerValue(ctrl_bind.writeBind.valueFieldId,val);}}
 else{if(!isNew){ctrl_bind.control.setAttr(this.FORMER_KEY_VAL+ctrl_bind.readBind.valueFieldId,val);}}}}}}}
 View.prototype.getModified=function(){var contr=this.getWriteController();if(!contr)return;var meth_id=this.getWriteMethodId();var pm=contr.getPublicMethodById(meth_id);var ctrl,modif=false;for(var ctrl_id in this.m_bindings){ctrl=this.m_bindings[ctrl_id].control;if(!ctrl.getEnabled())continue;var key_field_ids=this.m_bindings[ctrl_id].writeBind.keyFieldIds;var field_id=this.m_bindings[ctrl_id].writeBind.valueFieldId;var former_val,val;if(key_field_ids){for(var i=0;i<key_field_ids.length;i++){former_val=ctrl.getFormerFieldValue(key_field_ids[i]);val=ctrl.getFieldValue(key_field_ids[i]);if((pm.paramExists(key_field_ids[i]))&&(former_val!=val||ctrl.getAlwaysUpdate())&&!(former_val=="null"&&val&&val.length==0)&&!(former_val=="null"&&val==undefined)){modif=true;break;}}}
-else if(field_id){val=ctrl.getValue();former_val=ctrl.getAttr(this.FORMER_KEY_VAL+field_id);if((pm.paramExists(field_id))&&(former_val!=val||ctrl.getAlwaysUpdate())&&!(former_val==null&&val.length==0)){modif=true;break;}}}
+else if(field_id){val=ctrl.getValue();former_val=ctrl.getAttr(this.FORMER_KEY_VAL+field_id);if((pm.paramExists(field_id))&&(former_val!=val||ctrl.getAlwaysUpdate())&&!(former_val==null&&val.length==0)&&!(former_val==null&&val=="null")){modif=true;break;}}}
 return modif;}
 View.prototype.setMethodParams=function(pm,checkRes){for(var ctrl_id in this.m_bindings){var ctrl=this.m_bindings[ctrl_id].control;if(!this.m_bindings[ctrl_id].writeBind)continue;var key_field_ids=this.m_bindings[ctrl_id].writeBind.keyFieldIds;var field_id=this.m_bindings[ctrl_id].writeBind.valueFieldId;var former_val,val;if(key_field_ids){for(var i=0;i<key_field_ids.length;i++){former_val=ctrl.getFormerFieldValue(key_field_ids[i]);val=ctrl.getFieldValue(key_field_ids[i]);if(ctrl.validate){try{val=ctrl.validate(val);if(ctrl.setComment){ctrl.setComment("");}}
 catch(e){if(ctrl.setComment){ctrl.setComment(e.message);}
@@ -1673,7 +1673,7 @@ catch(e){if(ctrl.setComment){ctrl.setComment(e.message);}
 checkRes.incorrect_vals=true;}}
 former_val=ctrl.getAttr(this.FORMER_KEY_VAL+field_id);if(pm.paramExists(this.FORMER_KEY_VAL+field_id)){pm.setParamValue(this.FORMER_KEY_VAL+field_id,former_val);}
 if((pm.paramExists(field_id))&&(former_val!=val||ctrl.getAlwaysUpdate())){pm.setParamValue(field_id,val);checkRes.modif=true;}}}}
-View.prototype.writeData=function(async){var contr=this.getWriteController();if(!contr)return;var meth_id=this.getWriteMethodId();var check_res={"incorrect_vals":false,"modif":false};this.setMethodParams(contr.getPublicMethodById(meth_id),check_res);if(!check_res.incorrect_vals&&check_res.modif){this.setTempDisabled();contr.runPublicMethod(meth_id,{},(async!=undefined)?async:this.getWriteAsync(),this.onWriteOk,this,this.onError,this.getWriteRespXML());}
+View.prototype.writeData=function(async){var contr=this.getWriteController();if(!contr)return;debugger;var meth_id=this.getWriteMethodId();var check_res={"incorrect_vals":false,"modif":false};this.setMethodParams(contr.getPublicMethodById(meth_id),check_res);if(!check_res.incorrect_vals&&check_res.modif){this.setTempDisabled();contr.runPublicMethod(meth_id,{},(async!=undefined)?async:this.getWriteAsync(),this.onWriteOk,this,this.onError,this.getWriteRespXML());}
 else if(check_res.incorrect_vals){this.m_errorControl.setValue("Обнаружены ошибки!");}
 else if(!check_res.modif){this.onWriteOk();}}
 View.prototype.removeDOM=function(){if(this.m_titleControl){this.m_titleControl.removeDOM();}
@@ -4797,7 +4797,7 @@ DOCOrderDialog_View.prototype.getFormHeight=function(){return((SERV_VARS.ROLE_ID
 DOCOrderDialog_View.prototype.doDownloadOrder=function(){var id=this.getDataControl(this.getId()+"_id").control.getValue();if(id){var contr=new DOCOrder_Controller(new ServConnector(HOST_NAME));var meth=contr.getPublicMethodById("download_print");meth.setParamValue("doc_id",id);top.location.href=HOST_NAME+"index.php?"+
 contr.getQueryString(contr.getPublicMethodById("download_print"));}}
 DOCOrderDialog_View.prototype.onDownloadOrder=function(){var is_new=this.getIsNew();if(this.getModified()&&!is_new){var self=this;WindowQuestion.show({"text":"Для сохранения печатной формы, документ необходимо записать, продолжить?","callBack":function(res){if(res==WindowQuestion.RES_YES){self.writeData(false);if(self.m_lastWriteResult){var contr=new DOCOrder_Controller(new ServConnector(HOST_NAME));self.m_beforeOpen(contr,false,false);self.doDownloadOrder();}}}});}
-else{if(is_new){this.onClickSave();}
+else{if(is_new){this.onClickSave();var contr=new DOCOrder_Controller(new ServConnector(HOST_NAME));this.m_beforeOpen(contr,false,false);}
 if(!this.getIsNew()){this.doDownloadOrder();}}}
 DOCOrderDialog_View.prototype.updateDebts=function(){if(!this.m_clientCtrl){return;}
 var cl_id=this.m_clientCtrl.getFieldValue();if(!cl_id){return;}
@@ -5300,8 +5300,8 @@ function BtnSetReady(options){var id=uuid();options.caption="Готова";optio
 extend(BtnSetReady,Button); 
 function BtnSetClosed(options){var id=uuid();options.caption="В архив";options.attrs={"title":"перевести заявку в статус 'закрыта' или 'выполнена'"};options.onClick=function(){var keys=options.grid.getSelectedNodeKeys();if(keys){var contr=new DOCOrder_Controller(new ServConnector(HOST_NAME));contr.run("set_closed",{"async":true,"xml":true,"params":{"doc_id":keys["id"]},"func":function(resp){WindowMessage.show({"text":"Заявка переведена в статус 'закрыта' или 'выполнена'.","type":WindowMessage.TP_NOTE,"callBack":function(){options.grid.onRefresh();}});},"cont":this,"errControl":options.grid.getErrorControl()});}};BtnSetClosed.superclass.constructor.call(this,id,options);}
 extend(BtnSetClosed,Button); 
-function BtnSetShipped(options){var id=uuid();options.caption="Отгружена";options.attrs={"title":"перевести заявку в статус 'отгружена'"};this.m_grid=options.grid;this.m_keys=options.keys;var self=this;options.onClick=function(){if(self.m_grid){self.m_keys=self.m_grid.getSelectedNodeKeys();console.log("key from grid ="+self.m_keys['id'])}
-else{console.log("key NOT from grid ="+self.m_keys['id'])}
+function BtnSetShipped(options){var id=uuid();options.caption="Отгружена";options.attrs={"title":"перевести заявку в статус 'отгружена'"};this.m_grid=options.grid;this.m_keys=options.keys;var self=this;options.onClick=function(){if(self.m_grid){self.m_keys=self.m_grid.getSelectedNodeKeys();}
+else{}
 if(self.m_keys){self.m_extForm=new WIN_CLASS({"title":"Отгрузка","width":"900","height":"500"});self.m_extForm.open();self.m_extCtrl=new DOCOrderShipmentDialog_View("DOCOrderShipmentDialog_View",{"winObj":self.m_extForm,"readController":new DOCOrder_Controller(new ServConnector(HOST_NAME)),"onClose":function(){self.m_extForm.close();delete self.m_extForm;if(options.grid)options.grid.onRefresh();}});for(var key_id in self.m_keys){self.m_extCtrl.setReadIdValue(key_id,self.m_keys[key_id]);}
 self.m_extCtrl.readData(true);self.m_extCtrl.m_beforeOpen(new DOCOrder_Controller(new ServConnector(HOST_NAME)),false);self.m_extCtrl.toDOM(self.m_extForm.getContentParent());self.m_extForm.setFocus();}};BtnSetShipped.superclass.constructor.call(this,id,options);}
 extend(BtnSetShipped,Button); 

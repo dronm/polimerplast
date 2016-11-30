@@ -1997,7 +1997,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 		//parent::delete($pm);
 		
 		//Перенос в архив
-		$this->add_state($p->getDbVal('id'), 'closed');
+		$this->add_state($p->getDbVal('id'), 'canceled_by_sales_manager');
 	}
 	
 </xsl:template>
