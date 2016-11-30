@@ -267,9 +267,10 @@ DOCOrderDivisDialog_View.prototype.refreshProdTotals = function(){
 	this.m_totSumPack.setValue(tot_sum_pack.toFixed(2));
 	this.m_totSum.setValue(tot_sum.toFixed(2));
 	
-	if (this.m_delivPrice&&this.m_delivCost.m_editAllowedFieldCtrl.getValue()=="false"){
+	if (this.m_delivTotal && this.m_delivCost.m_editAllowedFieldCtrl.getValue()=="false"){
 		//новая сумма тр
-		var sm = Math.round(this.m_delivPrice*tot_vol*100)/100;
+		//var sm = Math.round(this.m_delivPrice*tot_vol*100)/100;
+		var sm = Math.round(this.m_delivTotal/this.m_delivVhCount*100)/100;
 		this.m_delivCost.setValue(sm.toFixed(2));
 	}
 	
@@ -307,14 +308,15 @@ DOCOrderDivisDialog_View.prototype.onGetData = function(resp){
 	//проверка статуса
 	var m = resp.getModelById("DOCOrderDivisDialog_Model",true);
 	if (m.getNextRow()){
-		var deliv_total = toFloat(m.getFieldValue("deliv_total"));
+		this.m_delivTotal = toFloat(m.getFieldValue("deliv_total"));
+		this.m_delivVhCount = toFloat(m.getFieldValue("deliv_vehicle_count"));
 		this.m_delivPrice = toFloat(m.getFieldValue("deliv_price"));
 		
-		if (deliv_total==0){
+		if (this.m_delivTotal==0){
 			this.m_delivCost.setVisible(false);
 			this.m_delivAddToCostCtrl.setVisible(false);
 		}
-		this.m_delivCost.setMaxValue(deliv_total);
+		this.m_delivCost.setMaxValue(this.m_delivTotal);
 		
 		//
 		var state = m.getFieldValue("state");
