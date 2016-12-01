@@ -712,7 +712,7 @@ DOCOrderDialog_View.prototype.setClientId = function(clientId,setPopFirm){
 		
 	//организация
 	if (setPopFirm && !this.m_FirmCtrl.getFieldValue()){	
-		console.log("setPopFirm="+setPopFirm);
+		//console.log("setPopFirm="+setPopFirm);
 		var self = this;
 		var contr = new Client_Controller(new ServConnector(HOST_NAME));
 		contr.run("get_pop_firm",{
@@ -1160,6 +1160,8 @@ DOCOrderDialog_View.prototype.writeData = function(){
 DOCOrderDialog_View.prototype.onWriteOk = function(resp){	
 	DOCOrderDialog_View.superclass.onWriteOk.call(this,resp);
 	
+	this.m_productDetails.getGridControl().m_modified = false;
+	
 	if (this.m_currentGrid && this.m_currentGrid.m_rendered){
 		this.m_currentGrid.onRefresh();
 	}
@@ -1292,8 +1294,10 @@ DOCOrderDialog_View.prototype.onDownloadOrder = function(){
 	//сначала запись!!
 	var is_new = this.getIsNew();
 	
+	var self = this;		
+	
 	if (this.getModified() && !is_new){
-		var self = this;		
+		
 		WindowQuestion.show({
 			"text":"Для сохранения печатной формы, документ необходимо записать, продолжить?",
 			"callBack":function(res){
@@ -1314,12 +1318,14 @@ DOCOrderDialog_View.prototype.onDownloadOrder = function(){
 	else{
 		if (is_new){			
 			this.onClickSave();
-			var contr = new DOCOrder_Controller(new ServConnector(HOST_NAME));
-			this.m_beforeOpen(contr,false,false);
-			
+			if (!this.getIsNew()){				
+				setTimeout(function(){
+					self.doDownloadOrder();
+				}, 3000);
+				
+			}			
 		}
-	
-		if (!this.getIsNew()){
+		else{
 			this.doDownloadOrder();
 		}
 	}		

@@ -937,7 +937,7 @@ class Client_Controller extends ControllerSQL{
 				f.name AS firm_descr,
 				COUNT(*) AS cnt,
 				(SELECT sum(t.def_debt) FROM client_debts AS t WHERE t.client_id=o.client_id AND t.firm_id=o.firm_id) AS def_debt,
-				(SELECT t.debt_total FROM client_debts AS t WHERE t.client_id=o.client_id AND t.firm_id=o.firm_id) AS debt_total
+				(SELECT t.debt_total FROM client_debts AS t WHERE t.client_id=o.client_id AND t.firm_id=o.firm_id LIMIT 1) AS debt_total
 			FROM doc_orders AS o
 			LEFT JOIN firms AS f ON f.id=o.firm_id
 			WHERE o.client_id=%d

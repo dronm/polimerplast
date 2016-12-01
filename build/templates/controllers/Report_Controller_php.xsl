@@ -461,6 +461,10 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 	}
 	
 	public function vehicle_stops($pm){
+		
+		/*ООчень медленный отчет*/
+		set_time_limit(900);
+	
 		$link = $this->getDbLink();
 		
 		$model = new VehicleStopList_Model($link);

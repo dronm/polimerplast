@@ -76,7 +76,7 @@ function DOCOrderDivisDialog_View(id,options){
 	this.m_delivVehicleCntCtrl = new EditNum(id+"_deliv_vehicle_count",
 			{"labelCaption":"Кол-во автомоб.:",
 			"name":"deliv_vehicle_count",
-			"enabled":false,
+			//"enabled":false,
 			"minValue":1,
 			"maxValue":1,
 			"tableLayout":false,
