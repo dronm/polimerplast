@@ -31,6 +31,11 @@ function DOCOrderNewList_View(id,options){
 		
 		var popup_menu = new PopUpMenu();
 		
+		//doc append
+		btn = new BtnAppendOrder({"grid":this.m_grid});
+		options.commands.addElement(btn);
+		popup_menu.addButton(btn);
+		
 		//doc cancel state
 		btn = new BtnCancelLastState({"grid":this.m_grid});
 		//this.m_customCommands.addElement(btn);

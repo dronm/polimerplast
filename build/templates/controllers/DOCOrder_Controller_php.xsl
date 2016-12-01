@@ -1975,6 +1975,40 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 		}
 	}
 	
+	public function get_append_list($pm){
+		$p = new ParamsSQL($pm,$this->getDbLink());
+		$p->addAll();	
+		
+		$this->addNewModel(sprintf(
+			"SELECT * FROM doc_orders_append_list(%d)",
+			$p->getDbVal('doc_id')
+		),'DOCOrderAppendList_Model');		
+		
+	}
+
+	public function append($pm){
+		$p = new ParamsSQL($pm,$this->getDbLink());
+		$p->addAll();	
+		
+		$doc_id_list = explode(',',$p->getVal('source_doc_id_list'));
+		$doc_id_list_db = '';
+		foreach($doc_id_list as $id){
+			$doc_id_list_db.= ($doc_id_list_db=='')? '':',';
+			$doc_id_list_db.= intval($id);
+		}
+		
+		$q = sprintf(
+			"SELECT doc_orders_append(%d,ARRAY[%s],%d)",
+			$p->getDbVal('target_doc_id'),
+			$doc_id_list_db,
+			$_SESSION['LOGIN_ID']
+		);
+		
+		//throw new Exception($q);
+		
+		$this->addNewModel($q,'DOCOrderAppendList_Model');
+	}
+	
 	public function delete($pm){
 		$p = new ParamsSQL($pm,$this->getDbLink());
 		$p->addAll();

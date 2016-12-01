@@ -445,6 +445,7 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/RepNaspunktCost_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/AccPKOList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/RepVehicleStop_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderAppend_View.js'));		
 		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/UnregClientCheck.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/ClientAttrs.js'));
@@ -481,6 +482,7 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnOrderSetFilter.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnOrderUnsetFilter.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnCancelOrder.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnAppendOrder.js'));		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnCatalogs.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnPriceTune.js'));		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/EditPeriodDateTime.js'));

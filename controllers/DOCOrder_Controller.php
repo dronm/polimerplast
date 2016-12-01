@@ -1628,10 +1628,41 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 		$opts['required']=TRUE;				
 		$pm->addParam(new FieldExtInt('doc_id',$opts));
+					
+			
+		$this->addPublicMethod($pm);
+						
+			
+		$pm = new PublicMethod('get_append_list');
+		
+				
+	$opts=array();
+	
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtInt('doc_id',$opts));
 	
 			
 		$this->addPublicMethod($pm);
-													
+												
+			
+		$pm = new PublicMethod('append');
+		
+				
+	$opts=array();
+	
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtInt('target_doc_id',$opts));
+	
+				
+	$opts=array();
+	
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtString('source_doc_id_list',$opts));
+	
+			
+		$this->addPublicMethod($pm);
+												
+										
 		
 	}	
 	
@@ -3554,6 +3585,40 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 		if (!$this->ext_doc_exists($p->getParamById('doc_id'),'ext_order_id')){
 			throw new Exception('Документ счет не выписан!');
 		}
+	}
+	
+	public function get_append_list($pm){
+		$p = new ParamsSQL($pm,$this->getDbLink());
+		$p->addAll();	
+		
+		$this->addNewModel(sprintf(
+			"SELECT * FROM doc_orders_append_list(%d)",
+			$p->getDbVal('doc_id')
+		),'DOCOrderAppendList_Model');		
+		
+	}
+
+	public function append($pm){
+		$p = new ParamsSQL($pm,$this->getDbLink());
+		$p->addAll();	
+		
+		$doc_id_list = explode(',',$p->getVal('source_doc_id_list'));
+		$doc_id_list_db = '';
+		foreach($doc_id_list as $id){
+			$doc_id_list_db.= ($doc_id_list_db=='')? '':',';
+			$doc_id_list_db.= intval($id);
+		}
+		
+		$q = sprintf(
+			"SELECT doc_orders_append(%d,ARRAY[%s],%d)",
+			$p->getDbVal('target_doc_id'),
+			$doc_id_list_db,
+			$_SESSION['LOGIN_ID']
+		);
+		
+		//throw new Exception($q);
+		
+		$this->addNewModel($q,'DOCOrderAppendList_Model');
 	}
 	
 	public function delete($pm){

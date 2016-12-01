@@ -73,6 +73,8 @@ function DOCOrder_Controller(servConnector){
 	this.add_get_pop_warehouse();
 	this.add_get_children();
 	this.add_get_cancel_cause();
+	this.add_get_append_list();
+	this.add_append();
 	
 }
 extend(DOCOrder_Controller,ControllerDb);
@@ -1602,8 +1604,30 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 				
 		pm.addParam(new FieldInt("doc_id"));
+					
+			
+}
+						
+			DOCOrder_Controller.prototype.add_get_append_list = function(){
+	var pm = this.addMethodById('get_append_list');
+	
+				
+		pm.addParam(new FieldInt("doc_id"));
 	
 			
 }
-													
+												
+			DOCOrder_Controller.prototype.add_append = function(){
+	var pm = this.addMethodById('append');
+	
+				
+		pm.addParam(new FieldInt("target_doc_id"));
+	
+				
+		pm.addParam(new FieldString("source_doc_id_list"));
+	
+			
+}
+												
+										
 		
