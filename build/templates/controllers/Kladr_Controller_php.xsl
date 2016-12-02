@@ -32,6 +32,11 @@ WHERE
 	AND NOT k.code LIKE substr(k.code,1,2)||'___00000000'
 ORDER BY code,name
 LIMIT 5
+
+МЕДЛЕННЫЙ ЗАПРОС
+SELECT code AS ulitza_code, name, name||' '||socr AS full_name
+FROM street
+WHERE code LIKE '72000001000%' AND lower(name) LIKE lower('немц%') ORDER BY name LIMIT 5
 -->
 
 class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{

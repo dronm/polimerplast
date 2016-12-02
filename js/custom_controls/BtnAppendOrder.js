@@ -10,7 +10,7 @@
 
 /* constructor */
 function BtnAppendOrder(options){	
-	var id = "btn_order_append";
+	var id = uuid();
 	options.caption = "Присоединить";
 	options.attrs={"title":"присоединить к данной заявке другие"};
 	
@@ -31,7 +31,7 @@ extend(BtnAppendOrder,Button);
 BtnAppendOrder.prototype.selectAppend = function(docId){
 	this.m_docId = docId;
 
-console.log("docId="+docId);
+//console.log("docId="+docId);
 	var self = this;
 	
 	this.m_extCtrl=new DOCOrderAppend_View("DOCOrderAppend_View",

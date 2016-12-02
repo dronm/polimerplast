@@ -42736,3 +42736,10 @@ Fatal Error: entity 'am' not found (Occurred in entity '/home/andrey/www/htdocs/
 01/12/2016 22:23 Building php controller DOCOrder_Controller.php
 01/12/2016 22:41 Building php controller DOCOrder_Controller.php
 01/12/2016 22:42 Building php controller DOCOrder_Controller.php
+01/12/2016 23:32 Version file is created. Version: 1.0069
+01/12/2016 23:32 Building php controller DOCOrder_Controller.php
+01/12/2016 23:32 JScripts are minified. File count: 415
+01/12/2016 23:32 Version closed.
+01/12/2016 23:32 Building SQL update script.
+01/12/2016 23:32 Copying all modified SQL scripts to update directory.
+01/12/2016 23:32 Project files are pushed to the server.

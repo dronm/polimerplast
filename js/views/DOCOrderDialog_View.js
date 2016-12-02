@@ -471,8 +471,16 @@ function DOCOrderDialog_View(id,options){
 			"name":"deliv_vehicle_count",
 			"tableLayout":false,
 			"buttonClear":false,
-			"attrs":{"maxlength":5,"size":5,
-			"required":"required"}}
+			"attrs":{
+				"maxlength":5,"size":5,
+				"required":"required"
+				},
+			"events":{
+				"keyup":function(){
+					self.checkForVehicleCapacity();
+				}
+			}
+			}
 		);	
 	this.bindControl(this.m_delivVehicleCntCtrl,
 		{"modelId":model_id,"valueFieldId":"deliv_vehicle_count","keyFieldIds":null},
@@ -1224,7 +1232,10 @@ DOCOrderDialog_View.prototype.calcVehicleCount = function(){
 		DOMHandler.removeClass(this.m_delivVehicleCntCtrl.m_node,"veh_cnt_warn");
 	}
 	this.m_savedVehCount = 0;
+	
+	this.checkForVehicleCapacity();
 }
+
 DOCOrderDialog_View.prototype.updateDistanceInf = function(){
 	var d1_m = parseFloat(this.m_cityRouteDistanceCtrl.getValue());
 	var d1 = Math.round(d1_m/1000);	
@@ -1366,3 +1377,28 @@ DOCOrderDialog_View.prototype.updateDebts = function(){
 	});
 	
 }
+
+DOCOrderDialog_View.prototype.checkForVehicleCapacity = function(){
+	var vh_cnt = parseInt(this.m_delivVehicleCntCtrl.getValue());
+
+	var ind = this.m_delivCostOptCtrl.m_node.selectedIndex;
+	var sel_n = this.m_delivCostOptCtrl.m_node.options[ind];
+	var v_max_vol = parseFloat(DOMHandler.getAttr(sel_n,"volume_m"))*vh_cnt;
+	var v_max_wt = parseFloat(DOMHandler.getAttr(sel_n,"weight_t"))*vh_cnt;
+	var vol = parseFloat(this.m_totVol.getValue());
+	var wt = parseFloat(this.m_totWt.getValue());	
+
+	if (vol>v_max_vol){
+		DOMHandler.addClass(this.m_delivVehicleCntCtrl.m_node,this.m_delivVehicleCntCtrl.INCORRECT_VAL_CLASS);
+		this.m_delivVehicleCntCtrl.setComment("Объем продукции больше вместимости ТС!");
+	}
+	else if(wt>v_max_wt){
+		DOMHandler.addClass(this.m_delivVehicleCntCtrl.m_node,this.m_delivVehicleCntCtrl.INCORRECT_VAL_CLASS);
+		this.m_delivVehicleCntCtrl.setComment("Масса продукции больше грузоподъемности ТС!");
+	}
+	else{
+		this.m_delivVehicleCntCtrl.setValid();
+		this.m_delivVehicleCntCtrl.setComment("");
+	}
+}
+
