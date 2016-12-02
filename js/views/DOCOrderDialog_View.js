@@ -1208,7 +1208,11 @@ DOCOrderDialog_View.prototype.refreshProdTotals = function(){
 	
 	if (!this.m_savedVehCount){
 		this.calcVehicleCount();
-	}	
+	}
+	else{
+		this.checkForVehicleCapacity();
+	}
+		
 }
 DOCOrderDialog_View.prototype.getFormCaption = function(){
 	return "Заявка";
