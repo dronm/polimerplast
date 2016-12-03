@@ -14,6 +14,8 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldExtBool.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPoint.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPolygon.php');
 
+require_once(FRAME_WORK_PATH.'basic_classes/ParamsSQL.php');
+
 
 
 class Kladr_Controller extends ControllerSQL{
@@ -264,40 +266,35 @@ class Kladr_Controller extends ControllerSQL{
 	}				
 	public function get_ulitsa_list($pm){
 		$dbLink = $this->getDbLink();
-		$pattern = $dbLink->escape_string($pm->getParamValue('pattern'));
-		$region_code = substr($dbLink->escape_string($pm->getParamValue('region_code')),0,2);		
-		if (!$region_code || !is_numeric($region_code)){
-			throw new Exception('Не задан регион!');
+		
+		$params = new ParamsSQL($pm,$dbLink);
+		$params->addAll();		
+		
+		$pattern = $params->getDbVal('pattern');
+		
+		if ($params->getVal('naspunkt_code')){
+			$code = "'".substr($params->getVal('naspunkt_code'),0,11)."'";
+		}
+		else if ($params->getVal('gorod_code')){
+			$code = "'".substr($params->getVal('gorod_code'),0,11)."'";
+		}
+		else if ($params->getVal('raion_code')){
+			$code = "'".substr($params->getVal('raion_code'),0,11)."'";
+		}
+		else{
+			$code = "'".substr($params->getVal('region_code'),0,11)."'";
 		}		
 		
-		$raion_code_str = $dbLink->escape_string($pm->getParamValue('raion_code'));
-		$raion_code = substr($raion_code_str,2,3);
-		if (!strlen($raion_code) || $raion_code_str=='null'){
-			$raion_code = '000';
-		}		
-		$naspunkt_code = substr($dbLink->escape_string($pm->getParamValue('naspunkt_code')),5,3);
-		$gorod_code = substr($dbLink->escape_string($pm->getParamValue('gorod_code')),5,3);
-		if ((!$naspunkt_code || !is_numeric($naspunkt_code)) && (!$gorod_code || !is_numeric($gorod_code))){
-			throw new Exception('Не задан ни город ни населенный пункт!');
-		}
-		else if (!$naspunkt_code || !is_numeric($naspunkt_code)){
-			$naspunkt_code='000';
-		}
-		else if (!$gorod_code || !is_numeric($gorod_code)){
-			$gorod_code='000';
-		}		
 		$q = sprintf("SELECT 
 				code AS ulitza_code,
 				name,
 				name||' '||socr AS full_name
 			FROM street
-			WHERE code LIKE '%s%s%s%s%%'
-				AND lower(name) LIKE lower('%s%%')
+			WHERE
+				code_part = %s
+				AND lower(name) LIKE lower(%s)||'%%'
 			ORDER BY name LIMIT %d",
-			$region_code,
-			$raion_code,
-			$gorod_code,
-			$naspunkt_code,
+			$code,
 			$pattern,
 			Kladr_Controller::COMPLETE_RES_COUNT);
 		//throw new Exception($q);
@@ -306,6 +303,21 @@ class Kladr_Controller extends ControllerSQL{
 	
 	public function get_from_naspunkt($pm){
 		$dbLink = $this->getDbLink();
+		
+		$params = new ParamsSQL($pm,$dbLink);
+		$params->addAll();		
+		
+		$pattern = $params->getDbVal('pattern');
+		$count = $params->getDbVal('count');
+		if (!$count){
+			$count = Kladr_Controller::COMPLETE_RES_COUNT;
+		}
+		$from = $params->getDbVal('from');
+		if (!$from){
+			$from = 0;
+		}
+
+		/*
 		$pattern = $dbLink->escape_string($pm->getParamValue('pattern'));
 		
 		if ($_REQUEST['count']){
@@ -321,10 +333,12 @@ class Kladr_Controller extends ControllerSQL{
 		else{
 			$from = 0;
 		}
+		*/
 		
-		$q = sprintf("SELECT * FROM kladr_naspunkt WHERE lower(name) LIKE '%s%%' OFFSET %d LIMIT %d",
+		$q = sprintf("SELECT * FROM kladr_naspunkt WHERE lower(name) LIKE lower(%s)||'%%' OFFSET %d LIMIT %d",
 			$pattern,
 			$from,$count);
+		//throw new ($q);
 		$this->addNewModel($q);
 	}	
 					
