@@ -53,6 +53,7 @@ BEGIN
 				--Создадим шапку нового документа
 				INSERT INTO doc_orders
 				(date_time,
+				number,
 				client_id,
 				delivery_plan_date,
 				firm_id,
@@ -70,11 +71,16 @@ BEGIN
 				deliv_total_edit,
 				deliv_cost_opt_id,
 				deliv_responsable_tel,
-				deliv_total
+				deliv_total,
+				submit_user_id
 				)
 				(
 				SELECT
 					h.date_time,
+					--просто номер без префикса
+					(SELECT coalesce( MAX(tmax.number::int),0)+1 FROM doc_orders AS tmax
+					WHERE substr(tmax.number::varchar,1,length(const_new_order_prefix_val()))<>const_new_order_prefix_val()	  
+					),					
 					h.client_id,
 					h.delivery_plan_date,
 					h.firm_id,
@@ -101,7 +107,8 @@ BEGIN
 					h.deliv_cost_opt_id,
 					h.deliv_responsable_tel,
 					--ROUND(h.deliv_total*v_new_prod_k,2)
-					0
+					0,
+					h.submit_user_id
 				FROM doc_orders AS h
 				WHERE h.id=in_doc_id
 				)

@@ -64,7 +64,8 @@ BEGIN
 		deliv_total_edit,
 		deliv_total,
 		city_route_distance,
-		country_route_distance
+		country_route_distance,
+		submit_user_id
 	)
 	(SELECT
 	  now()::timestamp,--date_time
@@ -99,7 +100,8 @@ BEGIN
 	  in_deliv_total_edit,
 	  LEAST(in_deliv_total,o.deliv_total),
 	  o.city_route_distance,
-	  o.country_route_distance
+	  o.country_route_distance,
+	  (SELECT l.user_id FROM logins l WHERE l.id=in_login_id)
 	  
 	FROM doc_orders o
 	WHERE o.id=in_orig_doc_id)

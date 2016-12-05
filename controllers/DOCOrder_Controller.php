@@ -1676,7 +1676,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	}	
 	
 	public function get_current_for_representative_list($pm){
-		$model = new DOCOrderCurrentList_Model($this->getDbLink());
+		$model = new DOCOrderCurrentForProductionList_Model($this->getDbLink());
 		
 		$order = $this->orderFromParams($pm,$model);
 		$where = $this->conditionFromParams($pm,$model);

@@ -34,8 +34,7 @@ function DOCOrderDOCTProductDialog_View(id,options){
 	this.m_evOnWHChange = function(e){
 			e = EventHandler.fixMouseEvent(e);
 			if (e.target.selectedIndex>=0){
-				self.onWarehouseSelected(
-					e.target.options[e.target.selectedIndex].value);
+				self.onWarehouseSelected(e.target.options[e.target.selectedIndex].value);
 		}		
 	};	
 	//******* ПАНЕЛЬ НАИМЕНОВАНИЕ*************
@@ -83,8 +82,11 @@ DOCOrderDOCTProductDialog_View.prototype.onProductSelected = function(productId)
 		}
 	}	
 	if (!wh_f){
-		this.m_WarehouseCtrl.setByIndex(1);
+		this.m_WarehouseCtrl.setByIndex(1);		
 	}
+	
+	this.setWHouseWarn();
+	
 	this.m_params.warehouseId = this.m_WarehouseCtrl.getFieldValue();
 	/*
 	for (var i in this.m_dimenCont.m_elements){
@@ -417,6 +419,9 @@ DOCOrderDOCTProductDialog_View.prototype.onWarehouseSelected = function(warehous
 	var ctrl = this.getDataControl(this.getId()+"_product").control;
 	ctrl.setWarehouseId(warehouseId);
 	ctrl.onRefresh();
+	
+	this.setWHouseWarn();	
+		
 	this.m_params.warehouseId = warehouseId;
 	this.calcTotals();
 }
@@ -467,6 +472,8 @@ DOCOrderDOCTProductDialog_View.prototype.onWriteOk = function(resp){
 	this.m_headWarehouseCtrl.setByFieldId(this.m_WarehouseCtrl.getValue());
 }
 DOCOrderDOCTProductDialog_View.prototype.calcTotals = function(){
+	if (!this.m_packCtrl) return;
+	
 	var contr = new DOCOrder_Controller(new ServConnector(HOST_NAME));
 	var id = this.getId();
 	var par_pack = (this.m_packCtrl.getValue()=="true"&&this.m_packNotFree);
@@ -653,3 +660,14 @@ DOCOrderDOCTProductDialog_View.prototype.getFormWidth = function(){
 DOCOrderDOCTProductDialog_View.prototype.getFormHeight = function(){
 	return "600";
 }
+DOCOrderDOCTProductDialog_View.prototype.setWHouseWarn = function(){
+	if (this.m_headWarehouseCtrl.getValue()!=this.m_WarehouseCtrl.getValue()){
+		this.m_WarehouseCtrl.setComment("Продукция не соответствует складу в заявке.");
+		DOMHandler.addClass(this.m_WarehouseCtrl.m_node,this.INCORRECT_VAL_CLASS);
+	}
+	else{
+		this.m_WarehouseCtrl.setValid();
+		this.m_WarehouseCtrl.setComment("");
+	}
+}
+

@@ -101,9 +101,11 @@ ClientDestinationEdit.prototype.toDOM = function(parent){
 */
 ClientDestinationEdit.prototype.openForm = function(keys){
 	var self = this;
+	//
 	//WindowFormModalBS
 	this.m_extForm = new WIN_CLASS(this.getId()+"_dest_edit",{"caption":"Адрес клиента",
-		"width":900,"height":1100,
+		"top":0,"left":0,
+		"width":getViewportWidth()-10,"height":getViewportHeight(),
 		"noMinimize":true,"resizable":false});
 	
 	this.m_extView = new ClientDestinationDialog_View(this.m_id+"_ClientDestinationDialog",
