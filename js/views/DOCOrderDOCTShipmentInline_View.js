@@ -217,7 +217,7 @@ function DOCOrderDOCTShipmentInline_View(id,options){
 		{"modelId":model_id,
 		"valueFieldId":"quant_confirmed_measure_unit",
 		"keyFieldIds":null},
-		{"valueFieldId":"quant_confirmed_measure_unit","keyFieldIds":null}
+		{"valueFieldId":"quant_confirmed","keyFieldIds":null}
 	);
 	
 }

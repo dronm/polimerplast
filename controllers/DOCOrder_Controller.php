@@ -2785,6 +2785,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 					);
 			}
 			if ($ar['product_name']){
+				//throw new Exception("quant_confirmed=".$ar['quant_confirmed'].' quant='.$ar['quant']);
 				array_push($items,array(
 					'product_name'=>$ar['product_name'],
 					'group_name'=>$ar['group_name'],

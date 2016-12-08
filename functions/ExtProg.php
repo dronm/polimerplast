@@ -224,6 +224,7 @@ class ExtProg{
 	}	
 	
 	public static function sale($head,$items,&$res){
+	//throw new Exception("public static function sale");
 		$xml=null;
 		ExtProg::send_query('sale',
 			array('head'=>serialize($head),

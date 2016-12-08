@@ -90,7 +90,7 @@ function DOCOrderDOCTShipmentList_View(id,options){
 		"editInline":true,
 		"pagination":null,
 		"commandPanel":new GridCommands(id+"_cmd",{
-			"noInsert":true,"noCopy":true,
+			"noInsert":true,"noCopy":true,"noDelete":true,
 			"noPrint":true,"noRefresh":true}),
 		"rowCommandPanelClass":null,
 		"filter":null,

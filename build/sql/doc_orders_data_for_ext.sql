@@ -1,6 +1,6 @@
 -- View: doc_orders_data_for_ext
 
---DROP VIEW doc_orders_data_for_ext;
+DROP VIEW doc_orders_data_for_ext;
 
 CREATE OR REPLACE VIEW doc_orders_data_for_ext AS 
 	SELECT
@@ -65,6 +65,8 @@ CREATE OR REPLACE VIEW doc_orders_data_for_ext AS
 		*/
 		
 		t.quant AS quant,
+		--t.quant_confirmed AS quant_confirmed,
+		
 		CASE
 			WHEN COALESCE(t.quant)=0 THEN 0
 			ELSE ROUND(t.total/t.quant,2)
