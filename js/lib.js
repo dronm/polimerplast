@@ -4764,7 +4764,8 @@ DOCOrderDialog_View.prototype.setToThirdParty=function(v){this.m_productDetails.
 DOCOrderDialog_View.prototype.setWarehouseId=function(id){this.m_productDetails.setWarehouseId(id);}
 DOCOrderDialog_View.prototype.onWarehouseSelected=function(){this.setWarehouseId(this.m_wareHCtrl.getFieldValue());this.calcDelivCost();}
 DOCOrderDialog_View.prototype.onFirmSelected=function(){var wh=this.m_wareHCtrl.getFieldValue();if(!wh){var contr=new DOCOrder_Controller(new ServConnector(HOST_NAME));var self=this;contr.run("get_pop_warehouse",{"params":{"firm_id":this.m_FirmCtrl.getFieldValue()},"errControl":this.getErrorControl(),"func":function(resp){var m=resp.getModelById("get_pop_warehouse");m.setActive(true);if(m.getNextRow()){self.m_wareHCtrl.setValue(m.getFieldValue('warehouse_descr'));self.m_wareHCtrl.setFieldValue("id",m.getFieldValue('warehouse_id'));self.onWarehouseSelected();}}});}}
-DOCOrderDialog_View.prototype.onGetData=function(resp){DOCOrderDialog_View.superclass.onGetData.call(this,resp,this.m_isCopy);var id=this.getId();if(SERV_VARS.ROLE_ID!="client"){this.onClientSelected(false);var data_ctrl=this.getDataControl(id+"_client_user");if(data_ctrl){var ctrl=data_ctrl.control;ctrl.setFieldValue("client_user_id",ctrl.getAttr("fkey_client_user_id"));this.onClientUserSelected();}}
+DOCOrderDialog_View.prototype.onGetData=function(resp){DOCOrderDialog_View.superclass.onGetData.call(this,resp,this.m_isCopy);if(this.m_saved){return;}
+var id=this.getId();if(SERV_VARS.ROLE_ID!="client"){this.onClientSelected(false);var data_ctrl=this.getDataControl(id+"_client_user");if(data_ctrl){var ctrl=data_ctrl.control;ctrl.setFieldValue("client_user_id",ctrl.getAttr("fkey_client_user_id"));this.onClientUserSelected();}}
 else{this.setClientId(0,false);}
 this.updateDistanceInf();this.changeDelivType();if(this.m_isCopy){}
 else{var m=resp.getModelById("head_history");m.setActive(true);while(m.getNextRow()){var f_id=m.getFieldValue("field");var p=f_id.indexOf("_id");if(p>=0){f_id=f_id.substring(0,p)}
@@ -4826,7 +4827,7 @@ DOCOrderDialog_View.prototype.getFormHeight=function(){return((SERV_VARS.ROLE_ID
 DOCOrderDialog_View.prototype.doDownloadOrder=function(){var id=this.getDataControl(this.getId()+"_id").control.getValue();if(id){var contr=new DOCOrder_Controller(new ServConnector(HOST_NAME));var meth=contr.getPublicMethodById("download_print");meth.setParamValue("doc_id",id);top.location.href=HOST_NAME+"index.php?"+
 contr.getQueryString(contr.getPublicMethodById("download_print"));}}
 DOCOrderDialog_View.prototype.onDownloadOrder=function(){var is_new=this.getIsNew();var self=this;if(this.getModified()&&!is_new){WindowQuestion.show({"text":"Для сохранения печатной формы, документ необходимо записать, продолжить?","callBack":function(res){if(res==WindowQuestion.RES_YES){self.writeData(false);if(self.m_lastWriteResult){var contr=new DOCOrder_Controller(new ServConnector(HOST_NAME));self.m_beforeOpen(contr,false,false);self.doDownloadOrder();}}}});}
-else{if(is_new){this.onClickSave();if(!this.getIsNew()){setTimeout(function(){self.doDownloadOrder();},3000);}}
+else{if(is_new){this.m_saved=true;this.onClickSave();if(!this.getIsNew()){setTimeout(function(){self.doDownloadOrder();},3000);}}
 else{this.doDownloadOrder();}}}
 DOCOrderDialog_View.prototype.updateDebts=function(){if(!this.m_clientCtrl){return;}
 var cl_id=this.m_clientCtrl.getFieldValue();if(!cl_id){return;}

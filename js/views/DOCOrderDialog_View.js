@@ -797,7 +797,14 @@ DOCOrderDialog_View.prototype.onFirmSelected = function(){
 }
 
 DOCOrderDialog_View.prototype.onGetData = function(resp){
+
 	DOCOrderDialog_View.superclass.onGetData.call(this,resp,this.m_isCopy);
+	
+	if (this.m_saved){
+		//Если после сохранения- НИЧЕГО НЕ ДЕЛАЕМ!!!
+		return;
+	}
+	
 	var id = this.getId();
 	
 	if (SERV_VARS.ROLE_ID!="client"){
@@ -1331,7 +1338,10 @@ DOCOrderDialog_View.prototype.onDownloadOrder = function(){
 		
 	}
 	else{
-		if (is_new){			
+		if (is_new){	
+		
+			this.m_saved = true;		
+			
 			this.onClickSave();
 			if (!this.getIsNew()){				
 				setTimeout(function(){

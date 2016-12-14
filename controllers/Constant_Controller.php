@@ -15,6 +15,9 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPoint.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPolygon.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ModelSQL.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQL.php');
+
+require_once(FRAME_WORK_PATH.'basic_classes/ParamsSQL.php');
+
 class Constant_Controller extends ControllerSQL{
 	public function __construct($dbLinkMaster=NULL){
 		parent::__construct($dbLinkMaster);
@@ -114,10 +117,13 @@ class Constant_Controller extends ControllerSQL{
 	}
 	
 	public function set_value($pm){
+		$p = new ParamsSQL($pm,$this->getDbLink());
+		$p->addAll();
+	
 		$link = $this->getDbLinkMaster();
 		$link->query(sprintf(
-		"SELECT const_%s_set_val('%s')",
-		$pm->getParamValue('id'),$pm->getParamValue('val')));
+		"SELECT const_%s_set_val(%s)",
+		$p->getVal('id'),$p->getDbVal('val')));
 	}
 }
 ?>
