@@ -25,8 +25,10 @@ function DOCOrderNewList_View(id,options){
 	DOCOrderNewList_View.superclass.constructor.call(this,
 		id,options);
 		
-	if (SERV_VARS.ROLE_ID=="sales_manager"||
-	SERV_VARS.ROLE_ID=="admin"){
+	if (SERV_VARS.ROLE_ID=="sales_manager"
+	|| SERV_VARS.ROLE_ID=="admin"
+	|| SERV_VARS.ROLE_ID=="representative"
+	){
 		var btn;
 		
 		var popup_menu = new PopUpMenu();
