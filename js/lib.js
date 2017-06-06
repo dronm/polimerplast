@@ -2342,7 +2342,7 @@ GridFilter.prototype.removeDOM=function(){if(this.m_btnToggle)this.m_btnToggle.r
 if(this.m_unsetControl){this.m_unsetControl.removeDOM();}
 for(var id in this.m_commandControls){this.m_commandControls[id].removeDOM();}
 GridFilter.superclass.removeDOM.call(this);}
-GridFilter.prototype.addFilterControl=function(control,filter){var ctrl_id=control.getId();var id=this.getId();if(TEMPLATE_PARAMS[id][ctrl_id]){control.unserialize(TEMPLATE_PARAMS[id][ctrl_id]);}
+GridFilter.prototype.addFilterControl=function(control,filter){var ctrl_id=control.getId();var id=this.getId();if(TEMPLATE_PARAMS[id]&&TEMPLATE_PARAMS[id][ctrl_id]){control.unserialize(TEMPLATE_PARAMS[id][ctrl_id]);}
 this.m_filter.addFilter(ctrl_id,filter);this.addElement(control);}
 GridFilter.prototype.getFilterControlById=function(id){return this.m_filter.getFilterById(id);}
 GridFilter.prototype.unsetFilterControlById=function(id){this.m_filter.unsetFilterById(id);}
