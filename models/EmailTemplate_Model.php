@@ -14,89 +14,64 @@ class EmailTemplate_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("email_templates");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['autoInc']=TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		'required'=>FALSE,
-			'primaryKey'=>TRUE,
-			'autoInc'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_email_type=new FieldSQlEnum($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"email_type"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>FALSE,
-			'autoInc'=>FALSE,
-			'alias'=>"Тип email"
-		,
-			'id'=>"email_type"
-				
+		//********************
+	
+		//*** Field email_type ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = FALSE;
+		$f_opts['autoInc']=FALSE;
+		$f_opts['id']="email_type";
 		
-		));
+		$f_email_type=new FieldSQLEnum($this->getDbLink(),$this->getDbName(),$this->getTableName(),"email_type",$f_opts);
 		$this->addField($f_email_type);
-
-		$f_template=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"template"
-		,array(
-		'required'=>TRUE,
-			'alias'=>"Шаблон"
-		,
-			'id'=>"template"
-				
+		//********************
+	
+		//*** Field template ***
+		$f_opts = array();
+		$f_opts['id']="template";
 		
-		));
+		$f_template=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"template",$f_opts);
 		$this->addField($f_template);
-
-		$f_comment_text=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"comment_text"
-		,array(
-		'required'=>TRUE,
-			'alias'=>"Комментарий"
-		,
-			'id'=>"comment_text"
-				
+		//********************
+	
+		//*** Field comment_text ***
+		$f_opts = array();
+		$f_opts['id']="comment_text";
 		
-		));
+		$f_comment_text=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"comment_text",$f_opts);
 		$this->addField($f_comment_text);
-
-		$f_mes_subject=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"mes_subject"
-		,array(
-		'required'=>TRUE,
-			'alias'=>"Тема"
-		,
-			'id'=>"mes_subject"
-				
+		//********************
+	
+		//*** Field mes_subject ***
+		$f_opts = array();
+		$f_opts['id']="mes_subject";
 		
-		));
+		$f_mes_subject=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"mes_subject",$f_opts);
 		$this->addField($f_mes_subject);
-
-		$f_fields=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"fields"
-		,array(
-		'required'=>TRUE,
-			'alias'=>"Поля"
-		,
-			'id'=>"fields"
-				
+		//********************
+	
+		//*** Field fields ***
+		$f_opts = array();
+		$f_opts['id']="fields";
 		
-		));
+		$f_fields=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"fields",$f_opts);
 		$this->addField($f_fields);
+		//********************
 
 		$order = new ModelOrderSQL();		
 		$this->setDefaultModelOrder($order);		
 		
 		$order->addField($f_email_type);
 
-		
-		
-		
 	}
 
 }

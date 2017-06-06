@@ -74,7 +74,6 @@ extend(Driver_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_id",{});
 	pm.addParam(param);
 	
@@ -84,13 +83,11 @@ extend(Driver_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("drive_perm",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -98,13 +95,11 @@ extend(Driver_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("ext_id",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

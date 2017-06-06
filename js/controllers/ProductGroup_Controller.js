@@ -60,7 +60,6 @@ extend(ProductGroup_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_id",{});
 	pm.addParam(param);
 	
@@ -70,13 +69,11 @@ extend(ProductGroup_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("ext_id",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

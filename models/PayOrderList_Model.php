@@ -14,143 +14,96 @@ class PayOrderList_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("pay_orders_list");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		
-			'alias'=>"Код заявки"
-		,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_client_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_id"
-		,array(
+		//********************
+	
+		//*** Field client_id ***
+		$f_opts = array();
+		$f_opts['id']="client_id";
 		
-			'alias'=>"Клиент код"
-		,
-			'id'=>"client_id"
-				
-		
-		));
+		$f_client_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_id",$f_opts);
 		$this->addField($f_client_id);
-
-		$f_number=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"number"
-		,array(
+		//********************
+	
+		//*** Field number ***
+		$f_opts = array();
+		$f_opts['id']="number";
 		
-			'alias'=>"Номер заявки"
-		,
-			'id'=>"number"
-				
-		
-		));
+		$f_number=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"number",$f_opts);
 		$this->addField($f_number);
-
-		$f_date_time=new FieldSQlDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"date_time"
-		,array(
+		//********************
+	
+		//*** Field date_time ***
+		$f_opts = array();
+		$f_opts['id']="date_time";
 		
-			'alias'=>"Дата заявки"
-		,
-			'id'=>"date_time"
-				
-		
-		));
+		$f_date_time=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_time",$f_opts);
 		$this->addField($f_date_time);
-
-		$f_date_time_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"date_time_descr"
-		,array(
+		//********************
+	
+		//*** Field date_time_descr ***
+		$f_opts = array();
+		$f_opts['id']="date_time_descr";
 		
-			'alias'=>"Дата заявки"
-		,
-			'id'=>"date_time_descr"
-				
-		
-		));
+		$f_date_time_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_time_descr",$f_opts);
 		$this->addField($f_date_time_descr);
-
-		$f_total=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"total"
-		,array(
+		//********************
+	
+		//*** Field total ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="total";
 		
-			'alias'=>"Сумма"
-		,
-			'length'=>15,
-			'id'=>"total"
-				
-		
-		));
+		$f_total=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total",$f_opts);
 		$this->addField($f_total);
-
-		$f_total_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"total_descr"
-		,array(
+		//********************
+	
+		//*** Field total_descr ***
+		$f_opts = array();
+		$f_opts['id']="total_descr";
 		
-			'alias'=>"Сумма"
-		,
-			'id'=>"total_descr"
-				
-		
-		));
+		$f_total_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total_descr",$f_opts);
 		$this->addField($f_total_descr);
-
-		$f_firm_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"firm_id"
-		,array(
+		//********************
+	
+		//*** Field firm_id ***
+		$f_opts = array();
+		$f_opts['id']="firm_id";
 		
-			'alias'=>"Организация код"
-		,
-			'id'=>"firm_id"
-				
-		
-		));
+		$f_firm_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"firm_id",$f_opts);
 		$this->addField($f_firm_id);
-
-		$f_firm_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"firm_descr"
-		,array(
+		//********************
+	
+		//*** Field firm_descr ***
+		$f_opts = array();
+		$f_opts['id']="firm_descr";
 		
-			'alias'=>"Организация"
-		,
-			'id'=>"firm_descr"
-				
-		
-		));
+		$f_firm_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"firm_descr",$f_opts);
 		$this->addField($f_firm_descr);
-
-		$f_state=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"state"
-		,array(
+		//********************
+	
+		//*** Field state ***
+		$f_opts = array();
+		$f_opts['id']="state";
 		
-			'alias'=>"Статус код"
-		,
-			'id'=>"state"
-				
-		
-		));
+		$f_state=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"state",$f_opts);
 		$this->addField($f_state);
-
-		$f_state_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"state_descr"
-		,array(
+		//********************
+	
+		//*** Field state_descr ***
+		$f_opts = array();
+		$f_opts['id']="state_descr";
 		
-			'alias'=>"Статус"
-		,
-			'id'=>"state_descr"
-				
-		
-		));
+		$f_state_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"state_descr",$f_opts);
 		$this->addField($f_state_descr);
+		//********************
 
-		
-		
-		
 	}
 
 }

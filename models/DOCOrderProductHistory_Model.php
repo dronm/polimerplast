@@ -13,64 +13,51 @@ class DOCOrderProductHistory_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("doc_orders_products_history");
+			
+		//*** Field doc_orders_states_id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="doc_orders_states_id";
 		
-		$f_doc_orders_states_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"doc_orders_states_id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'id'=>"doc_orders_states_id"
-				
-		
-		));
+		$f_doc_orders_states_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"doc_orders_states_id",$f_opts);
 		$this->addField($f_doc_orders_states_id);
-
-		$f_product_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"product_id"
-		,array(
+		//********************
+	
+		//*** Field product_id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="product_id";
 		
-			'primaryKey'=>TRUE,
-			'id'=>"product_id"
-				
-		
-		));
+		$f_product_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_id",$f_opts);
 		$this->addField($f_product_id);
-
-		$f_fields=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"fields"
-		,array(
+		//********************
+	
+		//*** Field fields ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="fields";
 		
-			'primaryKey'=>TRUE,
-			'id'=>"fields"
-				
-		
-		));
+		$f_fields=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"fields",$f_opts);
 		$this->addField($f_fields);
-
-		$f_oper=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"oper"
-		,array(
+		//********************
+	
+		//*** Field oper ***
+		$f_opts = array();
+		$f_opts['length']=8;
+		$f_opts['id']="oper";
 		
-			'length'=>8,
-			'id'=>"oper"
-				
-		
-		));
+		$f_oper=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"oper",$f_opts);
 		$this->addField($f_oper);
-
-		$f_old_vals=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"old_vals"
-		,array(
+		//********************
+	
+		//*** Field old_vals ***
+		$f_opts = array();
+		$f_opts['id']="old_vals";
 		
-			'id'=>"old_vals"
-				
-		
-		));
+		$f_old_vals=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"old_vals",$f_opts);
 		$this->addField($f_old_vals);
+		//********************
 
-		
-		
-		
 	}
 
 }

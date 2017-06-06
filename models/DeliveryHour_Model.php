@@ -12,47 +12,38 @@ class DeliveryHour_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("delivery_hours");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['autoInc']=TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'autoInc'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_h_from=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"h_from"
-		,array(
+		//********************
+	
+		//*** Field h_from ***
+		$f_opts = array();
+		$f_opts['id']="h_from";
 		
-			'id'=>"h_from"
-				
-		
-		));
+		$f_h_from=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"h_from",$f_opts);
 		$this->addField($f_h_from);
-
-		$f_h_to=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"h_to"
-		,array(
+		//********************
+	
+		//*** Field h_to ***
+		$f_opts = array();
+		$f_opts['id']="h_to";
 		
-			'id'=>"h_to"
-				
-		
-		));
+		$f_h_to=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"h_to",$f_opts);
 		$this->addField($f_h_to);
+		//********************
 
 		$order = new ModelOrderSQL();		
 		$this->setDefaultModelOrder($order);		
 		
 		$order->addField($f_h_from);
 
-		
-		
-		
 	}
 
 }

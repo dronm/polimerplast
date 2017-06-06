@@ -12,33 +12,26 @@ class DOCOrderDOCTProductList_Model extends ModelSQLDOCT20{
 		$this->setDbName("public");
 		
 		$this->setTableName("doc_orders_t_tmp_products_list");
+			
+		//*** Field view_id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['length']=32;
+		$f_opts['id']="view_id";
 		
-		$f_view_id=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"view_id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'length'=>32,
-			'id'=>"view_id"
-				
-		
-		));
+		$f_view_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"view_id",$f_opts);
 		$this->addField($f_view_id);
-
-		$f_line_number=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"line_number"
-		,array(
+		//********************
+	
+		//*** Field line_number ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="line_number";
 		
-			'primaryKey'=>TRUE,
-			'id'=>"line_number"
-				
-		
-		));
+		$f_line_number=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"line_number",$f_opts);
 		$this->addField($f_line_number);
+		//********************
 
-		
-		
-		
 	}
 
 }

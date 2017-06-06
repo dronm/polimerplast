@@ -12,44 +12,35 @@ class SertType_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("sert_types");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['autoInc']=TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'autoInc'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_name=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"name"
-		,array(
+		//********************
+	
+		//*** Field name ***
+		$f_opts = array();
+		$f_opts['length']=50;
+		$f_opts['id']="name";
 		
-			'length'=>50,
-			'id'=>"name"
-				
-		
-		));
+		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
-
-		$f_xslt_pattern=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"xslt_pattern"
-		,array(
+		//********************
+	
+		//*** Field xslt_pattern ***
+		$f_opts = array();
+		$f_opts['length']=50;
+		$f_opts['id']="xslt_pattern";
 		
-			'length'=>50,
-			'id'=>"xslt_pattern"
-				
-		
-		));
+		$f_xslt_pattern=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"xslt_pattern",$f_opts);
 		$this->addField($f_xslt_pattern);
+		//********************
 
-		
-		
-		
 	}
 
 }

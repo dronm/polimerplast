@@ -12,53 +12,41 @@ class UserWarehouseList_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("user_warehouses_list");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['sysCol']=TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'id'=>"id"
-		,
-			'sysCol'=>TRUE
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_user_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"user_id"
-		,array(
+		//********************
+	
+		//*** Field user_id ***
+		$f_opts = array();
+		$f_opts['id']="user_id";
 		
-			'id'=>"user_id"
-				
-		
-		));
+		$f_user_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"user_id",$f_opts);
 		$this->addField($f_user_id);
-
-		$f_warehouse_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"warehouse_id"
-		,array(
+		//********************
+	
+		//*** Field warehouse_id ***
+		$f_opts = array();
+		$f_opts['id']="warehouse_id";
 		
-			'id'=>"warehouse_id"
-				
-		
-		));
+		$f_warehouse_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"warehouse_id",$f_opts);
 		$this->addField($f_warehouse_id);
-
-		$f_warehouse_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"warehouse_descr"
-		,array(
+		//********************
+	
+		//*** Field warehouse_descr ***
+		$f_opts = array();
+		$f_opts['id']="warehouse_descr";
 		
-			'id'=>"warehouse_descr"
-				
-		
-		));
+		$f_warehouse_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"warehouse_descr",$f_opts);
 		$this->addField($f_warehouse_descr);
+		//********************
 
-		
-		
-		
 	}
 
 }

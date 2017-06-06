@@ -13,55 +13,41 @@ class TrackerServer_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("tracker_servers");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['autoInc']=TRUE;
+		$f_opts['sysCol']=TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'autoInc'=>TRUE,
-			'id'=>"id"
-		,
-			'sysCol'=>TRUE
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_ip=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"ip"
-		,array(
-		'required'=>TRUE,
-			'alias'=>"IP адрес"
-		,
-			'length'=>15,
-			'id'=>"ip"
-				
+		//********************
+	
+		//*** Field ip ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="ip";
 		
-		));
+		$f_ip=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ip",$f_opts);
 		$this->addField($f_ip);
-
-		$f_name=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"name"
-		,array(
+		//********************
+	
+		//*** Field name ***
+		$f_opts = array();
+		$f_opts['length']=50;
+		$f_opts['id']="name";
 		
-			'alias'=>"Описание"
-		,
-			'length'=>50,
-			'id'=>"name"
-				
-		
-		));
+		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
+		//********************
 
 		$order = new ModelOrderSQL();		
 		$this->setDefaultModelOrder($order);		
 		
 		$order->addField($f_id);
 
-		
-		
-		
 	}
 
 }

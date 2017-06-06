@@ -14,107 +14,72 @@ class RepPriceListTuning_Model extends ModelReportSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("price_list_tuning");
+			
+		//*** Field client_id ***
+		$f_opts = array();
+		$f_opts['id']="client_id";
 		
-		$f_client_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_id"
-		,array(
-		
-			'alias'=>"Код клиента"
-		,
-			'id'=>"client_id"
-				
-		
-		));
+		$f_client_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_id",$f_opts);
 		$this->addField($f_client_id);
-
-		$f_client_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_descr"
-		,array(
+		//********************
+	
+		//*** Field client_descr ***
+		$f_opts = array();
+		$f_opts['id']="client_descr";
 		
-			'alias'=>"Наименование клиента"
-		,
-			'id'=>"client_descr"
-				
-		
-		));
+		$f_client_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_descr",$f_opts);
 		$this->addField($f_client_descr);
-
-		$f_production_city_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"production_city_id"
-		,array(
+		//********************
+	
+		//*** Field production_city_id ***
+		$f_opts = array();
+		$f_opts['id']="production_city_id";
 		
-			'alias'=>"Код города"
-		,
-			'id'=>"production_city_id"
-				
-		
-		));
+		$f_production_city_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"production_city_id",$f_opts);
 		$this->addField($f_production_city_id);
-
-		$f_production_city_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"production_city_descr"
-		,array(
+		//********************
+	
+		//*** Field production_city_descr ***
+		$f_opts = array();
+		$f_opts['id']="production_city_descr";
 		
-			'alias'=>"Наименование города"
-		,
-			'id'=>"production_city_descr"
-				
-		
-		));
+		$f_production_city_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"production_city_descr",$f_opts);
 		$this->addField($f_production_city_descr);
-
-		$f_to_third_party_only=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"to_third_party_only"
-		,array(
+		//********************
+	
+		//*** Field to_third_party_only ***
+		$f_opts = array();
+		$f_opts['id']="to_third_party_only";
 		
-			'alias'=>"Для третьих лиц"
-		,
-			'id'=>"to_third_party_only"
-				
-		
-		));
+		$f_to_third_party_only=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"to_third_party_only",$f_opts);
 		$this->addField($f_to_third_party_only);
-
-		$f_price_list_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"price_list_descr"
-		,array(
+		//********************
+	
+		//*** Field price_list_descr ***
+		$f_opts = array();
+		$f_opts['id']="price_list_descr";
 		
-			'alias'=>"Наименование прайса"
-		,
-			'id'=>"price_list_descr"
-				
-		
-		));
+		$f_price_list_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"price_list_descr",$f_opts);
 		$this->addField($f_price_list_descr);
-
-		$f_product_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"product_descr"
-		,array(
+		//********************
+	
+		//*** Field product_descr ***
+		$f_opts = array();
+		$f_opts['id']="product_descr";
 		
-			'alias'=>"Наименование продукции"
-		,
-			'id'=>"product_descr"
-				
-		
-		));
+		$f_product_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_descr",$f_opts);
 		$this->addField($f_product_descr);
-
-		$f_product_descr=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"product_descr"
-		,array(
+		//********************
+	
+		//*** Field product_descr ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="product_descr";
 		
-			'alias'=>"Цена"
-		,
-			'length'=>15,
-			'id'=>"product_descr"
-				
-		
-		));
+		$f_product_descr=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_descr",$f_opts);
 		$this->addField($f_product_descr);
+		//********************
 
-		
-		
-		
 	}
 
 }

@@ -58,7 +58,6 @@ extend(Holiday_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldDate("old_date",{});
 	pm.addParam(param);
 	
@@ -67,7 +66,6 @@ extend(Holiday_Controller,ControllerDb);
 	var param = new FieldString("name",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

@@ -12,42 +12,33 @@ class DOCOrderHeadHistory_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("doc_orders_head_history");
+			
+		//*** Field doc_orders_states_id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="doc_orders_states_id";
 		
-		$f_doc_orders_states_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"doc_orders_states_id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'id'=>"doc_orders_states_id"
-				
-		
-		));
+		$f_doc_orders_states_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"doc_orders_states_id",$f_opts);
 		$this->addField($f_doc_orders_states_id);
-
-		$f_field=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"field"
-		,array(
+		//********************
+	
+		//*** Field field ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="field";
 		
-			'primaryKey'=>TRUE,
-			'id'=>"field"
-				
-		
-		));
+		$f_field=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"field",$f_opts);
 		$this->addField($f_field);
-
-		$f_old_val=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"old_val"
-		,array(
+		//********************
+	
+		//*** Field old_val ***
+		$f_opts = array();
+		$f_opts['id']="old_val";
 		
-			'id'=>"old_val"
-				
-		
-		));
+		$f_old_val=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"old_val",$f_opts);
 		$this->addField($f_old_val);
+		//********************
 
-		
-		
-		
 	}
 
 }

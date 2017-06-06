@@ -13,74 +13,59 @@ class DOCOrderDOCTCustSurvey_Model extends ModelSQLDOCT20{
 		$this->setDbName("public");
 		
 		$this->setTableName("doc_orders_t_tmp_cust_surveys");
+			
+		//*** Field view_id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['length']=32;
+		$f_opts['id']="view_id";
 		
-		$f_view_id=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"view_id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'length'=>32,
-			'id'=>"view_id"
-				
-		
-		));
+		$f_view_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"view_id",$f_opts);
 		$this->addField($f_view_id);
-
-		$f_line_number=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"line_number"
-		,array(
+		//********************
+	
+		//*** Field line_number ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="line_number";
 		
-			'primaryKey'=>TRUE,
-			'id'=>"line_number"
-				
-		
-		));
+		$f_line_number=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"line_number",$f_opts);
 		$this->addField($f_line_number);
-
-		$f_login_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"login_id"
-		,array(
+		//********************
+	
+		//*** Field login_id ***
+		$f_opts = array();
+		$f_opts['id']="login_id";
 		
-			'id'=>"login_id"
-				
-		
-		));
+		$f_login_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"login_id",$f_opts);
 		$this->addField($f_login_id);
-
-		$f_customer_survey_question_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"customer_survey_question_id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'id'=>"customer_survey_question_id"
-				
+		//********************
+	
+		//*** Field customer_survey_question_id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="customer_survey_question_id";
 		
-		));
+		$f_customer_survey_question_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"customer_survey_question_id",$f_opts);
 		$this->addField($f_customer_survey_question_id);
-
-		$f_points=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"points"
-		,array(
+		//********************
+	
+		//*** Field points ***
+		$f_opts = array();
+		$f_opts['id']="points";
 		
-			'id'=>"points"
-				
-		
-		));
+		$f_points=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"points",$f_opts);
 		$this->addField($f_points);
-
-		$f_answer_comment=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"answer_comment"
-		,array(
+		//********************
+	
+		//*** Field answer_comment ***
+		$f_opts = array();
+		$f_opts['id']="answer_comment";
 		
-			'id'=>"answer_comment"
-				
-		
-		));
+		$f_answer_comment=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"answer_comment",$f_opts);
 		$this->addField($f_answer_comment);
+		//********************
 
-		
-		
-		
 	}
 
 }

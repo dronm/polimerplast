@@ -14,72 +14,58 @@ class MeasureUnit_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("measure_units");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['autoInc']=TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'autoInc'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_name=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"name"
-		,array(
+		//********************
+	
+		//*** Field name ***
+		$f_opts = array();
+		$f_opts['length']=25;
+		$f_opts['id']="name";
 		
-			'length'=>25,
-			'id'=>"name"
-				
-		
-		));
+		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
-
-		$f_name_full=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"name_full"
-		,array(
+		//********************
+	
+		//*** Field name_full ***
+		$f_opts = array();
+		$f_opts['length']=100;
+		$f_opts['id']="name_full";
 		
-			'length'=>100,
-			'id'=>"name_full"
-				
-		
-		));
+		$f_name_full=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name_full",$f_opts);
 		$this->addField($f_name_full);
-
-		$f_is_int=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"is_int"
-		,array(
+		//********************
+	
+		//*** Field is_int ***
+		$f_opts = array();
+		$f_opts['defaultValue']=FALSE;
+		$f_opts['id']="is_int";
 		
-			'defaultValue'=>"FALSE"
-		,
-			'id'=>"is_int"
-				
-		
-		));
+		$f_is_int=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"is_int",$f_opts);
 		$this->addField($f_is_int);
-
-		$f_ext_id=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"ext_id"
-		,array(
+		//********************
+	
+		//*** Field ext_id ***
+		$f_opts = array();
+		$f_opts['length']=36;
+		$f_opts['id']="ext_id";
 		
-			'length'=>36,
-			'id'=>"ext_id"
-				
-		
-		));
+		$f_ext_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ext_id",$f_opts);
 		$this->addField($f_ext_id);
+		//********************
 
 		$order = new ModelOrderSQL();		
 		$this->setDefaultModelOrder($order);		
 		
 		$order->addField($f_name);
 
-		
-		
-		
 	}
 
 }

@@ -12,32 +12,25 @@ class DeliveryExtraVehicle_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("delivery_extra_vehicles");
+			
+		//*** Field vehicle_id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="vehicle_id";
 		
-		$f_vehicle_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"vehicle_id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'id'=>"vehicle_id"
-				
-		
-		));
+		$f_vehicle_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"vehicle_id",$f_opts);
 		$this->addField($f_vehicle_id);
-
-		$f_date=new FieldSQlDate($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"date"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'id'=>"date"
-				
+		//********************
+	
+		//*** Field date ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="date";
 		
-		));
+		$f_date=new FieldSQLDate($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date",$f_opts);
 		$this->addField($f_date);
+		//********************
 
-		
-		
-		
 	}
 
 }

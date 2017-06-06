@@ -12,47 +12,32 @@ class VehicleSelectList_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("vehicles_select_list");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'alias'=>"Код"
-		,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"descr"
-		,array(
+		//********************
+	
+		//*** Field descr ***
+		$f_opts = array();
+		$f_opts['id']="descr";
 		
-			'alias'=>"Автомобиль"
-		,
-			'id'=>"descr"
-				
-		
-		));
+		$f_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"descr",$f_opts);
 		$this->addField($f_descr);
-
-		$f_plate=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"plate"
-		,array(
+		//********************
+	
+		//*** Field plate ***
+		$f_opts = array();
+		$f_opts['id']="plate";
 		
-			'alias'=>"Гос.номер"
-		,
-			'id'=>"plate"
-				
-		
-		));
+		$f_plate=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"plate",$f_opts);
 		$this->addField($f_plate);
+		//********************
 
-		
-		
-		
 	}
 
 }

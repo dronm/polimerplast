@@ -12,42 +12,33 @@ class DOCOrderProdPassport_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("doc_orders_products_passports");
+			
+		//*** Field doc_order_id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="doc_order_id";
 		
-		$f_doc_order_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"doc_order_id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'id'=>"doc_order_id"
-				
-		
-		));
+		$f_doc_order_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"doc_order_id",$f_opts);
 		$this->addField($f_doc_order_id);
-
-		$f_product_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"product_id"
-		,array(
+		//********************
+	
+		//*** Field product_id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="product_id";
 		
-			'primaryKey'=>TRUE,
-			'id'=>"product_id"
-				
-		
-		));
+		$f_product_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_id",$f_opts);
 		$this->addField($f_product_id);
-
-		$f_content=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"content"
-		,array(
+		//********************
+	
+		//*** Field content ***
+		$f_opts = array();
+		$f_opts['id']="content";
 		
-			'id'=>"content"
-				
-		
-		));
+		$f_content=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"content",$f_opts);
 		$this->addField($f_content);
+		//********************
 
-		
-		
-		
 	}
 
 }

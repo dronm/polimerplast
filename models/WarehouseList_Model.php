@@ -11,21 +11,16 @@ class WarehouseList_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("warehouses_list");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
+		//********************
 
-		
-		
-		
 	}
 
 }

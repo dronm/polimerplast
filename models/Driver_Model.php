@@ -13,71 +13,58 @@ class Driver_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("drivers");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['autoInc']=TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'autoInc'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_name=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"name"
-		,array(
+		//********************
+	
+		//*** Field name ***
+		$f_opts = array();
+		$f_opts['length']=100;
+		$f_opts['id']="name";
 		
-			'length'=>100,
-			'id'=>"name"
-				
-		
-		));
+		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
-
-		$f_drive_perm=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"drive_perm"
-		,array(
+		//********************
+	
+		//*** Field drive_perm ***
+		$f_opts = array();
+		$f_opts['length']=20;
+		$f_opts['id']="drive_perm";
 		
-			'length'=>20,
-			'id'=>"drive_perm"
-				
-		
-		));
+		$f_drive_perm=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"drive_perm",$f_opts);
 		$this->addField($f_drive_perm);
-
-		$f_cel_phone=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"cel_phone"
-		,array(
+		//********************
+	
+		//*** Field cel_phone ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="cel_phone";
 		
-			'length'=>15,
-			'id'=>"cel_phone"
-				
-		
-		));
+		$f_cel_phone=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"cel_phone",$f_opts);
 		$this->addField($f_cel_phone);
-
-		$f_ext_id=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"ext_id"
-		,array(
+		//********************
+	
+		//*** Field ext_id ***
+		$f_opts = array();
+		$f_opts['length']=36;
+		$f_opts['id']="ext_id";
 		
-			'length'=>36,
-			'id'=>"ext_id"
-				
-		
-		));
+		$f_ext_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ext_id",$f_opts);
 		$this->addField($f_ext_id);
+		//********************
 
 		$order = new ModelOrderSQL();		
 		$this->setDefaultModelOrder($order);		
 		
 		$order->addField($f_name);
 
-		
-		
-		
 	}
 
 }

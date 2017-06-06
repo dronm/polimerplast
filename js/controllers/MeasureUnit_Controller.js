@@ -72,7 +72,6 @@ extend(MeasureUnit_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_id",{});
 	pm.addParam(param);
 	
@@ -82,13 +81,11 @@ extend(MeasureUnit_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("name_full",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -96,13 +93,11 @@ extend(MeasureUnit_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("ext_id",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

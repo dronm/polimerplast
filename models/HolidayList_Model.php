@@ -12,42 +12,33 @@ class HolidayList_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("holidays_list");
+			
+		//*** Field date ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="date";
 		
-		$f_date=new FieldSQlDate($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"date"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'id'=>"date"
-				
-		
-		));
+		$f_date=new FieldSQLDate($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date",$f_opts);
 		$this->addField($f_date);
-
-		$f_date_str=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"date_str"
-		,array(
+		//********************
+	
+		//*** Field date_str ***
+		$f_opts = array();
+		$f_opts['id']="date_str";
 		
-			'id'=>"date_str"
-				
-		
-		));
+		$f_date_str=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_str",$f_opts);
 		$this->addField($f_date_str);
-
-		$f_name=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"name"
-		,array(
+		//********************
+	
+		//*** Field name ***
+		$f_opts = array();
+		$f_opts['length']=50;
+		$f_opts['id']="name";
 		
-			'length'=>50,
-			'id'=>"name"
-				
-		
-		));
+		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
+		//********************
 
-		
-		
-		
 	}
 
 }

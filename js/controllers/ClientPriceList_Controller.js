@@ -86,7 +86,6 @@ extend(ClientPriceList_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_id",{});
 	pm.addParam(param);
 	
@@ -96,13 +95,11 @@ extend(ClientPriceList_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("production_city_id",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -110,13 +107,11 @@ extend(ClientPriceList_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldBool("part_ship_do_not_change_price",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -124,13 +119,11 @@ extend(ClientPriceList_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldBool("default_price_list",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

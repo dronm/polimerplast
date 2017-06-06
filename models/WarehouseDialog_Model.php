@@ -12,91 +12,72 @@ class WarehouseDialog_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("warehouses_dialog");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_name=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"name"
-		,array(
+		//********************
+	
+		//*** Field name ***
+		$f_opts = array();
+		$f_opts['id']="name";
 		
-			'id'=>"name"
-				
-		
-		));
+		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
-
-		$f_firm_id=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"firm_id"
-		,array(
+		//********************
+	
+		//*** Field firm_id ***
+		$f_opts = array();
+		$f_opts['id']="firm_id";
 		
-			'id'=>"firm_id"
-				
-		
-		));
+		$f_firm_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"firm_id",$f_opts);
 		$this->addField($f_firm_id);
-
-		$f_firm_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"firm_descr"
-		,array(
+		//********************
+	
+		//*** Field firm_descr ***
+		$f_opts = array();
+		$f_opts['id']="firm_descr";
 		
-			'id'=>"firm_descr"
-				
-		
-		));
+		$f_firm_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"firm_descr",$f_opts);
 		$this->addField($f_firm_descr);
-
-		$f_production_city_id=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"production_city_id"
-		,array(
+		//********************
+	
+		//*** Field production_city_id ***
+		$f_opts = array();
+		$f_opts['id']="production_city_id";
 		
-			'id'=>"production_city_id"
-				
-		
-		));
+		$f_production_city_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"production_city_id",$f_opts);
 		$this->addField($f_production_city_id);
-
-		$f_production_city_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"production_city_descr"
-		,array(
+		//********************
+	
+		//*** Field production_city_descr ***
+		$f_opts = array();
+		$f_opts['id']="production_city_descr";
 		
-			'id'=>"production_city_descr"
-				
-		
-		));
+		$f_production_city_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"production_city_descr",$f_opts);
 		$this->addField($f_production_city_descr);
-
-		$f_zone_str=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"zone_str"
-		,array(
+		//********************
+	
+		//*** Field zone_str ***
+		$f_opts = array();
+		$f_opts['id']="zone_str";
 		
-			'id'=>"zone_str"
-				
-		
-		));
+		$f_zone_str=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"zone_str",$f_opts);
 		$this->addField($f_zone_str);
-
-		$f_zone_center_str=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"zone_center_str"
-		,array(
+		//********************
+	
+		//*** Field zone_center_str ***
+		$f_opts = array();
+		$f_opts['id']="zone_center_str";
 		
-			'id'=>"zone_center_str"
-				
-		
-		));
+		$f_zone_center_str=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"zone_center_str",$f_opts);
 		$this->addField($f_zone_center_str);
+		//********************
 
-		
-		
-		
 	}
 
 }

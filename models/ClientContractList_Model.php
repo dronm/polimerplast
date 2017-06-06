@@ -12,71 +12,56 @@ class ClientContractList_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("client_contract_list");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_client_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_id"
-		,array(
+		//********************
+	
+		//*** Field client_id ***
+		$f_opts = array();
+		$f_opts['id']="client_id";
 		
-			'id'=>"client_id"
-				
-		
-		));
+		$f_client_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_id",$f_opts);
 		$this->addField($f_client_id);
-
-		$f_firm_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"firm_descr"
-		,array(
+		//********************
+	
+		//*** Field firm_descr ***
+		$f_opts = array();
+		$f_opts['id']="firm_descr";
 		
-			'id'=>"firm_descr"
-				
-		
-		));
+		$f_firm_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"firm_descr",$f_opts);
 		$this->addField($f_firm_descr);
-
-		$f_state=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"state"
-		,array(
+		//********************
+	
+		//*** Field state ***
+		$f_opts = array();
+		$f_opts['id']="state";
 		
-			'id'=>"state"
-				
-		
-		));
+		$f_state=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"state",$f_opts);
 		$this->addField($f_state);
-
-		$f_state_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"state_descr"
-		,array(
+		//********************
+	
+		//*** Field state_descr ***
+		$f_opts = array();
+		$f_opts['id']="state_descr";
 		
-			'id'=>"state_descr"
-				
-		
-		));
+		$f_state_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"state_descr",$f_opts);
 		$this->addField($f_state_descr);
-
-		$f_date_to_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"date_to_descr"
-		,array(
+		//********************
+	
+		//*** Field date_to_descr ***
+		$f_opts = array();
+		$f_opts['id']="date_to_descr";
 		
-			'id'=>"date_to_descr"
-				
-		
-		));
+		$f_date_to_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_to_descr",$f_opts);
 		$this->addField($f_date_to_descr);
+		//********************
 
-		
-		
-		
 	}
 
 }

@@ -13,131 +13,93 @@ class ClientDebtList_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("client_debt_list");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_firm_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"firm_id"
-		,array(
+		//********************
+	
+		//*** Field firm_id ***
+		$f_opts = array();
+		$f_opts['sysCol']=TRUE;
+		$f_opts['id']="firm_id";
 		
-			'id'=>"firm_id"
-		,
-			'sysCol'=>TRUE
-				
-		
-		));
+		$f_firm_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"firm_id",$f_opts);
 		$this->addField($f_firm_id);
-
-		$f_firm_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"firm_descr"
-		,array(
+		//********************
+	
+		//*** Field firm_descr ***
+		$f_opts = array();
+		$f_opts['id']="firm_descr";
 		
-			'alias'=>"Организация"
-		,
-			'id'=>"firm_descr"
-				
-		
-		));
+		$f_firm_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"firm_descr",$f_opts);
 		$this->addField($f_firm_descr);
-
-		$f_client_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_id"
-		,array(
+		//********************
+	
+		//*** Field client_id ***
+		$f_opts = array();
+		$f_opts['sysCol']=TRUE;
+		$f_opts['id']="client_id";
 		
-			'id'=>"client_id"
-		,
-			'sysCol'=>TRUE
-				
-		
-		));
+		$f_client_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_id",$f_opts);
 		$this->addField($f_client_id);
-
-		$f_client_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_descr"
-		,array(
+		//********************
+	
+		//*** Field client_descr ***
+		$f_opts = array();
+		$f_opts['id']="client_descr";
 		
-			'alias'=>"Контрагент"
-		,
-			'id'=>"client_descr"
-				
-		
-		));
+		$f_client_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_descr",$f_opts);
 		$this->addField($f_client_descr);
-
-		$f_client_debt_period_days_from=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_debt_period_days_from"
-		,array(
+		//********************
+	
+		//*** Field client_debt_period_days_from ***
+		$f_opts = array();
+		$f_opts['sysCol']=TRUE;
+		$f_opts['id']="client_debt_period_days_from";
 		
-			'id'=>"client_debt_period_days_from"
-		,
-			'sysCol'=>TRUE
-				
-		
-		));
+		$f_client_debt_period_days_from=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_debt_period_days_from",$f_opts);
 		$this->addField($f_client_debt_period_days_from);
-
-		$f_client_debt_period_days_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_debt_period_days_descr"
-		,array(
+		//********************
+	
+		//*** Field client_debt_period_days_descr ***
+		$f_opts = array();
+		$f_opts['id']="client_debt_period_days_descr";
 		
-			'alias'=>"Период задолженности"
-		,
-			'id'=>"client_debt_period_days_descr"
-				
-		
-		));
+		$f_client_debt_period_days_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_debt_period_days_descr",$f_opts);
 		$this->addField($f_client_debt_period_days_descr);
-
-		$f_def_debt=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"def_debt"
-		,array(
+		//********************
+	
+		//*** Field def_debt ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="def_debt";
 		
-			'alias'=>"Просроченная задолженность"
-		,
-			'length'=>15,
-			'id'=>"def_debt"
-				
-		
-		));
+		$f_def_debt=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"def_debt",$f_opts);
 		$this->addField($f_def_debt);
-
-		$f_debt_total=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"debt_total"
-		,array(
+		//********************
+	
+		//*** Field debt_total ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="debt_total";
 		
-			'alias'=>"Долг всего"
-		,
-			'length'=>15,
-			'id'=>"debt_total"
-				
-		
-		));
+		$f_debt_total=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"debt_total",$f_opts);
 		$this->addField($f_debt_total);
-
-		$f_days=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"days"
-		,array(
+		//********************
+	
+		//*** Field days ***
+		$f_opts = array();
+		$f_opts['id']="days";
 		
-			'alias'=>"Дней просроченного долга"
-		,
-			'id'=>"days"
-				
-		
-		));
+		$f_days=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"days",$f_opts);
 		$this->addField($f_days);
+		//********************
 
-		
-		
-		
 	}
 
 }

@@ -13,66 +13,51 @@ class TemplateParam_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("template_params");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['autoInc']=TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'autoInc'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_template=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"template"
-		,array(
+		//********************
+	
+		//*** Field template ***
+		$f_opts = array();
+		$f_opts['length']=100;
+		$f_opts['id']="template";
 		
-			'length'=>100,
-			'id'=>"template"
-				
-		
-		));
+		$f_template=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"template",$f_opts);
 		$this->addField($f_template);
-
-		$f_user_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"user_id"
-		,array(
+		//********************
+	
+		//*** Field user_id ***
+		$f_opts = array();
+		$f_opts['id']="user_id";
 		
-			'alias'=>"Пользователь"
-		,
-			'id'=>"user_id"
-				
-		
-		));
+		$f_user_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"user_id",$f_opts);
 		$this->addField($f_user_id);
-
-		$f_param=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"param"
-		,array(
+		//********************
+	
+		//*** Field param ***
+		$f_opts = array();
+		$f_opts['length']=100;
+		$f_opts['id']="param";
 		
-			'length'=>100,
-			'id'=>"param"
-				
-		
-		));
+		$f_param=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"param",$f_opts);
 		$this->addField($f_param);
-
-		$f_val=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"val"
-		,array(
+		//********************
+	
+		//*** Field val ***
+		$f_opts = array();
+		$f_opts['id']="val";
 		
-			'id'=>"val"
-				
-		
-		));
+		$f_val=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"val",$f_opts);
 		$this->addField($f_val);
+		//********************
 
-		
-		
-		
 	}
 
 }

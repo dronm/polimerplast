@@ -60,7 +60,6 @@ extend(UserWarehouse_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_id",{});
 	pm.addParam(param);
 	
@@ -70,13 +69,11 @@ extend(UserWarehouse_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("warehouse_id",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

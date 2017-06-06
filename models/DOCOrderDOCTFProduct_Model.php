@@ -13,236 +13,179 @@ class DOCOrderDOCTFProduct_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("doc_orders_t_products");
+			
+		//*** Field doc_id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="doc_id";
 		
-		$f_doc_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"doc_id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'id'=>"doc_id"
-				
-		
-		));
+		$f_doc_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"doc_id",$f_opts);
 		$this->addField($f_doc_id);
-
-		$f_line_number=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"line_number"
-		,array(
+		//********************
+	
+		//*** Field line_number ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="line_number";
 		
-			'primaryKey'=>TRUE,
-			'id'=>"line_number"
-				
-		
-		));
+		$f_line_number=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"line_number",$f_opts);
 		$this->addField($f_line_number);
-
-		$f_product_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"product_id"
-		,array(
-		'required'=>TRUE,
-			'alias'=>"Продукция"
-		,
-			'id'=>"product_id"
-				
+		//********************
+	
+		//*** Field product_id ***
+		$f_opts = array();
+		$f_opts['id']="product_id";
 		
-		));
+		$f_product_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_id",$f_opts);
 		$this->addField($f_product_id);
-
-		$f_mes_length=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"mes_length"
-		,array(
+		//********************
+	
+		//*** Field mes_length ***
+		$f_opts = array();
+		$f_opts['id']="mes_length";
 		
-			'id'=>"mes_length"
-				
-		
-		));
+		$f_mes_length=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"mes_length",$f_opts);
 		$this->addField($f_mes_length);
-
-		$f_mes_width=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"mes_width"
-		,array(
+		//********************
+	
+		//*** Field mes_width ***
+		$f_opts = array();
+		$f_opts['id']="mes_width";
 		
-			'id'=>"mes_width"
-				
-		
-		));
+		$f_mes_width=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"mes_width",$f_opts);
 		$this->addField($f_mes_width);
-
-		$f_mes_height=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"mes_height"
-		,array(
+		//********************
+	
+		//*** Field mes_height ***
+		$f_opts = array();
+		$f_opts['id']="mes_height";
 		
-			'id'=>"mes_height"
-				
-		
-		));
+		$f_mes_height=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"mes_height",$f_opts);
 		$this->addField($f_mes_height);
-
-		$f_measure_unit_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"measure_unit_id"
-		,array(
-		'required'=>TRUE,
-			'id'=>"measure_unit_id"
-				
+		//********************
+	
+		//*** Field measure_unit_id ***
+		$f_opts = array();
+		$f_opts['id']="measure_unit_id";
 		
-		));
+		$f_measure_unit_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"measure_unit_id",$f_opts);
 		$this->addField($f_measure_unit_id);
-
-		$f_quant=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"quant"
-		,array(
+		//********************
+	
+		//*** Field quant ***
+		$f_opts = array();
+		$f_opts['length']=19;
+		$f_opts['id']="quant";
 		
-			'alias'=>"Количество"
-		,
-			'length'=>19,
-			'id'=>"quant"
-				
-		
-		));
+		$f_quant=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"quant",$f_opts);
 		$this->addField($f_quant);
-
-		$f_quant_confirmed=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"quant_confirmed"
-		,array(
+		//********************
+	
+		//*** Field quant_confirmed ***
+		$f_opts = array();
+		$f_opts['length']=19;
+		$f_opts['id']="quant_confirmed";
 		
-			'length'=>19,
-			'id'=>"quant_confirmed"
-				
-		
-		));
+		$f_quant_confirmed=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"quant_confirmed",$f_opts);
 		$this->addField($f_quant_confirmed);
-
-		$f_quant_base_measure_unit=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"quant_base_measure_unit"
-		,array(
+		//********************
+	
+		//*** Field quant_base_measure_unit ***
+		$f_opts = array();
+		$f_opts['length']=19;
+		$f_opts['id']="quant_base_measure_unit";
 		
-			'alias'=>"Количество"
-		,
-			'length'=>19,
-			'id'=>"quant_base_measure_unit"
-				
-		
-		));
+		$f_quant_base_measure_unit=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"quant_base_measure_unit",$f_opts);
 		$this->addField($f_quant_base_measure_unit);
-
-		$f_quant_confirmed_base_measure_unit=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"quant_confirmed_base_measure_unit"
-		,array(
+		//********************
+	
+		//*** Field quant_confirmed_base_measure_unit ***
+		$f_opts = array();
+		$f_opts['length']=19;
+		$f_opts['id']="quant_confirmed_base_measure_unit";
 		
-			'length'=>19,
-			'id'=>"quant_confirmed_base_measure_unit"
-				
-		
-		));
+		$f_quant_confirmed_base_measure_unit=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"quant_confirmed_base_measure_unit",$f_opts);
 		$this->addField($f_quant_confirmed_base_measure_unit);
-
-		$f_volume=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"volume"
-		,array(
+		//********************
+	
+		//*** Field volume ***
+		$f_opts = array();
+		$f_opts['length']=19;
+		$f_opts['id']="volume";
 		
-			'length'=>19,
-			'id'=>"volume"
-				
-		
-		));
+		$f_volume=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"volume",$f_opts);
 		$this->addField($f_volume);
-
-		$f_weight=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"weight"
-		,array(
+		//********************
+	
+		//*** Field weight ***
+		$f_opts = array();
+		$f_opts['length']=19;
+		$f_opts['id']="weight";
 		
-			'length'=>19,
-			'id'=>"weight"
-				
-		
-		));
+		$f_weight=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"weight",$f_opts);
 		$this->addField($f_weight);
-
-		$f_price=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"price"
-		,array(
+		//********************
+	
+		//*** Field price ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="price";
 		
-			'alias'=>"Цена"
-		,
-			'length'=>15,
-			'id'=>"price"
-				
-		
-		));
+		$f_price=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"price",$f_opts);
 		$this->addField($f_price);
-
-		$f_price_no_deliv=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"price_no_deliv"
-		,array(
+		//********************
+	
+		//*** Field price_no_deliv ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="price_no_deliv";
 		
-			'alias'=>"Цена без доставки"
-		,
-			'length'=>15,
-			'id'=>"price_no_deliv"
-				
-		
-		));
+		$f_price_no_deliv=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"price_no_deliv",$f_opts);
 		$this->addField($f_price_no_deliv);
-
-		$f_price_edit=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"price_edit"
-		,array(
+		//********************
+	
+		//*** Field price_edit ***
+		$f_opts = array();
+		$f_opts['id']="price_edit";
 		
-			'id'=>"price_edit"
-				
-		
-		));
+		$f_price_edit=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"price_edit",$f_opts);
 		$this->addField($f_price_edit);
-
-		$f_total=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"total"
-		,array(
+		//********************
+	
+		//*** Field total ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="total";
 		
-			'alias'=>"Сумма"
-		,
-			'length'=>15,
-			'id'=>"total"
-				
-		
-		));
+		$f_total=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total",$f_opts);
 		$this->addField($f_total);
-
-		$f_total_pack=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"total_pack"
-		,array(
+		//********************
+	
+		//*** Field total_pack ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="total_pack";
 		
-			'alias'=>"Упаковка"
-		,
-			'length'=>15,
-			'id'=>"total_pack"
-				
-		
-		));
+		$f_total_pack=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total_pack",$f_opts);
 		$this->addField($f_total_pack);
-
-		$f_pack_exists=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"pack_exists"
-		,array(
+		//********************
+	
+		//*** Field pack_exists ***
+		$f_opts = array();
+		$f_opts['id']="pack_exists";
 		
-			'id'=>"pack_exists"
-				
-		
-		));
+		$f_pack_exists=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"pack_exists",$f_opts);
 		$this->addField($f_pack_exists);
-
-		$f_pack_in_price=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"pack_in_price"
-		,array(
+		//********************
+	
+		//*** Field pack_in_price ***
+		$f_opts = array();
+		$f_opts['id']="pack_in_price";
 		
-			'id'=>"pack_in_price"
-				
-		
-		));
+		$f_pack_in_price=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"pack_in_price",$f_opts);
 		$this->addField($f_pack_in_price);
+		//********************
 
-		
-		
-		
 	}
 
 }

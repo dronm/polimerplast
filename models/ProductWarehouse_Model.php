@@ -11,32 +11,25 @@ class ProductWarehouse_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("product_warehouses");
+			
+		//*** Field product_id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="product_id";
 		
-		$f_product_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"product_id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'id'=>"product_id"
-				
-		
-		));
+		$f_product_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_id",$f_opts);
 		$this->addField($f_product_id);
-
-		$f_warehouse_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"warehouse_id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'id'=>"warehouse_id"
-				
+		//********************
+	
+		//*** Field warehouse_id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="warehouse_id";
 		
-		));
+		$f_warehouse_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"warehouse_id",$f_opts);
 		$this->addField($f_warehouse_id);
+		//********************
 
-		
-		
-		
 	}
 
 }

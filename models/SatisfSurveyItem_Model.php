@@ -12,32 +12,25 @@ class SatisfSurveyItem_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("satisf_survey_items");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['autoInc']=TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'autoInc'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_item=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"item"
-		,array(
+		//********************
+	
+		//*** Field item ***
+		$f_opts = array();
+		$f_opts['id']="item";
 		
-			'id'=>"item"
-				
-		
-		));
+		$f_item=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"item",$f_opts);
 		$this->addField($f_item);
+		//********************
 
-		
-		
-		
 	}
 
 }

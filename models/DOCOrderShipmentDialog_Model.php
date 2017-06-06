@@ -11,21 +11,16 @@ class DOCOrderShipmentDialog_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("doc_orders_shipment_dialog");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
+		//********************
 
-		
-		
-		
 	}
 
 }

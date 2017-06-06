@@ -1,6 +1,4 @@
 <?php
-
-
 require_once(FRAME_WORK_PATH.'basic_classes/Controller.php');
 
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtInt.php');

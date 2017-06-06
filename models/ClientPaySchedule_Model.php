@@ -13,62 +13,49 @@ class ClientPaySchedule_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("client_pay_schedules");
+			
+		//*** Field doc_id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="doc_id";
 		
-		$f_doc_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"doc_id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'id'=>"doc_id"
-				
-		
-		));
+		$f_doc_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"doc_id",$f_opts);
 		$this->addField($f_doc_id);
-
-		$f_pay_date=new FieldSQlDate($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"pay_date"
-		,array(
-		'required'=>TRUE,
-			'id'=>"pay_date"
-				
+		//********************
+	
+		//*** Field pay_date ***
+		$f_opts = array();
+		$f_opts['id']="pay_date";
 		
-		));
+		$f_pay_date=new FieldSQLDate($this->getDbLink(),$this->getDbName(),$this->getTableName(),"pay_date",$f_opts);
 		$this->addField($f_pay_date);
-
-		$f_firm_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"firm_id"
-		,array(
-		'required'=>TRUE,
-			'id'=>"firm_id"
-				
+		//********************
+	
+		//*** Field firm_id ***
+		$f_opts = array();
+		$f_opts['id']="firm_id";
 		
-		));
+		$f_firm_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"firm_id",$f_opts);
 		$this->addField($f_firm_id);
-
-		$f_client_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_id"
-		,array(
-		'required'=>TRUE,
-			'id'=>"client_id"
-				
+		//********************
+	
+		//*** Field client_id ***
+		$f_opts = array();
+		$f_opts['id']="client_id";
 		
-		));
+		$f_client_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_id",$f_opts);
 		$this->addField($f_client_id);
-
-		$f_total=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"total"
-		,array(
+		//********************
+	
+		//*** Field total ***
+		$f_opts = array();
+		$f_opts['length']=19;
+		$f_opts['id']="total";
 		
-			'length'=>19,
-			'id'=>"total"
-				
-		
-		));
+		$f_total=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total",$f_opts);
 		$this->addField($f_total);
+		//********************
 
-		
-		
-		
 	}
 
 }

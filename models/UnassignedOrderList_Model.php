@@ -14,154 +14,106 @@ class UnassignedOrderList_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("deliv_unassigned_orders_list");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['sysCol']=TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		
-			'id'=>"id"
-		,
-			'sysCol'=>TRUE
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_number=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"number"
-		,array(
+		//********************
+	
+		//*** Field number ***
+		$f_opts = array();
+		$f_opts['id']="number";
 		
-			'alias'=>"Номер"
-		,
-			'id'=>"number"
-				
-		
-		));
+		$f_number=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"number",$f_opts);
 		$this->addField($f_number);
-
-		$f_date_time=new FieldSQlDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"date_time"
-		,array(
+		//********************
+	
+		//*** Field date_time ***
+		$f_opts = array();
+		$f_opts['id']="date_time";
 		
-			'alias'=>"Дата"
-		,
-			'id'=>"date_time"
-				
-		
-		));
+		$f_date_time=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_time",$f_opts);
 		$this->addField($f_date_time);
-
-		$f_delivery_plan_date=new FieldSQlDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"delivery_plan_date"
-		,array(
+		//********************
+	
+		//*** Field delivery_plan_date ***
+		$f_opts = array();
+		$f_opts['sysCol']=TRUE;
+		$f_opts['id']="delivery_plan_date";
 		
-			'id'=>"delivery_plan_date"
-		,
-			'sysCol'=>TRUE
-				
-		
-		));
+		$f_delivery_plan_date=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"delivery_plan_date",$f_opts);
 		$this->addField($f_delivery_plan_date);
-
-		$f_delivery_plan_date_descr=new FieldSQlDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"delivery_plan_date_descr"
-		,array(
+		//********************
+	
+		//*** Field delivery_plan_date_descr ***
+		$f_opts = array();
+		$f_opts['id']="delivery_plan_date_descr";
 		
-			'alias'=>"Плановая дата выпуска"
-		,
-			'id'=>"delivery_plan_date_descr"
-				
-		
-		));
+		$f_delivery_plan_date_descr=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"delivery_plan_date_descr",$f_opts);
 		$this->addField($f_delivery_plan_date_descr);
-
-		$f_client_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_id"
-		,array(
+		//********************
+	
+		//*** Field client_id ***
+		$f_opts = array();
+		$f_opts['sysCol']=TRUE;
+		$f_opts['id']="client_id";
 		
-			'id'=>"client_id"
-		,
-			'sysCol'=>TRUE
-				
-		
-		));
+		$f_client_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_id",$f_opts);
 		$this->addField($f_client_id);
-
-		$f_client_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_descr"
-		,array(
+		//********************
+	
+		//*** Field client_descr ***
+		$f_opts = array();
+		$f_opts['id']="client_descr";
 		
-			'alias'=>"Клиент"
-		,
-			'id'=>"client_descr"
-				
-		
-		));
+		$f_client_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_descr",$f_opts);
 		$this->addField($f_client_descr);
-
-		$f_warehouse_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"warehouse_descr"
-		,array(
+		//********************
+	
+		//*** Field warehouse_descr ***
+		$f_opts = array();
+		$f_opts['id']="warehouse_descr";
 		
-			'alias'=>"Склад"
-		,
-			'id'=>"warehouse_descr"
-				
-		
-		));
+		$f_warehouse_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"warehouse_descr",$f_opts);
 		$this->addField($f_warehouse_descr);
-
-		$f_client_dest_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_dest_descr"
-		,array(
+		//********************
+	
+		//*** Field client_dest_descr ***
+		$f_opts = array();
+		$f_opts['id']="client_dest_descr";
 		
-			'alias'=>"Адрес"
-		,
-			'id'=>"client_dest_descr"
-				
-		
-		));
+		$f_client_dest_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_dest_descr",$f_opts);
 		$this->addField($f_client_dest_descr);
-
-		$f_product_str=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"product_str"
-		,array(
+		//********************
+	
+		//*** Field product_str ***
+		$f_opts = array();
+		$f_opts['id']="product_str";
 		
-			'alias'=>"Продукция"
-		,
-			'id'=>"product_str"
-				
-		
-		));
+		$f_product_str=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_str",$f_opts);
 		$this->addField($f_product_str);
-
-		$f_total_volume=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"total_volume"
-		,array(
+		//********************
+	
+		//*** Field total_volume ***
+		$f_opts = array();
+		$f_opts['id']="total_volume";
 		
-			'alias'=>"Объем"
-		,
-			'id'=>"total_volume"
-				
-		
-		));
+		$f_total_volume=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total_volume",$f_opts);
 		$this->addField($f_total_volume);
-
-		$f_total_weight=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"total_weight"
-		,array(
+		//********************
+	
+		//*** Field total_weight ***
+		$f_opts = array();
+		$f_opts['id']="total_weight";
 		
-			'alias'=>"Вес"
-		,
-			'id'=>"total_weight"
-				
-		
-		));
+		$f_total_weight=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total_weight",$f_opts);
 		$this->addField($f_total_weight);
+		//********************
 
-		
-		
-		
 	}
 
 }

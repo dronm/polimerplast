@@ -14,63 +14,50 @@ class VehicleState_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("vehicle_states_data");
+			
+		//*** Field vehicle_id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="vehicle_id";
 		
-		$f_vehicle_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"vehicle_id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'id'=>"vehicle_id"
-				
-		
-		));
+		$f_vehicle_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"vehicle_id",$f_opts);
 		$this->addField($f_vehicle_id);
-
-		$f_date_time=new FieldSQlDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"date_time"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'id'=>"date_time"
-				
+		//********************
+	
+		//*** Field date_time ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="date_time";
 		
-		));
+		$f_date_time=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_time",$f_opts);
 		$this->addField($f_date_time);
-
-		$f_state=new FieldSQlEnum($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"state"
-		,array(
+		//********************
+	
+		//*** Field state ***
+		$f_opts = array();
+		$f_opts['id']="state";
 		
-			'id'=>"state"
-				
-		
-		));
+		$f_state=new FieldSQLEnum($this->getDbLink(),$this->getDbName(),$this->getTableName(),"state",$f_opts);
 		$this->addField($f_state);
-
-		$f_tracker=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"tracker"
-		,array(
+		//********************
+	
+		//*** Field tracker ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="tracker";
 		
-			'length'=>15,
-			'id'=>"tracker"
-				
-		
-		));
+		$f_tracker=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"tracker",$f_opts);
 		$this->addField($f_tracker);
-
-		$f_to_client_zone=new FieldSQlGeometry($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"to_client_zone"
-		,array(
+		//********************
+	
+		//*** Field to_client_zone ***
+		$f_opts = array();
+		$f_opts['id']="to_client_zone";
 		
-			'id'=>"to_client_zone"
-				
-		
-		));
+		$f_to_client_zone=new FieldSQLGeometry($this->getDbLink(),$this->getDbName(),$this->getTableName(),"to_client_zone",$f_opts);
 		$this->addField($f_to_client_zone);
+		//********************
 
-		
-		
-		
 	}
 
 }

@@ -1,5 +1,4 @@
 <?php
-
 require_once(FRAME_WORK_PATH.'basic_classes/ControllerSQL.php');
 
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtInt.php');
@@ -510,7 +509,7 @@ class ClientDestination_Controller extends ControllerSQL{
 		);
 		get_inf_on_address($addr,$res);
 	
-		if ($res['precision']!="exact" && $res['precision']!="near" & $res['precision']!="street"){
+		if ($pm->getParamValue('ulitza') && $pm->getParamValue('dom') && $res['precision']!="exact" && $res['precision']!="near" & $res['precision']!="street"){
 			throw new Exception("Адрес не найден!");
 		}
 		$this->addNewModel(sprintf(

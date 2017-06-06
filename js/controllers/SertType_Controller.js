@@ -63,7 +63,6 @@ extend(SertType_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_id",{});
 	pm.addParam(param);
 	
@@ -73,13 +72,11 @@ extend(SertType_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("xslt_pattern",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

@@ -82,7 +82,6 @@ extend(DOCOrderDOCTCustSurvey_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldString("old_view_id",{});
 	pm.addParam(param);
 	
@@ -91,7 +90,6 @@ extend(DOCOrderDOCTCustSurvey_Controller,ControllerDb);
 	var param = new FieldInt("line_number",options);
 	
 	pm.addParam(param);
-	
 	
 	param = new FieldInt("old_line_number",{});
 	pm.addParam(param);
@@ -102,13 +100,11 @@ extend(DOCOrderDOCTCustSurvey_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("customer_survey_question_id",options);
 	
 	pm.addParam(param);
-	
 	
 	param = new FieldInt("old_customer_survey_question_id",{});
 	pm.addParam(param);
@@ -119,13 +115,11 @@ extend(DOCOrderDOCTCustSurvey_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldText("answer_comment",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

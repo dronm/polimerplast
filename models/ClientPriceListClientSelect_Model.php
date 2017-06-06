@@ -11,21 +11,16 @@ class ClientPriceListClientSelect_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("");
+			
+		//*** Field client_id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="client_id";
 		
-		$f_client_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'id'=>"client_id"
-				
-		
-		));
+		$f_client_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_id",$f_opts);
 		$this->addField($f_client_id);
+		//********************
 
-		
-		
-		
 	}
 
 }

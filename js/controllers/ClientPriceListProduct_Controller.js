@@ -81,7 +81,6 @@ extend(ClientPriceListProduct_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_price_list_id",{});
 	pm.addParam(param);
 	
@@ -90,7 +89,6 @@ extend(ClientPriceListProduct_Controller,ControllerDb);
 	var param = new FieldInt("product_id",options);
 	
 	pm.addParam(param);
-	
 	
 	param = new FieldInt("old_product_id",{});
 	pm.addParam(param);
@@ -101,13 +99,11 @@ extend(ClientPriceListProduct_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldFloat("discount_volume",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -115,13 +111,11 @@ extend(ClientPriceListProduct_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldFloat("pack_price",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

@@ -11,41 +11,32 @@ class ClientPriceListClientList_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("client_price_list_clients_list");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_price_list_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"price_list_id"
-		,array(
+		//********************
+	
+		//*** Field price_list_id ***
+		$f_opts = array();
+		$f_opts['id']="price_list_id";
 		
-			'id'=>"price_list_id"
-				
-		
-		));
+		$f_price_list_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"price_list_id",$f_opts);
 		$this->addField($f_price_list_id);
-
-		$f_client_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_id"
-		,array(
-		'required'=>TRUE,
-			'id'=>"client_id"
-				
+		//********************
+	
+		//*** Field client_id ***
+		$f_opts = array();
+		$f_opts['id']="client_id";
 		
-		));
+		$f_client_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_id",$f_opts);
 		$this->addField($f_client_id);
+		//********************
 
-		
-		
-		
 	}
 
 }

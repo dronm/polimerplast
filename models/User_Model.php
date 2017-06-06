@@ -1,5 +1,4 @@
 <?php
-
 require_once(FRAME_WORK_PATH.'basic_classes/ModelSQL.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLInt.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLString.php');
@@ -16,158 +15,119 @@ class User_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("users");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['autoInc']=TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'autoInc'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_name=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"name"
-		,array(
-		'required'=>TRUE,
-			'alias'=>"логин"
-		,
-			'length'=>50,
-			'id'=>"name"
-				
+		//********************
+	
+		//*** Field name ***
+		$f_opts = array();
+		$f_opts['length']=50;
+		$f_opts['id']="name";
 		
-		));
+		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
-
-		$f_name_full=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"name_full"
-		,array(
-		'required'=>TRUE,
-			'alias'=>"ФИО"
-		,
-			'length'=>150,
-			'id'=>"name_full"
-				
+		//********************
+	
+		//*** Field name_full ***
+		$f_opts = array();
+		$f_opts['length']=150;
+		$f_opts['id']="name_full";
 		
-		));
+		$f_name_full=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name_full",$f_opts);
 		$this->addField($f_name_full);
-
-		$f_sign_order=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"sign_order"
-		,array(
+		//********************
+	
+		//*** Field sign_order ***
+		$f_opts = array();
+		$f_opts['length']=100;
+		$f_opts['id']="sign_order";
 		
-			'alias'=>"Приказ"
-		,
-			'length'=>100,
-			'id'=>"sign_order"
-				
-		
-		));
+		$f_sign_order=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"sign_order",$f_opts);
 		$this->addField($f_sign_order);
-
-		$f_role_id=new FieldSQlEnum($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"role_id"
-		,array(
+		//********************
+	
+		//*** Field role_id ***
+		$f_opts = array();
+		$f_opts['id']="role_id";
 		
-			'alias'=>"роль"
-		,
-			'id'=>"role_id"
-				
-		
-		));
+		$f_role_id=new FieldSQLEnum($this->getDbLink(),$this->getDbName(),$this->getTableName(),"role_id",$f_opts);
 		$this->addField($f_role_id);
-
-		$f_email=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"email"
-		,array(
-		'required'=>FALSE,
-			'alias'=>"эл.почта"
-		,
-			'length'=>50,
-			'id'=>"email"
-				
+		//********************
+	
+		//*** Field email ***
+		$f_opts = array();
+		$f_opts['length']=50;
+		$f_opts['id']="email";
 		
-		));
+		$f_email=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"email",$f_opts);
 		$this->addField($f_email);
-
-		$f_pwd=new FieldSQlPassword($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"pwd"
-		,array(
+		//********************
+	
+		//*** Field pwd ***
+		$f_opts = array();
+		$f_opts['length']=32;
+		$f_opts['id']="pwd";
 		
-			'alias'=>"пароль"
-		,
-			'length'=>32,
-			'id'=>"pwd"
-				
-		
-		));
+		$f_pwd=new FieldSQLPassword($this->getDbLink(),$this->getDbName(),$this->getTableName(),"pwd",$f_opts);
 		$this->addField($f_pwd);
-
-		$f_cel_phone=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"cel_phone"
-		,array(
-		'required'=>FALSE,
-			'length'=>15,
-			'id'=>"cel_phone"
-				
+		//********************
+	
+		//*** Field cel_phone ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="cel_phone";
 		
-		));
+		$f_cel_phone=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"cel_phone",$f_opts);
 		$this->addField($f_cel_phone);
-
-		$f_client_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_id"
-		,array(
+		//********************
+	
+		//*** Field client_id ***
+		$f_opts = array();
+		$f_opts['id']="client_id";
 		
-			'id'=>"client_id"
-				
-		
-		));
+		$f_client_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_id",$f_opts);
 		$this->addField($f_client_id);
-
-		$f_tel_ext=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"tel_ext"
-		,array(
+		//********************
+	
+		//*** Field tel_ext ***
+		$f_opts = array();
+		$f_opts['length']=5;
+		$f_opts['id']="tel_ext";
 		
-			'length'=>5,
-			'id'=>"tel_ext"
-				
-		
-		));
+		$f_tel_ext=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"tel_ext",$f_opts);
 		$this->addField($f_tel_ext);
-
-		$f_ext_id=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"ext_id"
-		,array(
+		//********************
+	
+		//*** Field ext_id ***
+		$f_opts = array();
+		$f_opts['length']=36;
+		$f_opts['id']="ext_id";
 		
-			'length'=>36,
-			'id'=>"ext_id"
-				
-		
-		));
+		$f_ext_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ext_id",$f_opts);
 		$this->addField($f_ext_id);
-
-		$f_ext_login=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"ext_login"
-		,array(
+		//********************
+	
+		//*** Field ext_login ***
+		$f_opts = array();
+		$f_opts['length']=100;
+		$f_opts['id']="ext_login";
 		
-			'length'=>100,
-			'id'=>"ext_login"
-				
-		
-		));
+		$f_ext_login=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ext_login",$f_opts);
 		$this->addField($f_ext_login);
+		//********************
 
 		$order = new ModelOrderSQL();		
 		$this->setDefaultModelOrder($order);		
 		
 		$order->addField($f_name);
 
-		
-		
-		
 	}
 
 	

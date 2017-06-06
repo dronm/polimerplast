@@ -320,7 +320,6 @@ extend(Product_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_id",{});
 	pm.addParam(param);
 	
@@ -330,13 +329,11 @@ extend(Product_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldBool("mes_length_exists",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -344,13 +341,11 @@ extend(Product_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldBool("mes_length_fix",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -358,13 +353,11 @@ extend(Product_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("mes_length_min_val",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -372,13 +365,11 @@ extend(Product_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("mes_length_def_val",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -386,13 +377,11 @@ extend(Product_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldText("mes_length_vals",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -400,13 +389,11 @@ extend(Product_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("mes_width_name",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -414,13 +401,11 @@ extend(Product_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("mes_width_fix_val",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -428,13 +413,11 @@ extend(Product_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("mes_width_max_val",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -442,13 +425,11 @@ extend(Product_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldBool("mes_width_seq",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -456,13 +437,11 @@ extend(Product_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldBool("mes_height_exists",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -470,13 +449,11 @@ extend(Product_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldBool("mes_height_fix",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -484,13 +461,11 @@ extend(Product_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("mes_height_min_val",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -498,13 +473,11 @@ extend(Product_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("mes_height_def_val",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -512,13 +485,11 @@ extend(Product_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldText("mes_height_vals",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -526,13 +497,11 @@ extend(Product_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("order_measure_unit_id",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -540,13 +509,11 @@ extend(Product_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldFloat("base_measure_unit_weight_t",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -554,13 +521,11 @@ extend(Product_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldBool("pack_default",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -568,13 +533,11 @@ extend(Product_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldBool("pack_full_package_only",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -582,13 +545,11 @@ extend(Product_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldBool("extra_pay_for_abn_size_always",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -596,13 +557,11 @@ extend(Product_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldText("warehouses_str",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -610,13 +569,11 @@ extend(Product_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("lot_volume",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -624,20 +581,17 @@ extend(Product_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("name_for_1c",options);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("product_group_id",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

@@ -84,7 +84,6 @@ extend(SertTypeAttr_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_id",{});
 	pm.addParam(param);
 	
@@ -94,13 +93,11 @@ extend(SertTypeAttr_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("attr_text",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -108,13 +105,11 @@ extend(SertTypeAttr_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("attr_val",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -122,13 +117,11 @@ extend(SertTypeAttr_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldFloat("attr_val_max",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

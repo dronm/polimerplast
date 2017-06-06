@@ -58,7 +58,6 @@ extend(ClientDebtPeriod_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_days_from",{});
 	pm.addParam(param);
 	
@@ -67,7 +66,6 @@ extend(ClientDebtPeriod_Controller,ControllerDb);
 	var param = new FieldInt("days_to",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

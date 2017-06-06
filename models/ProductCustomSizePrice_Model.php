@@ -12,54 +12,43 @@ class ProductCustomSizePrice_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("product_custom_size_prices");
+			
+		//*** Field product_id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="product_id";
 		
-		$f_product_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"product_id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'id'=>"product_id"
-				
-		
-		));
+		$f_product_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_id",$f_opts);
 		$this->addField($f_product_id);
-
-		$f_category=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"category"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'id'=>"category"
-				
+		//********************
+	
+		//*** Field category ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="category";
 		
-		));
+		$f_category=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"category",$f_opts);
 		$this->addField($f_category);
-
-		$f_price=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"price"
-		,array(
+		//********************
+	
+		//*** Field price ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="price";
 		
-			'length'=>15,
-			'id'=>"price"
-				
-		
-		));
+		$f_price=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"price",$f_opts);
 		$this->addField($f_price);
-
-		$f_quant=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"quant"
-		,array(
+		//********************
+	
+		//*** Field quant ***
+		$f_opts = array();
+		$f_opts['length']=19;
+		$f_opts['id']="quant";
 		
-			'length'=>19,
-			'id'=>"quant"
-				
-		
-		));
+		$f_quant=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"quant",$f_opts);
 		$this->addField($f_quant);
+		//********************
 
-		
-		
-		
 	}
 
 }

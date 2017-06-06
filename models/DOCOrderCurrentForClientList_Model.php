@@ -15,281 +15,224 @@ class DOCOrderCurrentForClientList_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("doc_orders_all_for_client_list");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_number=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"number"
-		,array(
+		//********************
+	
+		//*** Field number ***
+		$f_opts = array();
+		$f_opts['id']="number";
 		
-			'id'=>"number"
-				
-		
-		));
+		$f_number=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"number",$f_opts);
 		$this->addField($f_number);
-
-		$f_date_time=new FieldSQlDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"date_time"
-		,array(
+		//********************
+	
+		//*** Field date_time ***
+		$f_opts = array();
+		$f_opts['id']="date_time";
 		
-			'id'=>"date_time"
-				
-		
-		));
+		$f_date_time=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_time",$f_opts);
 		$this->addField($f_date_time);
-
-		$f_date_time_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"date_time_descr"
-		,array(
+		//********************
+	
+		//*** Field date_time_descr ***
+		$f_opts = array();
+		$f_opts['id']="date_time_descr";
 		
-			'id'=>"date_time_descr"
-				
-		
-		));
+		$f_date_time_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_time_descr",$f_opts);
 		$this->addField($f_date_time_descr);
-
-		$f_client_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_id"
-		,array(
+		//********************
+	
+		//*** Field client_id ***
+		$f_opts = array();
+		$f_opts['id']="client_id";
 		
-			'id'=>"client_id"
-				
-		
-		));
+		$f_client_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_id",$f_opts);
 		$this->addField($f_client_id);
-
-		$f_client_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_descr"
-		,array(
+		//********************
+	
+		//*** Field client_descr ***
+		$f_opts = array();
+		$f_opts['id']="client_descr";
 		
-			'id'=>"client_descr"
-				
-		
-		));
+		$f_client_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_descr",$f_opts);
 		$this->addField($f_client_descr);
-
-		$f_product_plan_date=new FieldSQlDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"product_plan_date"
-		,array(
+		//********************
+	
+		//*** Field product_plan_date ***
+		$f_opts = array();
+		$f_opts['id']="product_plan_date";
 		
-			'id'=>"product_plan_date"
-				
-		
-		));
+		$f_product_plan_date=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_plan_date",$f_opts);
 		$this->addField($f_product_plan_date);
-
-		$f_product_plan_date_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"product_plan_date_descr"
-		,array(
+		//********************
+	
+		//*** Field product_plan_date_descr ***
+		$f_opts = array();
+		$f_opts['id']="product_plan_date_descr";
 		
-			'id'=>"product_plan_date_descr"
-				
-		
-		));
+		$f_product_plan_date_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_plan_date_descr",$f_opts);
 		$this->addField($f_product_plan_date_descr);
-
-		$f_address_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"address_descr"
-		,array(
+		//********************
+	
+		//*** Field address_descr ***
+		$f_opts = array();
+		$f_opts['id']="address_descr";
 		
-			'id'=>"address_descr"
-				
-		
-		));
+		$f_address_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"address_descr",$f_opts);
 		$this->addField($f_address_descr);
-
-		$f_warehouse_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"warehouse_id"
-		,array(
+		//********************
+	
+		//*** Field warehouse_id ***
+		$f_opts = array();
+		$f_opts['id']="warehouse_id";
 		
-			'id'=>"warehouse_id"
-				
-		
-		));
+		$f_warehouse_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"warehouse_id",$f_opts);
 		$this->addField($f_warehouse_id);
-
-		$f_warehouse_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"warehouse_descr"
-		,array(
+		//********************
+	
+		//*** Field warehouse_descr ***
+		$f_opts = array();
+		$f_opts['id']="warehouse_descr";
 		
-			'id'=>"warehouse_descr"
-				
-		
-		));
+		$f_warehouse_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"warehouse_descr",$f_opts);
 		$this->addField($f_warehouse_descr);
-
-		$f_products_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"products_descr"
-		,array(
+		//********************
+	
+		//*** Field products_descr ***
+		$f_opts = array();
+		$f_opts['id']="products_descr";
 		
-			'id'=>"products_descr"
-				
-		
-		));
+		$f_products_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"products_descr",$f_opts);
 		$this->addField($f_products_descr);
-
-		$f_product_ids=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"product_ids"
-		,array(
+		//********************
+	
+		//*** Field product_ids ***
+		$f_opts = array();
+		$f_opts['id']="product_ids";
 		
-			'id'=>"product_ids"
-				
-		
-		));
+		$f_product_ids=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_ids",$f_opts);
 		$this->addField($f_product_ids);
-
-		$f_total=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"total"
-		,array(
+		//********************
+	
+		//*** Field total ***
+		$f_opts = array();
+		$f_opts['id']="total";
 		
-			'id'=>"total"
-				
-		
-		));
+		$f_total=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total",$f_opts);
 		$this->addField($f_total);
-
-		$f_total_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"total_descr"
-		,array(
+		//********************
+	
+		//*** Field total_descr ***
+		$f_opts = array();
+		$f_opts['id']="total_descr";
 		
-			'id'=>"total_descr"
-				
-		
-		));
+		$f_total_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total_descr",$f_opts);
 		$this->addField($f_total_descr);
-
-		$f_total_quant=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"total_quant"
-		,array(
+		//********************
+	
+		//*** Field total_quant ***
+		$f_opts = array();
+		$f_opts['id']="total_quant";
 		
-			'id'=>"total_quant"
-				
-		
-		));
+		$f_total_quant=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total_quant",$f_opts);
 		$this->addField($f_total_quant);
-
-		$f_total_volume=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"total_volume"
-		,array(
+		//********************
+	
+		//*** Field total_volume ***
+		$f_opts = array();
+		$f_opts['id']="total_volume";
 		
-			'id'=>"total_volume"
-				
-		
-		));
+		$f_total_volume=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total_volume",$f_opts);
 		$this->addField($f_total_volume);
-
-		$f_state=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"state"
-		,array(
+		//********************
+	
+		//*** Field state ***
+		$f_opts = array();
+		$f_opts['id']="state";
 		
-			'id'=>"state"
-				
-		
-		));
+		$f_state=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"state",$f_opts);
 		$this->addField($f_state);
-
-		$f_state_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"state_descr"
-		,array(
+		//********************
+	
+		//*** Field state_descr ***
+		$f_opts = array();
+		$f_opts['id']="state_descr";
 		
-			'id'=>"state_descr"
-				
-		
-		));
+		$f_state_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"state_descr",$f_opts);
 		$this->addField($f_state_descr);
-
-		$f_ext_ship_num=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"ext_ship_num"
-		,array(
+		//********************
+	
+		//*** Field ext_ship_num ***
+		$f_opts = array();
+		$f_opts['id']="ext_ship_num";
 		
-			'id'=>"ext_ship_num"
-				
-		
-		));
+		$f_ext_ship_num=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ext_ship_num",$f_opts);
 		$this->addField($f_ext_ship_num);
-
-		$f_delivery_fact_date=new FieldSQlDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"delivery_fact_date"
-		,array(
+		//********************
+	
+		//*** Field delivery_fact_date ***
+		$f_opts = array();
+		$f_opts['id']="delivery_fact_date";
 		
-			'id'=>"delivery_fact_date"
-				
-		
-		));
+		$f_delivery_fact_date=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"delivery_fact_date",$f_opts);
 		$this->addField($f_delivery_fact_date);
-
-		$f_delivery_fact_date_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"delivery_fact_date_descr"
-		,array(
+		//********************
+	
+		//*** Field delivery_fact_date_descr ***
+		$f_opts = array();
+		$f_opts['id']="delivery_fact_date_descr";
 		
-			'id'=>"delivery_fact_date_descr"
-				
-		
-		));
+		$f_delivery_fact_date_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"delivery_fact_date_descr",$f_opts);
 		$this->addField($f_delivery_fact_date_descr);
-
-		$f_client_number=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_number"
-		,array(
+		//********************
+	
+		//*** Field client_number ***
+		$f_opts = array();
+		$f_opts['id']="client_number";
 		
-			'id'=>"client_number"
-				
-		
-		));
+		$f_client_number=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_number",$f_opts);
 		$this->addField($f_client_number);
-
-		$f_printed=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"printed"
-		,array(
+		//********************
+	
+		//*** Field printed ***
+		$f_opts = array();
+		$f_opts['id']="printed";
 		
-			'id'=>"printed"
-				
-		
-		));
+		$f_printed=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"printed",$f_opts);
 		$this->addField($f_printed);
-
-		$f_customer_survey_date=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"customer_survey_date"
-		,array(
+		//********************
+	
+		//*** Field customer_survey_date ***
+		$f_opts = array();
+		$f_opts['id']="customer_survey_date";
 		
-			'id'=>"customer_survey_date"
-				
-		
-		));
+		$f_customer_survey_date=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"customer_survey_date",$f_opts);
 		$this->addField($f_customer_survey_date);
-
-		$f_customer_survey_date_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"customer_survey_date_descr"
-		,array(
+		//********************
+	
+		//*** Field customer_survey_date_descr ***
+		$f_opts = array();
+		$f_opts['id']="customer_survey_date_descr";
 		
-			'id'=>"customer_survey_date_descr"
-				
-		
-		));
+		$f_customer_survey_date_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"customer_survey_date_descr",$f_opts);
 		$this->addField($f_customer_survey_date_descr);
-
-		$f_is_current=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"is_current"
-		,array(
+		//********************
+	
+		//*** Field is_current ***
+		$f_opts = array();
+		$f_opts['id']="is_current";
 		
-			'id'=>"is_current"
-				
-		
-		));
+		$f_is_current=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"is_current",$f_opts);
 		$this->addField($f_is_current);
+		//********************
 
-		
-		
-		
 	}
 
 }

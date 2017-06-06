@@ -12,71 +12,56 @@ class DriverList_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("drivers_list");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_name=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"name"
-		,array(
+		//********************
+	
+		//*** Field name ***
+		$f_opts = array();
+		$f_opts['id']="name";
 		
-			'id'=>"name"
-				
-		
-		));
+		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
-
-		$f_drive_perm=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"drive_perm"
-		,array(
+		//********************
+	
+		//*** Field drive_perm ***
+		$f_opts = array();
+		$f_opts['id']="drive_perm";
 		
-			'id'=>"drive_perm"
-				
-		
-		));
+		$f_drive_perm=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"drive_perm",$f_opts);
 		$this->addField($f_drive_perm);
-
-		$f_cel_phone=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"cel_phone"
-		,array(
+		//********************
+	
+		//*** Field cel_phone ***
+		$f_opts = array();
+		$f_opts['id']="cel_phone";
 		
-			'id'=>"cel_phone"
-				
-		
-		));
+		$f_cel_phone=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"cel_phone",$f_opts);
 		$this->addField($f_cel_phone);
-
-		$f_ext_id=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"ext_id"
-		,array(
+		//********************
+	
+		//*** Field ext_id ***
+		$f_opts = array();
+		$f_opts['id']="ext_id";
 		
-			'id'=>"ext_id"
-				
-		
-		));
+		$f_ext_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ext_id",$f_opts);
 		$this->addField($f_ext_id);
-
-		$f_match_1c=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"match_1c"
-		,array(
+		//********************
+	
+		//*** Field match_1c ***
+		$f_opts = array();
+		$f_opts['id']="match_1c";
 		
-			'id'=>"match_1c"
-				
-		
-		));
+		$f_match_1c=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"match_1c",$f_opts);
 		$this->addField($f_match_1c);
+		//********************
 
-		
-		
-		
 	}
 
 }

@@ -12,72 +12,51 @@ class NaspunktList_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("naspunkt_list");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['autoInc']=TRUE;
+		$f_opts['sysCol']=TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'autoInc'=>TRUE,
-			'id'=>"id"
-		,
-			'sysCol'=>TRUE
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_city_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"city_id"
-		,array(
+		//********************
+	
+		//*** Field city_id ***
+		$f_opts = array();
+		$f_opts['sysCol']=TRUE;
+		$f_opts['id']="city_id";
 		
-			'id'=>"city_id"
-		,
-			'sysCol'=>TRUE
-				
-		
-		));
+		$f_city_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"city_id",$f_opts);
 		$this->addField($f_city_id);
-
-		$f_city_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"city_descr"
-		,array(
+		//********************
+	
+		//*** Field city_descr ***
+		$f_opts = array();
+		$f_opts['id']="city_descr";
 		
-			'alias'=>"Город"
-		,
-			'id'=>"city_descr"
-				
-		
-		));
+		$f_city_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"city_descr",$f_opts);
 		$this->addField($f_city_descr);
-
-		$f_name=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"name"
-		,array(
+		//********************
+	
+		//*** Field name ***
+		$f_opts = array();
+		$f_opts['id']="name";
 		
-			'alias'=>"Наименование"
-		,
-			'id'=>"name"
-				
-		
-		));
+		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
-
-		$f_distance=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"distance"
-		,array(
+		//********************
+	
+		//*** Field distance ***
+		$f_opts = array();
+		$f_opts['id']="distance";
 		
-			'alias'=>"Расстояние (км.)"
-		,
-			'id'=>"distance"
-				
-		
-		));
+		$f_distance=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"distance",$f_opts);
 		$this->addField($f_distance);
+		//********************
 
-		
-		
-		
 	}
 
 }

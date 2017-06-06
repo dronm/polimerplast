@@ -12,31 +12,24 @@ class DOCOrderCancelCause_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("doc_orders_cancel_causes");
+			
+		//*** Field doc_id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="doc_id";
 		
-		$f_doc_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"doc_id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'id'=>"doc_id"
-				
-		
-		));
+		$f_doc_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"doc_id",$f_opts);
 		$this->addField($f_doc_id);
-
-		$f_cause=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"cause"
-		,array(
-		'required'=>TRUE,
-			'id'=>"cause"
-				
+		//********************
+	
+		//*** Field cause ***
+		$f_opts = array();
+		$f_opts['id']="cause";
 		
-		));
+		$f_cause=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"cause",$f_opts);
 		$this->addField($f_cause);
+		//********************
 
-		
-		
-		
 	}
 
 }

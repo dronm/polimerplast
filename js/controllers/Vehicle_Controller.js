@@ -122,7 +122,6 @@ extend(Vehicle_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_id",{});
 	pm.addParam(param);
 	
@@ -132,13 +131,11 @@ extend(Vehicle_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("plate",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -146,13 +143,11 @@ extend(Vehicle_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldBool("employed",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -160,13 +155,11 @@ extend(Vehicle_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("production_city_id",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -174,13 +167,11 @@ extend(Vehicle_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("driver_id",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -188,13 +179,11 @@ extend(Vehicle_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("trailer_model",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -202,13 +191,11 @@ extend(Vehicle_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("tracker_id",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

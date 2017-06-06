@@ -79,7 +79,6 @@ extend(EmailTemplate_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_id",{});
 	pm.addParam(param);
 	
@@ -90,13 +89,11 @@ extend(EmailTemplate_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	options["alias"]="Шаблон";
 	var param = new FieldText("template",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	options["alias"]="Комментарий";
@@ -104,20 +101,17 @@ extend(EmailTemplate_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	options["alias"]="Тема";
 	var param = new FieldText("mes_subject",options);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	options["alias"]="Поля";
 	var param = new FieldText("fields",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

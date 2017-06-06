@@ -13,56 +13,45 @@ class ConstantList_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("constants_list_view");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_name=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"name"
-		,array(
+		//********************
+	
+		//*** Field name ***
+		$f_opts = array();
+		$f_opts['id']="name";
 		
-			'id'=>"name"
-				
-		
-		));
+		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
-
-		$f_descr=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"descr"
-		,array(
+		//********************
+	
+		//*** Field descr ***
+		$f_opts = array();
+		$f_opts['id']="descr";
 		
-			'id'=>"descr"
-				
-		
-		));
+		$f_descr=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"descr",$f_opts);
 		$this->addField($f_descr);
-
-		$f_val_descr=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"val_descr"
-		,array(
+		//********************
+	
+		//*** Field val_descr ***
+		$f_opts = array();
+		$f_opts['id']="val_descr";
 		
-			'id'=>"val_descr"
-				
-		
-		));
+		$f_val_descr=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"val_descr",$f_opts);
 		$this->addField($f_val_descr);
+		//********************
 
 		$order = new ModelOrderSQL();		
 		$this->setDefaultModelOrder($order);		
 		
 		$order->addField($f_name);
 
-		
-		
-		
 	}
 
 }

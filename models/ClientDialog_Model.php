@@ -14,91 +14,72 @@ class ClientDialog_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("client_dialog");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_name=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"name"
-		,array(
+		//********************
+	
+		//*** Field name ***
+		$f_opts = array();
+		$f_opts['id']="name";
 		
-			'id'=>"name"
-				
-		
-		));
+		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
-
-		$f_name_full=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"name_full"
-		,array(
+		//********************
+	
+		//*** Field name_full ***
+		$f_opts = array();
+		$f_opts['id']="name_full";
 		
-			'id'=>"name_full"
-				
-		
-		));
+		$f_name_full=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name_full",$f_opts);
 		$this->addField($f_name_full);
-
-		$f_occupation=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"occupation"
-		,array(
+		//********************
+	
+		//*** Field occupation ***
+		$f_opts = array();
+		$f_opts['id']="occupation";
 		
-			'id'=>"occupation"
-				
-		
-		));
+		$f_occupation=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"occupation",$f_opts);
 		$this->addField($f_occupation);
-
-		$f_inn=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"inn"
-		,array(
+		//********************
+	
+		//*** Field inn ***
+		$f_opts = array();
+		$f_opts['id']="inn";
 		
-			'id'=>"inn"
-				
-		
-		));
+		$f_inn=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"inn",$f_opts);
 		$this->addField($f_inn);
-
-		$f_banned=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"banned"
-		,array(
+		//********************
+	
+		//*** Field banned ***
+		$f_opts = array();
+		$f_opts['id']="banned";
 		
-			'id'=>"banned"
-				
-		
-		));
+		$f_banned=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"banned",$f_opts);
 		$this->addField($f_banned);
-
-		$f_def_firm_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"def_firm_id"
-		,array(
+		//********************
+	
+		//*** Field def_firm_id ***
+		$f_opts = array();
+		$f_opts['id']="def_firm_id";
 		
-			'id'=>"def_firm_id"
-				
-		
-		));
+		$f_def_firm_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"def_firm_id",$f_opts);
 		$this->addField($f_def_firm_id);
-
-		$f_def_warehouse_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"def_warehouse_id"
-		,array(
+		//********************
+	
+		//*** Field def_warehouse_id ***
+		$f_opts = array();
+		$f_opts['id']="def_warehouse_id";
 		
-			'id'=>"def_warehouse_id"
-				
-		
-		));
+		$f_def_warehouse_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"def_warehouse_id",$f_opts);
 		$this->addField($f_def_warehouse_id);
+		//********************
 
-		
-		
-		
 	}
 
 }

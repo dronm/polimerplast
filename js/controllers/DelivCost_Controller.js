@@ -73,7 +73,6 @@ extend(DelivCost_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_id",{});
 	pm.addParam(param);
 	
@@ -83,13 +82,11 @@ extend(DelivCost_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("deliv_cost_opt_id",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -97,7 +94,6 @@ extend(DelivCost_Controller,ControllerDb);
 	options["values"] = 'city,country';
 	
 	pm.addParam(param);
-	
 	
 	param = new FieldEnum("old_deliv_cost_type",{});
 	pm.addParam(param);
@@ -107,7 +103,6 @@ extend(DelivCost_Controller,ControllerDb);
 	var param = new FieldFloat("cost",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

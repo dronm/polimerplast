@@ -12,49 +12,35 @@ class ProductGroupList_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("product_groups_list");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['sysCol']=TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'id'=>"id"
-		,
-			'sysCol'=>TRUE
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_name=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"name"
-		,array(
+		//********************
+	
+		//*** Field name ***
+		$f_opts = array();
+		$f_opts['length']=100;
+		$f_opts['id']="name";
 		
-			'alias'=>"Наименование"
-		,
-			'length'=>100,
-			'id'=>"name"
-				
-		
-		));
+		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
-
-		$f_match_1c=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"match_1c"
-		,array(
+		//********************
+	
+		//*** Field match_1c ***
+		$f_opts = array();
+		$f_opts['length']=36;
+		$f_opts['id']="match_1c";
 		
-			'alias'=>"Соответствие 1с"
-		,
-			'length'=>36,
-			'id'=>"match_1c"
-				
-		
-		));
+		$f_match_1c=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"match_1c",$f_opts);
 		$this->addField($f_match_1c);
+		//********************
 
-		
-		
-		
 	}
 
 }

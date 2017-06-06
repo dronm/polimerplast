@@ -60,7 +60,6 @@ extend(ProductionCity_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_id",{});
 	pm.addParam(param);
 	
@@ -70,13 +69,11 @@ extend(ProductionCity_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldGeomPolygon("zone",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

@@ -14,67 +14,54 @@ class ReportVariant_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("report_variants");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['autoInc']=TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'autoInc'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_user_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"user_id"
-		,array(
+		//********************
+	
+		//*** Field user_id ***
+		$f_opts = array();
+		$f_opts['id']="user_id";
 		
-			'id'=>"user_id"
-				
-		
-		));
+		$f_user_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"user_id",$f_opts);
 		$this->addField($f_user_id);
-
-		$f_report_type=new FieldSQlEnum($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"report_type"
-		,array(
-		'required'=>TRUE,
-			'id'=>"report_type"
-				
+		//********************
+	
+		//*** Field report_type ***
+		$f_opts = array();
+		$f_opts['id']="report_type";
 		
-		));
+		$f_report_type=new FieldSQLEnum($this->getDbLink(),$this->getDbName(),$this->getTableName(),"report_type",$f_opts);
 		$this->addField($f_report_type);
-
-		$f_name=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"name"
-		,array(
+		//********************
+	
+		//*** Field name ***
+		$f_opts = array();
+		$f_opts['id']="name";
 		
-			'id'=>"name"
-				
-		
-		));
+		$f_name=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
-
-		$f_data=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"data"
-		,array(
+		//********************
+	
+		//*** Field data ***
+		$f_opts = array();
+		$f_opts['id']="data";
 		
-			'id'=>"data"
-				
-		
-		));
+		$f_data=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"data",$f_opts);
 		$this->addField($f_data);
+		//********************
 
 		$order = new ModelOrderSQL();		
 		$this->setDefaultModelOrder($order);		
 		
 		$order->addField($f_name);
 
-		
-		
-		
 	}
 
 }

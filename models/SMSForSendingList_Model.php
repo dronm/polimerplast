@@ -16,119 +16,93 @@ class SMSForSendingList_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("sms_for_sending_list");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['autoInc']=TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'autoInc'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_tel=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"tel"
-		,array(
+		//********************
+	
+		//*** Field tel ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="tel";
 		
-			'length'=>15,
-			'id'=>"tel"
-				
-		
-		));
+		$f_tel=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"tel",$f_opts);
 		$this->addField($f_tel);
-
-		$f_body=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"body"
-		,array(
+		//********************
+	
+		//*** Field body ***
+		$f_opts = array();
+		$f_opts['id']="body";
 		
-			'id'=>"body"
-				
-		
-		));
+		$f_body=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"body",$f_opts);
 		$this->addField($f_body);
-
-		$f_date_time=new FieldSQlDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"date_time"
-		,array(
+		//********************
+	
+		//*** Field date_time ***
+		$f_opts = array();
+		$f_opts['defaultValue']=current_timestamp;
+		$f_opts['id']="date_time";
 		
-			'defaultValue'=>"current_timestamp"
-		,
-			'id'=>"date_time"
-				
-		
-		));
+		$f_date_time=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_time",$f_opts);
 		$this->addField($f_date_time);
-
-		$f_sent=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"sent"
-		,array(
+		//********************
+	
+		//*** Field sent ***
+		$f_opts = array();
+		$f_opts['defaultValue']=false;
+		$f_opts['id']="sent";
 		
-			'defaultValue'=>"false"
-		,
-			'id'=>"sent"
-				
-		
-		));
+		$f_sent=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"sent",$f_opts);
 		$this->addField($f_sent);
-
-		$f_sent_date_time=new FieldSQlDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"sent_date_time"
-		,array(
+		//********************
+	
+		//*** Field sent_date_time ***
+		$f_opts = array();
+		$f_opts['id']="sent_date_time";
 		
-			'id'=>"sent_date_time"
-				
-		
-		));
+		$f_sent_date_time=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"sent_date_time",$f_opts);
 		$this->addField($f_sent_date_time);
-
-		$f_delivered=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"delivered"
-		,array(
+		//********************
+	
+		//*** Field delivered ***
+		$f_opts = array();
+		$f_opts['defaultValue']=false;
+		$f_opts['id']="delivered";
 		
-			'defaultValue'=>"false"
-		,
-			'id'=>"delivered"
-				
-		
-		));
+		$f_delivered=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"delivered",$f_opts);
 		$this->addField($f_delivered);
-
-		$f_delivered_date_time=new FieldSQlDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"delivered_date_time"
-		,array(
+		//********************
+	
+		//*** Field delivered_date_time ***
+		$f_opts = array();
+		$f_opts['id']="delivered_date_time";
 		
-			'id'=>"delivered_date_time"
-				
-		
-		));
+		$f_delivered_date_time=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"delivered_date_time",$f_opts);
 		$this->addField($f_delivered_date_time);
-
-		$f_sms_type=new FieldSQlEnum($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"sms_type"
-		,array(
+		//********************
+	
+		//*** Field sms_type ***
+		$f_opts = array();
+		$f_opts['id']="sms_type";
 		
-			'id'=>"sms_type"
-				
-		
-		));
+		$f_sms_type=new FieldSQLEnum($this->getDbLink(),$this->getDbName(),$this->getTableName(),"sms_type",$f_opts);
 		$this->addField($f_sms_type);
-
-		$f_sms_id=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"sms_id"
-		,array(
+		//********************
+	
+		//*** Field sms_id ***
+		$f_opts = array();
+		$f_opts['id']="sms_id";
 		
-			'id'=>"sms_id"
-				
-		
-		));
+		$f_sms_id=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"sms_id",$f_opts);
 		$this->addField($f_sms_id);
+		//********************
 
-		
-		
-		
 	}
 
 }

@@ -66,7 +66,6 @@ extend(CustomerSurveyQuestion_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_id",{});
 	pm.addParam(param);
 	
@@ -76,20 +75,17 @@ extend(CustomerSurveyQuestion_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("max_points",options);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldBool("in_use",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

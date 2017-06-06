@@ -17,365 +17,289 @@ class Client_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("clients");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['autoInc']=TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'autoInc'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_name=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"name"
-		,array(
-		'required'=>TRUE,
-			'length'=>150,
-			'id'=>"name"
-				
+		//********************
+	
+		//*** Field name ***
+		$f_opts = array();
+		$f_opts['length']=150;
+		$f_opts['id']="name";
 		
-		));
+		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
-
-		$f_name_full=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"name_full"
-		,array(
+		//********************
+	
+		//*** Field name_full ***
+		$f_opts = array();
+		$f_opts['id']="name_full";
 		
-			'id'=>"name_full"
-				
-		
-		));
+		$f_name_full=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name_full",$f_opts);
 		$this->addField($f_name_full);
-
-		$f_inn=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"inn"
-		,array(
-		'required'=>TRUE,
-			'length'=>12,
-			'id'=>"inn"
-				
+		//********************
+	
+		//*** Field inn ***
+		$f_opts = array();
+		$f_opts['length']=12;
+		$f_opts['id']="inn";
 		
-		));
+		$f_inn=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"inn",$f_opts);
 		$this->addField($f_inn);
-
-		$f_kpp=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"kpp"
-		,array(
+		//********************
+	
+		//*** Field kpp ***
+		$f_opts = array();
+		$f_opts['length']=10;
+		$f_opts['id']="kpp";
 		
-			'length'=>10,
-			'id'=>"kpp"
-				
-		
-		));
+		$f_kpp=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"kpp",$f_opts);
 		$this->addField($f_kpp);
-
-		$f_addr_reg=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"addr_reg"
-		,array(
-		'required'=>TRUE,
-			'id'=>"addr_reg"
-				
+		//********************
+	
+		//*** Field addr_reg ***
+		$f_opts = array();
+		$f_opts['id']="addr_reg";
 		
-		));
+		$f_addr_reg=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"addr_reg",$f_opts);
 		$this->addField($f_addr_reg);
-
-		$f_addr_mail=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"addr_mail"
-		,array(
+		//********************
+	
+		//*** Field addr_mail ***
+		$f_opts = array();
+		$f_opts['id']="addr_mail";
 		
-			'id'=>"addr_mail"
-				
-		
-		));
+		$f_addr_mail=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"addr_mail",$f_opts);
 		$this->addField($f_addr_mail);
-
-		$f_addr_mail_same_as_reg=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"addr_mail_same_as_reg"
-		,array(
+		//********************
+	
+		//*** Field addr_mail_same_as_reg ***
+		$f_opts = array();
+		$f_opts['id']="addr_mail_same_as_reg";
 		
-			'id'=>"addr_mail_same_as_reg"
-				
-		
-		));
+		$f_addr_mail_same_as_reg=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"addr_mail_same_as_reg",$f_opts);
 		$this->addField($f_addr_mail_same_as_reg);
-
-		$f_telephones=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"telephones"
-		,array(
+		//********************
+	
+		//*** Field telephones ***
+		$f_opts = array();
+		$f_opts['id']="telephones";
 		
-			'id'=>"telephones"
-				
-		
-		));
+		$f_telephones=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"telephones",$f_opts);
 		$this->addField($f_telephones);
-
-		$f_ogrn=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"ogrn"
-		,array(
+		//********************
+	
+		//*** Field ogrn ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="ogrn";
 		
-			'length'=>15,
-			'id'=>"ogrn"
-				
-		
-		));
+		$f_ogrn=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ogrn",$f_opts);
 		$this->addField($f_ogrn);
-
-		$f_okpo=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"okpo"
-		,array(
+		//********************
+	
+		//*** Field okpo ***
+		$f_opts = array();
+		$f_opts['length']=20;
+		$f_opts['id']="okpo";
 		
-			'length'=>20,
-			'id'=>"okpo"
-				
-		
-		));
+		$f_okpo=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"okpo",$f_opts);
 		$this->addField($f_okpo);
-
-		$f_acc=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"acc"
-		,array(
+		//********************
+	
+		//*** Field acc ***
+		$f_opts = array();
+		$f_opts['length']=20;
+		$f_opts['id']="acc";
 		
-			'length'=>20,
-			'id'=>"acc"
-				
-		
-		));
+		$f_acc=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"acc",$f_opts);
 		$this->addField($f_acc);
-
-		$f_bank_name=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"bank_name"
-		,array(
+		//********************
+	
+		//*** Field bank_name ***
+		$f_opts = array();
+		$f_opts['id']="bank_name";
 		
-			'id'=>"bank_name"
-				
-		
-		));
+		$f_bank_name=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"bank_name",$f_opts);
 		$this->addField($f_bank_name);
-
-		$f_bank_code=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"bank_code"
-		,array(
+		//********************
+	
+		//*** Field bank_code ***
+		$f_opts = array();
+		$f_opts['length']=9;
+		$f_opts['id']="bank_code";
 		
-			'length'=>9,
-			'id'=>"bank_code"
-				
-		
-		));
+		$f_bank_code=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"bank_code",$f_opts);
 		$this->addField($f_bank_code);
-
-		$f_bank_acc=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"bank_acc"
-		,array(
+		//********************
+	
+		//*** Field bank_acc ***
+		$f_opts = array();
+		$f_opts['length']=20;
+		$f_opts['id']="bank_acc";
 		
-			'length'=>20,
-			'id'=>"bank_acc"
-				
-		
-		));
+		$f_bank_acc=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"bank_acc",$f_opts);
 		$this->addField($f_bank_acc);
-
-		$f_registered=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"registered"
-		,array(
+		//********************
+	
+		//*** Field registered ***
+		$f_opts = array();
+		$f_opts['defaultValue']=false;
+		$f_opts['id']="registered";
 		
-			'defaultValue'=>"false"
-		,
-			'id'=>"registered"
-				
-		
-		));
+		$f_registered=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"registered",$f_opts);
 		$this->addField($f_registered);
-
-		$f_pay_type=new FieldSQlEnum($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"pay_type"
-		,array(
+		//********************
+	
+		//*** Field pay_type ***
+		$f_opts = array();
+		$f_opts['id']="pay_type";
 		
-			'id'=>"pay_type"
-				
-		
-		));
+		$f_pay_type=new FieldSQLEnum($this->getDbLink(),$this->getDbName(),$this->getTableName(),"pay_type",$f_opts);
 		$this->addField($f_pay_type);
-
-		$f_pay_delay_days=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"pay_delay_days"
-		,array(
+		//********************
+	
+		//*** Field pay_delay_days ***
+		$f_opts = array();
+		$f_opts['id']="pay_delay_days";
 		
-			'id'=>"pay_delay_days"
-				
-		
-		));
+		$f_pay_delay_days=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"pay_delay_days",$f_opts);
 		$this->addField($f_pay_delay_days);
-
-		$f_pay_fix_to_dow=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"pay_fix_to_dow"
-		,array(
+		//********************
+	
+		//*** Field pay_fix_to_dow ***
+		$f_opts = array();
+		$f_opts['defaultValue']=true;
+		$f_opts['id']="pay_fix_to_dow";
 		
-			'defaultValue'=>"true"
-		,
-			'id'=>"pay_fix_to_dow"
-				
-		
-		));
+		$f_pay_fix_to_dow=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"pay_fix_to_dow",$f_opts);
 		$this->addField($f_pay_fix_to_dow);
-
-		$f_pay_dow_days=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"pay_dow_days"
-		,array(
+		//********************
+	
+		//*** Field pay_dow_days ***
+		$f_opts = array();
+		$f_opts['id']="pay_dow_days";
 		
-			'id'=>"pay_dow_days"
-				
-		
-		));
+		$f_pay_dow_days=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"pay_dow_days",$f_opts);
 		$this->addField($f_pay_dow_days);
-
-		$f_pay_ban_on_debt_days=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"pay_ban_on_debt_days"
-		,array(
+		//********************
+	
+		//*** Field pay_ban_on_debt_days ***
+		$f_opts = array();
+		$f_opts['defaultValue']=true;
+		$f_opts['id']="pay_ban_on_debt_days";
 		
-			'defaultValue'=>"true"
-		,
-			'id'=>"pay_ban_on_debt_days"
-				
-		
-		));
+		$f_pay_ban_on_debt_days=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"pay_ban_on_debt_days",$f_opts);
 		$this->addField($f_pay_ban_on_debt_days);
-
-		$f_pay_debt_days=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"pay_debt_days"
-		,array(
+		//********************
+	
+		//*** Field pay_debt_days ***
+		$f_opts = array();
+		$f_opts['defaultValue']=5;
+		$f_opts['id']="pay_debt_days";
 		
-			'defaultValue'=>"5"
-		,
-			'id'=>"pay_debt_days"
-				
-		
-		));
+		$f_pay_debt_days=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"pay_debt_days",$f_opts);
 		$this->addField($f_pay_debt_days);
-
-		$f_pay_ban_on_debt_sum=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"pay_ban_on_debt_sum"
-		,array(
+		//********************
+	
+		//*** Field pay_ban_on_debt_sum ***
+		$f_opts = array();
+		$f_opts['defaultValue']=false;
+		$f_opts['id']="pay_ban_on_debt_sum";
 		
-			'defaultValue'=>"false"
-		,
-			'id'=>"pay_ban_on_debt_sum"
-				
-		
-		));
+		$f_pay_ban_on_debt_sum=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"pay_ban_on_debt_sum",$f_opts);
 		$this->addField($f_pay_ban_on_debt_sum);
-
-		$f_pay_debt_sum=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"pay_debt_sum"
-		,array(
+		//********************
+	
+		//*** Field pay_debt_sum ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="pay_debt_sum";
 		
-			'length'=>15,
-			'id'=>"pay_debt_sum"
-				
-		
-		));
+		$f_pay_debt_sum=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"pay_debt_sum",$f_opts);
 		$this->addField($f_pay_debt_sum);
-
-		$f_login_allowed=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"login_allowed"
-		,array(
+		//********************
+	
+		//*** Field login_allowed ***
+		$f_opts = array();
+		$f_opts['defaultValue']=true;
+		$f_opts['id']="login_allowed";
 		
-			'defaultValue'=>"true"
-		,
-			'id'=>"login_allowed"
-				
-		
-		));
+		$f_login_allowed=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"login_allowed",$f_opts);
 		$this->addField($f_login_allowed);
-
-		$f_sms_on_order_change=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"sms_on_order_change"
-		,array(
+		//********************
+	
+		//*** Field sms_on_order_change ***
+		$f_opts = array();
+		$f_opts['defaultValue']=true;
+		$f_opts['id']="sms_on_order_change";
 		
-			'defaultValue'=>"true"
-		,
-			'id'=>"sms_on_order_change"
-				
-		
-		));
+		$f_sms_on_order_change=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"sms_on_order_change",$f_opts);
 		$this->addField($f_sms_on_order_change);
-
-		$f_email_sert=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"email_sert"
-		,array(
+		//********************
+	
+		//*** Field email_sert ***
+		$f_opts = array();
+		$f_opts['defaultValue']=true;
+		$f_opts['id']="email_sert";
 		
-			'defaultValue'=>"true"
-		,
-			'id'=>"email_sert"
-				
-		
-		));
+		$f_email_sert=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"email_sert",$f_opts);
 		$this->addField($f_email_sert);
-
-		$f_show_delivery_tab=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"show_delivery_tab"
-		,array(
+		//********************
+	
+		//*** Field show_delivery_tab ***
+		$f_opts = array();
+		$f_opts['defaultValue']=true;
+		$f_opts['id']="show_delivery_tab";
 		
-			'defaultValue'=>"true"
-		,
-			'id'=>"show_delivery_tab"
-				
-		
-		));
+		$f_show_delivery_tab=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"show_delivery_tab",$f_opts);
 		$this->addField($f_show_delivery_tab);
-
-		$f_ext_id=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"ext_id"
-		,array(
+		//********************
+	
+		//*** Field ext_id ***
+		$f_opts = array();
+		$f_opts['length']=36;
+		$f_opts['id']="ext_id";
 		
-			'length'=>36,
-			'id'=>"ext_id"
-				
-		
-		));
+		$f_ext_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ext_id",$f_opts);
 		$this->addField($f_ext_id);
-
-		$f_client_activity_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_activity_id"
-		,array(
+		//********************
+	
+		//*** Field client_activity_id ***
+		$f_opts = array();
+		$f_opts['id']="client_activity_id";
 		
-			'id'=>"client_activity_id"
-				
-		
-		));
+		$f_client_activity_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_activity_id",$f_opts);
 		$this->addField($f_client_activity_id);
-
-		$f_def_firm_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"def_firm_id"
-		,array(
+		//********************
+	
+		//*** Field def_firm_id ***
+		$f_opts = array();
+		$f_opts['id']="def_firm_id";
 		
-			'id'=>"def_firm_id"
-				
-		
-		));
+		$f_def_firm_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"def_firm_id",$f_opts);
 		$this->addField($f_def_firm_id);
-
-		$f_def_warehouse_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"def_warehouse_id"
-		,array(
+		//********************
+	
+		//*** Field def_warehouse_id ***
+		$f_opts = array();
+		$f_opts['id']="def_warehouse_id";
 		
-			'id'=>"def_warehouse_id"
-				
-		
-		));
+		$f_def_warehouse_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"def_warehouse_id",$f_opts);
 		$this->addField($f_def_warehouse_id);
+		//********************
 
 		$order = new ModelOrderSQL();		
 		$this->setDefaultModelOrder($order);		
 		
 		$order->addField($f_name);
 
-		
-		
-		
 	}
 
 }

@@ -12,43 +12,34 @@ class MailForSendingAttachment_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("mail_for_sending_attachments");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['autoInc']=TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'autoInc'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_mail_for_sending_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"mail_for_sending_id"
-		,array(
+		//********************
+	
+		//*** Field mail_for_sending_id ***
+		$f_opts = array();
+		$f_opts['id']="mail_for_sending_id";
 		
-			'id'=>"mail_for_sending_id"
-				
-		
-		));
+		$f_mail_for_sending_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"mail_for_sending_id",$f_opts);
 		$this->addField($f_mail_for_sending_id);
-
-		$f_file_name=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"file_name"
-		,array(
+		//********************
+	
+		//*** Field file_name ***
+		$f_opts = array();
+		$f_opts['length']=255;
+		$f_opts['id']="file_name";
 		
-			'length'=>255,
-			'id'=>"file_name"
-				
-		
-		));
+		$f_file_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"file_name",$f_opts);
 		$this->addField($f_file_name);
+		//********************
 
-		
-		
-		
 	}
 
 }

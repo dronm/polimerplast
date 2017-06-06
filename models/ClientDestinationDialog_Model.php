@@ -12,41 +12,32 @@ class ClientDestinationDialog_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("client_destinations_dialog");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_client_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_id"
-		,array(
+		//********************
+	
+		//*** Field client_id ***
+		$f_opts = array();
+		$f_opts['id']="client_id";
 		
-			'id'=>"client_id"
-				
-		
-		));
+		$f_client_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_id",$f_opts);
 		$this->addField($f_client_id);
-
-		$f_zone_center_str=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"zone_center_str"
-		,array(
+		//********************
+	
+		//*** Field zone_center_str ***
+		$f_opts = array();
+		$f_opts['id']="zone_center_str";
 		
-			'id'=>"zone_center_str"
-				
-		
-		));
+		$f_zone_center_str=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"zone_center_str",$f_opts);
 		$this->addField($f_zone_center_str);
+		//********************
 
-		
-		
-		
 	}
 
 }

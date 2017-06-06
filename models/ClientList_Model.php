@@ -15,153 +15,122 @@ class ClientList_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("client_list");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_name=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"name"
-		,array(
+		//********************
+	
+		//*** Field name ***
+		$f_opts = array();
+		$f_opts['id']="name";
 		
-			'id'=>"name"
-				
-		
-		));
+		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
-
-		$f_occupation=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"occupation"
-		,array(
+		//********************
+	
+		//*** Field occupation ***
+		$f_opts = array();
+		$f_opts['id']="occupation";
 		
-			'id'=>"occupation"
-				
-		
-		));
+		$f_occupation=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"occupation",$f_opts);
 		$this->addField($f_occupation);
-
-		$f_inn=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"inn"
-		,array(
+		//********************
+	
+		//*** Field inn ***
+		$f_opts = array();
+		$f_opts['id']="inn";
 		
-			'id'=>"inn"
-				
-		
-		));
+		$f_inn=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"inn",$f_opts);
 		$this->addField($f_inn);
-
-		$f_contract_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"contract_descr"
-		,array(
+		//********************
+	
+		//*** Field contract_descr ***
+		$f_opts = array();
+		$f_opts['id']="contract_descr";
 		
-			'id'=>"contract_descr"
-				
-		
-		));
+		$f_contract_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"contract_descr",$f_opts);
 		$this->addField($f_contract_descr);
-
-		$f_contract_period=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"contract_period"
-		,array(
+		//********************
+	
+		//*** Field contract_period ***
+		$f_opts = array();
+		$f_opts['id']="contract_period";
 		
-			'id'=>"contract_period"
-				
-		
-		));
+		$f_contract_period=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"contract_period",$f_opts);
 		$this->addField($f_contract_period);
-
-		$f_terms=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"terms"
-		,array(
+		//********************
+	
+		//*** Field terms ***
+		$f_opts = array();
+		$f_opts['id']="terms";
 		
-			'id'=>"terms"
-				
-		
-		));
+		$f_terms=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"terms",$f_opts);
 		$this->addField($f_terms);
-
-		$f_banned=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"banned"
-		,array(
+		//********************
+	
+		//*** Field banned ***
+		$f_opts = array();
+		$f_opts['id']="banned";
 		
-			'id'=>"banned"
-				
-		
-		));
+		$f_banned=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"banned",$f_opts);
 		$this->addField($f_banned);
-
-		$f_client_activity_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_activity_descr"
-		,array(
+		//********************
+	
+		//*** Field client_activity_descr ***
+		$f_opts = array();
+		$f_opts['id']="client_activity_descr";
 		
-			'id'=>"client_activity_descr"
-				
-		
-		));
+		$f_client_activity_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_activity_descr",$f_opts);
 		$this->addField($f_client_activity_descr);
-
-		$f_login_allowed=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"login_allowed"
-		,array(
+		//********************
+	
+		//*** Field login_allowed ***
+		$f_opts = array();
+		$f_opts['id']="login_allowed";
 		
-			'id'=>"login_allowed"
-				
-		
-		));
+		$f_login_allowed=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"login_allowed",$f_opts);
 		$this->addField($f_login_allowed);
-
-		$f_def_firm_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"def_firm_id"
-		,array(
+		//********************
+	
+		//*** Field def_firm_id ***
+		$f_opts = array();
+		$f_opts['id']="def_firm_id";
 		
-			'id'=>"def_firm_id"
-				
-		
-		));
+		$f_def_firm_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"def_firm_id",$f_opts);
 		$this->addField($f_def_firm_id);
-
-		$f_def_warehouse_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"def_warehouse_id"
-		,array(
+		//********************
+	
+		//*** Field def_warehouse_id ***
+		$f_opts = array();
+		$f_opts['id']="def_warehouse_id";
 		
-			'id'=>"def_warehouse_id"
-				
-		
-		));
+		$f_def_warehouse_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"def_warehouse_id",$f_opts);
 		$this->addField($f_def_warehouse_id);
-
-		$f_def_debt=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"def_debt"
-		,array(
+		//********************
+	
+		//*** Field def_debt ***
+		$f_opts = array();
+		$f_opts['length']=19;
+		$f_opts['id']="def_debt";
 		
-			'length'=>19,
-			'id'=>"def_debt"
-				
-		
-		));
+		$f_def_debt=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"def_debt",$f_opts);
 		$this->addField($f_def_debt);
-
-		$f_debt_total=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"debt_total"
-		,array(
+		//********************
+	
+		//*** Field debt_total ***
+		$f_opts = array();
+		$f_opts['length']=19;
+		$f_opts['id']="debt_total";
 		
-			'length'=>19,
-			'id'=>"debt_total"
-				
-		
-		));
+		$f_debt_total=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"debt_total",$f_opts);
 		$this->addField($f_debt_total);
+		//********************
 
-		
-		
-		
 	}
 
 }

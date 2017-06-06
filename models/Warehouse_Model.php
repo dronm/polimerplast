@@ -15,132 +15,107 @@ class Warehouse_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("warehouses");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['autoInc']=TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'autoInc'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_name=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"name"
-		,array(
+		//********************
+	
+		//*** Field name ***
+		$f_opts = array();
+		$f_opts['length']=50;
+		$f_opts['id']="name";
 		
-			'length'=>50,
-			'id'=>"name"
-				
-		
-		));
+		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
-
-		$f_ext_id=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"ext_id"
-		,array(
+		//********************
+	
+		//*** Field ext_id ***
+		$f_opts = array();
+		$f_opts['length']=36;
+		$f_opts['id']="ext_id";
 		
-			'length'=>36,
-			'id'=>"ext_id"
-				
-		
-		));
+		$f_ext_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ext_id",$f_opts);
 		$this->addField($f_ext_id);
-
-		$f_zone=new FieldSQlGeomPolygon($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"zone"
-		,array(
+		//********************
+	
+		//*** Field zone ***
+		$f_opts = array();
+		$f_opts['id']="zone";
 		
-			'id'=>"zone"
-				
-		
-		));
+		$f_zone=new FieldSQLGeomPolygon($this->getDbLink(),$this->getDbName(),$this->getTableName(),"zone",$f_opts);
 		$this->addField($f_zone);
-
-		$f_production_city_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"production_city_id"
-		,array(
-		'required'=>TRUE,
-			'id'=>"production_city_id"
-				
+		//********************
+	
+		//*** Field production_city_id ***
+		$f_opts = array();
+		$f_opts['id']="production_city_id";
 		
-		));
+		$f_production_city_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"production_city_id",$f_opts);
 		$this->addField($f_production_city_id);
-
-		$f_default_firm_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"default_firm_id"
-		,array(
-		'required'=>TRUE,
-			'id'=>"default_firm_id"
-				
+		//********************
+	
+		//*** Field default_firm_id ***
+		$f_opts = array();
+		$f_opts['id']="default_firm_id";
 		
-		));
+		$f_default_firm_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"default_firm_id",$f_opts);
 		$this->addField($f_default_firm_id);
-
-		$f_near_road_lon=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"near_road_lon"
-		,array(
+		//********************
+	
+		//*** Field near_road_lon ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="near_road_lon";
 		
-			'length'=>15,
-			'id'=>"near_road_lon"
-				
-		
-		));
+		$f_near_road_lon=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"near_road_lon",$f_opts);
 		$this->addField($f_near_road_lon);
-
-		$f_near_road_lat=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"near_road_lat"
-		,array(
+		//********************
+	
+		//*** Field near_road_lat ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="near_road_lat";
 		
-			'length'=>15,
-			'id'=>"near_road_lat"
-				
-		
-		));
+		$f_near_road_lat=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"near_road_lat",$f_opts);
 		$this->addField($f_near_road_lat);
-
-		$f_address=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"address"
-		,array(
+		//********************
+	
+		//*** Field address ***
+		$f_opts = array();
+		$f_opts['id']="address";
 		
-			'id'=>"address"
-				
-		
-		));
+		$f_address=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"address",$f_opts);
 		$this->addField($f_address);
-
-		$f_tel=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"tel"
-		,array(
+		//********************
+	
+		//*** Field tel ***
+		$f_opts = array();
+		$f_opts['id']="tel";
 		
-			'id'=>"tel"
-				
-		
-		));
+		$f_tel=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"tel",$f_opts);
 		$this->addField($f_tel);
-
-		$f_email=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"email"
-		,array(
+		//********************
+	
+		//*** Field email ***
+		$f_opts = array();
+		$f_opts['length']=50;
+		$f_opts['id']="email";
 		
-			'length'=>50,
-			'id'=>"email"
-				
-		
-		));
+		$f_email=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"email",$f_opts);
 		$this->addField($f_email);
+		//********************
 
 		$order = new ModelOrderSQL();		
 		$this->setDefaultModelOrder($order);		
 		
 		$order->addField($f_name);
 
-		
-		
-		
 	}
 
 }

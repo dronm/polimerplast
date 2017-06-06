@@ -60,7 +60,6 @@ extend(DeliveryHour_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_id",{});
 	pm.addParam(param);
 	
@@ -70,13 +69,11 @@ extend(DeliveryHour_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("h_to",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

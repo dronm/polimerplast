@@ -14,84 +14,67 @@ class ClientPriceList_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("client_price_lists");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['autoInc']=TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'autoInc'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_name=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"name"
-		,array(
+		//********************
+	
+		//*** Field name ***
+		$f_opts = array();
+		$f_opts['length']=100;
+		$f_opts['id']="name";
 		
-			'length'=>100,
-			'id'=>"name"
-				
-		
-		));
+		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
-
-		$f_production_city_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"production_city_id"
-		,array(
-		'required'=>TRUE,
-			'id'=>"production_city_id"
-				
+		//********************
+	
+		//*** Field production_city_id ***
+		$f_opts = array();
+		$f_opts['id']="production_city_id";
 		
-		));
+		$f_production_city_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"production_city_id",$f_opts);
 		$this->addField($f_production_city_id);
-
-		$f_to_third_party_only=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"to_third_party_only"
-		,array(
+		//********************
+	
+		//*** Field to_third_party_only ***
+		$f_opts = array();
+		$f_opts['id']="to_third_party_only";
 		
-			'id'=>"to_third_party_only"
-				
-		
-		));
+		$f_to_third_party_only=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"to_third_party_only",$f_opts);
 		$this->addField($f_to_third_party_only);
-
-		$f_part_ship_do_not_change_price=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"part_ship_do_not_change_price"
-		,array(
+		//********************
+	
+		//*** Field part_ship_do_not_change_price ***
+		$f_opts = array();
+		$f_opts['id']="part_ship_do_not_change_price";
 		
-			'id'=>"part_ship_do_not_change_price"
-				
-		
-		));
+		$f_part_ship_do_not_change_price=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"part_ship_do_not_change_price",$f_opts);
 		$this->addField($f_part_ship_do_not_change_price);
-
-		$f_min_order_quant=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"min_order_quant"
-		,array(
+		//********************
+	
+		//*** Field min_order_quant ***
+		$f_opts = array();
+		$f_opts['length']=19;
+		$f_opts['id']="min_order_quant";
 		
-			'length'=>19,
-			'id'=>"min_order_quant"
-				
-		
-		));
+		$f_min_order_quant=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"min_order_quant",$f_opts);
 		$this->addField($f_min_order_quant);
-
-		$f_default_price_list=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"default_price_list"
-		,array(
+		//********************
+	
+		//*** Field default_price_list ***
+		$f_opts = array();
+		$f_opts['id']="default_price_list";
 		
-			'id'=>"default_price_list"
-				
-		
-		));
+		$f_default_price_list=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"default_price_list",$f_opts);
 		$this->addField($f_default_price_list);
+		//********************
 
-		
-		
-		
 	}
 
 }

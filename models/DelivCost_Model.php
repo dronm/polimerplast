@@ -13,64 +13,51 @@ class DelivCost_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("deliv_costs");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['autoInc']=TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'autoInc'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_production_city_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"production_city_id"
-		,array(
-		'required'=>TRUE,
-			'id'=>"production_city_id"
-				
+		//********************
+	
+		//*** Field production_city_id ***
+		$f_opts = array();
+		$f_opts['id']="production_city_id";
 		
-		));
+		$f_production_city_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"production_city_id",$f_opts);
 		$this->addField($f_production_city_id);
-
-		$f_deliv_cost_opt_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"deliv_cost_opt_id"
-		,array(
-		'required'=>TRUE,
-			'id'=>"deliv_cost_opt_id"
-				
+		//********************
+	
+		//*** Field deliv_cost_opt_id ***
+		$f_opts = array();
+		$f_opts['id']="deliv_cost_opt_id";
 		
-		));
+		$f_deliv_cost_opt_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_cost_opt_id",$f_opts);
 		$this->addField($f_deliv_cost_opt_id);
-
-		$f_deliv_cost_type=new FieldSQlEnum($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"deliv_cost_type"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'id'=>"deliv_cost_type"
-				
+		//********************
+	
+		//*** Field deliv_cost_type ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="deliv_cost_type";
 		
-		));
+		$f_deliv_cost_type=new FieldSQLEnum($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_cost_type",$f_opts);
 		$this->addField($f_deliv_cost_type);
-
-		$f_cost=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"cost"
-		,array(
+		//********************
+	
+		//*** Field cost ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="cost";
 		
-			'length'=>15,
-			'id'=>"cost"
-				
-		
-		));
+		$f_cost=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"cost",$f_opts);
 		$this->addField($f_cost);
+		//********************
 
-		
-		
-		
 	}
 
 }

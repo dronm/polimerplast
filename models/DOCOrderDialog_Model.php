@@ -12,43 +12,34 @@ class DOCOrderDialog_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("doc_orders_dialog");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_def_debt=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"def_debt"
-		,array(
+		//********************
+	
+		//*** Field def_debt ***
+		$f_opts = array();
+		$f_opts['length']=19;
+		$f_opts['id']="def_debt";
 		
-			'length'=>19,
-			'id'=>"def_debt"
-				
-		
-		));
+		$f_def_debt=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"def_debt",$f_opts);
 		$this->addField($f_def_debt);
-
-		$f_debt_total=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"debt_total"
-		,array(
+		//********************
+	
+		//*** Field debt_total ***
+		$f_opts = array();
+		$f_opts['length']=19;
+		$f_opts['id']="debt_total";
 		
-			'length'=>19,
-			'id'=>"debt_total"
-				
-		
-		));
+		$f_debt_total=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"debt_total",$f_opts);
 		$this->addField($f_debt_total);
+		//********************
 
-		
-		
-		
 	}
 
 }

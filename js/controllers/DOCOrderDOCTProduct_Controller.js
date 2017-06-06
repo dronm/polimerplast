@@ -179,7 +179,6 @@ extend(DOCOrderDOCTProduct_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldString("old_view_id",{});
 	pm.addParam(param);
 	
@@ -188,7 +187,6 @@ extend(DOCOrderDOCTProduct_Controller,ControllerDb);
 	var param = new FieldInt("line_number",options);
 	
 	pm.addParam(param);
-	
 	
 	param = new FieldInt("old_line_number",{});
 	pm.addParam(param);
@@ -199,13 +197,11 @@ extend(DOCOrderDOCTProduct_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	options["alias"]="Продукция";
 	var param = new FieldInt("product_id",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -213,13 +209,11 @@ extend(DOCOrderDOCTProduct_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("mes_width",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -227,13 +221,11 @@ extend(DOCOrderDOCTProduct_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("measure_unit_id",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	options["alias"]="Количество";
@@ -241,13 +233,11 @@ extend(DOCOrderDOCTProduct_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldFloat("quant_confirmed",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	options["alias"]="Количество";
@@ -255,13 +245,11 @@ extend(DOCOrderDOCTProduct_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldFloat("quant_confirmed_base_measure_unit",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -269,13 +257,11 @@ extend(DOCOrderDOCTProduct_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldFloat("weight",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	options["alias"]="Цена";
@@ -283,13 +269,11 @@ extend(DOCOrderDOCTProduct_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldBool("price_edit",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	options["alias"]="Сумма";
@@ -297,13 +281,11 @@ extend(DOCOrderDOCTProduct_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	options["alias"]="Сумма";
 	var param = new FieldFloat("total_pack",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -311,13 +293,11 @@ extend(DOCOrderDOCTProduct_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldBool("pack_in_price",options);
 	
 	pm.addParam(param);
-	
 	
 		var options = {};
 						

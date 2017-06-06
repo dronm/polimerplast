@@ -249,7 +249,6 @@ extend(Client_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_id",{});
 	pm.addParam(param);
 	
@@ -259,13 +258,11 @@ extend(Client_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldText("name_full",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -273,13 +270,11 @@ extend(Client_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("kpp",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -287,13 +282,11 @@ extend(Client_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldText("addr_mail",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -301,13 +294,11 @@ extend(Client_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldText("telephones",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -315,13 +306,11 @@ extend(Client_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("okpo",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -329,13 +318,11 @@ extend(Client_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldText("bank_name",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -343,20 +330,17 @@ extend(Client_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("bank_acc",options);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldBool("registered",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -365,13 +349,11 @@ extend(Client_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("pay_delay_days",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -379,13 +361,11 @@ extend(Client_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("pay_dow_days",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -393,13 +373,11 @@ extend(Client_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("pay_debt_days",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -407,13 +385,11 @@ extend(Client_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldFloat("pay_debt_sum",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -421,13 +397,11 @@ extend(Client_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldBool("sms_on_order_change",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -435,13 +409,11 @@ extend(Client_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldBool("show_delivery_tab",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -449,13 +421,11 @@ extend(Client_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("client_activity_id",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -463,13 +433,11 @@ extend(Client_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("def_warehouse_id",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

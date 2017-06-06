@@ -13,204 +13,163 @@ class ClientDestination_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("client_destinations");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['autoInc']=TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'autoInc'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_client_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_id"
-		,array(
-		'required'=>TRUE,
-			'id'=>"client_id"
-				
+		//********************
+	
+		//*** Field client_id ***
+		$f_opts = array();
+		$f_opts['id']="client_id";
 		
-		));
+		$f_client_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_id",$f_opts);
 		$this->addField($f_client_id);
-
-		$f_zone_center=new FieldSQlGeomPoint($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"zone_center"
-		,array(
+		//********************
+	
+		//*** Field zone_center ***
+		$f_opts = array();
+		$f_opts['id']="zone_center";
 		
-			'id'=>"zone_center"
-				
-		
-		));
+		$f_zone_center=new FieldSQLGeomPoint($this->getDbLink(),$this->getDbName(),$this->getTableName(),"zone_center",$f_opts);
 		$this->addField($f_zone_center);
-
-		$f_near_road_lon=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"near_road_lon"
-		,array(
+		//********************
+	
+		//*** Field near_road_lon ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="near_road_lon";
 		
-			'length'=>15,
-			'id'=>"near_road_lon"
-				
-		
-		));
+		$f_near_road_lon=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"near_road_lon",$f_opts);
 		$this->addField($f_near_road_lon);
-
-		$f_near_road_lat=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"near_road_lat"
-		,array(
+		//********************
+	
+		//*** Field near_road_lat ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="near_road_lat";
 		
-			'length'=>15,
-			'id'=>"near_road_lat"
-				
-		
-		));
+		$f_near_road_lat=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"near_road_lat",$f_opts);
 		$this->addField($f_near_road_lat);
-
-		$f_region=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"region"
-		,array(
+		//********************
+	
+		//*** Field region ***
+		$f_opts = array();
+		$f_opts['id']="region";
 		
-			'id'=>"region"
-				
-		
-		));
+		$f_region=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"region",$f_opts);
 		$this->addField($f_region);
-
-		$f_region_code=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"region_code"
-		,array(
+		//********************
+	
+		//*** Field region_code ***
+		$f_opts = array();
+		$f_opts['id']="region_code";
 		
-			'id'=>"region_code"
-				
-		
-		));
+		$f_region_code=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"region_code",$f_opts);
 		$this->addField($f_region_code);
-
-		$f_raion=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"raion"
-		,array(
+		//********************
+	
+		//*** Field raion ***
+		$f_opts = array();
+		$f_opts['id']="raion";
 		
-			'id'=>"raion"
-				
-		
-		));
+		$f_raion=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"raion",$f_opts);
 		$this->addField($f_raion);
-
-		$f_raion_code=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"raion_code"
-		,array(
+		//********************
+	
+		//*** Field raion_code ***
+		$f_opts = array();
+		$f_opts['id']="raion_code";
 		
-			'id'=>"raion_code"
-				
-		
-		));
+		$f_raion_code=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"raion_code",$f_opts);
 		$this->addField($f_raion_code);
-
-		$f_gorod=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"gorod"
-		,array(
+		//********************
+	
+		//*** Field gorod ***
+		$f_opts = array();
+		$f_opts['id']="gorod";
 		
-			'id'=>"gorod"
-				
-		
-		));
+		$f_gorod=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"gorod",$f_opts);
 		$this->addField($f_gorod);
-
-		$f_gorod_code=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"gorod_code"
-		,array(
+		//********************
+	
+		//*** Field gorod_code ***
+		$f_opts = array();
+		$f_opts['id']="gorod_code";
 		
-			'id'=>"gorod_code"
-				
-		
-		));
+		$f_gorod_code=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"gorod_code",$f_opts);
 		$this->addField($f_gorod_code);
-
-		$f_naspunkt=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"naspunkt"
-		,array(
+		//********************
+	
+		//*** Field naspunkt ***
+		$f_opts = array();
+		$f_opts['id']="naspunkt";
 		
-			'id'=>"naspunkt"
-				
-		
-		));
+		$f_naspunkt=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"naspunkt",$f_opts);
 		$this->addField($f_naspunkt);
-
-		$f_naspunkt_code=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"naspunkt_code"
-		,array(
+		//********************
+	
+		//*** Field naspunkt_code ***
+		$f_opts = array();
+		$f_opts['id']="naspunkt_code";
 		
-			'id'=>"naspunkt_code"
-				
-		
-		));
+		$f_naspunkt_code=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"naspunkt_code",$f_opts);
 		$this->addField($f_naspunkt_code);
-
-		$f_ulitza=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"ulitza"
-		,array(
+		//********************
+	
+		//*** Field ulitza ***
+		$f_opts = array();
+		$f_opts['id']="ulitza";
 		
-			'id'=>"ulitza"
-				
-		
-		));
+		$f_ulitza=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ulitza",$f_opts);
 		$this->addField($f_ulitza);
-
-		$f_ulitza_code=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"ulitza_code"
-		,array(
+		//********************
+	
+		//*** Field ulitza_code ***
+		$f_opts = array();
+		$f_opts['id']="ulitza_code";
 		
-			'id'=>"ulitza_code"
-				
-		
-		));
+		$f_ulitza_code=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ulitza_code",$f_opts);
 		$this->addField($f_ulitza_code);
-
-		$f_dom=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"dom"
-		,array(
+		//********************
+	
+		//*** Field dom ***
+		$f_opts = array();
+		$f_opts['id']="dom";
 		
-			'id'=>"dom"
-				
-		
-		));
+		$f_dom=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"dom",$f_opts);
 		$this->addField($f_dom);
-
-		$f_korpus=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"korpus"
-		,array(
+		//********************
+	
+		//*** Field korpus ***
+		$f_opts = array();
+		$f_opts['id']="korpus";
 		
-			'id'=>"korpus"
-				
-		
-		));
+		$f_korpus=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"korpus",$f_opts);
 		$this->addField($f_korpus);
-
-		$f_kvartira=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"kvartira"
-		,array(
+		//********************
+	
+		//*** Field kvartira ***
+		$f_opts = array();
+		$f_opts['id']="kvartira";
 		
-			'id'=>"kvartira"
-				
-		
-		));
+		$f_kvartira=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"kvartira",$f_opts);
 		$this->addField($f_kvartira);
-
-		$f_addr_index=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"addr_index"
-		,array(
+		//********************
+	
+		//*** Field addr_index ***
+		$f_opts = array();
+		$f_opts['id']="addr_index";
 		
-			'id'=>"addr_index"
-				
-		
-		));
+		$f_addr_index=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"addr_index",$f_opts);
 		$this->addField($f_addr_index);
+		//********************
 
-		
-		
-		
 	}
 
 }

@@ -73,7 +73,6 @@ extend(SMSTemplate_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_id",{});
 	pm.addParam(param);
 	
@@ -84,13 +83,11 @@ extend(SMSTemplate_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	options["alias"]="Шаблон";
 	var param = new FieldText("template",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	options["alias"]="Комментарий";
@@ -98,13 +95,11 @@ extend(SMSTemplate_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	options["alias"]="Поля";
 	var param = new FieldText("fields",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

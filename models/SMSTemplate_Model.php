@@ -14,77 +14,56 @@ class SMSTemplate_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("sms_templates");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['autoInc']=TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		'required'=>FALSE,
-			'primaryKey'=>TRUE,
-			'autoInc'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_sms_type=new FieldSQlEnum($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"sms_type"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>FALSE,
-			'autoInc'=>FALSE,
-			'alias'=>"Тип SMS"
-		,
-			'id'=>"sms_type"
-				
+		//********************
+	
+		//*** Field sms_type ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = FALSE;
+		$f_opts['autoInc']=FALSE;
+		$f_opts['id']="sms_type";
 		
-		));
+		$f_sms_type=new FieldSQLEnum($this->getDbLink(),$this->getDbName(),$this->getTableName(),"sms_type",$f_opts);
 		$this->addField($f_sms_type);
-
-		$f_template=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"template"
-		,array(
-		'required'=>TRUE,
-			'alias'=>"Шаблон"
-		,
-			'id'=>"template"
-				
+		//********************
+	
+		//*** Field template ***
+		$f_opts = array();
+		$f_opts['id']="template";
 		
-		));
+		$f_template=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"template",$f_opts);
 		$this->addField($f_template);
-
-		$f_comment_text=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"comment_text"
-		,array(
-		'required'=>TRUE,
-			'alias'=>"Комментарий"
-		,
-			'id'=>"comment_text"
-				
+		//********************
+	
+		//*** Field comment_text ***
+		$f_opts = array();
+		$f_opts['id']="comment_text";
 		
-		));
+		$f_comment_text=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"comment_text",$f_opts);
 		$this->addField($f_comment_text);
-
-		$f_fields=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"fields"
-		,array(
-		'required'=>TRUE,
-			'alias'=>"Поля"
-		,
-			'id'=>"fields"
-				
+		//********************
+	
+		//*** Field fields ***
+		$f_opts = array();
+		$f_opts['id']="fields";
 		
-		));
+		$f_fields=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"fields",$f_opts);
 		$this->addField($f_fields);
+		//********************
 
 		$order = new ModelOrderSQL();		
 		$this->setDefaultModelOrder($order);		
 		
 		$order->addField($f_sms_type);
 
-		
-		
-		
 	}
 
 }

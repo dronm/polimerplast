@@ -12,54 +12,43 @@ class Tracker_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("trackers");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['length']=15;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'length'=>15,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_tracker_server_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"tracker_server_id"
-		,array(
+		//********************
+	
+		//*** Field tracker_server_id ***
+		$f_opts = array();
+		$f_opts['id']="tracker_server_id";
 		
-			'id'=>"tracker_server_id"
-				
-		
-		));
+		$f_tracker_server_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"tracker_server_id",$f_opts);
 		$this->addField($f_tracker_server_id);
-
-		$f_sim_number=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"sim_number"
-		,array(
+		//********************
+	
+		//*** Field sim_number ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="sim_number";
 		
-			'length'=>15,
-			'id'=>"sim_number"
-				
-		
-		));
+		$f_sim_number=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"sim_number",$f_opts);
 		$this->addField($f_sim_number);
-
-		$f_sim_id=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"sim_id"
-		,array(
+		//********************
+	
+		//*** Field sim_id ***
+		$f_opts = array();
+		$f_opts['length']=36;
+		$f_opts['id']="sim_id";
 		
-			'length'=>36,
-			'id'=>"sim_id"
-				
-		
-		));
+		$f_sim_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"sim_id",$f_opts);
 		$this->addField($f_sim_id);
+		//********************
 
-		
-		
-		
 	}
 
 }

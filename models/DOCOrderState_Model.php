@@ -14,93 +14,74 @@ class DOCOrderState_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("doc_orders_states");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['autoInc']=TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'autoInc'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_doc_orders_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"doc_orders_id"
-		,array(
+		//********************
+	
+		//*** Field doc_orders_id ***
+		$f_opts = array();
+		$f_opts['id']="doc_orders_id";
 		
-			'id'=>"doc_orders_id"
-				
-		
-		));
+		$f_doc_orders_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"doc_orders_id",$f_opts);
 		$this->addField($f_doc_orders_id);
-
-		$f_date_time=new FieldSQlDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"date_time"
-		,array(
+		//********************
+	
+		//*** Field date_time ***
+		$f_opts = array();
+		$f_opts['id']="date_time";
 		
-			'id'=>"date_time"
-				
-		
-		));
+		$f_date_time=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_time",$f_opts);
 		$this->addField($f_date_time);
-
-		$f_state=new FieldSQlEnum($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"state"
-		,array(
+		//********************
+	
+		//*** Field state ***
+		$f_opts = array();
+		$f_opts['id']="state";
 		
-			'id'=>"state"
-				
-		
-		));
+		$f_state=new FieldSQLEnum($this->getDbLink(),$this->getDbName(),$this->getTableName(),"state",$f_opts);
 		$this->addField($f_state);
-
-		$f_user_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"user_id"
-		,array(
+		//********************
+	
+		//*** Field user_id ***
+		$f_opts = array();
+		$f_opts['id']="user_id";
 		
-			'id'=>"user_id"
-				
-		
-		));
+		$f_user_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"user_id",$f_opts);
 		$this->addField($f_user_id);
-
-		$f_tracker_id=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"tracker_id"
-		,array(
+		//********************
+	
+		//*** Field tracker_id ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="tracker_id";
 		
-			'length'=>15,
-			'id'=>"tracker_id"
-				
-		
-		));
+		$f_tracker_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"tracker_id",$f_opts);
 		$this->addField($f_tracker_id);
-
-		$f_client_zone=new FieldSQlGeometry($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_zone"
-		,array(
+		//********************
+	
+		//*** Field client_zone ***
+		$f_opts = array();
+		$f_opts['id']="client_zone";
 		
-			'id'=>"client_zone"
-				
-		
-		));
+		$f_client_zone=new FieldSQLGeometry($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_zone",$f_opts);
 		$this->addField($f_client_zone);
-
-		$f_production_zone=new FieldSQlGeometry($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"production_zone"
-		,array(
+		//********************
+	
+		//*** Field production_zone ***
+		$f_opts = array();
+		$f_opts['id']="production_zone";
 		
-			'id'=>"production_zone"
-				
-		
-		));
+		$f_production_zone=new FieldSQLGeometry($this->getDbLink(),$this->getDbName(),$this->getTableName(),"production_zone",$f_opts);
 		$this->addField($f_production_zone);
+		//********************
 
-		
-		
-		
 	}
 
 }

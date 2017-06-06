@@ -253,7 +253,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		);
 		get_inf_on_address($addr,$res);
 	
-		if ($res['precision']!="exact" &amp;&amp; $res['precision']!="near" &amp; $res['precision']!="street"){
+		if ($pm->getParamValue('ulitza') &amp;&amp; $pm->getParamValue('dom') &amp;&amp; $res['precision']!="exact" &amp;&amp; $res['precision']!="near" &amp; $res['precision']!="street"){
 			throw new Exception("Адрес не найден!");
 		}
 		$this->addNewModel(sprintf(

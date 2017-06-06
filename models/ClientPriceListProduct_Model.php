@@ -12,76 +12,61 @@ class ClientPriceListProduct_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("client_price_list_products");
+			
+		//*** Field price_list_id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="price_list_id";
 		
-		$f_price_list_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"price_list_id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'id'=>"price_list_id"
-				
-		
-		));
+		$f_price_list_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"price_list_id",$f_opts);
 		$this->addField($f_price_list_id);
-
-		$f_product_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"product_id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'id'=>"product_id"
-				
+		//********************
+	
+		//*** Field product_id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="product_id";
 		
-		));
+		$f_product_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_id",$f_opts);
 		$this->addField($f_product_id);
-
-		$f_price=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"price"
-		,array(
+		//********************
+	
+		//*** Field price ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="price";
 		
-			'length'=>15,
-			'id'=>"price"
-				
-		
-		));
+		$f_price=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"price",$f_opts);
 		$this->addField($f_price);
-
-		$f_discount_volume=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"discount_volume"
-		,array(
+		//********************
+	
+		//*** Field discount_volume ***
+		$f_opts = array();
+		$f_opts['length']=19;
+		$f_opts['id']="discount_volume";
 		
-			'length'=>19,
-			'id'=>"discount_volume"
-				
-		
-		));
+		$f_discount_volume=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"discount_volume",$f_opts);
 		$this->addField($f_discount_volume);
-
-		$f_discount_total=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"discount_total"
-		,array(
+		//********************
+	
+		//*** Field discount_total ***
+		$f_opts = array();
+		$f_opts['length']=19;
+		$f_opts['id']="discount_total";
 		
-			'length'=>19,
-			'id'=>"discount_total"
-				
-		
-		));
+		$f_discount_total=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"discount_total",$f_opts);
 		$this->addField($f_discount_total);
-
-		$f_pack_price=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"pack_price"
-		,array(
+		//********************
+	
+		//*** Field pack_price ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="pack_price";
 		
-			'length'=>15,
-			'id'=>"pack_price"
-				
-		
-		));
+		$f_pack_price=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"pack_price",$f_opts);
 		$this->addField($f_pack_price);
+		//********************
 
-		
-		
-		
 	}
 
 }

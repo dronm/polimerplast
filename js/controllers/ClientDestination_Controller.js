@@ -157,7 +157,6 @@ extend(ClientDestination_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_id",{});
 	pm.addParam(param);
 	
@@ -167,13 +166,11 @@ extend(ClientDestination_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldGeomPoint("zone_center",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -181,13 +178,11 @@ extend(ClientDestination_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldFloat("near_road_lat",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -195,13 +190,11 @@ extend(ClientDestination_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldText("region_code",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -209,13 +202,11 @@ extend(ClientDestination_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldText("raion_code",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -223,13 +214,11 @@ extend(ClientDestination_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldText("gorod_code",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -237,13 +226,11 @@ extend(ClientDestination_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldText("naspunkt_code",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -251,13 +238,11 @@ extend(ClientDestination_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldText("ulitza_code",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -265,13 +250,11 @@ extend(ClientDestination_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldText("korpus",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -279,13 +262,11 @@ extend(ClientDestination_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldText("addr_index",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

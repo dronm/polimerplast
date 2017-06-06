@@ -60,7 +60,6 @@ extend(ProductionState_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_id",{});
 	pm.addParam(param);
 	
@@ -70,13 +69,11 @@ extend(ProductionState_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("name",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

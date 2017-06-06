@@ -85,7 +85,6 @@ extend(ClientContract_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_id",{});
 	pm.addParam(param);
 	
@@ -95,13 +94,11 @@ extend(ClientContract_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("firm_id",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	options["alias"]="Состояние";
@@ -110,13 +107,11 @@ extend(ClientContract_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	options["alias"]="Дата с";
 	var param = new FieldDate("date_from",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	options["alias"]="Дата по";
@@ -124,13 +119,11 @@ extend(ClientContract_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	options["alias"]="номер";
 	var param = new FieldString("number",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

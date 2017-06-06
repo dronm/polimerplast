@@ -15,73 +15,58 @@ class AccPKO_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("acc_pkos");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['autoInc']=TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'autoInc'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_date_time=new FieldSQlDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"date_time"
-		,array(
+		//********************
+	
+		//*** Field date_time ***
+		$f_opts = array();
+		$f_opts['id']="date_time";
 		
-			'id'=>"date_time"
-				
-		
-		));
+		$f_date_time=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_time",$f_opts);
 		$this->addField($f_date_time);
-
-		$f_acc_pko_type=new FieldSQlEnum($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"acc_pko_type"
-		,array(
+		//********************
+	
+		//*** Field acc_pko_type ***
+		$f_opts = array();
+		$f_opts['id']="acc_pko_type";
 		
-			'id'=>"acc_pko_type"
-				
-		
-		));
+		$f_acc_pko_type=new FieldSQLEnum($this->getDbLink(),$this->getDbName(),$this->getTableName(),"acc_pko_type",$f_opts);
 		$this->addField($f_acc_pko_type);
-
-		$f_total=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"total"
-		,array(
+		//********************
+	
+		//*** Field total ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="total";
 		
-			'length'=>15,
-			'id'=>"total"
-				
-		
-		));
+		$f_total=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total",$f_opts);
 		$this->addField($f_total);
-
-		$f_order_list=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"order_list"
-		,array(
+		//********************
+	
+		//*** Field order_list ***
+		$f_opts = array();
+		$f_opts['id']="order_list";
 		
-			'id'=>"order_list"
-				
-		
-		));
+		$f_order_list=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"order_list",$f_opts);
 		$this->addField($f_order_list);
-
-		$f_order_ids=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"order_ids"
-		,array(
+		//********************
+	
+		//*** Field order_ids ***
+		$f_opts = array();
+		$f_opts['id']="order_ids";
 		
-			'id'=>"order_ids"
-				
-		
-		));
+		$f_order_ids=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"order_ids",$f_opts);
 		$this->addField($f_order_ids);
+		//********************
 
-		
-		
-		
 	}
 
 }

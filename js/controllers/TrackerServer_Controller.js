@@ -60,7 +60,6 @@ extend(TrackerServer_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_id",{});
 	pm.addParam(param);
 	
@@ -70,13 +69,11 @@ extend(TrackerServer_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	options["alias"]="Описание";
 	var param = new FieldString("name",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

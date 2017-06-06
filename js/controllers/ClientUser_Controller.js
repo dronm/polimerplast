@@ -116,7 +116,6 @@ extend(ClientUser_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_id",{});
 	pm.addParam(param);
 	
@@ -126,20 +125,17 @@ extend(ClientUser_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	options["alias"]="ФИО";
 	var param = new FieldString("name_full",options);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	options["alias"]="Приказ";
 	var param = new FieldString("sign_order",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	options["alias"]="роль";
@@ -148,13 +144,11 @@ extend(ClientUser_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	options["alias"]="эл.почта";
 	var param = new FieldString("email",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	options["alias"]="пароль";
@@ -162,13 +156,11 @@ extend(ClientUser_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("cel_phone",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -176,13 +168,11 @@ extend(ClientUser_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("tel_ext",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -190,13 +180,11 @@ extend(ClientUser_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("ext_login",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

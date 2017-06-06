@@ -13,95 +13,68 @@ class ClientPayScheduleList_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("client_pay_schedule_list");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['sysCol']=TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'id'=>"id"
-		,
-			'sysCol'=>TRUE
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_date=new FieldSQlDate($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"date"
-		,array(
+		//********************
+	
+		//*** Field date ***
+		$f_opts = array();
+		$f_opts['sysCol']=TRUE;
+		$f_opts['id']="date";
 		
-			'id'=>"date"
-		,
-			'sysCol'=>TRUE
-				
-		
-		));
+		$f_date=new FieldSQLDate($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date",$f_opts);
 		$this->addField($f_date);
-
-		$f_date_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"date_descr"
-		,array(
+		//********************
+	
+		//*** Field date_descr ***
+		$f_opts = array();
+		$f_opts['id']="date_descr";
 		
-			'alias'=>"Дата"
-		,
-			'id'=>"date_descr"
-				
-		
-		));
+		$f_date_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_descr",$f_opts);
 		$this->addField($f_date_descr);
-
-		$f_firm_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"firm_id"
-		,array(
+		//********************
+	
+		//*** Field firm_id ***
+		$f_opts = array();
+		$f_opts['sysCol']=TRUE;
+		$f_opts['id']="firm_id";
 		
-			'id'=>"firm_id"
-		,
-			'sysCol'=>TRUE
-				
-		
-		));
+		$f_firm_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"firm_id",$f_opts);
 		$this->addField($f_firm_id);
-
-		$f_firm_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"firm_descr"
-		,array(
+		//********************
+	
+		//*** Field firm_descr ***
+		$f_opts = array();
+		$f_opts['id']="firm_descr";
 		
-			'alias'=>"Организация"
-		,
-			'id'=>"firm_descr"
-				
-		
-		));
+		$f_firm_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"firm_descr",$f_opts);
 		$this->addField($f_firm_descr);
-
-		$f_client_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_id"
-		,array(
+		//********************
+	
+		//*** Field client_id ***
+		$f_opts = array();
+		$f_opts['sysCol']=TRUE;
+		$f_opts['id']="client_id";
 		
-			'id'=>"client_id"
-		,
-			'sysCol'=>TRUE
-				
-		
-		));
+		$f_client_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_id",$f_opts);
 		$this->addField($f_client_id);
-
-		$f_client_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_descr"
-		,array(
+		//********************
+	
+		//*** Field client_descr ***
+		$f_opts = array();
+		$f_opts['id']="client_descr";
 		
-			'alias'=>"Клиент"
-		,
-			'id'=>"client_descr"
-				
-		
-		));
+		$f_client_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_descr",$f_opts);
 		$this->addField($f_client_descr);
+		//********************
 
-		
-		
-		
 	}
 
 }

@@ -13,61 +13,48 @@ class EmailTemplateList_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("email_templates_list");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_email_type=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"email_type"
-		,array(
+		//********************
+	
+		//*** Field email_type ***
+		$f_opts = array();
+		$f_opts['id']="email_type";
 		
-			'id'=>"email_type"
-				
-		
-		));
+		$f_email_type=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"email_type",$f_opts);
 		$this->addField($f_email_type);
-
-		$f_email_type_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"email_type_descr"
-		,array(
+		//********************
+	
+		//*** Field email_type_descr ***
+		$f_opts = array();
+		$f_opts['id']="email_type_descr";
 		
-			'id'=>"email_type_descr"
-				
-		
-		));
+		$f_email_type_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"email_type_descr",$f_opts);
 		$this->addField($f_email_type_descr);
-
-		$f_template=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"template"
-		,array(
+		//********************
+	
+		//*** Field template ***
+		$f_opts = array();
+		$f_opts['id']="template";
 		
-			'id'=>"template"
-				
-		
-		));
+		$f_template=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"template",$f_opts);
 		$this->addField($f_template);
-
-		$f_fields=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"fields"
-		,array(
+		//********************
+	
+		//*** Field fields ***
+		$f_opts = array();
+		$f_opts['id']="fields";
 		
-			'id'=>"fields"
-				
-		
-		));
+		$f_fields=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"fields",$f_opts);
 		$this->addField($f_fields);
+		//********************
 
-		
-		
-		
 	}
 
 }

@@ -14,227 +14,153 @@ class VehicleDialog_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("vehicles_dialog");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'alias'=>"Код"
-		,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_plate=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"plate"
-		,array(
+		//********************
+	
+		//*** Field plate ***
+		$f_opts = array();
+		$f_opts['id']="plate";
 		
-			'alias'=>"Гос.номер"
-		,
-			'id'=>"plate"
-				
-		
-		));
+		$f_plate=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"plate",$f_opts);
 		$this->addField($f_plate);
-
-		$f_model=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"model"
-		,array(
+		//********************
+	
+		//*** Field model ***
+		$f_opts = array();
+		$f_opts['id']="model";
 		
-			'alias'=>"Модель"
-		,
-			'id'=>"model"
-				
-		
-		));
+		$f_model=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"model",$f_opts);
 		$this->addField($f_model);
-
-		$f_production_city_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"production_city_id"
-		,array(
+		//********************
+	
+		//*** Field production_city_id ***
+		$f_opts = array();
+		$f_opts['id']="production_city_id";
 		
-			'alias'=>"Город код"
-		,
-			'id'=>"production_city_id"
-				
-		
-		));
+		$f_production_city_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"production_city_id",$f_opts);
 		$this->addField($f_production_city_id);
-
-		$f_production_city_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"production_city_descr"
-		,array(
+		//********************
+	
+		//*** Field production_city_descr ***
+		$f_opts = array();
+		$f_opts['id']="production_city_descr";
 		
-			'alias'=>"Город"
-		,
-			'id'=>"production_city_descr"
-				
-		
-		));
+		$f_production_city_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"production_city_descr",$f_opts);
 		$this->addField($f_production_city_descr);
-
-		$f_driver_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"driver_id"
-		,array(
+		//********************
+	
+		//*** Field driver_id ***
+		$f_opts = array();
+		$f_opts['id']="driver_id";
 		
-			'alias'=>"Водитель код"
-		,
-			'id'=>"driver_id"
-				
-		
-		));
+		$f_driver_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"driver_id",$f_opts);
 		$this->addField($f_driver_id);
-
-		$f_driver_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"driver_descr"
-		,array(
+		//********************
+	
+		//*** Field driver_descr ***
+		$f_opts = array();
+		$f_opts['id']="driver_descr";
 		
-			'alias'=>"Водитель"
-		,
-			'id'=>"driver_descr"
-				
-		
-		));
+		$f_driver_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"driver_descr",$f_opts);
 		$this->addField($f_driver_descr);
-
-		$f_employed=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"employed"
-		,array(
+		//********************
+	
+		//*** Field employed ***
+		$f_opts = array();
+		$f_opts['id']="employed";
 		
-			'alias'=>"Постоянный"
-		,
-			'id'=>"employed"
-				
-		
-		));
+		$f_employed=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"employed",$f_opts);
 		$this->addField($f_employed);
-
-		$f_vol=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"vol"
-		,array(
+		//********************
+	
+		//*** Field vol ***
+		$f_opts = array();
+		$f_opts['id']="vol";
 		
-			'alias'=>"Объем"
-		,
-			'id'=>"vol"
-				
-		
-		));
+		$f_vol=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"vol",$f_opts);
 		$this->addField($f_vol);
-
-		$f_load_weight_t=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"load_weight_t"
-		,array(
+		//********************
+	
+		//*** Field load_weight_t ***
+		$f_opts = array();
+		$f_opts['id']="load_weight_t";
 		
-			'alias'=>"Грузоподъемность"
-		,
-			'id'=>"load_weight_t"
-				
-		
-		));
+		$f_load_weight_t=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"load_weight_t",$f_opts);
 		$this->addField($f_load_weight_t);
-
-		$f_vl_wt=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"vl_wt"
-		,array(
+		//********************
+	
+		//*** Field vl_wt ***
+		$f_opts = array();
+		$f_opts['id']="vl_wt";
 		
-			'alias'=>"объем/грузоподъемность"
-		,
-			'id'=>"vl_wt"
-				
-		
-		));
+		$f_vl_wt=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"vl_wt",$f_opts);
 		$this->addField($f_vl_wt);
-
-		$f_carrier_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"carrier_id"
-		,array(
+		//********************
+	
+		//*** Field carrier_id ***
+		$f_opts = array();
+		$f_opts['id']="carrier_id";
 		
-			'alias'=>"Перевозчник"
-		,
-			'id'=>"carrier_id"
-				
-		
-		));
+		$f_carrier_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"carrier_id",$f_opts);
 		$this->addField($f_carrier_id);
-
-		$f_carrier_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"carrier_descr"
-		,array(
+		//********************
+	
+		//*** Field carrier_descr ***
+		$f_opts = array();
+		$f_opts['id']="carrier_descr";
 		
-			'alias'=>"Перевозчник"
-		,
-			'id'=>"carrier_descr"
-				
-		
-		));
+		$f_carrier_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"carrier_descr",$f_opts);
 		$this->addField($f_carrier_descr);
-
-		$f_trailer_model=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"trailer_model"
-		,array(
+		//********************
+	
+		//*** Field trailer_model ***
+		$f_opts = array();
+		$f_opts['id']="trailer_model";
 		
-			'alias'=>"Модель прицепа"
-		,
-			'id'=>"trailer_model"
-				
-		
-		));
+		$f_trailer_model=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"trailer_model",$f_opts);
 		$this->addField($f_trailer_model);
-
-		$f_trailer_plate=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"trailer_plate"
-		,array(
+		//********************
+	
+		//*** Field trailer_plate ***
+		$f_opts = array();
+		$f_opts['id']="trailer_plate";
 		
-			'alias'=>"Номер прицепа"
-		,
-			'id'=>"trailer_plate"
-				
-		
-		));
+		$f_trailer_plate=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"trailer_plate",$f_opts);
 		$this->addField($f_trailer_plate);
-
-		$f_tracker_id=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"tracker_id"
-		,array(
+		//********************
+	
+		//*** Field tracker_id ***
+		$f_opts = array();
+		$f_opts['id']="tracker_id";
 		
-			'alias'=>"Трекер"
-		,
-			'id'=>"tracker_id"
-				
-		
-		));
+		$f_tracker_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"tracker_id",$f_opts);
 		$this->addField($f_tracker_id);
-
-		$f_last_tracker_data=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"last_tracker_data"
-		,array(
+		//********************
+	
+		//*** Field last_tracker_data ***
+		$f_opts = array();
+		$f_opts['id']="last_tracker_data";
 		
-			'alias'=>"Данные с трекера"
-		,
-			'id'=>"last_tracker_data"
-				
-		
-		));
+		$f_last_tracker_data=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"last_tracker_data",$f_opts);
 		$this->addField($f_last_tracker_data);
-
-		$f_match_1c=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"match_1c"
-		,array(
+		//********************
+	
+		//*** Field match_1c ***
+		$f_opts = array();
+		$f_opts['sysCol']=TRUE;
+		$f_opts['id']="match_1c";
 		
-			'id'=>"match_1c"
-		,
-			'sysCol'=>TRUE
-				
-		
-		));
+		$f_match_1c=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"match_1c",$f_opts);
 		$this->addField($f_match_1c);
+		//********************
 
-		
-		
-		
 	}
 
 }

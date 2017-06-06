@@ -70,7 +70,6 @@ extend(ProductCustomSizePrice_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_product_id",{});
 	pm.addParam(param);
 	
@@ -79,7 +78,6 @@ extend(ProductCustomSizePrice_Controller,ControllerDb);
 	var param = new FieldInt("category",options);
 	
 	pm.addParam(param);
-	
 	
 	param = new FieldInt("old_category",{});
 	pm.addParam(param);
@@ -90,13 +88,11 @@ extend(ProductCustomSizePrice_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldFloat("quant",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

@@ -13,94 +13,66 @@ class VehicleStopList_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("");
+			
+		//*** Field vh_id ***
+		$f_opts = array();
+		$f_opts['sysCol']=TRUE;
+		$f_opts['id']="vh_id";
 		
-		$f_vh_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"vh_id"
-		,array(
-		
-			'id'=>"vh_id"
-		,
-			'sysCol'=>TRUE
-				
-		
-		));
+		$f_vh_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"vh_id",$f_opts);
 		$this->addField($f_vh_id);
-
-		$f_vh_id_list=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"vh_id_list"
-		,array(
+		//********************
+	
+		//*** Field vh_id_list ***
+		$f_opts = array();
+		$f_opts['sysCol']=TRUE;
+		$f_opts['id']="vh_id_list";
 		
-			'id'=>"vh_id_list"
-		,
-			'sysCol'=>TRUE
-				
-		
-		));
+		$f_vh_id_list=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"vh_id_list",$f_opts);
 		$this->addField($f_vh_id_list);
-
-		$f_vh_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"vh_descr"
-		,array(
+		//********************
+	
+		//*** Field vh_descr ***
+		$f_opts = array();
+		$f_opts['id']="vh_descr";
 		
-			'alias'=>"ТС"
-		,
-			'id'=>"vh_descr"
-				
-		
-		));
+		$f_vh_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"vh_descr",$f_opts);
 		$this->addField($f_vh_descr);
-
-		$f_date_time_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"date_time_descr"
-		,array(
+		//********************
+	
+		//*** Field date_time_descr ***
+		$f_opts = array();
+		$f_opts['id']="date_time_descr";
 		
-			'alias'=>"Дата"
-		,
-			'id'=>"date_time_descr"
-				
-		
-		));
+		$f_date_time_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_time_descr",$f_opts);
 		$this->addField($f_date_time_descr);
-
-		$f_date_time=new FieldSQlDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"date_time"
-		,array(
+		//********************
+	
+		//*** Field date_time ***
+		$f_opts = array();
+		$f_opts['sysCol']=TRUE;
+		$f_opts['id']="date_time";
 		
-			'id'=>"date_time"
-		,
-			'sysCol'=>TRUE
-				
-		
-		));
+		$f_date_time=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_time",$f_opts);
 		$this->addField($f_date_time);
-
-		$f_duration=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"duration"
-		,array(
+		//********************
+	
+		//*** Field duration ***
+		$f_opts = array();
+		$f_opts['id']="duration";
 		
-			'alias'=>"Продолжит.стоянки"
-		,
-			'id'=>"duration"
-				
-		
-		));
+		$f_duration=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"duration",$f_opts);
 		$this->addField($f_duration);
-
-		$f_address=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"address"
-		,array(
+		//********************
+	
+		//*** Field address ***
+		$f_opts = array();
+		$f_opts['id']="address";
 		
-			'alias'=>"Адрес"
-		,
-			'id'=>"address"
-				
-		
-		));
+		$f_address=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"address",$f_opts);
 		$this->addField($f_address);
+		//********************
 
-		
-		
-		
 	}
 
 }

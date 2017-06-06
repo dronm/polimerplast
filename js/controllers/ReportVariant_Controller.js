@@ -72,7 +72,6 @@ extend(ReportVariant_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_id",{});
 	pm.addParam(param);
 	
@@ -82,7 +81,6 @@ extend(ReportVariant_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	param = new FieldEnum("report_type",options);
@@ -90,20 +88,17 @@ extend(ReportVariant_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldText("name",options);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldText("data",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

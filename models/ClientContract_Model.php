@@ -14,91 +14,66 @@ class ClientContract_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("client_contracts");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['autoInc']=TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'autoInc'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_client_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_id"
-		,array(
-		'required'=>TRUE,
-			'id'=>"client_id"
-				
+		//********************
+	
+		//*** Field client_id ***
+		$f_opts = array();
+		$f_opts['id']="client_id";
 		
-		));
+		$f_client_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_id",$f_opts);
 		$this->addField($f_client_id);
-
-		$f_firm_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"firm_id"
-		,array(
-		'required'=>TRUE,
-			'id'=>"firm_id"
-				
+		//********************
+	
+		//*** Field firm_id ***
+		$f_opts = array();
+		$f_opts['id']="firm_id";
 		
-		));
+		$f_firm_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"firm_id",$f_opts);
 		$this->addField($f_firm_id);
-
-		$f_state=new FieldSQlEnum($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"state"
-		,array(
-		'required'=>TRUE,
-			'alias'=>"Состояние"
-		,
-			'id'=>"state"
-				
+		//********************
+	
+		//*** Field state ***
+		$f_opts = array();
+		$f_opts['id']="state";
 		
-		));
+		$f_state=new FieldSQLEnum($this->getDbLink(),$this->getDbName(),$this->getTableName(),"state",$f_opts);
 		$this->addField($f_state);
-
-		$f_date_from=new FieldSQlDate($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"date_from"
-		,array(
+		//********************
+	
+		//*** Field date_from ***
+		$f_opts = array();
+		$f_opts['id']="date_from";
 		
-			'alias'=>"Дата с"
-		,
-			'id'=>"date_from"
-				
-		
-		));
+		$f_date_from=new FieldSQLDate($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_from",$f_opts);
 		$this->addField($f_date_from);
-
-		$f_date_to=new FieldSQlDate($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"date_to"
-		,array(
+		//********************
+	
+		//*** Field date_to ***
+		$f_opts = array();
+		$f_opts['id']="date_to";
 		
-			'alias'=>"Дата по"
-		,
-			'id'=>"date_to"
-				
-		
-		));
+		$f_date_to=new FieldSQLDate($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_to",$f_opts);
 		$this->addField($f_date_to);
-
-		$f_number=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"number"
-		,array(
+		//********************
+	
+		//*** Field number ***
+		$f_opts = array();
+		$f_opts['length']=50;
+		$f_opts['id']="number";
 		
-			'alias'=>"номер"
-		,
-			'length'=>50,
-			'id'=>"number"
-				
-		
-		));
+		$f_number=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"number",$f_opts);
 		$this->addField($f_number);
+		//********************
 
-		
-		
-		
 	}
 
 }

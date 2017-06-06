@@ -70,7 +70,6 @@ extend(Tracker_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldString("old_id",{});
 	pm.addParam(param);
 	
@@ -80,20 +79,17 @@ extend(Tracker_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("sim_number",options);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("sim_id",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

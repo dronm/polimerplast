@@ -58,7 +58,6 @@ extend(ProductWarehouse_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_product_id",{});
 	pm.addParam(param);
 	
@@ -67,7 +66,6 @@ extend(ProductWarehouse_Controller,ControllerDb);
 	var param = new FieldInt("warehouse_id",options);
 	
 	pm.addParam(param);
-	
 	
 	param = new FieldInt("old_warehouse_id",{});
 	pm.addParam(param);

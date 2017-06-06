@@ -70,7 +70,6 @@ extend(ProductMeasureUnit_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_product_id",{});
 	pm.addParam(param);
 	
@@ -79,7 +78,6 @@ extend(ProductMeasureUnit_Controller,ControllerDb);
 	var param = new FieldInt("measure_unit_id",options);
 	
 	pm.addParam(param);
-	
 	
 	param = new FieldInt("old_measure_unit_id",{});
 	pm.addParam(param);
@@ -90,13 +88,11 @@ extend(ProductMeasureUnit_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldBool("in_use",options);
 	
 	pm.addParam(param);
-	
 	
 	
 }

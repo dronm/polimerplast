@@ -186,17 +186,28 @@ class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@par
 
 
 <xsl:template match="publicMethod[@id='get_object']">
-<xsl:variable name="model_id" select="@modelId"/>
+<xsl:variable name="cur_model_id" select="@modelId"/>
 		/* get_object */
 		$pm = new PublicMethod('get_object');
 		$pm->addParam(new FieldExtInt('browse_mode'));
+		<xsl:variable name="model_id">
+		<xsl:choose>
+		<xsl:when test="/metadata/models/model[@id=$cur_model_id and @virtual='TRUE']/@baseModelId">
+			<xsl:value-of select="/metadata/models/model[@id=$cur_model_id]/@baseModelId"/>
+		</xsl:when>
+		<xsl:otherwise>
+			<xsl:value-of select="@modelId"/>
+		</xsl:otherwise>
+		</xsl:choose>	
+		</xsl:variable>
+		
 		<xsl:for-each select="/metadata/models/model[@id=$model_id]/field[@primaryKey='TRUE']">
 		<xsl:variable name="enum_id" select="@enumId"/>
 		$pm->addParam(new FieldExt<xsl:value-of select="@dataType"/>('<xsl:value-of select="@id"/>'
 		<xsl:if test="@dataType='Enum'">,',','<xsl:for-each select="/metadata/enums/enum[@id=$enum_id]/value"><xsl:if test="position() &gt; 1">,</xsl:if><xsl:value-of select="@id"/></xsl:for-each>'</xsl:if>));
 		</xsl:for-each>
 		$this->addPublicMethod($pm);
-		$this->setObjectModelId('<xsl:value-of select="concat($model_id,'_Model')"/>');		
+		$this->setObjectModelId('<xsl:value-of select="concat($cur_model_id,'_Model')"/>');		
 </xsl:template>
 
 <xsl:template match="controller[@parentId='ControllerSQLMasterDetail']/publicMethod[@id='get_object']">
@@ -314,6 +325,16 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldExtBool.php');</xsl:if>
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPoint.php');</xsl:if>
 <xsl:if test="/metadata/models/model/field/@dataType='GeomPolygon'">
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPolygon.php');</xsl:if>
+<xsl:if test="/metadata/models/model/field/@dataType='Interval'">
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtInterval.php');</xsl:if>
+<xsl:if test="/metadata/models/model/field/@dataType='DateTimeTZ'">
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtDateTimeTZ.php');</xsl:if>
+<xsl:if test="/metadata/models/model/field/@dataType='JSON'">
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtJSON.php');</xsl:if>
+<xsl:if test="/metadata/models/model/field/@dataType='JSONB'">
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtJSONB.php');</xsl:if>
+<xsl:if test="/metadata/models/model/field/@dataType='Array'">
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtArray.php');</xsl:if>
 </xsl:template>
 
 </xsl:stylesheet>

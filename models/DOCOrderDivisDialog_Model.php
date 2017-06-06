@@ -14,101 +14,80 @@ class DOCOrderDivisDialog_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("doc_orders_divis_dialog");
+			
+		//*** Field main_doc_id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="main_doc_id";
 		
-		$f_main_doc_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"main_doc_id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'id'=>"main_doc_id"
-				
-		
-		));
+		$f_main_doc_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"main_doc_id",$f_opts);
 		$this->addField($f_main_doc_id);
-
-		$f_delivery_plan_date=new FieldSQlDate($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"delivery_plan_date"
-		,array(
+		//********************
+	
+		//*** Field delivery_plan_date ***
+		$f_opts = array();
+		$f_opts['id']="delivery_plan_date";
 		
-			'id'=>"delivery_plan_date"
-				
-		
-		));
+		$f_delivery_plan_date=new FieldSQLDate($this->getDbLink(),$this->getDbName(),$this->getTableName(),"delivery_plan_date",$f_opts);
 		$this->addField($f_delivery_plan_date);
-
-		$f_sales_manager_comment=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"sales_manager_comment"
-		,array(
+		//********************
+	
+		//*** Field sales_manager_comment ***
+		$f_opts = array();
+		$f_opts['id']="sales_manager_comment";
 		
-			'id'=>"sales_manager_comment"
-				
-		
-		));
+		$f_sales_manager_comment=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"sales_manager_comment",$f_opts);
 		$this->addField($f_sales_manager_comment);
-
-		$f_deliv_period_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"deliv_period_id"
-		,array(
+		//********************
+	
+		//*** Field deliv_period_id ***
+		$f_opts = array();
+		$f_opts['id']="deliv_period_id";
 		
-			'id'=>"deliv_period_id"
-				
-		
-		));
+		$f_deliv_period_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_period_id",$f_opts);
 		$this->addField($f_deliv_period_id);
-
-		$f_deliv_vehicle_count=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"deliv_vehicle_count"
-		,array(
+		//********************
+	
+		//*** Field deliv_vehicle_count ***
+		$f_opts = array();
+		$f_opts['id']="deliv_vehicle_count";
 		
-			'id'=>"deliv_vehicle_count"
-				
-		
-		));
+		$f_deliv_vehicle_count=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_vehicle_count",$f_opts);
 		$this->addField($f_deliv_vehicle_count);
-
-		$f_deliv_cost_opt_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"deliv_cost_opt_id"
-		,array(
+		//********************
+	
+		//*** Field deliv_cost_opt_id ***
+		$f_opts = array();
+		$f_opts['id']="deliv_cost_opt_id";
 		
-			'id'=>"deliv_cost_opt_id"
-				
-		
-		));
+		$f_deliv_cost_opt_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_cost_opt_id",$f_opts);
 		$this->addField($f_deliv_cost_opt_id);
-
-		$f_state=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"state"
-		,array(
+		//********************
+	
+		//*** Field state ***
+		$f_opts = array();
+		$f_opts['id']="state";
 		
-			'id'=>"state"
-				
-		
-		));
+		$f_state=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"state",$f_opts);
 		$this->addField($f_state);
-
-		$f_deliv_total=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"deliv_total"
-		,array(
+		//********************
+	
+		//*** Field deliv_total ***
+		$f_opts = array();
+		$f_opts['id']="deliv_total";
 		
-			'id'=>"deliv_total"
-				
-		
-		));
+		$f_deliv_total=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_total",$f_opts);
 		$this->addField($f_deliv_total);
-
-		$f_deliv_total_edit=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"deliv_total_edit"
-		,array(
+		//********************
+	
+		//*** Field deliv_total_edit ***
+		$f_opts = array();
+		$f_opts['id']="deliv_total_edit";
 		
-			'id'=>"deliv_total_edit"
-				
-		
-		));
+		$f_deliv_total_edit=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_total_edit",$f_opts);
 		$this->addField($f_deliv_total_edit);
+		//********************
 
-		
-		
-		
 	}
 
 }

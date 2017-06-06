@@ -438,7 +438,6 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	param = new FieldInt("old_id",{});
 	pm.addParam(param);
 	
@@ -448,13 +447,11 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	options["alias"]="Номер";
 	var param = new FieldString("number",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	options["alias"]="Проведен";
@@ -462,13 +459,11 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("client_id",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -476,13 +471,11 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldDate("delivery_plan_date",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -490,13 +483,11 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldDate("product_plan_date",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -504,13 +495,11 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("firm_id",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -518,13 +507,11 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldText("sales_manager_comment",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -532,13 +519,11 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldText("marketing_comment",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -546,13 +531,11 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("deliv_destination_id",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -561,13 +544,11 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldBool("deliv_to_third_party",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -575,13 +556,11 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldBool("deliv_add_cost_to_product",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -589,13 +568,11 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("deliv_responsable",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -603,13 +580,11 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("tel",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -617,13 +592,11 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("deliv_cost_opt_id",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -631,13 +604,11 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldFloat("deliv_total",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -645,13 +616,11 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldFloat("total",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -659,13 +628,11 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldFloat("total_quant",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -673,13 +640,11 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldFloat("total_weight",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -687,13 +652,11 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("ext_order_num",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -701,13 +664,11 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("ext_ship_num",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -715,13 +676,11 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldString("ext_invoice_num",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -729,13 +688,11 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldDateTime("ext_invoice_date_time",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -743,13 +700,11 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldText("cust_surv_comment",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -757,13 +712,11 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("product_ids",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -771,13 +724,11 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldBool("paid",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -785,13 +736,11 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldBool("acc_pko",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -799,13 +748,11 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldInt("country_route_distance",options);
 	
 	pm.addParam(param);
-	
 	
 	options = {};
 	
@@ -813,20 +760,17 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldFloat("deliv_expenses",options);
 	
 	pm.addParam(param);
 	
-	
 	options = {};
 	
 	var param = new FieldBool("deliv_pay_bank",options);
 	
 	pm.addParam(param);
-	
 	
 		var options = {};
 		

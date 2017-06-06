@@ -13,97 +13,68 @@ class RepClientDebtList_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("rep_debts");
+			
+		//*** Field firm_id ***
+		$f_opts = array();
+		$f_opts['sysCol']=TRUE;
+		$f_opts['id']="firm_id";
 		
-		$f_firm_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"firm_id"
-		,array(
-		
-			'id'=>"firm_id"
-		,
-			'sysCol'=>TRUE
-				
-		
-		));
+		$f_firm_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"firm_id",$f_opts);
 		$this->addField($f_firm_id);
-
-		$f_firm_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"firm_descr"
-		,array(
+		//********************
+	
+		//*** Field firm_descr ***
+		$f_opts = array();
+		$f_opts['id']="firm_descr";
 		
-			'alias'=>"Организация"
-		,
-			'id'=>"firm_descr"
-				
-		
-		));
+		$f_firm_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"firm_descr",$f_opts);
 		$this->addField($f_firm_descr);
-
-		$f_client_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_id"
-		,array(
+		//********************
+	
+		//*** Field client_id ***
+		$f_opts = array();
+		$f_opts['sysCol']=TRUE;
+		$f_opts['id']="client_id";
 		
-			'id'=>"client_id"
-		,
-			'sysCol'=>TRUE
-				
-		
-		));
+		$f_client_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_id",$f_opts);
 		$this->addField($f_client_id);
-
-		$f_client_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_descr"
-		,array(
+		//********************
+	
+		//*** Field client_descr ***
+		$f_opts = array();
+		$f_opts['id']="client_descr";
 		
-			'alias'=>"Контрагент"
-		,
-			'id'=>"client_descr"
-				
-		
-		));
+		$f_client_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_descr",$f_opts);
 		$this->addField($f_client_descr);
-
-		$f_shipped_not_payed=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"shipped_not_payed"
-		,array(
+		//********************
+	
+		//*** Field shipped_not_payed ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="shipped_not_payed";
 		
-			'alias'=>"Отгружено, не оплачено"
-		,
-			'length'=>15,
-			'id'=>"shipped_not_payed"
-				
-		
-		));
+		$f_shipped_not_payed=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"shipped_not_payed",$f_opts);
 		$this->addField($f_shipped_not_payed);
-
-		$f_not_shipped_payed=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"not_shipped_payed"
-		,array(
+		//********************
+	
+		//*** Field not_shipped_payed ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="not_shipped_payed";
 		
-			'alias'=>"Оплачено, не отгружено"
-		,
-			'length'=>15,
-			'id'=>"not_shipped_payed"
-				
-		
-		));
+		$f_not_shipped_payed=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"not_shipped_payed",$f_opts);
 		$this->addField($f_not_shipped_payed);
-
-		$f_balance=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"balance"
-		,array(
+		//********************
+	
+		//*** Field balance ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="balance";
 		
-			'alias'=>"Сумма"
-		,
-			'length'=>15,
-			'id'=>"balance"
-				
-		
-		));
+		$f_balance=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"balance",$f_opts);
 		$this->addField($f_balance);
+		//********************
 
-		
-		
-		
 	}
 
 }

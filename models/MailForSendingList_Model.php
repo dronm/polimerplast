@@ -16,171 +16,137 @@ class MailForSendingList_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("mail_for_sending_list");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_date_time=new FieldSQlDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"date_time"
-		,array(
+		//********************
+	
+		//*** Field date_time ***
+		$f_opts = array();
+		$f_opts['id']="date_time";
 		
-			'id'=>"date_time"
-				
-		
-		));
+		$f_date_time=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_time",$f_opts);
 		$this->addField($f_date_time);
-
-		$f_from_addr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"from_addr"
-		,array(
+		//********************
+	
+		//*** Field from_addr ***
+		$f_opts = array();
+		$f_opts['length']=50;
+		$f_opts['id']="from_addr";
 		
-			'length'=>50,
-			'id'=>"from_addr"
-				
-		
-		));
+		$f_from_addr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"from_addr",$f_opts);
 		$this->addField($f_from_addr);
-
-		$f_from_name=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"from_name"
-		,array(
+		//********************
+	
+		//*** Field from_name ***
+		$f_opts = array();
+		$f_opts['length']=255;
+		$f_opts['id']="from_name";
 		
-			'length'=>255,
-			'id'=>"from_name"
-				
-		
-		));
+		$f_from_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"from_name",$f_opts);
 		$this->addField($f_from_name);
-
-		$f_to_addr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"to_addr"
-		,array(
+		//********************
+	
+		//*** Field to_addr ***
+		$f_opts = array();
+		$f_opts['length']=50;
+		$f_opts['id']="to_addr";
 		
-			'length'=>50,
-			'id'=>"to_addr"
-				
-		
-		));
+		$f_to_addr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"to_addr",$f_opts);
 		$this->addField($f_to_addr);
-
-		$f_to_name=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"to_name"
-		,array(
+		//********************
+	
+		//*** Field to_name ***
+		$f_opts = array();
+		$f_opts['length']=255;
+		$f_opts['id']="to_name";
 		
-			'length'=>255,
-			'id'=>"to_name"
-				
-		
-		));
+		$f_to_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"to_name",$f_opts);
 		$this->addField($f_to_name);
-
-		$f_reply_addr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"reply_addr"
-		,array(
+		//********************
+	
+		//*** Field reply_addr ***
+		$f_opts = array();
+		$f_opts['length']=50;
+		$f_opts['id']="reply_addr";
 		
-			'length'=>50,
-			'id'=>"reply_addr"
-				
-		
-		));
+		$f_reply_addr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"reply_addr",$f_opts);
 		$this->addField($f_reply_addr);
-
-		$f_reply_name=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"reply_name"
-		,array(
+		//********************
+	
+		//*** Field reply_name ***
+		$f_opts = array();
+		$f_opts['length']=255;
+		$f_opts['id']="reply_name";
 		
-			'length'=>255,
-			'id'=>"reply_name"
-				
-		
-		));
+		$f_reply_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"reply_name",$f_opts);
 		$this->addField($f_reply_name);
-
-		$f_body=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"body"
-		,array(
+		//********************
+	
+		//*** Field body ***
+		$f_opts = array();
+		$f_opts['id']="body";
 		
-			'id'=>"body"
-				
-		
-		));
+		$f_body=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"body",$f_opts);
 		$this->addField($f_body);
-
-		$f_sender_addr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"sender_addr"
-		,array(
+		//********************
+	
+		//*** Field sender_addr ***
+		$f_opts = array();
+		$f_opts['length']=50;
+		$f_opts['id']="sender_addr";
 		
-			'length'=>50,
-			'id'=>"sender_addr"
-				
-		
-		));
+		$f_sender_addr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"sender_addr",$f_opts);
 		$this->addField($f_sender_addr);
-
-		$f_subject=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"subject"
-		,array(
+		//********************
+	
+		//*** Field subject ***
+		$f_opts = array();
+		$f_opts['length']=255;
+		$f_opts['id']="subject";
 		
-			'length'=>255,
-			'id'=>"subject"
-				
-		
-		));
+		$f_subject=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"subject",$f_opts);
 		$this->addField($f_subject);
-
-		$f_sent=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"sent"
-		,array(
+		//********************
+	
+		//*** Field sent ***
+		$f_opts = array();
+		$f_opts['defaultValue']=false;
+		$f_opts['id']="sent";
 		
-			'defaultValue'=>"false"
-		,
-			'id'=>"sent"
-				
-		
-		));
+		$f_sent=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"sent",$f_opts);
 		$this->addField($f_sent);
-
-		$f_sent_date_time=new FieldSQlDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"sent_date_time"
-		,array(
+		//********************
+	
+		//*** Field sent_date_time ***
+		$f_opts = array();
+		$f_opts['id']="sent_date_time";
 		
-			'id'=>"sent_date_time"
-				
-		
-		));
+		$f_sent_date_time=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"sent_date_time",$f_opts);
 		$this->addField($f_sent_date_time);
-
-		$f_send_error=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"send_error"
-		,array(
+		//********************
+	
+		//*** Field send_error ***
+		$f_opts = array();
+		$f_opts['id']="send_error";
 		
-			'id'=>"send_error"
-				
-		
-		));
+		$f_send_error=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"send_error",$f_opts);
 		$this->addField($f_send_error);
-
-		$f_email_type=new FieldSQlEnum($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"email_type"
-		,array(
+		//********************
+	
+		//*** Field email_type ***
+		$f_opts = array();
+		$f_opts['id']="email_type";
 		
-			'id'=>"email_type"
-				
-		
-		));
+		$f_email_type=new FieldSQLEnum($this->getDbLink(),$this->getDbName(),$this->getTableName(),"email_type",$f_opts);
 		$this->addField($f_email_type);
+		//********************
 
-		
-		
-		
 	}
 
 }

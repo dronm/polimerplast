@@ -12,51 +12,40 @@ class UserList_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("user_list_view");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		
-			'primaryKey'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_name_full=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"name_full"
-		,array(
+		//********************
+	
+		//*** Field name_full ***
+		$f_opts = array();
+		$f_opts['id']="name_full";
 		
-			'id'=>"name_full"
-				
-		
-		));
+		$f_name_full=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name_full",$f_opts);
 		$this->addField($f_name_full);
-
-		$f_email=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"email"
-		,array(
+		//********************
+	
+		//*** Field email ***
+		$f_opts = array();
+		$f_opts['id']="email";
 		
-			'id'=>"email"
-				
-		
-		));
+		$f_email=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"email",$f_opts);
 		$this->addField($f_email);
-
-		$f_role_descr=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"role_descr"
-		,array(
+		//********************
+	
+		//*** Field role_descr ***
+		$f_opts = array();
+		$f_opts['id']="role_descr";
 		
-			'id'=>"role_descr"
-				
-		
-		));
+		$f_role_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"role_descr",$f_opts);
 		$this->addField($f_role_descr);
+		//********************
 
-		
-		
-		
 	}
 
 }

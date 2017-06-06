@@ -1,5 +1,4 @@
 <?php
-
 require_once(FRAME_WORK_PATH.'basic_classes/ModelSQLDOCPl.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLInt.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLString.php');
@@ -22,611 +21,485 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$this->setDbName("public");
 		
 		$this->setTableName("doc_orders");
+			
+		//*** Field id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['autoInc']=TRUE;
+		$f_opts['id']="id";
 		
-		$f_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"id"
-		,array(
-		'required'=>FALSE,
-			'primaryKey'=>TRUE,
-			'autoInc'=>TRUE,
-			'id'=>"id"
-				
-		
-		));
+		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
-
-		$f_date_time=new FieldSQlDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"date_time"
-		,array(
+		//********************
+	
+		//*** Field date_time ***
+		$f_opts = array();
+		$f_opts['id']="date_time";
 		
-			'alias'=>"Дата пдч."
-		,
-			'id'=>"date_time"
-				
-		
-		));
+		$f_date_time=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_time",$f_opts);
 		$this->addField($f_date_time);
-
-		$f_number=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"number"
-		,array(
+		//********************
+	
+		//*** Field number ***
+		$f_opts = array();
+		$f_opts['length']=10;
+		$f_opts['id']="number";
 		
-			'alias'=>"Номер"
-		,
-			'length'=>10,
-			'id'=>"number"
-				
-		
-		));
+		$f_number=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"number",$f_opts);
 		$this->addField($f_number);
-
-		$f_processed=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"processed"
-		,array(
+		//********************
+	
+		//*** Field processed ***
+		$f_opts = array();
+		$f_opts['id']="processed";
 		
-			'alias'=>"Проведен"
-		,
-			'id'=>"processed"
-				
-		
-		));
+		$f_processed=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"processed",$f_opts);
 		$this->addField($f_processed);
-
-		$f_client_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_id"
-		,array(
+		//********************
+	
+		//*** Field client_id ***
+		$f_opts = array();
+		$f_opts['id']="client_id";
 		
-			'id'=>"client_id"
-				
-		
-		));
+		$f_client_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_id",$f_opts);
 		$this->addField($f_client_id);
-
-		$f_client_number=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_number"
-		,array(
+		//********************
+	
+		//*** Field client_number ***
+		$f_opts = array();
+		$f_opts['length']=12;
+		$f_opts['id']="client_number";
 		
-			'length'=>12,
-			'id'=>"client_number"
-				
-		
-		));
+		$f_client_number=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_number",$f_opts);
 		$this->addField($f_client_number);
-
-		$f_delivery_plan_date=new FieldSQlDate($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"delivery_plan_date"
-		,array(
+		//********************
+	
+		//*** Field delivery_plan_date ***
+		$f_opts = array();
+		$f_opts['id']="delivery_plan_date";
 		
-			'id'=>"delivery_plan_date"
-				
-		
-		));
+		$f_delivery_plan_date=new FieldSQLDate($this->getDbLink(),$this->getDbName(),$this->getTableName(),"delivery_plan_date",$f_opts);
 		$this->addField($f_delivery_plan_date);
-
-		$f_delivery_fact_date=new FieldSQlDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"delivery_fact_date"
-		,array(
+		//********************
+	
+		//*** Field delivery_fact_date ***
+		$f_opts = array();
+		$f_opts['id']="delivery_fact_date";
 		
-			'id'=>"delivery_fact_date"
-				
-		
-		));
+		$f_delivery_fact_date=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"delivery_fact_date",$f_opts);
 		$this->addField($f_delivery_fact_date);
-
-		$f_product_plan_date=new FieldSQlDate($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"product_plan_date"
-		,array(
+		//********************
+	
+		//*** Field product_plan_date ***
+		$f_opts = array();
+		$f_opts['id']="product_plan_date";
 		
-			'id'=>"product_plan_date"
-				
-		
-		));
+		$f_product_plan_date=new FieldSQLDate($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_plan_date",$f_opts);
 		$this->addField($f_product_plan_date);
-
-		$f_client_user_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_user_id"
-		,array(
+		//********************
+	
+		//*** Field client_user_id ***
+		$f_opts = array();
+		$f_opts['id']="client_user_id";
 		
-			'id'=>"client_user_id"
-				
-		
-		));
+		$f_client_user_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_user_id",$f_opts);
 		$this->addField($f_client_user_id);
-
-		$f_firm_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"firm_id"
-		,array(
+		//********************
+	
+		//*** Field firm_id ***
+		$f_opts = array();
+		$f_opts['id']="firm_id";
 		
-			'id'=>"firm_id"
-				
-		
-		));
+		$f_firm_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"firm_id",$f_opts);
 		$this->addField($f_firm_id);
-
-		$f_user_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"user_id"
-		,array(
+		//********************
+	
+		//*** Field user_id ***
+		$f_opts = array();
+		$f_opts['id']="user_id";
 		
-			'id'=>"user_id"
-				
-		
-		));
+		$f_user_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"user_id",$f_opts);
 		$this->addField($f_user_id);
-
-		$f_sales_manager_comment=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"sales_manager_comment"
-		,array(
+		//********************
+	
+		//*** Field sales_manager_comment ***
+		$f_opts = array();
+		$f_opts['id']="sales_manager_comment";
 		
-			'id'=>"sales_manager_comment"
-				
-		
-		));
+		$f_sales_manager_comment=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"sales_manager_comment",$f_opts);
 		$this->addField($f_sales_manager_comment);
-
-		$f_client_comment=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_comment"
-		,array(
+		//********************
+	
+		//*** Field client_comment ***
+		$f_opts = array();
+		$f_opts['id']="client_comment";
 		
-			'id'=>"client_comment"
-				
-		
-		));
+		$f_client_comment=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_comment",$f_opts);
 		$this->addField($f_client_comment);
-
-		$f_marketing_comment=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"marketing_comment"
-		,array(
+		//********************
+	
+		//*** Field marketing_comment ***
+		$f_opts = array();
+		$f_opts['id']="marketing_comment";
 		
-			'id'=>"marketing_comment"
-				
-		
-		));
+		$f_marketing_comment=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"marketing_comment",$f_opts);
 		$this->addField($f_marketing_comment);
-
-		$f_warehouse_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"warehouse_id"
-		,array(
+		//********************
+	
+		//*** Field warehouse_id ***
+		$f_opts = array();
+		$f_opts['id']="warehouse_id";
 		
-			'id'=>"warehouse_id"
-				
-		
-		));
+		$f_warehouse_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"warehouse_id",$f_opts);
 		$this->addField($f_warehouse_id);
-
-		$f_deliv_destination_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"deliv_destination_id"
-		,array(
+		//********************
+	
+		//*** Field deliv_destination_id ***
+		$f_opts = array();
+		$f_opts['id']="deliv_destination_id";
 		
-			'id'=>"deliv_destination_id"
-				
-		
-		));
+		$f_deliv_destination_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_destination_id",$f_opts);
 		$this->addField($f_deliv_destination_id);
-
-		$f_deliv_type=new FieldSQlEnum($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"deliv_type"
-		,array(
-		'required'=>TRUE,
-			'id'=>"deliv_type"
-				
+		//********************
+	
+		//*** Field deliv_type ***
+		$f_opts = array();
+		$f_opts['id']="deliv_type";
 		
-		));
+		$f_deliv_type=new FieldSQLEnum($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_type",$f_opts);
 		$this->addField($f_deliv_type);
-
-		$f_deliv_to_third_party=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"deliv_to_third_party"
-		,array(
+		//********************
+	
+		//*** Field deliv_to_third_party ***
+		$f_opts = array();
+		$f_opts['id']="deliv_to_third_party";
 		
-			'id'=>"deliv_to_third_party"
-				
-		
-		));
+		$f_deliv_to_third_party=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_to_third_party",$f_opts);
 		$this->addField($f_deliv_to_third_party);
-
-		$f_deliv_send_sms=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"deliv_send_sms"
-		,array(
+		//********************
+	
+		//*** Field deliv_send_sms ***
+		$f_opts = array();
+		$f_opts['id']="deliv_send_sms";
 		
-			'id'=>"deliv_send_sms"
-				
-		
-		));
+		$f_deliv_send_sms=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_send_sms",$f_opts);
 		$this->addField($f_deliv_send_sms);
-
-		$f_deliv_add_cost_to_product=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"deliv_add_cost_to_product"
-		,array(
+		//********************
+	
+		//*** Field deliv_add_cost_to_product ***
+		$f_opts = array();
+		$f_opts['id']="deliv_add_cost_to_product";
 		
-			'id'=>"deliv_add_cost_to_product"
-				
-		
-		));
+		$f_deliv_add_cost_to_product=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_add_cost_to_product",$f_opts);
 		$this->addField($f_deliv_add_cost_to_product);
-
-		$f_deliv_period_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"deliv_period_id"
-		,array(
+		//********************
+	
+		//*** Field deliv_period_id ***
+		$f_opts = array();
+		$f_opts['id']="deliv_period_id";
 		
-			'id'=>"deliv_period_id"
-				
-		
-		));
+		$f_deliv_period_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_period_id",$f_opts);
 		$this->addField($f_deliv_period_id);
-
-		$f_deliv_responsable=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"deliv_responsable"
-		,array(
+		//********************
+	
+		//*** Field deliv_responsable ***
+		$f_opts = array();
+		$f_opts['length']=50;
+		$f_opts['id']="deliv_responsable";
 		
-			'length'=>50,
-			'id'=>"deliv_responsable"
-				
-		
-		));
+		$f_deliv_responsable=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_responsable",$f_opts);
 		$this->addField($f_deliv_responsable);
-
-		$f_deliv_responsable_tel=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"deliv_responsable_tel"
-		,array(
+		//********************
+	
+		//*** Field deliv_responsable_tel ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="deliv_responsable_tel";
 		
-			'length'=>15,
-			'id'=>"deliv_responsable_tel"
-				
-		
-		));
+		$f_deliv_responsable_tel=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_responsable_tel",$f_opts);
 		$this->addField($f_deliv_responsable_tel);
-
-		$f_tel=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"tel"
-		,array(
+		//********************
+	
+		//*** Field tel ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="tel";
 		
-			'length'=>15,
-			'id'=>"tel"
-				
-		
-		));
+		$f_tel=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"tel",$f_opts);
 		$this->addField($f_tel);
-
-		$f_deliv_vehicle_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"deliv_vehicle_id"
-		,array(
+		//********************
+	
+		//*** Field deliv_vehicle_id ***
+		$f_opts = array();
+		$f_opts['id']="deliv_vehicle_id";
 		
-			'id'=>"deliv_vehicle_id"
-				
-		
-		));
+		$f_deliv_vehicle_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_vehicle_id",$f_opts);
 		$this->addField($f_deliv_vehicle_id);
-
-		$f_deliv_cost_opt_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"deliv_cost_opt_id"
-		,array(
+		//********************
+	
+		//*** Field deliv_cost_opt_id ***
+		$f_opts = array();
+		$f_opts['id']="deliv_cost_opt_id";
 		
-			'id'=>"deliv_cost_opt_id"
-				
-		
-		));
+		$f_deliv_cost_opt_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_cost_opt_id",$f_opts);
 		$this->addField($f_deliv_cost_opt_id);
-
-		$f_deliv_vehicle_count=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"deliv_vehicle_count"
-		,array(
+		//********************
+	
+		//*** Field deliv_vehicle_count ***
+		$f_opts = array();
+		$f_opts['id']="deliv_vehicle_count";
 		
-			'id'=>"deliv_vehicle_count"
-				
-		
-		));
+		$f_deliv_vehicle_count=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_vehicle_count",$f_opts);
 		$this->addField($f_deliv_vehicle_count);
-
-		$f_deliv_total=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"deliv_total"
-		,array(
+		//********************
+	
+		//*** Field deliv_total ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="deliv_total";
 		
-			'length'=>15,
-			'id'=>"deliv_total"
-				
-		
-		));
+		$f_deliv_total=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_total",$f_opts);
 		$this->addField($f_deliv_total);
-
-		$f_deliv_total_edit=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"deliv_total_edit"
-		,array(
+		//********************
+	
+		//*** Field deliv_total_edit ***
+		$f_opts = array();
+		$f_opts['id']="deliv_total_edit";
 		
-			'id'=>"deliv_total_edit"
-				
-		
-		));
+		$f_deliv_total_edit=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_total_edit",$f_opts);
 		$this->addField($f_deliv_total_edit);
-
-		$f_total=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"total"
-		,array(
+		//********************
+	
+		//*** Field total ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="total";
 		
-			'length'=>15,
-			'id'=>"total"
-				
-		
-		));
+		$f_total=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total",$f_opts);
 		$this->addField($f_total);
-
-		$f_total_pack=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"total_pack"
-		,array(
+		//********************
+	
+		//*** Field total_pack ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['defaultValue']=0;
+		$f_opts['id']="total_pack";
 		
-			'length'=>15,
-			'defaultValue'=>"0"
-		,
-			'id'=>"total_pack"
-				
-		
-		));
+		$f_total_pack=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total_pack",$f_opts);
 		$this->addField($f_total_pack);
-
-		$f_total_quant=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"total_quant"
-		,array(
+		//********************
+	
+		//*** Field total_quant ***
+		$f_opts = array();
+		$f_opts['length']=19;
+		$f_opts['id']="total_quant";
 		
-			'length'=>19,
-			'id'=>"total_quant"
-				
-		
-		));
+		$f_total_quant=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total_quant",$f_opts);
 		$this->addField($f_total_quant);
-
-		$f_total_volume=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"total_volume"
-		,array(
+		//********************
+	
+		//*** Field total_volume ***
+		$f_opts = array();
+		$f_opts['length']=19;
+		$f_opts['id']="total_volume";
 		
-			'length'=>19,
-			'id'=>"total_volume"
-				
-		
-		));
+		$f_total_volume=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total_volume",$f_opts);
 		$this->addField($f_total_volume);
-
-		$f_total_weight=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"total_weight"
-		,array(
+		//********************
+	
+		//*** Field total_weight ***
+		$f_opts = array();
+		$f_opts['length']=19;
+		$f_opts['id']="total_weight";
 		
-			'length'=>19,
-			'id'=>"total_weight"
-				
-		
-		));
+		$f_total_weight=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total_weight",$f_opts);
 		$this->addField($f_total_weight);
-
-		$f_printed=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"printed"
-		,array(
+		//********************
+	
+		//*** Field printed ***
+		$f_opts = array();
+		$f_opts['id']="printed";
 		
-			'id'=>"printed"
-				
-		
-		));
+		$f_printed=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"printed",$f_opts);
 		$this->addField($f_printed);
-
-		$f_ext_order_num=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"ext_order_num"
-		,array(
+		//********************
+	
+		//*** Field ext_order_num ***
+		$f_opts = array();
+		$f_opts['length']=11;
+		$f_opts['id']="ext_order_num";
 		
-			'length'=>11,
-			'id'=>"ext_order_num"
-				
-		
-		));
+		$f_ext_order_num=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ext_order_num",$f_opts);
 		$this->addField($f_ext_order_num);
-
-		$f_ext_order_id=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"ext_order_id"
-		,array(
+		//********************
+	
+		//*** Field ext_order_id ***
+		$f_opts = array();
+		$f_opts['length']=36;
+		$f_opts['id']="ext_order_id";
 		
-			'length'=>36,
-			'id'=>"ext_order_id"
-				
-		
-		));
+		$f_ext_order_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ext_order_id",$f_opts);
 		$this->addField($f_ext_order_id);
-
-		$f_ext_ship_num=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"ext_ship_num"
-		,array(
+		//********************
+	
+		//*** Field ext_ship_num ***
+		$f_opts = array();
+		$f_opts['length']=11;
+		$f_opts['id']="ext_ship_num";
 		
-			'length'=>11,
-			'id'=>"ext_ship_num"
-				
-		
-		));
+		$f_ext_ship_num=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ext_ship_num",$f_opts);
 		$this->addField($f_ext_ship_num);
-
-		$f_ext_ship_id=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"ext_ship_id"
-		,array(
+		//********************
+	
+		//*** Field ext_ship_id ***
+		$f_opts = array();
+		$f_opts['length']=36;
+		$f_opts['id']="ext_ship_id";
 		
-			'length'=>36,
-			'id'=>"ext_ship_id"
-				
-		
-		));
+		$f_ext_ship_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ext_ship_id",$f_opts);
 		$this->addField($f_ext_ship_id);
-
-		$f_ext_invoice_num=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"ext_invoice_num"
-		,array(
+		//********************
+	
+		//*** Field ext_invoice_num ***
+		$f_opts = array();
+		$f_opts['length']=11;
+		$f_opts['id']="ext_invoice_num";
 		
-			'length'=>11,
-			'id'=>"ext_invoice_num"
-				
-		
-		));
+		$f_ext_invoice_num=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ext_invoice_num",$f_opts);
 		$this->addField($f_ext_invoice_num);
-
-		$f_ext_invoice_id=new FieldSQlString($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"ext_invoice_id"
-		,array(
+		//********************
+	
+		//*** Field ext_invoice_id ***
+		$f_opts = array();
+		$f_opts['length']=36;
+		$f_opts['id']="ext_invoice_id";
 		
-			'length'=>36,
-			'id'=>"ext_invoice_id"
-				
-		
-		));
+		$f_ext_invoice_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ext_invoice_id",$f_opts);
 		$this->addField($f_ext_invoice_id);
-
-		$f_ext_invoice_date_time=new FieldSQlDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"ext_invoice_date_time"
-		,array(
+		//********************
+	
+		//*** Field ext_invoice_date_time ***
+		$f_opts = array();
+		$f_opts['id']="ext_invoice_date_time";
 		
-			'id'=>"ext_invoice_date_time"
-				
-		
-		));
+		$f_ext_invoice_date_time=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ext_invoice_date_time",$f_opts);
 		$this->addField($f_ext_invoice_date_time);
-
-		$f_cust_surv_date_time=new FieldSQlDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"cust_surv_date_time"
-		,array(
+		//********************
+	
+		//*** Field cust_surv_date_time ***
+		$f_opts = array();
+		$f_opts['id']="cust_surv_date_time";
 		
-			'id'=>"cust_surv_date_time"
-				
-		
-		));
+		$f_cust_surv_date_time=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"cust_surv_date_time",$f_opts);
 		$this->addField($f_cust_surv_date_time);
-
-		$f_cust_surv_comment=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"cust_surv_comment"
-		,array(
+		//********************
+	
+		//*** Field cust_surv_comment ***
+		$f_opts = array();
+		$f_opts['id']="cust_surv_comment";
 		
-			'id'=>"cust_surv_comment"
-				
-		
-		));
+		$f_cust_surv_comment=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"cust_surv_comment",$f_opts);
 		$this->addField($f_cust_surv_comment);
-
-		$f_product_str=new FieldSQlText($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"product_str"
-		,array(
+		//********************
+	
+		//*** Field product_str ***
+		$f_opts = array();
+		$f_opts['id']="product_str";
 		
-			'id'=>"product_str"
-				
-		
-		));
+		$f_product_str=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_str",$f_opts);
 		$this->addField($f_product_str);
-
-		$f_product_ids=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"product_ids"
-		,array(
+		//********************
+	
+		//*** Field product_ids ***
+		$f_opts = array();
+		$f_opts['id']="product_ids";
 		
-			'id'=>"product_ids"
-				
-		
-		));
+		$f_product_ids=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_ids",$f_opts);
 		$this->addField($f_product_ids);
-
-		$f_submit_user_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"submit_user_id"
-		,array(
+		//********************
+	
+		//*** Field submit_user_id ***
+		$f_opts = array();
+		$f_opts['id']="submit_user_id";
 		
-			'id'=>"submit_user_id"
-				
-		
-		));
+		$f_submit_user_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"submit_user_id",$f_opts);
 		$this->addField($f_submit_user_id);
-
-		$f_paid=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"paid"
-		,array(
+		//********************
+	
+		//*** Field paid ***
+		$f_opts = array();
+		$f_opts['defaultValue']=FALSE;
+		$f_opts['id']="paid";
 		
-			'defaultValue'=>"FALSE"
-		,
-			'id'=>"paid"
-				
-		
-		));
+		$f_paid=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"paid",$f_opts);
 		$this->addField($f_paid);
-
-		$f_paid_by_bank=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"paid_by_bank"
-		,array(
+		//********************
+	
+		//*** Field paid_by_bank ***
+		$f_opts = array();
+		$f_opts['defaultValue']=FALSE;
+		$f_opts['id']="paid_by_bank";
 		
-			'defaultValue'=>"FALSE"
-		,
-			'id'=>"paid_by_bank"
-				
-		
-		));
+		$f_paid_by_bank=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"paid_by_bank",$f_opts);
 		$this->addField($f_paid_by_bank);
-
-		$f_acc_pko=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"acc_pko"
-		,array(
+		//********************
+	
+		//*** Field acc_pko ***
+		$f_opts = array();
+		$f_opts['defaultValue']=FALSE;
+		$f_opts['id']="acc_pko";
 		
-			'defaultValue'=>"FALSE"
-		,
-			'id'=>"acc_pko"
-				
-		
-		));
+		$f_acc_pko=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"acc_pko",$f_opts);
 		$this->addField($f_acc_pko);
-
-		$f_city_route_distance=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"city_route_distance"
-		,array(
+		//********************
+	
+		//*** Field city_route_distance ***
+		$f_opts = array();
+		$f_opts['id']="city_route_distance";
 		
-			'id'=>"city_route_distance"
-				
-		
-		));
+		$f_city_route_distance=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"city_route_distance",$f_opts);
 		$this->addField($f_city_route_distance);
-
-		$f_country_route_distance=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"country_route_distance"
-		,array(
+		//********************
+	
+		//*** Field country_route_distance ***
+		$f_opts = array();
+		$f_opts['id']="country_route_distance";
 		
-			'id'=>"country_route_distance"
-				
-		
-		));
+		$f_country_route_distance=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"country_route_distance",$f_opts);
 		$this->addField($f_country_route_distance);
-
-		$f_destination_to_ttn=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"destination_to_ttn"
-		,array(
+		//********************
+	
+		//*** Field destination_to_ttn ***
+		$f_opts = array();
+		$f_opts['defaultValue']=FALSE;
+		$f_opts['id']="destination_to_ttn";
 		
-			'defaultValue'=>"FALSE"
-		,
-			'id'=>"destination_to_ttn"
-				
-		
-		));
+		$f_destination_to_ttn=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"destination_to_ttn",$f_opts);
 		$this->addField($f_destination_to_ttn);
-
-		$f_deliv_expenses=new FieldSQlFloat($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"deliv_expenses"
-		,array(
+		//********************
+	
+		//*** Field deliv_expenses ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="deliv_expenses";
 		
-			'length'=>15,
-			'id'=>"deliv_expenses"
-				
-		
-		));
+		$f_deliv_expenses=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_expenses",$f_opts);
 		$this->addField($f_deliv_expenses);
-
-		$f_deliv_pay_bank=new FieldSQlBool($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"deliv_pay_bank"
-		,array(
+		//********************
+	
+		//*** Field deliv_pay_bank ***
+		$f_opts = array();
+		$f_opts['id']="deliv_pay_bank";
 		
-			'id'=>"deliv_pay_bank"
-				
-		
-		));
+		$f_deliv_pay_bank=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_pay_bank",$f_opts);
 		$this->addField($f_deliv_pay_bank);
+		//********************
 
 		$order = new ModelOrderSQL();		
 		$this->setDefaultModelOrder($order);		
 		
 		$order->addField($f_date_time);
 
-		
-		
-		
 	}
 
 

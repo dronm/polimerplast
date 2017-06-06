@@ -12,36 +12,29 @@ class ClientDebtPeriod_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("client_debt_periods");
+			
+		//*** Field days_from ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="days_from";
 		
-		$f_days_from=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"days_from"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'id'=>"days_from"
-				
-		
-		));
+		$f_days_from=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"days_from",$f_opts);
 		$this->addField($f_days_from);
-
-		$f_days_to=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"days_to"
-		,array(
-		'required'=>TRUE,
-			'id'=>"days_to"
-				
+		//********************
+	
+		//*** Field days_to ***
+		$f_opts = array();
+		$f_opts['id']="days_to";
 		
-		));
+		$f_days_to=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"days_to",$f_opts);
 		$this->addField($f_days_to);
+		//********************
 
 		$order = new ModelOrderSQL();		
 		$this->setDefaultModelOrder($order);		
 		
 		$order->addField($f_days_from);
 
-		
-		
-		
 	}
 
 }

@@ -11,72 +11,57 @@ class DelivDistanceCache_Model extends ModelSQL{
 		$this->setDbName("public");
 		
 		$this->setTableName("deliv_distance_cache");
+			
+		//*** Field warehouse_id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="warehouse_id";
 		
-		$f_warehouse_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"warehouse_id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'id'=>"warehouse_id"
-				
-		
-		));
+		$f_warehouse_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"warehouse_id",$f_opts);
 		$this->addField($f_warehouse_id);
-
-		$f_client_destination_id=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"client_destination_id"
-		,array(
-		'required'=>TRUE,
-			'primaryKey'=>TRUE,
-			'id'=>"client_destination_id"
-				
+		//********************
+	
+		//*** Field client_destination_id ***
+		$f_opts = array();
+		$f_opts['primaryKey'] = TRUE;
+		$f_opts['id']="client_destination_id";
 		
-		));
+		$f_client_destination_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_destination_id",$f_opts);
 		$this->addField($f_client_destination_id);
-
-		$f_city_route=new FieldSQlGeomPolygon($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"city_route"
-		,array(
+		//********************
+	
+		//*** Field city_route ***
+		$f_opts = array();
+		$f_opts['id']="city_route";
 		
-			'id'=>"city_route"
-				
-		
-		));
+		$f_city_route=new FieldSQLGeomPolygon($this->getDbLink(),$this->getDbName(),$this->getTableName(),"city_route",$f_opts);
 		$this->addField($f_city_route);
-
-		$f_city_route_distance=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"city_route_distance"
-		,array(
+		//********************
+	
+		//*** Field city_route_distance ***
+		$f_opts = array();
+		$f_opts['id']="city_route_distance";
 		
-			'id'=>"city_route_distance"
-				
-		
-		));
+		$f_city_route_distance=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"city_route_distance",$f_opts);
 		$this->addField($f_city_route_distance);
-
-		$f_country_route=new FieldSQlGeomPolygon($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"country_route"
-		,array(
+		//********************
+	
+		//*** Field country_route ***
+		$f_opts = array();
+		$f_opts['id']="country_route";
 		
-			'id'=>"country_route"
-				
-		
-		));
+		$f_country_route=new FieldSQLGeomPolygon($this->getDbLink(),$this->getDbName(),$this->getTableName(),"country_route",$f_opts);
 		$this->addField($f_country_route);
-
-		$f_country_route_distance=new FieldSQlInt($this->getDbLink(),$this->getDbName(),$this->getTableName()
-		,"country_route_distance"
-		,array(
+		//********************
+	
+		//*** Field country_route_distance ***
+		$f_opts = array();
+		$f_opts['id']="country_route_distance";
 		
-			'id'=>"country_route_distance"
-				
-		
-		));
+		$f_country_route_distance=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"country_route_distance",$f_opts);
 		$this->addField($f_country_route_distance);
+		//********************
 
-		
-		
-		
 	}
 
 }
