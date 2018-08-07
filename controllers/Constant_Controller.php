@@ -12,14 +12,21 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldExtPassword.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtBool.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPoint.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPolygon.php');
+
+/**
+ * THIS FILE IS GENERATED FROM TEMPLATE build/templates/controllers/Controller_php.xsl
+ * ALL DIRECT MODIFICATIONS WILL BE LOST WITH THE NEXT BUILD PROCESS!!!
+ */
+
+
 require_once(FRAME_WORK_PATH.'basic_classes/ModelSQL.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQL.php');
 
 require_once(FRAME_WORK_PATH.'basic_classes/ParamsSQL.php');
 
 class Constant_Controller extends ControllerSQL{
-	public function __construct($dbLinkMaster=NULL){
-		parent::__construct($dbLinkMaster);
+	public function __construct($dbLinkMaster=NULL,$dbLink=NULL){
+		parent::__construct($dbLinkMaster,$dbLink);
 			
 		$pm = new PublicMethod('set_value');
 		
@@ -39,8 +46,7 @@ class Constant_Controller extends ControllerSQL{
 			
 		/* get_list */
 		$pm = new PublicMethod('get_list');
-		$pm->addParam(new FieldExtInt('browse_mode'));
-		$pm->addParam(new FieldExtInt('browse_id'));		
+		
 		$pm->addParam(new FieldExtInt('count'));
 		$pm->addParam(new FieldExtInt('from'));
 		$pm->addParam(new FieldExtString('cond_fields'));
@@ -50,7 +56,7 @@ class Constant_Controller extends ControllerSQL{
 		$pm->addParam(new FieldExtString('ord_fields'));
 		$pm->addParam(new FieldExtString('ord_directs'));
 		$pm->addParam(new FieldExtString('field_sep'));
-		
+
 		$this->addPublicMethod($pm);
 		
 		$this->setListModelId('ConstantList_Model');
@@ -80,13 +86,13 @@ class Constant_Controller extends ControllerSQL{
 		
 	}
 	
-	/*
-	@param array $idList
-	returns ModelSQL
-	*/
+	/**
+	 * @param {array} $idList
+	 * @returns {ModelSQL}
+	 */
 	public function getConstantValueModel(&$idList){
 		$link = $this->getDbLink();
-		$model = new ModelSQL($link,array('id'=>'ConstantValueList_Model'));
+		$model = new ModelSQL($link,array('id'=>'ConstantValueList_Model','sysModel'=>TRUE));
 		$model->addField(new FieldSQL($link,null,null,'id',DT_STRING));
 		$model->addField(new FieldSQL($link,null,null,'val',DT_STRING));		
 
@@ -108,9 +114,15 @@ class Constant_Controller extends ControllerSQL{
 	}
 	
 	public function get_values($pm){
-		$id_list = $pm->getParamValue('id_list');
+		$p = new ParamsSQL($pm,$this->getDbLink());
+		$p->addAll();
+	
+		$id_list = $p->getVal('id_list');
+		$field_sep = $p->getVal('field_sep');
+		$field_sep = (isset($field_sep))? $field_sep:',';
 		if (isset($id_list)){
-			$model = $this->getConstantValueModel(explode(',',$id_list));
+			$ar = explode($field_sep,$id_list);
+			$model = $this->getConstantValueModel($ar);
 			$this->addModel($model);
 		}
 	}

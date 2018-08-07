@@ -31,6 +31,79 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		$this->setListModelId('VehicleSelectList_Model');
 		parent::get_list($pm);
 	}
+	
+	private function get_driver_attrs($pm,&amp;$fields){
+		if ($pm->getParamValue('driver_cel_phone')){
+			$fields = 'cel_phone='.$p->getDbVal('driver_cel_phone');
+		}
+		if ($pm->getParamValue('driver_drive_perm')){
+			$fields.= ($fields=='')? '':', ';
+			$fields.= 'drive_perm='.$p->getDbVal('driver_drive_perm');
+		}	
+	}
+	
+	private function upadte_driver($pm){
+		$p = new ParamsSQL($pm,$this->getDbLink());
+		$p->addAll();
+	
+		if ($pm->getParamValue('driver_descr')){
+			//изменили ФИО водителя
+			$ar = $this->getDbLink()->query_first(sprintf(
+			"SELECT * FROM drivers WHERE name=%s LIMIT 1",
+			$p->getDbVal('driver_descr')
+			));
+			if (count($ar)){
+				//есть такой водитель - изменяем
+				$fields = '';
+				$this->get_driver_attrs($pm,$fields);
+				
+				if (strlen($fields)){
+					$this->getDbLink()->query(sprintf(
+					"UPDATE drivers SET %s WHERE id=%d",
+					$fields
+					$ar['id']
+					));				
+				}
+			}
+			else{
+				//нет такого - заводим
+				$ar = $this->getDbLink()->query_first(sprintf(
+				"INSERT INTO drivers (name,cel_phone,drive_perm)
+				VALUES (%s,%s,%s)
+				RETURNING id",
+				$p->getDbVal('driver_descr'),
+				($pm->getParamValue('driver_cel_phone'))? $p->getDbVal('driver_cel_phone'):'NULL',
+				($pm->getParamValue('driver_drive_perm'))? $p->getDbVal('driver_drive_perm'):'NULL'
+				));
+				
+			}
+			$pm->setParamValue('driver_id',$ar['id']);
+		}
+		else if ($pm->getParamValue('old_id')){
+			//возможно изменили данные старого водителя
+			$fields = '';
+			$this->get_driver_attrs($pm,$fields);
+			if (strlen($fields)){
+				$this->getDbLink()->query(sprintf(
+				"UPDATE drivers SET %s WHERE id=(SELECT v.driver_id FROM vehicles v WHERE v.id=%d)",
+				$fields
+				$p->getDbVal('old_id')
+				));				
+			}
+		}		
+	}
+	
+	public function upadte($pm){
+		$this->upadte_driver($pm);
+		parent::upadte($pm);
+	}
+	
+	public function insert($pm){
+		$this->upadte_driver($pm);
+		parent::insert($pm);
+	}
+	
+	
 </xsl:template>
 
 </xsl:stylesheet>

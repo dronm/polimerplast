@@ -349,3 +349,15 @@ td[paid="bank"]{
 }
 
 .input-group-btn>.glyphicon {margin-top: -1px;}
+
+tr.todayOrd{font-weight:bolder;font-size:130%;background-color:#d2abfb;}
+
+tr[is_old="t"]{
+	background-color:#cbff99;
+	border:2px solid black;
+}
+.addressEdit[fkey_deliv_destination_id="0"]{
+	color:red;
+	font-weight:bolder;	
+}
+

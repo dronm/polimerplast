@@ -84,6 +84,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 				FROM product_warehouses AS pw
 				WHERE pw.warehouse_id=%d)
 				)
+			AND NOT coalesce(products.deleted,FALSE)
 		ORDER BY name		
 		",
 		$warehouse_id,$warehouse_id,$warehouse_id);

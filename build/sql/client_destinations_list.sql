@@ -7,6 +7,9 @@ CREATE OR REPLACE VIEW client_destinations_list AS
 		cd.id,
 		cd.client_id,
 		
+		--ВРЕМЕННО
+		cd.value AS address,
+		/*
 		array_to_string(
 			ARRAY[
 				cd.addr_index,
@@ -28,7 +31,10 @@ CREATE OR REPLACE VIEW client_destinations_list AS
 					ELSE 'кв. '||cd.kvartira
 				END		
 			],
-		',') AS address
+		',') AS address,
+		*/
+		cd.value
+		
 	FROM client_destinations AS cd
 	ORDER BY address;
 

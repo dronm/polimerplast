@@ -58,7 +58,10 @@ CREATE OR REPLACE VIEW products_dialog AS
 		p.sert_type_id,
 		sert.name AS sert_type_descr,
 		p.product_group_id,
-		pg.name AS product_group_descr
+		pg.name AS product_group_descr,
+		
+		p.fin_group,
+		p.deleted
 		
 	
 	FROM products AS p

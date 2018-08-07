@@ -335,7 +335,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 				(SELECT t.debt_total FROM client_debts AS t WHERE t.client_id=o.client_id AND t.firm_id=o.firm_id LIMIT 1) AS debt_total
 			FROM doc_orders AS o
 			LEFT JOIN firms AS f ON f.id=o.firm_id
-			WHERE o.client_id=%d
+			WHERE o.client_id=%d AND NOT coalesce(f.deleted,FALSE)
 			GROUP BY o.firm_id,f.name,o.client_id
 			ORDER BY cnt DESC LIMIT 1",
 			$client_id
@@ -474,6 +474,42 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		);
 		$this->addModel($model);
 		
+	}
+	
+	public function get_list($pm){
+		if ($_SESSION['role_id']!='admin'){
+			$model = new ClientList_Model($this->getDbLink());
+		
+			$order = $this->orderFromParams($pm,$model);
+			$where = $this->conditionFromParams($pm,$model);
+			if (!$where){
+				$where = new ModelWhereSQL();
+			}
+			$from = null; $count = null;
+			$limit = $this->limitFromParams($pm,$from,$count);
+			$calc_total = ($count>0);
+			if ($from){
+				$model->setListFrom($from);
+			}
+			if ($count){
+				$model->setRowsPerPage($count);
+			}		
+		
+			//Фильтр по deleted		
+			$field = clone $model->getFieldById('deleted');
+			$field->setValue('FALSE');
+			$where->addField($field,'=',NULL,NULL);
+		
+			$model->select(FALSE,$where,$order,
+				$limit,NULL,NULL,NULL,
+				$calc_total,TRUE);
+			//
+			$this->addModel($model);
+		
+		}
+		else{
+			parent::get_list($pm);
+		}
 	}
 	
 </xsl:template>

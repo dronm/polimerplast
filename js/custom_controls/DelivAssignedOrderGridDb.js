@@ -373,9 +373,9 @@ GridDropCell.prototype.toDOM = function(parent){
 		if (dt<now){
 			er_text = "Нельзя разместить заявку на прошедшую дату!";
 		}
-		else if (dt.getTime()==now.getTime()&&now_h>period_h_to){
+		/*else if (dt.getTime()==now.getTime()&&now_h>period_h_to){
 			er_text = "Нельзя разместить заявку на прошедшее время!";
-		}
+		}*/
 		else if (maxvol<order_inf.vm){
 			er_text = "Заявка не проходит по объему!";			
 		}

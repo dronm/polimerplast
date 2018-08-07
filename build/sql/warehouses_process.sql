@@ -11,7 +11,7 @@ BEGIN
 	IF (TG_WHEN='BEFORE') THEN
 		v_id = 0;
 		IF (TG_OP='UPDATE') THEN
-			IF (ST_AsText(NEW.zone)<>ST_AsText(OLD.zone)) THEN
+			IF (NEW.zone IS NULL OR ST_AsText(NEW.zone)<>ST_AsText(OLD.zone)) THEN
 				v_id = NEW.id;
 			END IF;
 		ELSE

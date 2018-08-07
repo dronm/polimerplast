@@ -315,11 +315,18 @@ function DOCOrderDialog_View(id,options){
 	this.addControl(cont);
 	
 	//Адрес доставки
+	
 	var cont = new ControlContainer(uuid(),"div",{"className":"row"});
+		
+	this.m_clientDestCtrl = new ClientDestinationEdit2(id+"_deliv_destination",{
+		"fieldId":"deliv_destination_id",
+		"winObj":options.winObj});
+	/*
 	this.m_clientDestCtrl = new ClientDestinationEdit(id+"_deliv_destination",{
 		"fieldId":"deliv_destination_id",
-		//"enabled":(SERV_VARS.ROLE_ID=="client"),
 		"winObj":options.winObj});
+	}
+	*/
 	this.bindControl(this.m_clientDestCtrl,
 		{"modelId":model_id,"valueFieldId":"deliv_destination_descr","keyFieldIds":["deliv_destination_id"]},
 		{"valueFieldId":null,"keyFieldIds":["deliv_destination_id"]});	
@@ -556,7 +563,7 @@ function DOCOrderDialog_View(id,options){
 	
 	//Включать стоимость доставки
 	this.m_delivAddToCostCtrl = new EditCheckBox(id+"_deliv_add_cost_to_product",
-		{"labelCaption":"Включать стоимость доставки пропорцилнально в стоимость продукции","name":"deliv_add_cost_to_product",
+		{"labelCaption":"Включать стоимость доставки пропорционально в стоимость продукции","name":"deliv_add_cost_to_product",
 		"buttonClear":false,"labelAlign":"left",
 		"tableLayout":false,		
 		"attrs":{},
@@ -689,7 +696,8 @@ DOCOrderDialog_View.prototype.setClientId = function(clientId,setPopFirm){
 	
 	//Адреса клиента
 	this.m_clientDestCtrl.setClientId(clientId);
-	this.m_clientDestCtrl.onRefresh();
+	//НОВЫ КОНТРОЛ
+	//this.m_clientDestCtrl.onRefresh();
 	
 	//Табличная часть
 	this.m_productDetails.setClientId(clientId);

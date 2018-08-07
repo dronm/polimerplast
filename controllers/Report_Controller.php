@@ -12,6 +12,13 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldExtPassword.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtBool.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPoint.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPolygon.php');
+
+/**
+ * THIS FILE IS GENERATED FROM TEMPLATE build/templates/controllers/Controller_php.xsl
+ * ALL DIRECT MODIFICATIONS WILL BE LOST WITH THE NEXT BUILD PROCESS!!!
+ */
+
+
 require_once(FRAME_WORK_PATH.'basic_classes/ParamsSQL.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLString.php');
 
@@ -112,7 +119,6 @@ class Report_Controller extends ControllerSQL{
 		$this->addPublicMethod($pm);
 
 			
-			
 		$pm = new PublicMethod('client_balance');
 		
 				
@@ -141,7 +147,7 @@ class Report_Controller extends ControllerSQL{
 	
 			
 		$this->addPublicMethod($pm);
-			
+
 			
 		$pm = new PublicMethod('sales');
 		
@@ -195,7 +201,7 @@ class Report_Controller extends ControllerSQL{
 	
 			
 		$this->addPublicMethod($pm);
-	
+
 			
 		$pm = new PublicMethod('vehicle_stops');
 		
@@ -271,7 +277,6 @@ class Report_Controller extends ControllerSQL{
 			
 		$this->addPublicMethod($pm);
 
-											
 		
 	}	
 	

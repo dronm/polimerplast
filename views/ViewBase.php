@@ -52,7 +52,6 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'bootstrap-datepicker.ru.min.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'jquery.stickytableheaders.min.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'md5-min.js'));
-	
 		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'extra/JSLib/Keyboard.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'extra/JSLib/Textbox.Common.js'));
@@ -60,16 +59,13 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'extra/JSLib/Textbox.Restriction.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'extra/JSLib/Textbox.MaskEdit.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'extra/JSLib/Textbox.Trim.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'extra/JSLib/Textbox.Tip.js'));				
-		
-		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'extra/JSLib/Textbox.Tip.js'));
 		
 		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'common/functions.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'common/DateHandler.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'common/DOMHandler.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'common/EventHandler.js'));
-
 		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'core/Controller.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'core/ControllerDb.js'));
@@ -86,10 +82,8 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'core/FieldEnum.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'core/FieldText.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'core/FieldPassword.js'));
-		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'core/FieldGeomPoint.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'core/FieldGeomPolygon.js'));
-		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'core/DataSource.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'core/Model.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'core/ModelSingleRow.js'));
@@ -107,16 +101,12 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'core/ValidatorDateTime.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'core/ValidatorCellPhone.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'core/ListFilter.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'core/ListGroupper.js'));			
-
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'core/ListGroupper.js'));
 		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/WindowForm.js'));
 		
-		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'extra/DynamicDrive/windowfiles/dhtmlwindowBS.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/WindowFormDD.js'));
-		
-
 		
 		
 		
@@ -130,7 +120,6 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/Calculator.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/Label.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/LabelField.js'));
-
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/Button.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ButtonCtrl.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ButtonSmall.js'));
@@ -147,7 +136,7 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ButtonClearObject.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ButtonOpenObject.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ButtonPrint.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ButtonInsertObject.js'));		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ButtonInsertObject.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/Edit.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/EditString.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/actb.js'));
@@ -163,7 +152,7 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/EditSelect.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/EditSelectOption.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/EditRadio.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/EditRadioGroup.js'));	
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/EditRadioGroup.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/EditCheckBox.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/EditHTML.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/EditPassword.js'));
@@ -172,10 +161,9 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/EditPeriodDate.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/EditPeriodMonth.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/EditPeriodQuater.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/EditReportVariant.js'));		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/EditReportVariant.js'));
 		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/EditDow.js'));
-		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ViewDialog.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ViewList.js'));
@@ -185,12 +173,11 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ViewInlineGridEditDOCT.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ViewDialogGridEditDOCT.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ViewReport.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ViewMenu.js'));		
-
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ViewMenu.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/Grid.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridRowCommands.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridRowCommandsDOC.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridRowCommandsConst.js'));		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridRowCommandsConst.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridCommands.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridPagination.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridDb.js'));
@@ -209,52 +196,41 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridCell.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridFootCell.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridCellStepInc.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridHeadCell.js'));		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridHeadCell.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridDbHeadCell.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridDbHeadCellBool.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridDbHeadSysCell.js'));
-	
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridFilter.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridFastFilter.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridFilterDocument.js'));		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridFastFilter.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridFilterDocument.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GroupFields.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/PopUpMenu.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ViewGridColumnManager.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ViewGridColParam.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ViewGridColOrder.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ViewGridColVisibility.js'));								
-		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ViewGridColVisibility.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/PeriodFilter.js'));
-		
 		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/RepBaseFields.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/RepCondFields.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/RepAggFields.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/RepGroupFields.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/RepGroupFields_View.js'));		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/RepGroupFields.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/RepGroupFields_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/RepFieldsCommands.js'));
-		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/TabMenuItem.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/MenuItem.js'));
-		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/EditListCommands.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/GridClient.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/EditList.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ViewInlineGridClientEdit.js'));		
-		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ViewInlineGridClientEdit.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/WaitControl.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ErrorControl.js'));
 		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ToolTip.js'));
-		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/CurrentDateTime.js'));		
-		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/Kladr2_View.js'));		
-		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/FileLoader.js'));		
-		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/CurrentDateTime.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/Kladr2_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/FileLoader.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/WindowFormModalBS.js'));
-		
 		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'extra/OpenLayers/OpenLayers.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/TrackConstants.js'));
@@ -270,7 +246,6 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'map/Map_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'map/MapZones_View.js'));
 		
-		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/Constant_Controller.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/Enum_Controller.js'));
 		
@@ -282,21 +257,21 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/Product_Controller.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ClientPriceList_Controller.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ProductionCity_Controller.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ClientPriceListProduct_Controller.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/DOCOrder_Controller.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/DOCOrderDOCTProduct_Controller.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/DOCOrderDOCTCustSurvey_Controller.js'));		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ClientPriceListProduct_Controller.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/DOCOrder_Controller.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/DOCOrderDOCTProduct_Controller.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/DOCOrderDOCTCustSurvey_Controller.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/Warehouse_Controller.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/MeasureUnit_Controller.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ProductMeasureUnit_Controller.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/DeliveryPeriod_Controller.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ProductCustomSizePrice_Controller.js'));				
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/DeliveryPeriod_Controller.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ProductCustomSizePrice_Controller.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ProductWarehouse_Controller.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/CustomerSurveyQuestion_Controller.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/CustomerSurvey_Controller.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ProductionState_Controller.js'));		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/CustomerSurveyQuestion_Controller.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/CustomerSurvey_Controller.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ProductionState_Controller.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/Report_Controller.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ReportVariant_Controller.js'));		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ReportVariant_Controller.js'));
 		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/Delivery_Controller.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/Driver_Controller.js'));
@@ -310,12 +285,12 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/DelivCostOpt_Controller.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/Payment_Controller.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/Holiday_Controller.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ClientDebtPeriod_Controller.js'));		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ClientDebtPeriod_Controller.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ClientPriceListClient_Controller.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/DeliveryHour_Controller.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ClientActivity_Controller.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/SertType_Controller.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/SertTypeAttr_Controller.js'));		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ClientActivity_Controller.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/SertType_Controller.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/SertTypeAttr_Controller.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/TrackerServer_Controller.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/Tracker_Controller.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/UserWarehouse_Controller.js'));
@@ -323,12 +298,11 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/MailForSending_Controller.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/Holiday_Controller.js'));
 		
-		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/PPViewReport.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ConstantInline_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ConstantList_View.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ReportVariantList_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ReportVariantInline_View.js'));		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ReportVariantList_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ReportVariantInline_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/UserDialog_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/UserAccount_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/UserList_View.js'));
@@ -337,25 +311,25 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/PaymentList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/RepSales_View.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientList_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientSelectList_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientDialog_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientUserList_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientUserInline_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientContractList_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientContractInline_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/UserWarehouseList_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/UserWarehouseInline_View.js'));				
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/FirmList_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/FirmInline_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DeliveryPeriodList_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DeliveryPeriodInline_View.js'));				
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientPriceListList_View.js'));		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientList_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientSelectList_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientDialog_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientUserList_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientUserInline_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientContractList_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientContractInline_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/UserWarehouseList_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/UserWarehouseInline_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/FirmList_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/FirmInline_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DeliveryPeriodList_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DeliveryPeriodInline_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientPriceListList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientPriceListDialog_View.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientPriceListClientList_View.js'));		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientPriceListClientList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ProductionCityDialog_View.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ProductionCityList_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientPriceListProductList_View.js'));		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ProductionCityList_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientPriceListProductList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientPriceListProductInline_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderBaseList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderNewList_View.js'));
@@ -366,14 +340,14 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderDivisDialog_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderCustomSurveyDialog_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderShipmentDialog_View.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderDOCTProductList_View.js'));		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderDOCTProductList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderDOCTDivisProductList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderDOCTDivisProductInline_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderDOCTProductDialog_View.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderDOCTCustSurveyList_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderDOCTCustSurveyInline_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderDOCTShipmentList_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderDOCTShipmentInline_View.js'));				
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderDOCTCustSurveyList_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderDOCTCustSurveyInline_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderDOCTShipmentList_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderDOCTShipmentInline_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderCancel_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/Catalogs_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/WarehouseList_View.js'));
@@ -390,15 +364,15 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ProductWarehouseInline_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/CustomerSurveyQuestionList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/CustomerSurveyQuestionInline_View.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ProductionStateList_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ProductionStateInline_View.js'));		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ProductionStateList_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ProductionStateInline_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/RepProductionLoad_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/RepClientDebts_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/RepPriceListTuning_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/PayOrderList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/RepClientBalance_View.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/PaySchedule_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/PayDefDebt_View.js'));				
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/PaySchedule_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/PayDefDebt_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DelivAssignedOrderList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DelivAssignedOrderForClient_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DelivUnassignedOrderList_View.js'));
@@ -406,20 +380,24 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DriverList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DriverInline_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/CarrierList_View.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/CarrierInline_View.js'));		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/CarrierInline_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/TTNAttrPair_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/TTNAttrPairInline_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/CarrierOrder_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/CarrierOrderInline_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/VehicleList_View.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/VehicleDialog_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DelivExtraVehSelectList_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientDestinationDialog_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/SMSTemplateList_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/SMSTemplateListInline_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/EmailTemplateList_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/EmailTemplateListInline_View.js'));				
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DelivCostList_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DelivCostInline_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DelivCostOptList_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DelivCostOptInline_View.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientDebtPeriodList_View.js'));		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/VehicleDialog_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DelivExtraVehSelectList_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientDestinationDialog_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/SMSTemplateList_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/SMSTemplateListInline_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/EmailTemplateList_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/EmailTemplateListInline_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DelivCostList_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DelivCostInline_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DelivCostOptList_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DelivCostOptInline_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientDebtPeriodList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientDebtPeriodInline_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DeliveryHour_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DeliveryHourInline_View.js'));
@@ -445,15 +423,14 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/RepNaspunktCost_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/AccPKOList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/RepVehicleStop_View.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderAppend_View.js'));		
-		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/DOCOrderAppend_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/UnregClientCheck.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/ClientAttrs.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/ClientUserGridRowCommands.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/EditObjects.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/ChildForm.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/DOCOrderGridDb.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnCancelLastState.js'));		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/DOCOrderGridDb.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnCancelLastState.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnPassToProduction.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnUpdatePaid.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnSetPaid.js'));
@@ -475,37 +452,182 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnSetReady.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnSetClosed.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnSetShipped.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnSetClosed.js'));		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnSetClosed.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnCustomSurvey.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnOrderDivis.js'));		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnOrderDivis.js'));
 		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnOrderSetFilter.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnOrderUnsetFilter.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnCancelOrder.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnAppendOrder.js'));		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnAppendOrder.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnCatalogs.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnPriceTune.js'));		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnPriceTune.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/EditPeriodDateTime.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/CustomGridFilter.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/DelivAssignedOrderGridDb.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/DelivAssignedOrderGridCommands.js'));
 		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/DelivUnassignedOrderGridDb.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/ClientDestinationEdit.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/EditMoneyEditable.js'));				
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/ClientDestinationEdit.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/ClientDestinationEdit2.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/EditMoneyEditable.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/ClientPriceListClientGridCom.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/DOCOrderQuantEdit.js'));		
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/DOCOrderChildren.js'));		
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/DOCOrderQuantEdit.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/DOCOrderChildren.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/DOCOrderCancelCause.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/BtnRefreshClientDebts.js'));
-		
 		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'extra/DragnDrop/DragObject.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'extra/DragnDrop/DropTarget.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'extra/DragnDrop/dragMaster.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'extra/DragnDrop/helpers.js'));
-		
-	$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ProductGroup_Controller.js'));$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ProjectManager_Controller.js'));$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/Naspunkt_Controller.js'));$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/AccPKO_Controller.js'));$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/TemplateParam_Controller.js'));			
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ProductGroup_Controller.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ProjectManager_Controller.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/Naspunkt_Controller.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/AccPKO_Controller.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/TemplateParam_Controller.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/TTNAttrPair_Controller.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/CarrierOrder_Controller.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ConstantList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/Firm_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/FirmList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ClientActivity_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ClientActivityList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/Client_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ClientList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ClientDialog_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ClientComplete_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ClientContract_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ClientContractList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ClientDestination_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ClientDestinationList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ClientDestinationDialog_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ProductionCity_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ProductionCityList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ProductionCityDialog_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/Warehouse_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/WarehouseList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/WarehouseDialog_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/User_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/UserList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/UserDialog_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ClientUserList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/MeasureUnit_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/MeasureUnitList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/MeasureUnitDialog_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DeliveryPeriod_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/Driver_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DriverList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/Carrier_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/CarrierList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/TrackerServer_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/Tracker_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/TrackerList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/Vehicle_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/VehicleList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/VehicleDialog_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/VehicleSelectList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/SatisfSurveyItem_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/SertType_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/SertTypeAttr_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/SertTypeAttrList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ProductGroup_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ProductGroupList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/Product_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ProductList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ProductFilterList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ProductDialog_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ProductCustomSizePrice_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ProductMeasureUnit_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ProductMeasureUnitList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ProductWarehouse_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ProductWarehouseList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DOCOrder_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DOCOrderLink_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DOCOrderState_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DOCOrderHeadHistory_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DOCOrderProductHistory_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DOCOrderProdPassport_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DOCOrderNewList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DOCOrderCurrentList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DOCOrderCurrentForClientList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DOCOrderCurrentForProductionList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DOCOrderClosedList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DOCOrderDialog_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DOCOrderDivisDialog_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DOCOrderCustSurveyDialog_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DOCOrderShipmentDialog_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ClientPriceList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ClientPriceListList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ClientPriceListDialog_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ClientPriceListProduct_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ClientPriceListClient_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ClientPriceListClientList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ClientPriceListClientSelect_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DOCOrderDOCTProduct_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DOCOrderDOCTProductList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DOCOrderDOCTProductDialog_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DOCOrderDOCTFProduct_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DOCOrderDOCTCustSurvey_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DOCOrderDOCTCustSurveyList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DOCOrderDOCTFCustSurvey_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/OrderChange_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/CustomerSurveyQuestion_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ProductionState_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DeliveryHour_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DeliveryVehicle_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/Delivery_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DeliveryExtraVehicle_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DeliveryDeletedVehicle_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/VehicleState_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/MailForSending_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/MailForSendingList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/MailForSendingAttachment_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/SMSForSending_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/SMSForSendingList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/RepProductionLoad_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/RepSale_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/RepPriceListTuning_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/PayOrderList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ClientDebtPeriod_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ClientDebtPeriodList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ReportVariant_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ReportVariantList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DOCOrderCancelCause_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/SMSTemplate_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/SMSTemplateList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/EmailTemplate_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/EmailTemplateList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DelivDistanceCache_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DelivCostOpt_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DelivCostOptList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DelivCost_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DelivCostList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ClientPaySchedule_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ClientPayScheduleList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ClientDebt_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ClientDebtList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/RepClientDebtList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/UserWarehouse_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/UserWarehouseList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/Holiday_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/HolidayList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/TelPrefix_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/Naspunkt_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/NaspunktList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/NaspunktCostList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DOCOrderPrintSeq_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/AccPKO_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/AccPKOList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/VehicleStopList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/TemplateParam_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/TemplateParamList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/UnassignedOrderList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/TTNAttrPair_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/TTNAttrPairList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/CarrierOrder_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/CarrierOrderList_Model.js'));
+				
 			if (isset($_SESSION['scriptId'])){
 				$script_id = $_SESSION['scriptId'];
 			}

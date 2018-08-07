@@ -24,13 +24,31 @@
 
 <xsl:template match="model[@id='head']/row">
 <!-- style="border-bottom:1px dotted black;" -->
+
+<xsl:variable name="total">
+	<xsl:choose>
+		<xsl:when test="deliv_type='by_supplier' and deliv_add_cost_to_product!='t'">
+			<xsl:call-template name="format_money">
+				<xsl:with-param name="val" select="total+deliv_total+total_pack"/>
+			</xsl:call-template>																					
+		</xsl:when>
+		<xsl:otherwise>
+			<xsl:call-template name="format_money">
+				<xsl:with-param name="val" select="total+total_pack"/>
+			</xsl:call-template>																														
+		</xsl:otherwise>
+	</xsl:choose>
+</xsl:variable>
+
+
 <div style="display:inline-block;width:100%;">
 	<div style="display:inline-block;width:70%;border-right:1px dotted black;padding-right:10px;">
 		<h5>Товарный чек № <xsl:value-of select="number"/> от <xsl:value-of select="date_descr"/></h5>
-		<!--
-		<div>Организация:<xsl:value-of select="firm_descr"/></div>
-		<div>Склад:<xsl:value-of select="warehouse_descr"/></div>
-		<h4>Контрагент:<xsl:value-of select="client_descr"/></h4>
+		
+		<h4>Поставщик: <xsl:value-of select="firm_descr"/></h4>
+		<h4>Покупатель: <xsl:value-of select="client_descr"/></h4>
+		<!--		
+		<div>Склад:<xsl:value-of select="warehouse_descr"/></div>		
 		-->
 		<table style="width:100%;">
 			<thead>
@@ -99,6 +117,7 @@
 			</xsl:if>
 			
 			</tbody>	
+			
 			<tfoot align="right" style="font-weight:bolder;font-size:120%;border:none;">	
 				<tr>
 					<!-- ШТРИХ КОД-->
@@ -133,25 +152,33 @@
 								<xsl:with-param name="val" select="total_quant"/>
 							</xsl:call-template>							
 						</div>
-						<xsl:variable name="total">
-							<xsl:choose>
-								<xsl:when test="deliv_type='by_supplier' and deliv_add_cost_to_product!='t'">
-									<xsl:call-template name="format_money">
-										<xsl:with-param name="val" select="total+deliv_total+total_pack"/>
-									</xsl:call-template>																					
-								</xsl:when>
-								<xsl:otherwise>
-									<xsl:call-template name="format_money">
-										<xsl:with-param name="val" select="total+total_pack"/>
-									</xsl:call-template>																														
-								</xsl:otherwise>
-							</xsl:choose>
-						</xsl:variable>
 						<div><xsl:value-of select="$total"/></div>
 					</td>
 				</tr>
 			</tfoot>
 		</table>
+		
+		<div>
+			<xsl:variable name="item_count">
+				<xsl:choose>
+				<xsl:when test="deliv_type='by_supplier' and deliv_add_cost_to_product!='t' and total_pack &gt; 0">
+					<xsl:value-of select="count(/document/model[@id='products']/row)+2"/>
+				</xsl:when>
+				<xsl:when test="deliv_type='by_supplier' and deliv_add_cost_to_product!='t' and not(total_pack &gt; 0)">
+					<xsl:value-of select="count(/document/model[@id='products']/row)+1"/>
+				</xsl:when>
+				<xsl:when test="not(deliv_type='by_supplier' and deliv_add_cost_to_product!='t') and total_pack &gt; 0">
+					<xsl:value-of select="count(/document/model[@id='products']/row)+1"/>
+				</xsl:when>				
+				<xsl:otherwise>
+					<xsl:value-of select="count(/document/model[@id='products']/row)"/>
+				</xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>
+			<div>Всего наименований: <xsl:value-of select="$item_count"/>, на сумму: <xsl:value-of select="$total"/> руб.</div>
+			<div> <xsl:value-of select="total_str"/></div>
+		</div>
+		
 		<br></br>
 		<br></br>
 		<div>

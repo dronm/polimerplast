@@ -27,9 +27,23 @@ function FirmList_View(id,options){
 	row.addElement(new GridDbHeadCell(id+"_col_name",{"value":"Наименование",
 		"readBind":{"valueFieldId":"name"},"descrCol":true
 		}));
+		
+	row.addElement(new GridDbHeadCellBool(id+"_col_nds",{"value":"Есть НДС",
+		"readBind":{"valueFieldId":"nds"}
+		}));
+	row.addElement(new GridDbHeadCellBool(id+"_col_cash",{"value":"За нал.расчет",
+		"readBind":{"valueFieldId":"cash"}
+		}));
+		
+		
+	row.addElement(new GridDbHeadCellBool(id+"_col_deleted",{"value":"Удален",
+		"readBind":{"valueFieldId":"deleted"}
+		}));
+
 	row.addElement(new GridDbHeadCellBool(id+"_col_match_1c",{"value":"Соответствует 1с",
 		"readBind":{"valueFieldId":"match_1c"}
 		}));
+
 		
 	head.addElement(row);
 	

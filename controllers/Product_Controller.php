@@ -12,6 +12,13 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldExtPassword.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtBool.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPoint.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPolygon.php');
+
+/**
+ * THIS FILE IS GENERATED FROM TEMPLATE build/templates/controllers/Controller_php.xsl
+ * ALL DIRECT MODIFICATIONS WILL BE LOST WITH THE NEXT BUILD PROCESS!!!
+ */
+
+
 require_once(FRAME_WORK_PATH.'basic_classes/ParamsSQL.php');
 require_once('common/downloader.php');
 
@@ -21,7 +28,7 @@ class Product_Controller extends ControllerSQL{
 	public function __construct($dbLinkMaster=NULL){
 		parent::__construct($dbLinkMaster);
 			
-		
+
 		/* insert */
 		$pm = new PublicMethod('insert');
 		$param = new FieldExtString('name'
@@ -157,6 +164,12 @@ class Product_Controller extends ControllerSQL{
 				,array());
 		$pm->addParam($param);
 		$param = new FieldExtInt('product_group_id'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtText('fin_group'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtBool('deleted'
 				,array());
 		$pm->addParam($param);
 		
@@ -357,6 +370,14 @@ class Product_Controller extends ControllerSQL{
 				,array(
 			));
 			$pm->addParam($param);
+		$param = new FieldExtText('fin_group'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtBool('deleted'
+				,array(
+			));
+			$pm->addParam($param);
 		
 			$param = new FieldExtInt('id',array(
 			));
@@ -381,8 +402,7 @@ class Product_Controller extends ControllerSQL{
 			
 		/* get_list */
 		$pm = new PublicMethod('get_list');
-		$pm->addParam(new FieldExtInt('browse_mode'));
-		$pm->addParam(new FieldExtInt('browse_id'));		
+		
 		$pm->addParam(new FieldExtInt('count'));
 		$pm->addParam(new FieldExtInt('from'));
 		$pm->addParam(new FieldExtString('cond_fields'));
@@ -392,7 +412,7 @@ class Product_Controller extends ControllerSQL{
 		$pm->addParam(new FieldExtString('ord_fields'));
 		$pm->addParam(new FieldExtString('ord_directs'));
 		$pm->addParam(new FieldExtString('field_sep'));
-		
+
 		$this->addPublicMethod($pm);
 		
 		$this->setListModelId('ProductList_Model');
@@ -419,13 +439,12 @@ class Product_Controller extends ControllerSQL{
 	
 			
 		$this->addPublicMethod($pm);
-			
+
 			
 		$pm = new PublicMethod('get_filter_list');
 		
-			
 		$this->addPublicMethod($pm);
-						
+
 		
 	}
 	
@@ -481,6 +500,7 @@ class Product_Controller extends ControllerSQL{
 				FROM product_warehouses AS pw
 				WHERE pw.warehouse_id=%d)
 				)
+			AND NOT coalesce(products.deleted,FALSE)
 		ORDER BY name		
 		",
 		$warehouse_id,$warehouse_id,$warehouse_id);

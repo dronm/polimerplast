@@ -135,7 +135,7 @@ class EmailSender {
 				$dbLink->query(
 				"UPDATE mail_for_sending
 				SET
-					sent=TRUE,
+					sent=".(($send_res)? "TRUE":"FALSE").",
 					sent_date_time=now()::timestamp,
 					send_error = ".$send_error."
 					

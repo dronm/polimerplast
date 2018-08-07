@@ -12,6 +12,13 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldExtPassword.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtBool.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPoint.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPolygon.php');
+
+/**
+ * THIS FILE IS GENERATED FROM TEMPLATE build/templates/controllers/Controller_php.xsl
+ * ALL DIRECT MODIFICATIONS WILL BE LOST WITH THE NEXT BUILD PROCESS!!!
+ */
+
+
 require_once('common/OSRM.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ParamsSQL.php');
 require_once('functions/ExtProg.php');
@@ -19,7 +26,7 @@ class Warehouse_Controller extends ControllerSQL{
 	public function __construct($dbLinkMaster=NULL){
 		parent::__construct($dbLinkMaster);
 			
-		
+
 		/* insert */
 		$pm = new PublicMethod('insert');
 		$param = new FieldExtString('name'
@@ -50,6 +57,9 @@ class Warehouse_Controller extends ControllerSQL{
 				,array());
 		$pm->addParam($param);
 		$param = new FieldExtString('email'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtBool('deleted'
 				,array());
 		$pm->addParam($param);
 		
@@ -110,6 +120,10 @@ class Warehouse_Controller extends ControllerSQL{
 				,array(
 			));
 			$pm->addParam($param);
+		$param = new FieldExtBool('deleted'
+				,array(
+			));
+			$pm->addParam($param);
 		
 			$param = new FieldExtInt('id',array(
 			));
@@ -134,8 +148,7 @@ class Warehouse_Controller extends ControllerSQL{
 			
 		/* get_list */
 		$pm = new PublicMethod('get_list');
-		$pm->addParam(new FieldExtInt('browse_mode'));
-		$pm->addParam(new FieldExtInt('browse_id'));		
+		
 		$pm->addParam(new FieldExtInt('count'));
 		$pm->addParam(new FieldExtInt('from'));
 		$pm->addParam(new FieldExtString('cond_fields'));
@@ -145,7 +158,7 @@ class Warehouse_Controller extends ControllerSQL{
 		$pm->addParam(new FieldExtString('ord_fields'));
 		$pm->addParam(new FieldExtString('ord_directs'));
 		$pm->addParam(new FieldExtString('field_sep'));
-		
+
 		$this->addPublicMethod($pm);
 		
 		$this->setListModelId('WarehouseList_Model');
@@ -188,10 +201,11 @@ class Warehouse_Controller extends ControllerSQL{
 	}
 	public function set_near_road($pm){
 		$zone = $pm->getParamValue('zone');
-		if ($zone){
+		if ($zone && $zone!='null'){		
 			$pares = explode(',',$zone);
 			if (count($pares)){
-				$zone.=','.$pares[0];
+				$zone.=','.$pares[0];				
+				throw new Exception($zone);
 				$ar=$this->getDbLink()->query_first(sprintf(
 				"SELECT
 					replace(replace(st_astext(ST_Centroid(ST_GeomFromText('POLYGON((%s))'))),'POINT(',''),')','')
@@ -221,6 +235,43 @@ class Warehouse_Controller extends ControllerSQL{
 		$this->set_near_road($pm);
 		parent::update($pm);
 	}	
+	
+	public function get_list($pm){
+		if ($_SESSION['role_id']!='admin'){
+			$model = new WarehouseList_Model($this->getDbLink());
+		
+			$order = $this->orderFromParams($pm,$model);
+			$where = $this->conditionFromParams($pm,$model);
+			if (!$where){
+				$where = new ModelWhereSQL();
+			}
+			$from = null; $count = null;
+			$limit = $this->limitFromParams($pm,$from,$count);
+			$calc_total = ($count>0);
+			if ($from){
+				$model->setListFrom($from);
+			}
+			if ($count){
+				$model->setRowsPerPage($count);
+			}		
+		
+			//Фильтр по deleted		
+			$field = clone $model->getFieldById('deleted');
+			$field->setValue('FALSE');
+			$where->addField($field,'=',NULL,NULL);
+		
+			$model->select(FALSE,$where,$order,
+				$limit,NULL,NULL,NULL,
+				$calc_total,TRUE);
+			//
+			$this->addModel($model);
+		
+		}
+		else{
+			parent::get_list($pm);
+		}
+	}
+	
 	public function get_list_for_order($pm){
 		$link = $this->getDbLink();		
 		$params = new ParamsSQL($pm,$link);

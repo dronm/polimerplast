@@ -233,6 +233,12 @@ extend(Client_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
+	options = {};
+	
+	var param = new FieldBool("deleted",options);
+	
+	pm.addParam(param);
+	
 	pm.addParam(new FieldInt("ret_id",{}));
 	
 	
@@ -439,6 +445,12 @@ extend(Client_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
+	options = {};
+	
+	var param = new FieldBool("deleted",options);
+	
+	pm.addParam(param);
+	
 	
 }
 
@@ -469,6 +481,7 @@ extend(Client_Controller,ControllerDb);
 	pm.addParam(new FieldInt("def_warehouse_id",options));
 	pm.addParam(new FieldFloat("def_debt",options));
 	pm.addParam(new FieldFloat("debt_total",options));
+	pm.addParam(new FieldBool("deleted",options));
 }
 
 			Client_Controller.prototype.addGetObject = function(){
@@ -489,7 +502,6 @@ extend(Client_Controller,ControllerDb);
 	pm.getParamById(this.PARAM_ORD_FIELDS).setValue("name");
 }
 
-		
 			Client_Controller.prototype.add_get_unreg_list = function(){
 	var pm = this.addMethodById('get_unreg_list');
 	
@@ -535,7 +547,7 @@ extend(Client_Controller,ControllerDb);
 	
 			
 }
-									
+
 			Client_Controller.prototype.add_register = function(){
 	var pm = this.addMethodById('register');
 	
@@ -649,7 +661,7 @@ extend(Client_Controller,ControllerDb);
 	
 				
 		pm.addParam(new FieldString("cond_ic"));
-				
+	
 				
 		pm.addParam(new FieldInt("from"));
 	

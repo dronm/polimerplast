@@ -12,6 +12,13 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldExtPassword.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtBool.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPoint.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPolygon.php');
+
+/**
+ * THIS FILE IS GENERATED FROM TEMPLATE build/templates/controllers/Controller_php.xsl
+ * ALL DIRECT MODIFICATIONS WILL BE LOST WITH THE NEXT BUILD PROCESS!!!
+ */
+
+
 require_once(dirname(__FILE__).'/../functions/ExtProg.php');
 require_once(dirname(__FILE__).'/../functions/EmailSender.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ParamsSQL.php');
@@ -28,7 +35,7 @@ class Client_Controller extends ControllerSQL{
 	public function __construct($dbLinkMaster=NULL){
 		parent::__construct($dbLinkMaster);
 			
-		
+
 		/* insert */
 		$pm = new PublicMethod('insert');
 		$param = new FieldExtString('name'
@@ -123,6 +130,9 @@ class Client_Controller extends ControllerSQL{
 				,array());
 		$pm->addParam($param);
 		$param = new FieldExtInt('def_warehouse_id'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtBool('deleted'
 				,array());
 		$pm->addParam($param);
 		
@@ -268,6 +278,10 @@ class Client_Controller extends ControllerSQL{
 				,array(
 			));
 			$pm->addParam($param);
+		$param = new FieldExtBool('deleted'
+				,array(
+			));
+			$pm->addParam($param);
 		
 			$param = new FieldExtInt('id',array(
 			));
@@ -292,8 +306,7 @@ class Client_Controller extends ControllerSQL{
 			
 		/* get_list */
 		$pm = new PublicMethod('get_list');
-		$pm->addParam(new FieldExtInt('browse_mode'));
-		$pm->addParam(new FieldExtInt('browse_id'));		
+		
 		$pm->addParam(new FieldExtInt('count'));
 		$pm->addParam(new FieldExtInt('from'));
 		$pm->addParam(new FieldExtString('cond_fields'));
@@ -303,7 +316,7 @@ class Client_Controller extends ControllerSQL{
 		$pm->addParam(new FieldExtString('ord_fields'));
 		$pm->addParam(new FieldExtString('ord_directs'));
 		$pm->addParam(new FieldExtString('field_sep'));
-		
+
 		$this->addPublicMethod($pm);
 		
 		$this->setListModelId('ClientList_Model');
@@ -330,7 +343,6 @@ class Client_Controller extends ControllerSQL{
 		$this->addPublicMethod($pm);					
 		$this->setCompleteModelId('ClientComplete_Model');
 
-		
 			
 		$pm = new PublicMethod('get_unreg_list');
 		
@@ -388,7 +400,7 @@ class Client_Controller extends ControllerSQL{
 	
 			
 		$this->addPublicMethod($pm);
-									
+
 			
 		$pm = new PublicMethod('register');
 		
@@ -606,7 +618,7 @@ class Client_Controller extends ControllerSQL{
 	$opts=array();
 					
 		$pm->addParam(new FieldExtString('cond_ic',$opts));
-				
+	
 				
 	$opts=array();
 					
@@ -939,7 +951,7 @@ class Client_Controller extends ControllerSQL{
 				(SELECT t.debt_total FROM client_debts AS t WHERE t.client_id=o.client_id AND t.firm_id=o.firm_id LIMIT 1) AS debt_total
 			FROM doc_orders AS o
 			LEFT JOIN firms AS f ON f.id=o.firm_id
-			WHERE o.client_id=%d
+			WHERE o.client_id=%d AND NOT coalesce(f.deleted,FALSE)
 			GROUP BY o.firm_id,f.name,o.client_id
 			ORDER BY cnt DESC LIMIT 1",
 			$client_id
@@ -1078,6 +1090,42 @@ class Client_Controller extends ControllerSQL{
 		);
 		$this->addModel($model);
 		
+	}
+	
+	public function get_list($pm){
+		if ($_SESSION['role_id']!='admin'){
+			$model = new ClientList_Model($this->getDbLink());
+		
+			$order = $this->orderFromParams($pm,$model);
+			$where = $this->conditionFromParams($pm,$model);
+			if (!$where){
+				$where = new ModelWhereSQL();
+			}
+			$from = null; $count = null;
+			$limit = $this->limitFromParams($pm,$from,$count);
+			$calc_total = ($count>0);
+			if ($from){
+				$model->setListFrom($from);
+			}
+			if ($count){
+				$model->setRowsPerPage($count);
+			}		
+		
+			//Фильтр по deleted		
+			$field = clone $model->getFieldById('deleted');
+			$field->setValue('FALSE');
+			$where->addField($field,'=',NULL,NULL);
+		
+			$model->select(FALSE,$where,$order,
+				$limit,NULL,NULL,NULL,
+				$calc_total,TRUE);
+			//
+			$this->addModel($model);
+		
+		}
+		else{
+			parent::get_list($pm);
+		}
 	}
 	
 

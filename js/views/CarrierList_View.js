@@ -27,6 +27,13 @@ function CarrierList_View(id,options){
 	row.addElement(new GridDbHeadCell(id+"_col_name",{"value":"Наименование",
 		"readBind":{"valueFieldId":"name"},"descrCol":true
 		}));
+	row.addElement(new GridDbHeadCell(id+"_col_client_id",{
+		"readBind":{"valueFieldId":"client_id"},"visible":false
+		}));		
+	row.addElement(new GridDbHeadCell(id+"_col_client_descr",{"value":"Реквизиты",
+		"readBind":{"valueFieldId":"client_descr"}
+		}));
+		
 		
 	head.addElement(row);
 	
@@ -34,7 +41,7 @@ function CarrierList_View(id,options){
 		{"head":head,
 		"body":new GridBody(),
 		"controller":controller,
-		"readModelId":"Carrier_Model",
+		"readModelId":"CarrierList_Model",
 		"editViewClass":CarrierInline_View,
 		"editInline":true,
 		"pagination":null,

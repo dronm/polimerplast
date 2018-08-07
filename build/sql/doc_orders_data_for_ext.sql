@@ -1,8 +1,32 @@
 -- View: doc_orders_data_for_ext
 
-DROP VIEW doc_orders_data_for_ext;
+--DROP VIEW doc_orders_data_for_ext;
 
+/*
+АТРИБУТЫ ВОДИТЕЛЬ - ДЛЯ ЗАПИСИ В СВОЙСТВА!!!
+*/
 CREATE OR REPLACE VIEW doc_orders_data_for_ext AS 
+	WITH
+	ttn_data AS (
+		SELECT
+			t_cl.ext_id AS carrier_ref,
+			t_dr.ext_id AS driver_ref,
+			t_dr.name AS driver_name,
+			t_dr.drive_perm AS driver_drive_perm,
+			t_dr.cel_phone AS driver_cel_phone,
+			t_vh.model AS vh_model,
+			t_vh.plate AS vh_plate,
+			t_vh.load_weight_t AS vh_load_weight_t,
+			t_vh.vol AS vh_vol,
+			t_vh.trailer_plate AS vh_trailer_plate,
+			t_vh.trailer_model As vh_trailer_model
+		FROM carrier_orders t
+		LEFT JOIN carriers AS t_cr ON t_cr.id=t.carrier_id
+		LEFT JOIN clients AS t_cl ON t_cl.id=t_cr.client_id
+		LEFT JOIN drivers AS t_dr ON t_dr.id=t.driver_id
+		LEFT JOIN vehicles AS t_vh ON t_vh.id=t.vehicle_id
+		WHERE t.ord=carrier_orders_today_ord(now()::timestamp without time zone)
+	)
 	SELECT
 		--t.doc_id,
 		h.id AS doc_id,
@@ -10,6 +34,7 @@ CREATE OR REPLACE VIEW doc_orders_data_for_ext AS
 		--ШАПКА
 		f.ext_id AS firm_ref,
 		w.ext_id AS warehouse_ref,
+		w.address AS warehouse_address,
 		c.ext_id AS client_ref,
 		(c.pay_type='cash'::payment_types) AS pay_cash,
 		
@@ -19,6 +44,7 @@ CREATE OR REPLACE VIEW doc_orders_data_for_ext AS
 				h.deliv_total
 		ELSE 0
 		END AS deliv_total,
+		h.deliv_type,
 		
 		h.total_pack AS pack_total,
 		h.number,
@@ -30,14 +56,58 @@ CREATE OR REPLACE VIEW doc_orders_data_for_ext AS
 			ELSE c.addr_reg
 		END AS deliv_address,
 		
-		dr.ext_id AS driver_ref,
-		vh.plate AS vh_plate,
-		vh.trailer_plate AS vh_trailer_plate,
-		vh.trailer_model AS vh_trailer_model,
+		CASE
+			WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.driver_ref FROM ttn_data)
+			ELSE dr.ext_id
+		END AS driver_ref,
+		CASE
+			WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.driver_name FROM ttn_data)
+			ELSE dr.name
+		END AS driver_name,
+		CASE
+			WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.driver_drive_perm FROM ttn_data)
+			ELSE dr.drive_perm
+		END AS driver_drive_perm,
+		CASE
+			WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.driver_cel_phone FROM ttn_data)
+			ELSE dr.cel_phone
+		END AS driver_cel_phone,
+
+		CASE
+			WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.vh_trailer_plate FROM ttn_data)
+			ELSE vh.trailer_plate
+		END AS vh_trailer_plate,
+		CASE
+			WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.vh_trailer_model FROM ttn_data)
+			ELSE vh.trailer_model
+		END AS vh_trailer_model,
+		CASE
+			WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.carrier_ref FROM ttn_data)
+			ELSE NULL
+		END AS carrier_ref,
+		CASE
+			WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.vh_model FROM ttn_data)
+			ELSE vh.model
+		END AS vh_model,
+		CASE
+			WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.vh_plate FROM ttn_data)
+			ELSE vh.plate
+		END AS vh_plate,
+		CASE
+			WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.vh_vol FROM ttn_data)
+			ELSE vh.vol
+		END AS vh_vol,
+		CASE
+			WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.vh_load_weight_t FROM ttn_data)
+			ELSE vh.load_weight_t
+		END AS vh_load_weight_t,
+		
 		--ТАБЛИЦА
 		
 		p.name AS group_name,
 		pg.ext_id AS product_group_ref,
+		
+		p.fin_group,
 		
 		products_descr(p,
 			t.mes_length,t.mes_width,t.mes_height,
@@ -77,7 +147,12 @@ CREATE OR REPLACE VIEW doc_orders_data_for_ext AS
 		h.ext_ship_id,
 		h.client_comment,
 		h.sales_manager_comment,
-		h.deliv_vehicle_count
+		h.deliv_vehicle_count,
+		
+		f.nds AS firm_nds,
+		
+		h.total_volume AS total_volume,
+		h.total_weight AS total_weight
 		
 	--FROM doc_orders_t_products t
 	--LEFT JOIN doc_orders h ON h.id=t.doc_id
@@ -97,6 +172,13 @@ CREATE OR REPLACE VIEW doc_orders_data_for_ext AS
 	LEFT JOIN vehicles vh ON vh.id=dlv.vehicle_id
 	LEFT JOIN drivers dr ON dr.id=vh.driver_id
 	LEFT JOIN product_groups pg ON pg.id=p.product_group_id
+	LEFT JOIN 
+		(SELECT
+			ttn_attr_pairs.warehouse_id,
+			ttn_attr_pairs.firm_id
+		FROM ttn_attr_pairs
+		) AS ttn_pairs ON ttn_pairs.firm_id=h.firm_id AND ttn_pairs.warehouse_id=h.warehouse_id
+	
 	;
 ALTER TABLE doc_orders_data_for_ext OWNER TO polimerplast;
 

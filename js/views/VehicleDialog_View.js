@@ -127,6 +127,7 @@ function VehicleDialog_View(id,options){
 	
 	
 	//Driver
+	/*
 	this.m_driverCtrl = new DriverEditObject("driver_id","driver",false,{
 		"options":{
 			"extraFields":["match_1c"],
@@ -147,9 +148,43 @@ function VehicleDialog_View(id,options){
 		{"modelId":model,
 		"valueFieldId":null,"keyFieldIds":["driver_id"]}
 	);
-	(this.m_driverCtrl.getButtonInsert()).addBind("name",this.m_driverCtrl);
-		
+	(this.m_driverCtrl.getButtonInsert()).addBind("name",this.m_driverCtrl);		
 	cont.addElement(this.m_driverCtrl);
+	*/
+	//Теперь данные по водителю - текстовые поля
+	ctrl = new EditString(id+"_driver_descr",
+		{"attrs":{"maxlength":150},
+		"labelCaption":"ФИО водителя:",
+		"name":"driver_descr"}
+	);
+	this.bindControl(ctrl,
+		{"modelId":model,
+		"valueFieldId":"driver_descr",
+		"keyFieldIds":null},
+		{"valueFieldId":"driver_descr","keyFieldIds":null});	
+	cont.addElement(ctrl);
+	ctrl = new EditString(id+"_driver_drive_perm",
+		{"attrs":{"maxlength":20},
+		"labelCaption":"Вод.удост.водителя:",
+		"name":"driver_descr"}
+	);
+	this.bindControl(ctrl,
+		{"modelId":model,
+		"valueFieldId":"driver_drive_perm",
+		"keyFieldIds":null},
+		{"valueFieldId":"driver_drive_perm","keyFieldIds":null});	
+	cont.addElement(ctrl);
+	ctrl = new EditCellPhone(id+"_driver_cel_phone",
+		{
+		"labelCaption":"Сот.тел.водителя:",
+		"name":"driver_cel_phone"}
+	);
+	this.bindControl(ctrl,
+		{"modelId":model,
+		"valueFieldId":"driver_cel_phone",
+		"keyFieldIds":null},
+		{"valueFieldId":"driver_cel_phone","keyFieldIds":null});	
+	cont.addElement(ctrl);
 	
 	
 	this.m_getAttrsBtn = new ButtonCtrl(id+":btn_get_attrs",{

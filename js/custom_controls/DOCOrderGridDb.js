@@ -36,7 +36,7 @@ DOCOrderGridDb.prototype.onGetData = function(resp){
 			this.m_colorToolTips[i]=new ToolTip({
 				"node":cells[i],
 				"wait":1,
-				"onHover":function(event){					
+				"onHover":function(event){
 					this.popup(
 						'<div><span class="color-sample behind_plan">&nbsp;&nbsp;&nbsp;</span> - опаздание</div>'+
 						'<div><span class="color-sample waiting_for_us">&nbsp;&nbsp;&nbsp;</span> - согласование Полимерпласт</div>'+
@@ -82,7 +82,7 @@ DOCOrderGridDb.prototype.onGetData = function(resp){
 							meth.setParamValue("doc_id",keys["id"]);
 							contr.run(meth_id,{
 								"async":true,
-								"func":function(resp){								
+								"func":function(resp){									
 									var driver_descr;
 									var vehicle_descr;
 								

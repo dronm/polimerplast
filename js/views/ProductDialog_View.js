@@ -65,7 +65,8 @@ function ProductDialog_View(id,options){
 	{"valueFieldId":"name_for_1c","keyFieldIds":null});	
 	this.addControl(ctrl);
 
-	//номенклатурная группа
+	//номенклатурная группа В комплексной не используется!!!
+	/*
 	ctrl = new ProductGroupEdit(
 		{controlId:"product_group",
 		"fieldId":"product_group_id"}
@@ -76,6 +77,39 @@ function ProductDialog_View(id,options){
 		"keyFieldIds":["product_group_id"]},
 	{"valueFieldId":null,"keyFieldIds":["product_group_id"]});	
 	this.addControl(ctrl);
+	*/
+	
+	//Группа фин.учета для 1с
+	ctrl = new EditString(id+"_fin_group",
+		{"labelCaption":"Группа финансового учета:",
+		"name":"fin_group",
+		"buttonClear":false,
+		"tableLayout":false,
+		"attrs":{"maxlength":500,
+			"size":100
+			}
+		}
+	);
+	this.bindControl(ctrl,
+		{"modelId":model_id,
+		"valueFieldId":"fin_group",
+		"keyFieldIds":null},
+	{"valueFieldId":"fin_group","keyFieldIds":null});	
+	this.addControl(ctrl);
+	
+	this.addDataControl(
+		new EditCheckBox(id+"_deleted",
+		{"labelCaption":"Удален:",
+		"name":"name",
+		"tableLayout":false
+		}
+		),
+		{"modelId":model_id,
+		"valueFieldId":"deleted",
+		"keyFieldIds":null},
+		{"valueFieldId":"deleted","keyFieldIds":null,
+		"modelId":"Warehouse_Model"}
+	);
 	
 	//****** Панель Склады ***************
 	var cont_m=new ControlContainer(uuid(),"div",{className:"row"});

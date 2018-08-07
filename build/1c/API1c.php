@@ -186,6 +186,7 @@
 	/*
 	Параметры:
 		head serialized строка,			
+		pkoType (cash/bank)
 	*/	
 	define('CMD_PAID_TO_ACC', 'paid_to_acc');
 	
@@ -231,7 +232,7 @@
 	define('PAR_DEF_STAMP', '0');
 	//***** значения по умолчанию ************
 	
-	define('COM_OBJ_NAME', 'v82Server.Connection');
+	define('COM_OBJ_NAME', 'v8Server.Connection');
 	define('API_EPF', dirname(__FILE__).'\API1C.epf');
 	
 	$xml_status = 'true';
@@ -250,13 +251,9 @@
 		else if ($com==CMD_GET_CLIENT_ON_INN){
 			if (!strlen($_REQUEST[PAR_INN])){
 				throw new Exception("Не задан ИНН");
-			}
-			$v8 = new COM(COM_OBJ_NAME);
-			$ref = get_clienton_on_inn($v8,$_REQUEST[PAR_INN]);
-			if (!is_null($ref)){
-				$xml_body = sprintf('<ref>%s</ref>',
-					$v8->String($ref->УникальныйИдентификатор()));
-			}
+			}	
+			$v8 = new COM(COM_OBJ_NAME);			
+			$xml_body = get_client_on_inn($v8,$_REQUEST[PAR_INN]);
 		}
 		else if ($com==CMD_GET_CLIENT_ATTRS){
 			
@@ -267,92 +264,10 @@
 			$name = str_replace('\"','""',$name);
 			
 			$v8 = new COM(COM_OBJ_NAME);
-			$q_obj = $v8->NewObject('Запрос');
-			$q_obj->Текст ='
-			ВЫБРАТЬ ПЕРВЫЕ 1
-				Клиент.Ссылка КАК ref,
-				Клиент.НаименованиеПолное КАК name_full,
-				Клиент.ИНН КАК inn,
-				Клиент.КПП КАК kpp,
-				Клиент.КодПоОКПО КАК okpo,
-				ЕстьNULL(КИТелефон.Представление,"""") КАК telephones,
-				ЕстьNULL(КИАдресРег.Представление,"""") КАК addr_reg,
-				ЕстьNULL(КИАдресПочт.Представление,"""") КАК addr_mail,
-				РС.НомерСчета КАК acc,
-				Банк.Наименование КАК bank_name,
-				Банк.Код КАК bank_code,
-				Банк.КоррСчет КАК bank_acc
-			
-			ИЗ Справочник.Контрагенты КАК Клиент
-			
-			ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.КонтактнаяИнформация КАК КИТелефон
-			ПО КИТелефон.Объект=Клиент.Ссылка И КИТелефон.Тип=ЗНАЧЕНИЕ(Перечисление.ТипыКонтактнойИнформации.Телефон)
-			И КИТелефон.Вид=ЗНАЧЕНИЕ(Справочник.ВидыКонтактнойИнформации.ТелефонКонтрагента)
-			
-			ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.КонтактнаяИнформация КАК КИАдресРег
-			ПО КИАдресРег.Объект=Клиент.Ссылка И КИАдресРег.Тип=ЗНАЧЕНИЕ(Перечисление.ТипыКонтактнойИнформации.Адрес)
-			И КИАдресРег.Вид=ЗНАЧЕНИЕ(Справочник.ВидыКонтактнойИнформации.ЮрАдресКонтрагента)
-			
-			ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.КонтактнаяИнформация КАК КИАдресПочт
-			ПО КИАдресПочт.Объект=Клиент.Ссылка И КИАдресПочт.Тип=ЗНАЧЕНИЕ(Перечисление.ТипыКонтактнойИнформации.Адрес)
-			И КИАдресПочт.Вид =ЗНАЧЕНИЕ(Справочник.ВидыКонтактнойИнформации.ФактАдресКонтрагента)
-			
-			ЛЕВОЕ СОЕДИНЕНИЕ Справочник.БанковскиеСчета КАК РС
-			ПО РС.Ссылка=Клиент.ОсновнойБанковскийСчет
-			
-			ЛЕВОЕ СОЕДИНЕНИЕ Справочник.Банки КАК Банки
-			ПО Банки.Ссылка=РС.Банк
-			
-			ГДЕ Клиент.Наименование="'.$name.'"
-			
-			';
-			
-			$sel = $q_obj->Выполнить()->Выбрать();
-			if ($sel->Следующий()){
-				$xml_body.= sprintf('<ref>%s</ref>',
-					$v8->String($sel->ref->УникальныйИдентификатор()));
-				$xml_body.= '<attrs>';
-				$xml_body.= sprintf('<name_full>%s</name_full>',
-					cyr_str_encode($sel->name_full));
-				$xml_body.= sprintf('<inn>%s</inn>',$sel->inn);
-				$xml_body.= sprintf('<kpp>%s</kpp>',$sel->kpp);
-				$xml_body.= sprintf('<okpo>%s</okpo>',$sel->okpo);
-				$xml_body.= sprintf('<telephones>%s</telephones>',
-					cyr_str_encode($sel->telephones));
-				$xml_body.= sprintf('<addr_reg>%s</addr_reg>',
-					cyr_str_encode($sel->addr_reg));
-				$xml_body.= sprintf('<addr_mail>%s</addr_mail>',
-					cyr_str_encode($sel->addr_mail));
-				$xml_body.= sprintf('<acc>%s</acc>',$sel->acc);
-				$xml_body.= sprintf('<bank_name>%s</bank_name>',
-					cyr_str_encode($sel->bank_name));
-				$xml_body.= sprintf('<bank_code>%s</bank_code>',$sel->bank_code);
-				$xml_body.= sprintf('<bank_acc>%s</bank_acc>',$sel->bank_acc);
-				$xml_body.= '</attrs>';
-			}
+			$xml_body = get_client_attrs($v8,$name);
 		}
 		
 		else if ($com==CMD_COMPLETE_CLIENT){
-			/*
-			if (!isset($_REQUEST[PAR_TEMPL])){
-				throw new Exception("Не задан шаблон");
-			}
-			$count = (isset($_REQUEST[PAR_COUNT]))? $_REQUEST[PAR_COUNT]:PAR_DEF_COUNT;
-			$par = str_replace('\"','""',$_REQUEST[PAR_TEMPL]);
-			$v8 = new COM(COM_OBJ_NAME);
-			$q_obj = $v8->NewObject('Запрос');
-			$q_obj->Текст ='ВЫБРАТЬ ПЕРВЫЕ '.$count.' 
-				Клиент.Ссылка КАК ref,
-				Клиент.Наименование КАК name
-				ИЗ Справочник.Контрагенты КАК Клиент
-				ГДЕ Клиент.Наименование ПОДОБНО "'.cyr_str_decode($par).'%"';
-			$sel = $q_obj->Выполнить()->Выбрать();
-			while ($sel->Следующий()){
-				$xml_body.= sprintf("<ref name='%s'>%s</ref>",
-					cyr_str_encode($sel->name),
-					$v8->String($sel->ref->УникальныйИдентификатор()));
-			}
-			*/
 			$xml_body = completeSprOnDescr('Контрагенты');
 		}
 		else if ($com==CMD_COMPLETE_USER){
@@ -365,7 +280,6 @@
 			$xml_body = getSprRefOnDescr('НоменклатурныеГруппы');
 		}		
 		else if ($com==CMD_GET_PERSON_ON_NAME){
-			//$xml_body = getSprRefOnDescr('ФизическиеЛица');
 			$xml_body = getPersonRefOnDescr();
 		}		
 		else if ($com==CMD_GET_DRIVER_ATTRS){
@@ -377,7 +291,7 @@
 		}		
 		
 		else if ($com==CMD_GET_CLIENT_ACTIVITY_ON_NAME){
-			$xml_body = getSprRefOnDescr('ВидыДеятельностиКонтрагентов');
+			//$xml_body = getSprRefOnDescr('ВидыДеятельностиКонтрагентов');
 		}		
 		
 		else if ($com==CMD_GET_WAREHOUSE_ON_NAME){
@@ -391,15 +305,14 @@
 			$par = str_replace('\"','""',$par);
 			$v8 = new COM(COM_OBJ_NAME);
 			$q_obj = $v8->NewObject('Запрос');
-			$q_obj->Текст ='ВЫБРАТЬ Спр.Ссылка КАК ref,
-			Спр.НаименованиеПолное КАК name_full
-			ИЗ Справочник.КлассификаторЕдиницИзмерения КАК Спр
-			ГДЕ Спр.Наименование="'.$par.'"';
+			$q_obj->Текст ='ВЫБРАТЬ Ссылка,НаименованиеПолное
+			ИЗ Справочник.УпаковкиЕдиницыИзмерения
+			ГДЕ Код <> """" И Наименование="'.$par.'" И НЕ ПометкаУдаления И ЕдиницаИзмерения=ЗНАЧЕНИЕ(Справочник.УпаковкиЕдиницыИзмерения.ПустаяСсылка)';
 			$sel = $q_obj->Выполнить()->Выбрать();
 			if ($sel->Следующий()){
 				$xml_body = sprintf('<ref>%s</ref><name_full>%s</name_full>',
-					$v8->String($sel->ref->УникальныйИдентификатор()),
-					$v8->String(cyr_str_encode($sel->name_full))
+					$v8->String($sel->Ссылка->УникальныйИдентификатор()),
+					$v8->String(cyr_str_encode($sel->НаименованиеПолное))
 					);
 			}
 		}						
@@ -409,14 +322,19 @@
 			$q_obj = $v8->NewObject('Запрос');
 			$q_obj->Текст ="
 			ВЫБРАТЬ
-			Расчеты.Организация AS firmRef,
-			Расчеты.Контрагент AS clientRef,
-			ВЫРАЗИТЬ(СУММА(ЕСТЬNULL(Расчеты.СуммаВзаиморасчетовОстаток,0)) КАК ЧИСЛО(15,2)) КАК Сумма
-			ИЗ
-			    РегистрНакопления.ВзаиморасчетыСКонтрагентами.Остатки(
-			        ДАТАВРЕМЯ(".$par_date.")) КАК Расчеты
-			СГРУППИРОВАТЬ ПО Расчеты.Организация,Расчеты.Контрагент
-			";
+			БухОст.Организация AS firmRef,
+			БухОст.Субконто1 AS clientRef,
+			ВЫРАЗИТЬ(СУММА(ЕСТЬNULL(БухОст.СуммаОстатокДт,0)) КАК ЧИСЛО(15,2)) AS Сумма
+			ИЗ РегистрБухгалтерии.Хозрасчетный.Остатки(
+			ДАТАВРЕМЯ(".$par_date."),
+			Счет в ИЕРАРХИИ (&ВыбСчет),ЗНАЧЕНИЕ(ПланВидовХарактеристик.ВидыСубконтоХозрасчетные.Контрагенты)) КАК БухОст
+			ГДЕ БухОст.СуммаОстатокДт<>0
+			СГРУППИРОВАТЬ ПО БухОст.Организация,БухОст.Субконто1";
+			$spis = $v8->NewObject('СписокЗначений');
+			$spis->Добавить($v8->ПланыСчетов->Хозрасчетный->РасчетыСПоставщикамиИПодрядчиками);
+			$spis->Добавить($v8->ПланыСчетов->Хозрасчетный->РасчетыСПокупателямиИЗаказчиками);
+			$q_obj->УстановитьПараметр('ВыбСчет',$spis);
+			$q_obj->УстановитьПараметр('ВыбСчет',$spis);
 			$sel = $q_obj->Выполнить()->Выбрать();
 			while ($sel->Следующий()){
 				$sm = str_replace(' ','',$sel->Сумма);
@@ -491,81 +409,64 @@
 			if (!$doc_ref){
 				throw new Exception("Не задан идентификатор документа!");
 			}
+			
 			$stamp = ($_REQUEST[PAR_STAMP])? intval($_REQUEST[PAR_STAMP]):PAR_DEF_STAMP;
 			$user_ref = ($_REQUEST['user_ref'])? $_REQUEST['user_ref']:'';
 			$v8 = new COM(COM_OBJ_NAME);
 			$obr = get_ext_obr($v8);
+			//$stamp = 0;
 			$file = $obr->ПечатьСчетаВФайл($doc_ref,$user_ref,$stamp);			
 			downloadfile($file);
 			unlink($file);
 			$SENT_FILE = TRUE;
 		}		
 		
-		else if ($com==CMD_TORG12){
-			$doc_ref = $_REQUEST[PAR_DOC];
-			if (!$doc_ref){
-				throw new Exception("Не задан идентификатор документа!");
-			}
-			$stamp = ($_REQUEST[PAR_STAMP])? intval($_REQUEST[PAR_STAMP]):PAR_DEF_STAMP;
-			$user_ref = ($_REQUEST['user_ref'])? $_REQUEST['user_ref']:'';
-			$v8 = new COM(COM_OBJ_NAME);
-			$obr = get_ext_obr($v8);
-			$file = $obr->ПечатьТорг12ВФайл($doc_ref,$user_ref,$stamp);
-			downloadfile($file);
-			unlink($file);
-			$SENT_FILE = TRUE;
-		}	
 		else if ($com==CMD_SHIP){
 			$doc_ref = $_REQUEST[PAR_DOC];
 			if (!$doc_ref){
 				throw new Exception("Не задан идентификатор документа!");
 			}
 			$stamp = ($_REQUEST[PAR_STAMP])? intval($_REQUEST[PAR_STAMP]):PAR_DEF_STAMP;
-			$user_ref = ($_REQUEST['user_ref'])? $_REQUEST['user_ref']:'';
 			
 			$head = unserialize(stripslashes($_REQUEST[PAR_HEAD]));
+			$ttn_exists = ($head['deliv_type'] && $head['deliv_type']=='by_supplier');
 			
 			$v8 = new COM(COM_OBJ_NAME);
 			
-			$attrs = fill_struc_for_ttn($v8,$head);
-			
 			$obr = get_ext_obr($v8);
 			
-			$file1 = $obr->ПечатьУПДВФайл($doc_ref,$user_ref,$stamp);			
-			$file2 = $obr->ПечатьТТНВФайл($doc_ref,$attrs,$user_ref,$stamp);
+			$file1 = $obr->ПечатьУПДВФайл($doc_ref,$stamp);			
 			
 			$zip = new ZipArchive();
-			$file_zip = dirname(__FILE__).'/'.md5(uniqid()).'.zip';
-			if ($zip->open($file_zip, ZIPARCHIVE::CREATE)!==TRUE) {
-				throw new Exception("cannot open <$file_zip>\n");
-			}
-
+			$file_for_download = dirname(__FILE__).'/'.md5(uniqid()).'.zip';
+			if ($zip->open($file_for_download, ZIPARCHIVE::CREATE)!==TRUE) {
+				throw new Exception("cannot open <$file_for_download>\n");
+			}			
 			$zip->addFile($file1,'upd.pdf');
-			$zip->addFile($file2,'ttn.pdf');
+			
+			if ($ttn_exists){
+				//2 files
+				$file2 = $obr->ПечатьТТНВФайл($doc_ref,$stamp);
+				$zip->addFile($file2,'ttn.pdf');
+			}
 			$zip->close();
 			
 			ob_clean();
-			downloadfile($file_zip);//$file_zip
-			unlink($file_zip);
+			downloadfile($file_for_download);
+			unlink($file_for_download);
 			
-			/*
-			$file = $obr->ПечатьПакетаОтгрузВФайл($doc_ref,$attrs,$user_ref,$stamp);
-			
-			downloadfile($file);
-			unlink($file);
-			*/
 			$SENT_FILE = TRUE;
 		}						
-		else if ($com==CMD_UPD){
+		else if ($com==CMD_UPD || $com==CMD_INVOICE || $com==CMD_TORG12){
 			$doc_ref = $_REQUEST[PAR_DOC];
 			if (!$doc_ref){
 				throw new Exception("Не задан идентификатор документа!");
 			}
 			$stamp = ($_REQUEST[PAR_STAMP])? intval($_REQUEST[PAR_STAMP]):PAR_DEF_STAMP;
-			$user_ref = ($_REQUEST['user_ref'])? $_REQUEST['user_ref']:'';
+			//$user_ref = ($_REQUEST['user_ref'])? $_REQUEST['user_ref']:'';
 			$v8 = new COM(COM_OBJ_NAME);
 			$obr = get_ext_obr($v8);
-			$file = $obr->ПечатьУПДВФайл($doc_ref,$user_ref,$stamp);
+			$file = $obr->ПечатьУПДВФайл($doc_ref,$stamp);
 			downloadfile($file);
 			unlink($file);
 			$SENT_FILE = TRUE;
@@ -577,33 +478,17 @@
 			}
 			$stamp = ($_REQUEST[PAR_STAMP])? intval($_REQUEST[PAR_STAMP]):PAR_DEF_STAMP;
 			$head = unserialize(stripslashes($_REQUEST[PAR_HEAD]));
-			$user_ref = ($_REQUEST['user_ref'])? $_REQUEST['user_ref']:'';
-			//throw new Exception('driver_name='.cyr_str_decode($head["driver_name"]));
+			
 			$v8 = new COM(COM_OBJ_NAME);			
 			
-			$attrs = fill_struc_for_ttn($v8,$head);
-			
 			$obr = get_ext_obr($v8);
-			$file = $obr->ПечатьТТНВФайл($doc_ref,$attrs,$user_ref,$stamp);
+			$file = $obr->ПечатьТТНВФайл($doc_ref,$stamp);
 			ob_clean();
 			downloadfile($file);
 			unlink($file);
 			$SENT_FILE = TRUE;
 		}				
 		
-		else if ($com==CMD_INVOICE){
-			$doc_ref = $_REQUEST[PAR_DOC];
-			if (!$doc_ref){
-				throw new Exception("Не задан идентификатор документа!");
-			}
-			$v8 = new COM(COM_OBJ_NAME);
-			$obr = get_ext_obr($v8);
-			$user_ref = ($_REQUEST['user_ref'])? $_REQUEST['user_ref']:'';
-			$file = $obr->ПечатьСЧФВФайл($doc_ref,$user_ref);
-			downloadfile($file);
-			unlink($file);
-			$SENT_FILE = TRUE;
-		}
 		else if	($com==CMD_BALANCE){
 			if (!isset($_REQUEST[PAR_CLIENT])){
 				throw new Exception("Не задан идентификатор клиента!");
@@ -640,7 +525,7 @@
 		}
 		else if ($com==CMD_FIRM_DATA){
 			if (!isset($_REQUEST[PAR_FIRM])){
-				throw new Exception("Не задан идентификатор документа!");
+				throw new Exception("Не задан идентификатор организации!");
 			}				
 			$v8 = new COM(COM_OBJ_NAME);
 			$obr = get_ext_obr($v8);
@@ -649,8 +534,9 @@
 		}
 		else if ($com==CMD_PAID_TO_ACC){
 			$head = unserialize(stripslashes($_REQUEST[PAR_HEAD]));
+			$pay_type_cash = ($_REQUEST['pkoType'] && $_REQUEST['pkoType']=='bank');
 			$v8 = new COM(COM_OBJ_NAME);
-			pko($v8,$head);
+			pko($v8,$head,$pay_type_cash);
 		}
 		else if ($com==CMD_DEL_DOCS){
 			$v8 = new COM(COM_OBJ_NAME);

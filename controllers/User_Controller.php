@@ -12,6 +12,13 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldExtPassword.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtBool.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPoint.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPolygon.php');
+
+/**
+ * THIS FILE IS GENERATED FROM TEMPLATE build/templates/controllers/Controller_php.xsl
+ * ALL DIRECT MODIFICATIONS WILL BE LOST WITH THE NEXT BUILD PROCESS!!!
+ */
+
+
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLString.php');
 require_once(FRAME_WORK_PATH.'basic_classes/GlobalFilter.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ModelWhereSQL.php');
@@ -22,7 +29,7 @@ class User_Controller extends ControllerSQL{
 	public function __construct($dbLinkMaster=NULL){
 		parent::__construct($dbLinkMaster);
 			
-		
+
 		/* insert */
 		$pm = new PublicMethod('insert');
 		$param = new FieldExtString('name'
@@ -170,8 +177,7 @@ class User_Controller extends ControllerSQL{
 			
 		/* get_list */
 		$pm = new PublicMethod('get_list');
-		$pm->addParam(new FieldExtInt('browse_mode'));
-		$pm->addParam(new FieldExtInt('browse_id'));		
+		
 		$pm->addParam(new FieldExtInt('count'));
 		$pm->addParam(new FieldExtInt('from'));
 		$pm->addParam(new FieldExtString('cond_fields'));
@@ -181,7 +187,7 @@ class User_Controller extends ControllerSQL{
 		$pm->addParam(new FieldExtString('ord_fields'));
 		$pm->addParam(new FieldExtString('ord_directs'));
 		$pm->addParam(new FieldExtString('field_sep'));
-		
+
 		$this->addPublicMethod($pm);
 		
 		$this->setListModelId('UserList_Model');
@@ -262,7 +268,7 @@ class User_Controller extends ControllerSQL{
 		$pm = new PublicMethod('get_account');
 		
 		$this->addPublicMethod($pm);
-			
+
 			
 		$pm = new PublicMethod('complete_from_1c');
 		
@@ -274,7 +280,7 @@ class User_Controller extends ControllerSQL{
 	
 			
 		$this->addPublicMethod($pm);
-			
+
 		
 	}
 	
@@ -621,6 +627,14 @@ class User_Controller extends ControllerSQL{
 		
 		$this->check_user($pm);
 		
+		/*
+		$pwd = $pm->getParamValue('pwd');
+		if (!isset($pwd) || $pwd==''){
+			$ar = $this->getDbLink()->query_first(sprintf("SELECT pwd FROM users WHERE id=%d",$_SESSION['user_id']));
+			$pm->setParamValue('pwd',$ar['pwd']);
+		}
+		*/
+		//throw new Exception('PWD='.$pm->getParamValue('pwd'));
 		parent::update($pm);
 	}
 	

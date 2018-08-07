@@ -12,6 +12,13 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldExtPassword.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtBool.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPoint.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPolygon.php');
+
+/**
+ * THIS FILE IS GENERATED FROM TEMPLATE build/templates/controllers/Controller_php.xsl
+ * ALL DIRECT MODIFICATIONS WILL BE LOST WITH THE NEXT BUILD PROCESS!!!
+ */
+
+
 require_once(FRAME_WORK_PATH.'basic_classes/ParamsSQL.php');
 require_once(FRAME_WORK_PATH.'basic_classes/CondParamsSQL.php');
 
@@ -87,7 +94,7 @@ class Delivery_Controller extends ControllerSQL{
 	
 			
 		$this->addPublicMethod($pm);
-			
+
 			
 		$pm = new PublicMethod('assigned_orders_for_client');
 		
@@ -121,8 +128,7 @@ class Delivery_Controller extends ControllerSQL{
 	
 			
 		$this->addPublicMethod($pm);
-			
-			
+
 			
 		$pm = new PublicMethod('add_extra_vehicle');
 		
@@ -140,7 +146,7 @@ class Delivery_Controller extends ControllerSQL{
 	
 			
 		$this->addPublicMethod($pm);
-						
+
 			
 		$pm = new PublicMethod('extra_veh_select_list');
 		
@@ -152,7 +158,7 @@ class Delivery_Controller extends ControllerSQL{
 	
 			
 		$this->addPublicMethod($pm);
-									
+
 			
 		$pm = new PublicMethod('delete_extra_vehicle');
 		
@@ -170,7 +176,7 @@ class Delivery_Controller extends ControllerSQL{
 	
 			
 		$this->addPublicMethod($pm);
-												
+
 			
 		$pm = new PublicMethod('current_position_all');
 		
@@ -199,7 +205,7 @@ class Delivery_Controller extends ControllerSQL{
 	
 			
 		$this->addPublicMethod($pm);
-			
+
 			
 		$pm = new PublicMethod('assign_order_to_vehicle');
 		
@@ -229,7 +235,7 @@ class Delivery_Controller extends ControllerSQL{
 	
 			
 		$this->addPublicMethod($pm);
-						
+
 			
 		$pm = new PublicMethod('remove_order');
 		
@@ -241,7 +247,7 @@ class Delivery_Controller extends ControllerSQL{
 	
 			
 		$this->addPublicMethod($pm);
-									
+
 		
 	}	
 	

@@ -38,7 +38,11 @@ CREATE OR REPLACE VIEW vehicles_dialog AS
 		END
 		AS last_tracker_data,
 		
-		(dr.ext_id IS NOT NULL) AS match_1c
+		(dr.ext_id IS NOT NULL) AS match_1c,
+		
+		dr.drive_perm AS driver_drive_perm,
+		dr.cel_phone AS driver_cel_phone
+		
 		
 	FROM vehicles AS v
 	LEFT JOIN production_cities AS pct ON pct.id=v.production_city_id

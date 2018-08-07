@@ -1,18 +1,17 @@
--- Function: warehouse_list_for_order(in_login_id int,in_product_id int)
+-- Function: public.warehouse_list_for_order(integer, integer)
 
--- DROP FUNCTION warehouse_list_for_order(in_login_id int,in_product_id int);
+-- DROP FUNCTION public.warehouse_list_for_order(integer, integer);
 
-CREATE OR REPLACE FUNCTION warehouse_list_for_order(in_login_id int,in_product_id int)
-  RETURNS Table(
-	id int,
-	name text
-  ) AS
+CREATE OR REPLACE FUNCTION public.warehouse_list_for_order(
+    IN in_login_id integer,
+    IN in_product_id integer)
+  RETURNS TABLE(id integer, name text) AS
 $BODY$
 	(SELECT
 		w.id,
 		w.name::text
 	FROM warehouses w
-	WHERE $2=0)
+	WHERE $2=0 AND coalesce(deleted,FALSE)=FALSE)
 	
 	UNION
 	
@@ -54,7 +53,9 @@ $BODY$
 	ORDER BY w.name::text)
 	;
 $BODY$
-  LANGUAGE sql
-  COST 100;
-ALTER FUNCTION warehouse_list_for_order(in_login_id int,in_product_id int)
-OWNER TO polimerplast;
+  LANGUAGE sql VOLATILE
+  COST 100
+  ROWS 1000;
+ALTER FUNCTION public.warehouse_list_for_order(integer, integer)
+  OWNER TO polimerplast;
+

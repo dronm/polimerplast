@@ -24,6 +24,11 @@ function WarehouseList_View(id,options){
 		"readBind":{"valueFieldId":"id"},"keyCol":true,
 		"visible":false
 		}));
+	if (SERV_VARS.ROLE_ID=="admin"){
+		row.addElement(new GridDbHeadCellBool(id+"_col_deleted",{"value":"Удален",
+			"readBind":{"valueFieldId":"deleted"}
+			}));
+	}
 	row.addElement(new GridDbHeadCell(id+"_col_name",{"value":"Наименование",
 		"readBind":{"valueFieldId":"name"},"descrCol":true
 		}));
@@ -38,6 +43,10 @@ function WarehouseList_View(id,options){
 		}));
 	row.addElement(new GridDbHeadCellBool(id+"_on_map",{"value":"Объект на карте",
 		"readBind":{"valueFieldId":"on_map"}
+		}));
+
+	row.addElement(new GridDbHeadCellBool(id+"_deleted",{"value":"Удален",
+		"readBind":{"valueFieldId":"deleted"}
 		}));
 		
 	head.addElement(row);

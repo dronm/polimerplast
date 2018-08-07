@@ -15,7 +15,7 @@ try{
 	$dbLinkMaster->persistent=true;
 	$dbLinkMaster->appname = APP_NAME;
 	$dbLinkMaster->technicalemail = TECH_EMAIL;
-	$dbLinkMaster->reporterror = DEBUG;
+	$dbLinkMaster->reportError = DEBUG;
 	$dbLinkMaster->database	= DB_NAME;			
 	$port = (defined('DB_PORT_MASTER'))? DB_PORT:NULL;
 	$dbLinkMaster->connect(DB_SERVER_MASTER,DB_USER,DB_PASSWORD,$port);
@@ -29,7 +29,7 @@ try{
 		$dbLink->persistent=true;
 		$dbLink->appname = APP_NAME;
 		$dbLink->technicalemail = TECH_EMAIL;
-		$dbLink->reporterror = DEBUG;
+		$dbLink->reportError = DEBUG;
 		$dbLink->database= DB_NAME;			
 		$port = (defined('DB_PORT'))? DB_PORT:NULL;
 		$dbLink->connect(DB_SERVER,DB_USER,DB_PASSWORD,$port);		
@@ -194,7 +194,7 @@ try{
 	$contrObj->write($view_class,$view);
 }
 catch (Exception $e){
-	unset($_REQUEST[PARAM_TEMPLATE]);
+	if (defined('PARAM_TEMPLATE'))unset($_REQUEST[PARAM_TEMPLATE]);
 	$contrObj = new Controller();	
 	$resp = new ModelServResponse();				
 	$contrObj->addModel($resp);	

@@ -13,6 +13,13 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldExtBool.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPoint.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPolygon.php');
 
+/**
+ * THIS FILE IS GENERATED FROM TEMPLATE build/templates/controllers/Controller_php.xsl
+ * ALL DIRECT MODIFICATIONS WILL BE LOST WITH THE NEXT BUILD PROCESS!!!
+ */
+
+
+
 require_once('common/Logger.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ModelVars.php');
 require_once(FRAME_WORK_PATH.'build/ProjectManager.php');
@@ -94,7 +101,7 @@ class ProjectManager_Controller extends Controller{
 		$pm = new PublicMethod('build_all');
 		
 		$this->addPublicMethod($pm);
-			
+
 			
 		$pm = new PublicMethod('create_symlinks');
 		
@@ -115,7 +122,7 @@ class ProjectManager_Controller extends Controller{
 	
 			
 		$this->addPublicMethod($pm);
-			
+
 			
 		$pm = new PublicMethod('zip_project');
 		
@@ -140,7 +147,7 @@ class ProjectManager_Controller extends Controller{
 		$pm = new PublicMethod('apply_sql');
 		
 		$this->addPublicMethod($pm);
-			
+
 		
 		
 		$this->projManager = new ProjectManager(

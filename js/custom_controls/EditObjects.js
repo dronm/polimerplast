@@ -9,6 +9,12 @@
  * @requires 
 */
 function FirmEditObject(fieldId,controlId,inLine,defaultId,opts){
+	var contr = new Firm_Controller(new ServConnector(HOST_NAME))
+	var pm = contr.getPublicMethodById(contr.METH_GET_LIST);
+	pm.setParamValue(contr.PARAM_COND_FIELDS,"deleted");
+	pm.setParamValue(contr.PARAM_COND_VALS,"false");
+	pm.setParamValue(contr.PARAM_COND_SGNS,"e");
+	
 	options =
 		{"tableLayout":false,
 		"methodId":"get_list",
@@ -16,7 +22,7 @@ function FirmEditObject(fieldId,controlId,inLine,defaultId,opts){
 		"lookupValueFieldId":"name",
 		"lookupKeyFieldIds":["id"],
 		"keyFieldIds":[fieldId],
-		"controller":new Firm_Controller(new ServConnector(HOST_NAME)),
+		"controller":contr,
 		"objectView":null,
 		"noSelect":false,
 		"noOpen":true,
@@ -192,6 +198,12 @@ function ClientEditObject(fieldId,controlId,inLine,opts){
 extend(ClientEditObject,EditObject);
 
 function ProductEditObject(fieldId,controlId,inLine,defaultId,opts){
+	var contr = new Product_Controller(new ServConnector(HOST_NAME));
+	var pm = contr.getPublicMethodById(contr.METH_GET_LIST);
+	pm.setParamValue(contr.PARAM_COND_FIELDS,"deleted");
+	pm.setParamValue(contr.PARAM_COND_VALS,"false");
+	pm.setParamValue(contr.PARAM_COND_SGNS,"e");
+
 	options =
 		{"attrs":{"required":"required"},
 		"tableLayout":false,
@@ -200,7 +212,7 @@ function ProductEditObject(fieldId,controlId,inLine,defaultId,opts){
 		"lookupValueFieldId":"name",
 		"lookupKeyFieldIds":["id"],
 		"keyFieldIds":[fieldId],
-		"controller":new Product_Controller(new ServConnector(HOST_NAME)),
+		"controller":contr,
 		"objectView":null,
 		"noSelect":false,
 		"noOpen":true,
@@ -418,6 +430,11 @@ function ProductForOrderEditObject(opts){
 	this.m_pm = contr.getPublicMethodById("get_list_for_order");
 	this.m_pm.setParamValue("warehouse_id","0");
 
+	var pm = contr.getPublicMethodById("get_list");
+	pm.setParamValue(contr.PARAM_COND_FIELDS,"deleted");
+	pm.setParamValue(contr.PARAM_COND_VALS,"false");
+	pm.setParamValue(contr.PARAM_COND_SGNS,"e");
+
 	options =
 		{"attrs":{"required":"required"},
 		"tableLayout":false,
@@ -569,7 +586,7 @@ function CarrierEditObject(fieldId,controlId,inLine,opts){
 	options = 
 		{"methodId":"get_list",
 		"tableLayout":false,
-		"modelId":"Carrier_Model",
+		"modelId":"CarrierList_Model",
 		"lookupValueFieldId":"name",
 		"lookupKeyFieldIds":["id"],
 		"keyFieldIds":[fieldId],

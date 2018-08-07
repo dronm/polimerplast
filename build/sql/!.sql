@@ -22,37 +22,30 @@ FROM doc_orders_t_tmp_products AS tmp
 LEFT JOIN logins ON tmp.login_id=logins.id
 WHERE logins.date_time_out IS NOT NULL OR (logins.date_time_out IS NULL AND (now()-logins.date_time_in)>'24 hours')
 
-DROP VIEW deliv_assigned_orders_for_client;
-DROP VIEW deliv_current_pos_all;
-DROP VIEW doc_orders_data_for_ext;
-DROP VIEW doc_orders_ttn;
-DROP VIEW email_text_order_remind;
-DROP VIEW sms_client_change_time;
-DROP VIEW sms_client_on_leave_prod;
-DROP VIEW sms_client_remind;
-DROP VIEW sms_driver_first_deliv;
-DROP VIEW vehicles_dialog;
-DROP VIEW doc_orders_print_h;
-DROP VIEW doc_orders_dialog;
-DROP VIEW vehicles_list;
-DROP VIEW vehicles_select_list;
+update doc_orders
+SET
+	deliv_address = sel.address,
+	deliv_address_tsv = to_tsvector(sel.address)
+FROM (
+SELECT
+	doc_orders.id AS doc_id,
+	adr.address
+FROM doc_orders
+left join client_destinations_list AS adr ON adr.id=doc_orders.deliv_destination_id
+WHERE doc_orders.deliv_destination_id IS NOT NULL
+) AS sel
+WHERE sel.doc_id= doc_orders.id
 
-ALTER TABLE vehicles ALTER COLUMN plate TYPE varchar(20);
-ALTER TABLE vehicles ALTER COLUMN trailer_plate TYPE varchar(20);
+CREATE INDEX doc_orders_address_idx ON doc_orders USING gin(to_tsvector(deliv_address));
+
+SELECT * FROM doc_orders where client_id=348 AND deliv_address_tsv @@ plainto_tsquery('елань')--AND deliv_address_tsv IS NOT NULL limit 5
 
 
-INSERT INTO public.doc_orders_t_products(
-            doc_id, line_number, product_id, quant, price, total, mes_length, 
-            mes_width, mes_height, measure_unit_id, pack_exists, pack_in_price, 
-            quant_base_measure_unit, quant_confirmed_base_measure_unit, volume, 
-            weight, quant_confirmed, price_no_deliv, price_edit, total_pack)
-    VALUES (7144, 1, 15, 6.6, 1230, 8118, 2000, 
-            1000, 30, 5, FALSE, NULL, 
-            6.6, 6.6, 6.6, 
-            0.066, 6.6, NULL, NULL, 0),
-(7144, 2, 15, 32, 1230, 39360, 2000, 
-            1000, 100, 5, FALSE, NULL, 
-            32, 32, 32, 
-            0.32, 32, NULL, NULL, 0)            
-            ;
-
+update client_destinations
+set value = adr.address
+FROM (
+SELECT
+	client_destinations_list.id,
+	client_destinations_list.address
+FROM client_destinations_list
+) As adr WHERE adr.id=client_destinations.id

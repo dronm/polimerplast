@@ -93,6 +93,12 @@ extend(Warehouse_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
+	options = {};
+	
+	var param = new FieldBool("deleted",options);
+	
+	pm.addParam(param);
+	
 	pm.addParam(new FieldInt("ret_id",{}));
 	
 	
@@ -172,6 +178,12 @@ extend(Warehouse_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
+	options = {};
+	
+	var param = new FieldBool("deleted",options);
+	
+	pm.addParam(param);
+	
 	
 }
 
@@ -189,6 +201,7 @@ extend(Warehouse_Controller,ControllerDb);
 	
 	var pm = this.getGetList();
 	pm.addParam(new FieldInt("id",options));
+	pm.addParam(new FieldBool("deleted",options));
 }
 
 			Warehouse_Controller.prototype.addGetObject = function(){

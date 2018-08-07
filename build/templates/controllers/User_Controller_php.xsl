@@ -307,6 +307,14 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		
 		$this->check_user($pm);
 		
+		/*
+		$pwd = $pm->getParamValue('pwd');
+		if (!isset($pwd) || $pwd==''){
+			$ar = $this->getDbLink()->query_first(sprintf("SELECT pwd FROM users WHERE id=%d",$_SESSION['user_id']));
+			$pm->setParamValue('pwd',$ar['pwd']);
+		}
+		*/
+		//throw new Exception('PWD='.$pm->getParamValue('pwd'));
 		parent::update($pm);
 	}
 	

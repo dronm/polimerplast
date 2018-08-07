@@ -1,9 +1,15 @@
 <?php
+/**
+ *
+ * THIS FILE IS GENERATED FROM TEMPLATE build/templates/models/Model_php.xsl
+ * ALL DIRECT MODIFICATIONS WILL BE LOST WITH THE NEXT BUILD PROCESS!!!
+ *
+ */
 
 require_once(FRAME_WORK_PATH.'basic_classes/ModelSQL.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLInt.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLFloat.php');
-
+ 
 class DOCOrderDialog_Model extends ModelSQL{
 	
 	public function __construct($dbLink){
@@ -17,29 +23,29 @@ class DOCOrderDialog_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="id";
-		
+				
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
-	
+		
 		//*** Field def_debt ***
 		$f_opts = array();
 		$f_opts['length']=19;
 		$f_opts['id']="def_debt";
-		
+				
 		$f_def_debt=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"def_debt",$f_opts);
 		$this->addField($f_def_debt);
 		//********************
-	
+		
 		//*** Field debt_total ***
 		$f_opts = array();
 		$f_opts['length']=19;
 		$f_opts['id']="debt_total";
-		
+				
 		$f_debt_total=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"debt_total",$f_opts);
 		$this->addField($f_debt_total);
 		//********************
-
+	
 	}
 
 }

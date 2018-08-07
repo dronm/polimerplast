@@ -1,6 +1,6 @@
 -- View: warehouses_dialog
 
-DROP VIEW warehouses_dialog;
+--DROP VIEW warehouses_dialog;
 
 CREATE OR REPLACE VIEW warehouses_dialog AS 
 	SELECT
@@ -14,7 +14,8 @@ CREATE OR REPLACE VIEW warehouses_dialog AS
 		f.id AS default_firm_id,
 		f.name AS default_firm_descr,
 		pc.id AS production_city_id,
-		pc.name AS production_city_descr		
+		pc.name AS production_city_descr,
+		w.deleted
 	FROM warehouses AS w
 	LEFT JOIN firms AS f ON f.id=w.default_firm_id
 	LEFT JOIN production_cities AS pc ON pc.id=w.production_city_id

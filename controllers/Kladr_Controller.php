@@ -13,6 +13,13 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldExtBool.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPoint.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPolygon.php');
 
+/**
+ * THIS FILE IS GENERATED FROM TEMPLATE build/templates/controllers/Controller_php.xsl
+ * ALL DIRECT MODIFICATIONS WILL BE LOST WITH THE NEXT BUILD PROCESS!!!
+ */
+
+
+
 require_once(FRAME_WORK_PATH.'basic_classes/ParamsSQL.php');
 
 
@@ -138,7 +145,7 @@ class Kladr_Controller extends ControllerSQL{
 	
 			
 		$this->addPublicMethod($pm);
-			
+
 			
 		$pm = new PublicMethod('get_from_naspunkt');
 		
@@ -166,8 +173,7 @@ class Kladr_Controller extends ControllerSQL{
 	
 			
 		$this->addPublicMethod($pm);
-			
-			
+
 		
 	}	
 	public function get_region_list($pm){

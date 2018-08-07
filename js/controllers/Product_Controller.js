@@ -304,6 +304,18 @@ extend(Product_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
+	options = {};
+	
+	var param = new FieldText("fin_group",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldBool("deleted",options);
+	
+	pm.addParam(param);
+	
 	pm.addParam(new FieldInt("ret_id",{}));
 	
 	
@@ -593,6 +605,18 @@ extend(Product_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
+	options = {};
+	
+	var param = new FieldText("fin_group",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldBool("deleted",options);
+	
+	pm.addParam(param);
+	
 	
 }
 
@@ -610,6 +634,7 @@ extend(Product_Controller,ControllerDb);
 	
 	var pm = this.getGetList();
 	pm.addParam(new FieldInt("id",options));
+	pm.addParam(new FieldBool("deleted",options));
 }
 
 			Product_Controller.prototype.addGetObject = function(){
@@ -628,11 +653,10 @@ extend(Product_Controller,ControllerDb);
 	
 			
 }
-			
+
 			Product_Controller.prototype.add_get_filter_list = function(){
 	var pm = this.addMethodById('get_filter_list');
 	
-			
 }
-						
+
 		

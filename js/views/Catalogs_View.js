@@ -44,6 +44,9 @@ function Catalogs_View(id,options){
 	this.addItem({"caption":"Расстояние до нас. пунктов","viewClassId":NaspunktList_View,"id":"NaspunktList_View"});
 	this.addItem({"caption":"Стоимость доставки по нас.пунктам","viewClassId":RepNaspunktCost_View,"id":"RepNaspunktCost_View"});
 	
+	this.addItem({"caption":"ТТН","viewClassId":TTNAttrPair_View,"id":"TTNAttrPair_View"});
+	this.addItem({"caption":"Порядок перевозчиков в ТТН","viewClassId":CarrierOrder_View,"id":"CarrierOrder_View"});
+	
 	this.addItem({"caption":"Серверы трекеров","viewClassId":TrackerServerList_View,"id":"TrackerServerList_View"});
 	this.addItem({"caption":"Трекеры","viewClassId":TrackerList_View,"id":"TrackerList_View"});
 	this.addItem({"caption":"Отчет по стоянкам","viewClassId":RepVehicleStop_View,"id":"RepVehicleStop_View"});

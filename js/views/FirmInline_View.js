@@ -36,5 +36,35 @@ function FirmInline_View(id,options){
 		"keyFieldIds":null},
 		{"valueFieldId":"name","keyFieldIds":null}
 	);
+	
+	this.addDataControl(
+		new EditCheckBox(id+"_nds",
+		{
+		}),
+		{"modelId":"FirmList_Model",
+		"valueFieldId":"nds",
+		"keyFieldIds":null},
+		{"valueFieldId":"nds","keyFieldIds":null}
+	);
+	this.addDataControl(
+		new EditCheckBox(id+"_cash",
+		{
+		}),
+		{"modelId":"FirmList_Model",
+		"valueFieldId":"cash",
+		"keyFieldIds":null},
+		{"valueFieldId":"cash","keyFieldIds":null}
+	);
+
+	this.addDataControl(
+		new EditCheckBox(id+"_deleted",
+		{
+		}),
+		{"modelId":"FirmList_Model",
+		"valueFieldId":"deleted",
+		"keyFieldIds":null},
+		{"valueFieldId":"deleted","keyFieldIds":null}
+	);
+	
 }
 extend(FirmInline_View,ViewInlineGridEdit);

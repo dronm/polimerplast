@@ -35,6 +35,10 @@ function ProductList_View(id,options){
 		"readBind":{"valueFieldId":"warehouses_descr"}
 		}));
 		
+	row.addElement(new GridDbHeadCellBool(id+"_deleted",{"value":"Удален",
+		"readBind":{"valueFieldId":"deleted"}
+		}));
+		
 	head.addElement(row);
 	
 	this.addElement(new GridDb(id+"_grid",

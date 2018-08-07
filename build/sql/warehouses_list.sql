@@ -11,7 +11,8 @@ CREATE OR REPLACE VIEW warehouses_list AS
 		f.name AS firm_descr,
 		w.production_city_id,
 		pc.name AS production_city_descr,
-		w.address
+		w.address,
+		w.deleted
 	FROM warehouses AS w
 	LEFT JOIN firms AS f ON f.id=w.default_firm_id
 	LEFT JOIN production_cities AS pc ON pc.id=w.production_city_id

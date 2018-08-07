@@ -13,21 +13,35 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldExtBool.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPoint.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPolygon.php');
 
+/**
+ * THIS FILE IS GENERATED FROM TEMPLATE build/templates/controllers/Controller_php.xsl
+ * ALL DIRECT MODIFICATIONS WILL BE LOST WITH THE NEXT BUILD PROCESS!!!
+ */
+
+
+
 require_once('common/OSRM.php');
 require_once('common/geo/yandex.php');
 require_once('common/geo/YndxReverseCode.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ParamsSQL.php');
 require_once(USER_CONTROLLERS_PATH.'Kladr_Controller.php');
 
+require_once(ABSOLUTE_PATH.'functions/DadataSuggest.php');
+use Dadata\DadataSuggest as DadataSuggest;
+require_once(FRAME_WORK_PATH.'basic_classes/Model.php');
+
 class ClientDestination_Controller extends ControllerSQL{
 	public function __construct($dbLinkMaster=NULL){
 		parent::__construct($dbLinkMaster);
 			
-		
+
 		/* insert */
 		$pm = new PublicMethod('insert');
 		$param = new FieldExtInt('client_id'
 				,array('required'=>TRUE));
+		$pm->addParam($param);
+		$param = new FieldExtText('value'
+				,array());
 		$pm->addParam($param);
 		$param = new FieldExtGeomPoint('zone_center'
 				,array());
@@ -78,6 +92,9 @@ class ClientDestination_Controller extends ControllerSQL{
 				,array());
 		$pm->addParam($param);
 		$param = new FieldExtText('addr_index'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtText('value'
 				,array());
 		$pm->addParam($param);
 		
@@ -102,6 +119,10 @@ class ClientDestination_Controller extends ControllerSQL{
 				,array(
 			));
 			$pm->addParam($param);
+		$param = new FieldExtText('value'
+				,array(
+			));
+			$pm->addParam($param);
 		$param = new FieldExtGeomPoint('zone_center'
 				,array(
 			));
@@ -167,6 +188,10 @@ class ClientDestination_Controller extends ControllerSQL{
 			));
 			$pm->addParam($param);
 		$param = new FieldExtText('addr_index'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtText('value'
 				,array(
 			));
 			$pm->addParam($param);
@@ -194,8 +219,7 @@ class ClientDestination_Controller extends ControllerSQL{
 			
 		/* get_list */
 		$pm = new PublicMethod('get_list');
-		$pm->addParam(new FieldExtInt('browse_mode'));
-		$pm->addParam(new FieldExtInt('browse_id'));		
+		
 		$pm->addParam(new FieldExtInt('count'));
 		$pm->addParam(new FieldExtInt('from'));
 		$pm->addParam(new FieldExtString('cond_fields'));
@@ -205,7 +229,7 @@ class ClientDestination_Controller extends ControllerSQL{
 		$pm->addParam(new FieldExtString('ord_fields'));
 		$pm->addParam(new FieldExtString('ord_directs'));
 		$pm->addParam(new FieldExtString('field_sep'));
-		
+
 		$this->addPublicMethod($pm);
 		
 		$this->setListModelId('ClientDestinationList_Model');
@@ -224,6 +248,11 @@ class ClientDestination_Controller extends ControllerSQL{
 			
 		$pm = new PublicMethod('get_address_gps');
 		
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtText('value',$opts));
+	
 				
 	$opts=array();
 					
@@ -287,6 +316,24 @@ class ClientDestination_Controller extends ControllerSQL{
 			
 		$this->addPublicMethod($pm);
 
+			
+		$pm = new PublicMethod('complete_address');
+		
+				
+	$opts=array();
+	
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtInt('client_id',$opts));
+	
+				
+	$opts=array();
+	
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtText('address',$opts));
+	
+			
+		$this->addPublicMethod($pm);
+
 		
 	}	
 	
@@ -315,47 +362,71 @@ class ClientDestination_Controller extends ControllerSQL{
 			if (count($points)>=2){
 				$osrm = new OSRM(OSRM_PROTOCOLE,OSRM_HOST,OSRM_PORT);
 				$road_lat=NULL;$road_lon=NULL;
+				
+				$pm->setParamValue('near_road_lon','65.697777');
+				$pm->setParamValue('near_road_lat','56.942547');
+				
+				/*
 				$osrm->getNearestRoadCoord(
 					$points[1],$points[0],
 					$road_lat,$road_lon
 					);
 				$pm->setParamValue('near_road_lon',$road_lon);
 				$pm->setParamValue('near_road_lat',$road_lat);
+				*/
 			}
 		}
 	}
 
 	public function insert($pm){
 		$zone_center = $pm->getParamValue('zone_center');
-		$region = $pm->getParamValue('region');
-		$raion = $pm->getParamValue('raion');
-		$gorod = $pm->getParamValue('gorod');
-		$naspunkt = $pm->getParamValue('naspunkt');
-		$ulitza = $pm->getParamValue('ulitza');
-		$dom = $pm->getParamValue('dom');
-		$korpus = $pm->getParamValue('korpus');
+		$value = $pm->getParamValue('value');
 		
-		$addr_exists = strlen($region.$raion.$gorod.$naspunkt.$ulitza.$dom.$korpus);
+		$value = $pm->getParamValue('value');
+		if ($pm->getParamValue('region') && !$value){
+			$region = $pm->getParamValue('region');
+			$raion = $pm->getParamValue('raion');
+			$gorod = $pm->getParamValue('gorod');
+			$naspunkt = $pm->getParamValue('naspunkt');
+			$ulitza = $pm->getParamValue('ulitza');
+			$dom = $pm->getParamValue('dom');
+			$korpus = $pm->getParamValue('korpus');
+			$kvartira = $pm->getParamValue('kvartira');						
+			
+			$value = $region;
+			$value.= ($raion)? (','.$raion):'';
+			$value.= ($gorod)? (','.$gorod):'';
+			$value.= ($naspunkt)? (','.$naspunkt):'';
+			$value.= ($ulitza)? (','.$ulitza):'';
+			$value.= ($dom)? (',дом '.$dom):'';
+			$value.= ($korpus)? (',корп. '.$korpus):'';
+			$value.= ($kvartira)? (',кв. '.$kvartira):'';
+			
+			$pm->setParamValue("value",$value);
+		}
+		
+		
+		$addr_exists = strlen($value);
 		
 		if (!$zone_center){
 			//нет маркера зоны
-			if (!strlen($region.$raion.$gorod.$naspunkt.$ulitza.$korpus.$dom)){
+			if (!strlen($value)){
 				throw new Exception("Не задан адрес!");
 			}
 			//Обратное геокодирование
 			$res = array();
-			$addr = array('region'=>$region,
-					'raion'=>$raion,
-					'city'=>$gorod,
-					'naspunkt'=>$naspunkt,
-					'street'=>$ulitza,
-					'building'=>$dom,
-					'korpus'=>$korpus
+			$addr = array('region'=>$value,
+					'raion'=>'',
+					'city'=>'',
+					'naspunkt'=>'',
+					'street'=>'',
+					'building'=>'',
+					'korpus'=>''
 			);
 			
 			get_inf_on_address($addr,$res);
 			
-			if ($res['lon_pos']&&$res['lat_pos']){
+			if ($res['lon_pos'] && $res['lat_pos']){
 				$pm->setParamValue('zone_center',
 					$res['lon_pos'].' '.$res['lat_pos']
 					);
@@ -369,15 +440,42 @@ class ClientDestination_Controller extends ControllerSQL{
 			
 			}			
 		}
-		else if(!$zone_center&&!$addr_exists){
+		else if(!$zone_center && !$addr_exists){
 			throw new Exception("Не задан ни адрес, ни координаты объекта!");
 		}
 		$this->set_near_road($pm);
+		$pm->setParamValue("ret_id","1");
 		parent::insert($pm);
 	}
+	
 	public function update($pm){
 		/* если адрес изменился а маркера нет*/
 		$zone_center = $pm->getParamValue('zone_center');
+		
+		$value = $pm->getParamValue('value');
+		if ($pm->getParamValue('region') && !$value){
+			$region = $pm->getParamValue('region');
+			$raion = $pm->getParamValue('raion');
+			$gorod = $pm->getParamValue('gorod');
+			$naspunkt = $pm->getParamValue('naspunkt');
+			$ulitza = $pm->getParamValue('ulitza');
+			$dom = $pm->getParamValue('dom');
+			$korpus = $pm->getParamValue('korpus');
+			$kvartira = $pm->getParamValue('kvartira');						
+			
+			$value = $region;
+			$value.= ($raion)? (','.$raion):'';
+			$value.= ($gorod)? (','.$gorod):'';
+			$value.= ($naspunkt)? (','.$naspunkt):'';
+			$value.= ($ulitza)? (','.$ulitza):'';
+			$value.= ($dom)? (',дом '.$dom):'';
+			$value.= ($korpus)? (',корп. '.$korpus):'';
+			$value.= ($kvartira)? (',кв. '.$kvartira):'';
+			
+			$pm->setParamValue("value",$value);
+		}
+				
+		/*
 		$region = $pm->getParamValue('region');
 		$raion = $pm->getParamValue('raion');
 		$gorod = $pm->getParamValue('gorod');
@@ -385,8 +483,9 @@ class ClientDestination_Controller extends ControllerSQL{
 		$ulitza = $pm->getParamValue('ulitza');
 		$dom = $pm->getParamValue('dom');
 		$korpus = $pm->getParamValue('korpus');
+		*/
 		
-		$addr_exists = strlen($region.$raion.$gorod.$naspunkt.$ulitza.$korpus.$dom);
+		$addr_exists = strlen($value);
 		
 		if (!$zone_center){
 			//нет маркера зоны
@@ -396,6 +495,7 @@ class ClientDestination_Controller extends ControllerSQL{
 				Обратное геокодирование
 				*/
 				
+				/*
 				$old_id = intval($pm->getParamValue('old_id'));
 				$db_addr_res = $this->getDbLink()->query_first(sprintf(
 				"SELECT
@@ -410,9 +510,10 @@ class ClientDestination_Controller extends ControllerSQL{
 				WHERE id=%d",
 				$old_id
 				));
-				if (!is_array($db_addr_res)||!count($db_addr_res)){
+				if (!is_array($db_addr_res) || !count($db_addr_res)){
 					throw new Exception("Неверный id!");
 				}
+				
 				
 				$region = (isset($region))? $region:$db_addr_res['region'];
 				$raion = (isset($raion))? $raion:$db_addr_res['raion'];
@@ -421,20 +522,21 @@ class ClientDestination_Controller extends ControllerSQL{
 				$ulitza = (isset($ulitza))? $ulitza:$db_addr_res['ulitza'];
 				$dom = (isset($dom))? $dom:$db_addr_res['dom'];
 				$korpus = (isset($korpus))? $korpus:$db_addr_res['korpus'];
+				*/
 				
 				$res = array();
-				$addr = array('region'=>$region,
-						'raion'=>$raion,
-						'city'=>$gorod,
-						'naspunkt'=>$naspunkt,
-						'street'=>$ulitza,
-						'building'=>$dom,
-						'korpus'=>$korpus
+				$addr = array('region'=>$value,
+						'raion'=>'',
+						'city'=>'',
+						'naspunkt'=>'',
+						'street'=>'',
+						'building'=>'',
+						'korpus'=>''
 				);
 				
 				get_inf_on_address($addr,$res);
 				
-				if ($res['lon_pos']&&$res['lat_pos']){
+				if ($res['lon_pos'] && $res['lat_pos']){
 					$pm->setParamValue('zone_center',
 						$res['lon_pos'].' '.$res['lat_pos']
 						);
@@ -443,8 +545,15 @@ class ClientDestination_Controller extends ControllerSQL{
 		}
 		else if(!$addr_exists){
 			/*есть маркет но нет адреса
-			проверим адрес
+			проверим адрес. Маркер сдвинули руками - определим адрес
 			*/
+			$points = explode(' ',$zone_center);
+			if (count($points) >= 2){
+				$this->set_addr_from_gps($points[1],$points[0],$pm);
+			}				
+
+			
+			/*
 			$ar = $this->getDbLink()->query_first(sprintf(
 			"SELECT
 				region||raion||gorod||naspunkt||ulitza||dom||korpus AS addr
@@ -452,9 +561,10 @@ class ClientDestination_Controller extends ControllerSQL{
 			WHERE id=%d",
 			intval($pm->getParamValue('old_id'))
 			));
-			if (!is_array($ar)||!count($ar)){
+			if (!is_array($ar) || !count($ar)){
 				throw new Exception("Неверный id!");
 			}
+			
 			if (!strlen($ar['addr'])){
 				//все таки нет адреса - определим по GPS
 				$points = explode(' ',$zone_center);
@@ -462,6 +572,7 @@ class ClientDestination_Controller extends ControllerSQL{
 					$this->set_addr_from_gps($points[1],$points[0],$pm);
 				}				
 			}
+			*/
 		}
 		$this->set_near_road($pm);
 		parent::update($pm);
@@ -470,53 +581,176 @@ class ClientDestination_Controller extends ControllerSQL{
 		$p = new ParamsSQL($pm,$this->getDbLink());
 		$p->addAll();
 		
-		$q = "";
-		if ($code=$p->getParamById('region_code')){
-			$q.=($q=="")? "":", ";
-			$q.=sprintf("(SELECT k.name FROM kladr k WHERE k.code=%s) AS region",$code);
-		}
-		if ($p->getParamById('raion_code') && ($code=$p->getParamById('raion_code')) ){
-			$q.=($q=="")? "":", ";
-			$q.=sprintf("(SELECT k.name FROM kladr k WHERE k.code=%s) AS raion",$code);
-		}
-		if ($code=$p->getParamById('naspunkt_code')){
-			$q.=($q=="")? "":", ";
-			$q.=sprintf("(SELECT k.name FROM kladr k WHERE k.code=%s) AS naspunkt",$code);
-		}
-		if ($code=$p->getParamById('gorod_code')){
-			$q.=($q=="")? "":", ";
-			$q.=sprintf("(SELECT k.name FROM kladr k WHERE k.code=%s) AS gorod",$code);
-		}		
-		if ($code=$p->getParamById('ulitza_code')){
-			$q.=($q=="")? "":", ";
-			$q.=sprintf("(SELECT k.name FROM street k WHERE k.code=%s) AS ulitza",$code);
-		}
-	
-		$kl_ar = array();
-		if (strlen($q)){
-			$kladr = new Kladr_Controller();
-			$kl_ar = $kladr->query_first("SELECT ".$q);
-		}
-		
 		$res = array();
-		$addr = array('region'=>(array_key_exists('region',$kl_ar))? $kl_ar['region']:$pm->getParamValue('region'),
-				'raion'=>(array_key_exists('raion',$kl_ar))? $kl_ar['raion']:$pm->getParamValue('raion'),
-				'city'=>(array_key_exists('gorod',$kl_ar))? $kl_ar['gorod']:$pm->getParamValue('gorod'),
-				'naspunkt'=>(array_key_exists('naspunkt',$kl_ar))? $kl_ar['naspunkt']:$pm->getParamValue('naspunkt'),
-				'street'=>(array_key_exists('ulitza',$kl_ar))? $kl_ar['ulitza']:$pm->getParamValue('ulitza'),
-				'building'=>$pm->getParamValue('dom'),
-				'korpus'=>$pm->getParamValue('korpus')
-		);
+		if ($value=$p->getParamById('value')){
+			$addr = array('region'=>$value,
+				'raion'=>'',
+				'city'=>'',
+				'naspunkt'=>'',
+				'street'=>'',
+				'building'=>'',
+				'korpus'=>''
+			);		
+		}
+		else{
+			$q = "";
+			if ($code=$p->getParamById('region_code')){
+				$q.=($q=="")? "":", ";
+				$q.=sprintf("(SELECT k.name FROM kladr k WHERE k.code=%s) AS region",$code);
+			}
+			if ($p->getParamById('raion_code') && ($code=$p->getParamById('raion_code')) ){
+				$q.=($q=="")? "":", ";
+				$q.=sprintf("(SELECT k.name FROM kladr k WHERE k.code=%s) AS raion",$code);
+			}
+			if ($code=$p->getParamById('naspunkt_code')){
+				$q.=($q=="")? "":", ";
+				$q.=sprintf("(SELECT k.name FROM kladr k WHERE k.code=%s) AS naspunkt",$code);
+			}
+			if ($code=$p->getParamById('gorod_code')){
+				$q.=($q=="")? "":", ";
+				$q.=sprintf("(SELECT k.name FROM kladr k WHERE k.code=%s) AS gorod",$code);
+			}		
+			if ($code=$p->getParamById('ulitza_code')){
+				$q.=($q=="")? "":", ";
+				$q.=sprintf("(SELECT k.name FROM street k WHERE k.code=%s) AS ulitza",$code);
+			}
+	
+			$kl_ar = array();
+			if (strlen($q)){
+				$kladr = new Kladr_Controller();
+				$kl_ar = $kladr->query_first("SELECT ".$q);
+			}
+					
+			$addr = array('region'=>(array_key_exists('region',$kl_ar))? $kl_ar['region']:$pm->getParamValue('region'),
+					'raion'=>(array_key_exists('raion',$kl_ar))? $kl_ar['raion']:$pm->getParamValue('raion'),
+					'city'=>(array_key_exists('gorod',$kl_ar))? $kl_ar['gorod']:$pm->getParamValue('gorod'),
+					'naspunkt'=>(array_key_exists('naspunkt',$kl_ar))? $kl_ar['naspunkt']:$pm->getParamValue('naspunkt'),
+					'street'=>(array_key_exists('ulitza',$kl_ar))? $kl_ar['ulitza']:$pm->getParamValue('ulitza'),
+					'building'=>$pm->getParamValue('dom'),
+					'korpus'=>$pm->getParamValue('korpus')
+			);
+		
+		}
 		get_inf_on_address($addr,$res);
 	
-		if ($pm->getParamValue('ulitza') && $pm->getParamValue('dom') && $res['precision']!="exact" && $res['precision']!="near" & $res['precision']!="street"){
+		if (!$value && $pm->getParamValue('ulitza') && $pm->getParamValue('dom') && $res['precision']!="exact" && $res['precision']!="near" & $res['precision']!="street"){
 			throw new Exception("Адрес не найден!");
 		}
-		$this->addNewModel(sprintf(
-		"SELECT %f lon,%f lat",
-		$res['lon_pos'],$res['lat_pos']
-		),'gps');
+		
+		$this->addNewModel(sprintf("SELECT %f lon,%f lat",$res['lon_pos'],$res['lat_pos']), 'gps');
 	}
+	
+	/*
+	возвращает не более 10 адресов:
+		3 старых, были в документах. отсортированы впереди
+		остальные новые
+	*/
+	public function complete_address($pm){
+		if ($_SESSION['role_id']=='client'){
+			//Установим клиента
+			$pm->setParamValue('client_id',$_SESSION['global_client_id']);
+		}	
+	
+		$TOTAL_CNT = 10;
+		$OLD_CNT = 3;
+		
+		$p = new ParamsSQL($pm,$this->getDbLink());
+		$p->addAll();
+	
+		$model = new Model(array('id'=>'DelivAddress_Model'));		
+	
+		$qid = $this->getDbLink()->query(sprintf(
+		"SELECT
+			cd.id,
+			cd.value AS address,
+			true AS is_old
+		FROM client_destinations As cd
+		WHERE cd.client_id=%d AND to_tsvector(cd.value) @@ plainto_tsquery(%s)
+		ORDER BY cd.value
+		LIMIT %d",
+		$p->getDbVal('client_id'),
+		$p->getDbVal('address'),
+		$OLD_CNT
+		));
+		
+		$included_ids = '';
+		while($ar = $this->getDbLink()->fetch_array($qid)){
+			$row = array(
+				new Field('address',DT_STRING,array('value'=>$ar['address'])),
+				new Field('is_old',DT_STRING,array('value'=>$ar['is_old'])),
+				new Field('id',DT_INT,array('value'=>$ar['id']))
+			);
+			$model->insert($row);					
+			
+			$included_ids.= ($included_ids=='')? '':',';
+			$included_ids.= $ar['id'];
+		}
+		
+		$srch1 = $this->getDbLink()->num_rows();
+		$srch2 = 0;
+		if (($OLD_CNT - $srch1) > 0){
+			$cond = '';
+			
+			$address_w = split(' ',$p->getVal('address'));
+			foreach($address_w as $w){
+				if (strlen($w) > 3){
+					$cond.= ($cond=='')? '':' AND ';	
+					$cond.= "lower(cd.value) LIKE lower('%".$w."%')";
+				}
+			}
+			
+			if ($cond!=""){
+				$qid = $this->getDbLink()->query(
+				"SELECT
+					cd.id,
+					cd.value AS address,
+					true AS is_old
+				FROM client_destinations As cd
+				WHERE cd.client_id=".$p->getDbVal('client_id')." AND ".$cond.
+					(($included_ids=="")? "": "AND cd.id IN (".$included_ids.") ").
+				"ORDER BY cd.value
+				LIMIT ".($OLD_CNT - $srch1)
+				);
+				$srch2 = $this->getDbLink()->num_rows(); 
+			}
+		}
+		
+		$ext_cnt = $TOTAL_CNT - $srch1 - $srch2;
+		
+		//throw new Exception("ExtCnt=".$ext_cnt);
+		
+		while($ar = $this->getDbLink()->fetch_array($qid)){
+			$row = array(
+				new Field('address',DT_STRING,array('value'=>$ar['address'])),
+				new Field('is_old',DT_STRING,array('value'=>$ar['is_old'])),
+				new Field('id',DT_INT,array('value'=>$ar['id']))
+			);
+			$model->insert($row);					
+		}
+		
+		//Ext
+		
+		$dadata = new DadataSuggest(DADATA_KEY);
+		$addr_for_query = trim($p->getVal('address'));
+		//а если 1 слово - прибавим Тюменскаую область чтобы убрать лишнее
+		$addr_ar = explode(' ',$addr_for_query);
+		if (count($addr_ar)==1){
+			$addr_for_query.= ' тюмен';
+		}
+		$ext_addresses = $dadata->address($addr_for_query,$ext_cnt);
+		for($i=0;$i<count($ext_addresses->suggestions);$i++){						
+			$row = array(
+				new Field('address',DT_STRING,array('value'=>$ext_addresses->suggestions[$i]->value)),
+				new Field('is_old',DT_STRING,array('value'=>'f')),
+				new Field('id',DT_INT,array('value'=>'0'))
+			);
+			$model->insert($row);								
+		}
+		
+		
+		$this->addModel($model);
+	}
+	
 
 }
 ?>

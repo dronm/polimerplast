@@ -26,9 +26,19 @@ class ExtProg{
 		foreach($params as $name=>$val){
 			$par_str.= '&'.$name.'='.$val;
 		}
-		throw new Exception('http://'.HOST_1C.'/API1c.php?cmd='.$cmd.$par_str);
+		file_put_contents('output/q_'.uniqid().'.xml',$cmd.$par_str);
+		if ($cmd=="print_order"){
+			file_put_contents('output/print_fileOpts',var_export($fileOpts));
+		}
+		*/
+		/*
+		$par_str = '';
+		foreach($params as $name=>$val){
+			$par_str.= '&'.$name.'='.$val;
+		}
+		//throw new Exception('http://'.HOST_1C.'/API1c.php?cmd='.$cmd.$par_str);
 		set_time_limit($CON_TIMEOUT);
-		$res = @fopen('http://'.HOST_1C.'/API1c.php?cmd='.$cmd.$par_str,'r');
+		$res = @fopen('http://'.HOST_1C.':'.PORT_1C.'/API1c.php?cmd='.$cmd.$par_str,'r');
 		if (!$res) {
 			throw new Exception('Ошибка соединения с сервером 1с');
 		}
@@ -54,13 +64,12 @@ class ExtProg{
 		$contents = file_get_contents('http://'.HOST_1C.':'.PORT_1C.'/API1c.php', FALSE, $context);
 		
 		$header_res = self::parseHeaders($http_response_header);
-		if ($header_res['reponse_code']&&$header_res['reponse_code']!=200){
+		if ($header_res['reponse_code'] && $header_res['reponse_code']!=200){
 			throw new Exception($header_res['reponse_descr']);
 		}
 		
-		//ответ всегда в ANSI		
-		//throw new Exception($contents);
-		
+		//ответ всегда в ANSI
+		//file_put_contents('output/cont_'.uniqid().'.xml',$contents);		
 		if (!is_null($fileOpts) && is_array($fileOpts)){
 			if (!array_key_exists('name',$fileOpts)){
 				$fileOpts['name'] = uniqid().'.pdf';
@@ -94,13 +103,19 @@ class ExtProg{
 				echo $contents;
 			}			
 		}
+		else if (!strlen($contents)){
+			throw new Exception('Нет доступа к серверу 1с!');
+		}
 		else{
-			$contents=@iconv('Windows-1251','UTF-8',$contents);
+			$contents = @iconv('Windows-1251','UTF-8',$contents);
+			//file_put_contents('output/cont_'.uniqid().'.xml',$contents);		
+			//throw new Exception("ОШИБКА!!!=".$contents);//$contents
+			
 			try{
-				$xml = new SimpleXMLElement($contents);					
+				$xml = new SimpleXMLElement($contents);
 			}
 			catch(Exception $e){
-				throw new Exception('Ошибка в XML ответе из 1с, содержание: '.$contents.', ошибка: '.$e->getMessage());
+				throw new Exception('Ошибка парсинга ответа 1с:'.$e->getMessage().' Строка: '.$contents);
 			}
 			
 			if ($xml['status']=='false'){

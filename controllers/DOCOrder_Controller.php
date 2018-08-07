@@ -13,8 +13,16 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldExtBool.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPoint.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPolygon.php');
 
+/**
+ * THIS FILE IS GENERATED FROM TEMPLATE build/templates/controllers/Controller_php.xsl
+ * ALL DIRECT MODIFICATIONS WILL BE LOST WITH THE NEXT BUILD PROCESS!!!
+ */
+
+
+
 require_once(FRAME_WORK_PATH.'basic_classes/ControllerSQLDOCPl.php');
 
+require_once(FRAME_WORK_PATH.'basic_classes/Model.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ParamsSQL.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ModelSQL.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ModelWhereSQL.php');
@@ -24,6 +32,7 @@ require_once('models/DOCOrderShipmentDialog_Model.php');
 require_once('models/DOCOrderDivisDialog_Model.php');
 require_once('functions/PPEmailSender.php');
 require_once('functions/ExtProg.php');
+
 require_once('common/OSRM.php');
 require_once('common/decodePolylineToArray.php');
 require_once('common/downloader.php');
@@ -37,13 +46,15 @@ require_once('common/barcodegen.1d-php5.v5.2.1/class/BCGDrawing.php');
 //require_once('common/barcodegen.1d-php5.v5.2.1/class/BCGcodabar.barcode.php');
 require_once('common/barcodegen.1d-php5.v5.2.1/class/BCGcode128.barcode.php');
 
+require_once('common/money2str.php');
+
 class DOCOrder_Controller extends ControllerSQLDOCPl{
 	const ER_WRONG_STATE = 'Заявка в неверном статусе!'; 
 	
 	public function __construct($dbLinkMaster=NULL){
 		parent::__construct($dbLinkMaster);
 			
-		
+
 		/* insert */
 		$pm = new PublicMethod('insert');
 		$param = new FieldExtDateTime('date_time'
@@ -232,7 +243,6 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 		$this->addPublicMethod($pm);
 		$this->setInsertModelId('DOCOrder_Model');
 
-			
 			
 		/* update */		
 		$pm = new PublicMethod('update');
@@ -488,7 +498,6 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 			$this->setUpdateModelId('DOCOrder_Model');
 
 			
-			
 		$pm = new PublicMethod('divide');
 		
 				
@@ -576,7 +585,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	$opts=array();
 					
 		$pm->addParam(new FieldExtString('cond_ic',$opts));
-				
+	
 				
 	$opts=array();
 					
@@ -627,7 +636,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	$opts=array();
 					
 		$pm->addParam(new FieldExtString('cond_ic',$opts));
-							
+	
 				
 	$opts=array();
 					
@@ -637,7 +646,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	$opts=array();
 					
 		$pm->addParam(new FieldExtInt('count',$opts));
-					
+	
 				
 	$opts=array();
 					
@@ -647,7 +656,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	$opts=array();
 					
 		$pm->addParam(new FieldExtString('ord_directs',$opts));
-					
+	
 				
 	$opts=array();
 					
@@ -678,7 +687,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	$opts=array();
 					
 		$pm->addParam(new FieldExtString('cond_ic',$opts));
-							
+	
 				
 	$opts=array();
 					
@@ -688,7 +697,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	$opts=array();
 					
 		$pm->addParam(new FieldExtInt('count',$opts));
-					
+	
 				
 	$opts=array();
 					
@@ -698,7 +707,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	$opts=array();
 					
 		$pm->addParam(new FieldExtString('ord_directs',$opts));
-					
+	
 				
 	$opts=array();
 					
@@ -707,7 +716,6 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 			
 		$this->addPublicMethod($pm);
 
-			
 			
 		$pm = new PublicMethod('get_current_for_client_list');
 		
@@ -730,7 +738,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	$opts=array();
 					
 		$pm->addParam(new FieldExtString('cond_ic',$opts));
-							
+	
 				
 	$opts=array();
 					
@@ -740,7 +748,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	$opts=array();
 					
 		$pm->addParam(new FieldExtInt('count',$opts));
-					
+	
 				
 	$opts=array();
 					
@@ -750,7 +758,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	$opts=array();
 					
 		$pm->addParam(new FieldExtString('ord_directs',$opts));
-					
+	
 				
 	$opts=array();
 					
@@ -758,7 +766,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-			
+
 			
 		$pm = new PublicMethod('get_current_for_production_list');
 		
@@ -781,7 +789,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	$opts=array();
 					
 		$pm->addParam(new FieldExtString('cond_ic',$opts));
-							
+	
 				
 	$opts=array();
 					
@@ -791,7 +799,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	$opts=array();
 					
 		$pm->addParam(new FieldExtInt('count',$opts));
-					
+	
 				
 	$opts=array();
 					
@@ -801,7 +809,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	$opts=array();
 					
 		$pm->addParam(new FieldExtString('ord_directs',$opts));
-			
+	
 				
 	$opts=array();
 					
@@ -809,8 +817,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-			
-			
+
 			
 		$pm = new PublicMethod('get_closed_list');
 		
@@ -833,7 +840,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	$opts=array();
 					
 		$pm->addParam(new FieldExtString('cond_ic',$opts));
-							
+	
 				
 	$opts=array();
 					
@@ -843,7 +850,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	$opts=array();
 					
 		$pm->addParam(new FieldExtInt('count',$opts));
-					
+	
 				
 	$opts=array();
 					
@@ -853,7 +860,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	$opts=array();
 					
 		$pm->addParam(new FieldExtString('ord_directs',$opts));
-					
+	
 				
 	$opts=array();
 					
@@ -861,7 +868,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-			
+
 			
 		/* get_object */
 		$pm = new PublicMethod('get_object');
@@ -901,7 +908,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-			
+
 			
 		$pm = new PublicMethod('before_open');
 		
@@ -932,7 +939,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-			
+
 			
 		$pm = new PublicMethod('get_print');
 		
@@ -949,7 +956,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-				
+
 			
 		$pm = new PublicMethod('download_print');
 		
@@ -961,8 +968,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-				
-			
+
 			
 		$pm = new PublicMethod('get_print_check');
 		
@@ -979,8 +985,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-				
-			
+
 			
 		$pm = new PublicMethod('set_ready');
 		
@@ -992,7 +997,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-							
+
 			
 		$pm = new PublicMethod('get_shipment');
 		
@@ -1015,7 +1020,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-							
+
 			
 		$pm = new PublicMethod('cancel');
 		
@@ -1027,7 +1032,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-										
+
 			
 		$pm = new PublicMethod('cancel_last_state');
 		
@@ -1039,7 +1044,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-													
+
 			
 		$pm = new PublicMethod('get_history');
 		
@@ -1051,7 +1056,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-													
+
 			
 		$pm = new PublicMethod('pass_to_production');
 		
@@ -1091,7 +1096,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-			
+
 			
 		$pm = new PublicMethod('set_shipped');
 		
@@ -1110,7 +1115,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-						
+
 			
 		$pm = new PublicMethod('get_ship_docs');
 		
@@ -1122,7 +1127,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-									
+
 			
 		$pm = new PublicMethod('print_ship_docs');
 		
@@ -1134,8 +1139,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-		
-													
+
 			
 		$pm = new PublicMethod('set_paid');
 		
@@ -1147,7 +1151,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-									
+
 			
 		$pm = new PublicMethod('set_not_paid');
 		
@@ -1159,13 +1163,11 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-												
+
 			
 		$pm = new PublicMethod('paid_to_acc');
 		
-			
 		$this->addPublicMethod($pm);
-		
 
 			
 		$pm = new PublicMethod('set_paid_by_bank');
@@ -1178,14 +1180,12 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-									
+
 			
 		$pm = new PublicMethod('paid_by_bank_to_acc');
 		
-			
 		$this->addPublicMethod($pm);
-		
-																
+
 			
 		$pm = new PublicMethod('set_closed');
 		
@@ -1197,7 +1197,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-									
+
 			
 		$pm = new PublicMethod('print_order');
 		
@@ -1209,7 +1209,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-									
+
 			
 		$pm = new PublicMethod('ext_ship_exists');
 		
@@ -1221,7 +1221,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-												
+
 			
 		$pm = new PublicMethod('ext_invoice_exists');
 		
@@ -1233,7 +1233,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-															
+
 			
 		$pm = new PublicMethod('ext_order_exists');
 		
@@ -1245,7 +1245,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-																		
+
 			
 		$pm = new PublicMethod('print_torg12');
 		
@@ -1257,7 +1257,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-									
+
 			
 		$pm = new PublicMethod('print_invoice');
 		
@@ -1269,7 +1269,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-									
+
 			
 		$pm = new PublicMethod('print_upd');
 		
@@ -1281,7 +1281,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-												
+
 			
 		$pm = new PublicMethod('print_ttn');
 		
@@ -1293,7 +1293,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-															
+
 			
 		$pm = new PublicMethod('print_passport');
 		
@@ -1305,8 +1305,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-									
-			
+
 			
 		$pm = new PublicMethod('pay_orders_list');
 		
@@ -1329,7 +1328,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	$opts=array();
 					
 		$pm->addParam(new FieldExtString('cond_ic',$opts));
-							
+	
 				
 	$opts=array();
 					
@@ -1339,7 +1338,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	$opts=array();
 					
 		$pm->addParam(new FieldExtInt('count',$opts));
-					
+	
 				
 	$opts=array();
 					
@@ -1349,7 +1348,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	$opts=array();
 					
 		$pm->addParam(new FieldExtString('ord_directs',$opts));
-					
+	
 				
 	$opts=array();
 					
@@ -1357,7 +1356,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-						
+
 			
 		$pm = new PublicMethod('fill_cust_surv');
 		
@@ -1564,7 +1563,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-			
+
 			
 		$pm = new PublicMethod('calc_deliv_cost');
 		
@@ -1618,7 +1617,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-										
+
 			
 		$pm = new PublicMethod('get_cancel_cause');
 		
@@ -1627,10 +1626,10 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 		$opts['required']=TRUE;				
 		$pm->addParam(new FieldExtInt('doc_id',$opts));
-					
+	
 			
 		$this->addPublicMethod($pm);
-						
+
 			
 		$pm = new PublicMethod('get_append_list');
 		
@@ -1642,7 +1641,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-												
+
 			
 		$pm = new PublicMethod('append');
 		
@@ -1660,8 +1659,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	
 			
 		$this->addPublicMethod($pm);
-												
-										
+
 		
 	}	
 	
@@ -1670,8 +1668,40 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 		parent::get_list($pm);
 	}
 	public function get_current_list($pm){
-		$this->setListModelId('DOCOrderCurrentList_Model');
-		parent::get_list($pm);	
+		if ($_SESSION['role_id']=='representative'){
+			$model = new DOCOrderCurrentList_Model($this->getDbLink());
+		
+			$order = $this->orderFromParams($pm,$model);
+			$where = $this->conditionFromParams($pm,$model);
+			if (!$where){
+				$where = new ModelWhereSQL();
+			}
+			$from = null; $count = null;
+			$limit = $this->limitFromParams($pm,$from,$count);
+			$calc_total = ($count>0);
+			if ($from){
+				$model->setListFrom($from);
+			}
+			if ($count){
+				$model->setRowsPerPage($count);
+			}		
+		
+			//Фильтр по списку складов		
+			$field = clone $model->getFieldById('warehouse_id');
+			$field->setValue('('.$_SESSION['warehouse_id_list'].')');
+			$where->addField($field,'IN',NULL,NULL);
+		
+			$model->select(FALSE,$where,$order,
+				$limit,NULL,NULL,NULL,
+				$calc_total,TRUE);
+			//
+			$this->addModel($model);
+		
+		}
+		else{
+			$this->setListModelId('DOCOrderCurrentList_Model');
+			parent::get_list($pm);	
+		}
 	}	
 	
 	public function get_current_for_representative_list($pm){
@@ -2025,6 +2055,12 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 		array_push($fields,new Field('barcode_descr',DT_STRING,array('value'=>$ar['number_for_bar_code'])));
 		array_push($fields,new Field('barcode_img_mime',DT_STRING,array('value'=>'image/png')));
 		array_push($fields,new Field('barcode_img',DT_STRING,array('value'=>base64_encode($contents))));
+		
+		//Сумма строкой
+		$total = floatval($ar['total']) + floatval($ar['total_pack']);
+		$total += ($ar['deliv_type']=='by_supplier' && $ar['deliv_add_cost_to_product']!='t')?
+			 $ar['deliv_total']  : 0;
+		array_push($fields,new Field('total_str',DT_STRING,array('value'=>lcfirst(money2str_ru($total)))));
 		
 		$this->addModel(new ModelVars(
 			array('id'=>'head',
@@ -2767,11 +2803,20 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 					'user_ref'=>$ar['user_ref'],
 					'client_ref'=>$ar['client_ref'],
 					'warehouse_ref'=>$ar['warehouse_ref'],
+					'warehouse_address'=>$ar['warehouse_address'],
 					'deliv_total'=>$ar['deliv_total'],
+					'deliv_type'=>$ar['deliv_type'],
 					'pack_total'=>$ar['pack_total'],
 					'deliv_address'=>$ar['deliv_address'],
 					'driver_ref'=>$ar['driver_ref'],
+					'driver_name'=>$ar['driver_name'],
+					'driver_cel_phone'=>$ar['driver_cel_phone'],
+					'driver_drive_perm'=>$ar['driver_drive_perm'],
+					'carrier_ref'=>$ar['carrier_ref'],
 					'vh_plate'=>$ar['vh_plate'],
+					'vh_model'=>$ar['vh_model'],
+					'vh_vol'=>$ar['vh_vol'],
+					'vh_load_weight_t'=>$ar['vh_load_weight_t'],
 					'vh_trailer_plate'=>$ar['vh_trailer_plate'],
 					'vh_trailer_model'=>$ar['vh_trailer_model'],
 					'ext_order_id'=>$ar['ext_order_id'],
@@ -2780,7 +2825,11 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 					'sales_manager_comment'=>$ar['sales_manager_comment'],
 					'pay_cash'=>$ar['pay_cash'],
 					'deliv_vehicle_count'=>$ar['deliv_vehicle_count'],
-					'number'=>$ar['number']
+					'number'=>$ar['number'],
+					'firm_nds'=>$ar['firm_nds'],
+					'delivery_plan_date'=>$ar['delivery_plan_date'],
+					'total_volume'=>$ar['total_volume'],
+					'total_weight'=>$ar['total_weight']
 					);
 			}
 			if ($ar['product_name']){
@@ -2789,6 +2838,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 					'product_name'=>$ar['product_name'],
 					'group_name'=>$ar['group_name'],
 					'product_group_ref'=>$ar['product_group_ref'],
+					'fin_group'=>$ar['fin_group'],
 					'mes_length'=>$ar['mes_length'],
 					'mes_width'=>$ar['mes_width'],
 					'mes_height'=>$ar['mes_height'],
@@ -2843,23 +2893,23 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	public function update_paid($pm,$field,$paid){
 		$params = new ParamsSQL($pm,$this->getDbLink());
 		$params->addAll();
-		
+		//Проверять будет не тип клиента cl.pay_type а атрибут фирмы f.cash
 		$ar = $this->getDbLink()->query_first(sprintf(
 		"SELECT
-			cl.pay_type,
-			get_payment_types_descr(cl.pay_type) AS pay_type_descr
-		FROM clients cl
-		WHERE cl.id=(SELECT o.client_id
+			coalesce(f.cash,FALSE) AS cash,
+			f.name
+		FROM firms f
+		WHERE f.id=(SELECT o.firm_id
 				FROM doc_orders o
 				WHERE o.id=%d)",
 		$params->getParamById('doc_id')
 		));
 		if (!is_array($ar) || !count($ar)){
-			throw new Exception("Не нашли клиента!");
+			throw new Exception("Не нашли организацию!");
 		}
-		if ($ar['pay_type'] != 'cash'){
-			throw new Exception(sprintf('Вид оплаты клиента: "%s"!',
-				$ar['pay_type_descr']));
+		if ($ar['cash'] != 't'){
+			throw new Exception(sprintf('Фирма %s, указанная в заявке, не работат по наличному расчету!',
+				$ar['name']));
 		}
 		
 		$this->getDbLinkMaster()->query(sprintf(
@@ -3202,6 +3252,10 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 		if (!$ar['ext_ship_id']){
 			throw new Exception("Накладная не выписана!");
 		}
+		if ($ar['deliv_type']!='by_supplier'){
+			throw new Exception("Нет ТТН!");
+		}
+		
 		ExtProg::print_ttn($ar['ext_ship_id'],
 			$ar,
 			$_SESSION['user_ext_id'],
@@ -3645,6 +3699,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 		//Перенос в архив
 		$this->add_state($p->getDbVal('id'), 'canceled_by_sales_manager');
 	}
+	
 	
 
 }

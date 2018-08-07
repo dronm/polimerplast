@@ -108,6 +108,14 @@ extend(Vehicle_Controller,ControllerDb);
 	
 	pm.addParam(new FieldInt("ret_id",{}));
 	
+		var options = {};
+						
+		pm.addParam(new FieldString("driver_drive_perm",options));
+	
+		var options = {};
+						
+		pm.addParam(new FieldString("driver_cel_phone",options));
+	
 	
 }
 
@@ -196,6 +204,14 @@ extend(Vehicle_Controller,ControllerDb);
 	var param = new FieldString("tracker_id",options);
 	
 	pm.addParam(param);
+	
+		var options = {};
+						
+		pm.addParam(new FieldString("driver_drive_perm",options));
+	
+		var options = {};
+						
+		pm.addParam(new FieldString("driver_cel_phone",options));
 	
 	
 }

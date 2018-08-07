@@ -115,7 +115,7 @@ function UserAccount_View(id,options){
 		{"labelCaption":"Новый пароль:","name":"pwd",
 		"editContClassName":ctrl_cont_class,
 		"labelClassName":label_class,		
-		"attrs":{"maxlength":50,"size":20},
+		"attrs":{"maxlength":50,"size":20,"required":"required"},
 		"minLength":PWD_MIN_LEN
 		});
 	this.bindControl(this.m_pwdCtrl,
@@ -128,7 +128,7 @@ function UserAccount_View(id,options){
 		{"labelCaption":"Подтверждение:","name":"pwd_conf",
 		"editContClassName":ctrl_cont_class,
 		"labelClassName":label_class,		
-		"attrs":{"maxlength":50,"size":20},
+		"attrs":{"maxlength":50,"size":20,"required":"required"},
 		"minLength":PWD_MIN_LEN
 		});
 	cont.addElement(this.m_pwdConfCtrl);
@@ -138,7 +138,14 @@ function UserAccount_View(id,options){
 	cont.addElement(new Button(id+"btnOk",		
 		{"caption":"Изменить",
 		"onClick":function(){
-			self.onClickOk();
+			var pwd = self.m_pwdCtrl.getValue();
+			var conf = self.m_pwdConfCtrl.getValue();
+			if (pwd!=conf){
+				self.m_pwdConfInfCtrl.setValue("Пароли отличаются");
+			}
+			else{
+				self.onClickOk();
+			}
 		},
 		"className":"btn btn-default",
 		"attrs":{

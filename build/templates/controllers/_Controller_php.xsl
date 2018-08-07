@@ -8,11 +8,12 @@
 
 <xsl:key name="controller_models" match="/metadata/controllers/controller/publicMethod" use="@modelId"/>			
 
+<!-- THIS TEMPLATE NEVER RUNS!!! OVERRIDDEN IN SPECIFIC CONTROLLERS!!!-->
 <xsl:template match="controller"><![CDATA[<?php]]>
 <xsl:call-template name="add_requirements"/>
 class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@parentId"/>{
-	public function __construct($dbLinkMaster=NULL){
-		parent::__construct($dbLinkMaster);<xsl:apply-templates/>
+	public function __construct($dbLinkMaster=NULL,$dbLink=NULL){
+		parent::__construct($dbLinkMaster,$dbLink);<xsl:apply-templates/>
 	}
 }
 <![CDATA[?>]]>
@@ -28,14 +29,36 @@ class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@par
 
 
 <xsl:template match="publicMethod[@id='insert']">
-<xsl:variable name="model_id" select="@modelId"/>
-
-		<xsl:if test="../@processable">
+<xsl:variable name="model_id" select="@modelId"/>		
+		<xsl:if test="../@processable='TRUE'">
 		$this->setProcessable(TRUE);
-		</xsl:if>
 		
+		$pm = new PublicMethod('get_actions');
+		$pm->addParam(new FieldExtInt('doc_id',array('required'=>TRUE)));				
+		$this->addPublicMethod($pm);					
+		
+		$pm = new PublicMethod('set_unprocessed');
+		$pm->addParam(new FieldExtInt('doc_id',array('required'=>TRUE)));				
+		$this->addPublicMethod($pm);					
+		</xsl:if>		
+		<xsl:if test="../@details='TRUE'">
+		/* before open */
+		$pm = new PublicMethod('before_open');
+		$pm->addParam(new FieldExtString('view_id',array('required'=>TRUE,'length'=>32)));
+		$pm->addParam(new FieldExtInt('doc_id',array('required'=>TRUE)));				
+		$this->addPublicMethod($pm);							
+		
+		/* get details */
+		$pm = new PublicMethod('get_details');
+		<xsl:call-template name="add_cond_fields"/>
+		$this->addPublicMethod($pm);									
+		</xsl:if>
+
 		/* insert */
 		$pm = new PublicMethod('insert');
+		<xsl:if test="../@details='TRUE'">
+		$pm->addParam(new FieldExtString('view_id',array('required'=>TRUE,'length'=>32)));
+		</xsl:if>
 		<xsl:for-each select="/metadata/models/model[@id=$model_id]/field[not(@primaryKey='TRUE' and @autoInc='TRUE')]">
 			<xsl:choose>
 				<xsl:when test="@fieldType='FT_LOOK_UP'">
@@ -88,6 +111,9 @@ class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@par
 <xsl:variable name="model_id" select="@modelId"/>
 		/* update */		
 		$pm = new PublicMethod('update');
+		<xsl:if test="../@details='TRUE'">
+		$pm->addParam(new FieldExtString('view_id',array('required'=>TRUE,'length'=>32)));
+		</xsl:if>		
 		<xsl:for-each select="/metadata/models/model[@id=$model_id]/field[@primaryKey='TRUE']">
 		<xsl:variable name="enum_id" select="@enumId"/>
 		$pm->addParam(new FieldExt<xsl:value-of select="@dataType"/>('old_<xsl:value-of select="@id"/>',<xsl:if test="@dataType='Enum'">',','<xsl:for-each select="/metadata/enums/enum[@id=$enum_id]/value"><xsl:if test="position() &gt; 1">,</xsl:if><xsl:value-of select="@id"/></xsl:for-each>',</xsl:if>array('required'=>TRUE)));
@@ -149,17 +175,7 @@ class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@par
 <xsl:variable name="model_id" select="@modelId"/>
 		/* get_list */
 		$pm = new PublicMethod('get_list');
-		$pm->addParam(new FieldExtInt('browse_mode'));
-		$pm->addParam(new FieldExtInt('browse_id'));		
-		$pm->addParam(new FieldExtInt('count'));
-		$pm->addParam(new FieldExtInt('from'));
-		$pm->addParam(new FieldExtString('cond_fields'));
-		$pm->addParam(new FieldExtString('cond_sgns'));
-		$pm->addParam(new FieldExtString('cond_vals'));
-		$pm->addParam(new FieldExtString('cond_ic'));
-		$pm->addParam(new FieldExtString('ord_fields'));
-		$pm->addParam(new FieldExtString('ord_directs'));
-		$pm->addParam(new FieldExtString('field_sep'));
+		<xsl:call-template name="add_cond_fields"/>
 		<xsl:for-each select="field">
 			$f_params = array();
 			<xsl:if test="@alias">
@@ -189,7 +205,7 @@ class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@par
 <xsl:variable name="cur_model_id" select="@modelId"/>
 		/* get_object */
 		$pm = new PublicMethod('get_object');
-		$pm->addParam(new FieldExtInt('browse_mode'));
+		$pm->addParam(new FieldExtString('mode'));
 		<xsl:variable name="model_id">
 		<xsl:choose>
 		<xsl:when test="/metadata/models/model[@id=$cur_model_id and @virtual='TRUE']/@baseModelId">
@@ -214,7 +230,7 @@ class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@par
 <xsl:variable name="model_id" select="@modelId"/>
 		/* get_object */
 		$pm = new PublicMethod('get_object');
-		$pm->addParam(new FieldExtInt('browse_mode'));
+		$pm->addParam(new FieldExtString('mode'));
 		$pm->addParam(new FieldExtString('details'));
 		<xsl:for-each select="/metadata/models/model[@id=$model_id]/field[@primaryKey='TRUE']">
 		<xsl:variable name="enum_id" select="@enumId"/>
@@ -255,6 +271,9 @@ class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@par
 
 <xsl:template match="publicMethod">
 		$pm = new PublicMethod('<xsl:value-of select="@id"/>');
+		<xsl:if test="@condFields='TRUE'">
+		<xsl:call-template name="add_cond_fields"/>
+		</xsl:if>
 		<xsl:apply-templates/>
 		$this->addPublicMethod($pm);
 </xsl:template>
@@ -297,8 +316,25 @@ class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@par
 	$this->addDetailModelId("<xsl:value-of select="@modelId"/>");
 </xsl:template>
 
+<xsl:template name="add_cond_fields">
+		$pm->addParam(new FieldExtInt('count'));
+		$pm->addParam(new FieldExtInt('from'));
+		$pm->addParam(new FieldExtString('cond_fields'));
+		$pm->addParam(new FieldExtString('cond_sgns'));
+		$pm->addParam(new FieldExtString('cond_vals'));
+		$pm->addParam(new FieldExtString('cond_ic'));
+		$pm->addParam(new FieldExtString('ord_fields'));
+		$pm->addParam(new FieldExtString('ord_directs'));
+		$pm->addParam(new FieldExtString('field_sep'));
+</xsl:template>
+
 <xsl:template name="add_requirements">
-require_once(FRAME_WORK_PATH.'basic_classes/<xsl:value-of select="@parentId"/>.php');
+<xsl:choose>
+<xsl:when test="@parentType='user'">
+require_once(USER_CONTROLLERS_PATH.'<xsl:value-of select="@parentId"/>.php');</xsl:when>
+<xsl:otherwise>
+require_once(FRAME_WORK_PATH.'basic_classes/<xsl:value-of select="@parentId"/>.php');</xsl:otherwise>
+</xsl:choose>
 <xsl:if test="/metadata/models/model/field/@dataType='Int'">
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtInt.php');</xsl:if>
 <xsl:if test="/metadata/models/model/field/@dataType='String'">
@@ -335,6 +371,18 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldExtJSON.php');</xsl:if>
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtJSONB.php');</xsl:if>
 <xsl:if test="/metadata/models/model/field/@dataType='Array'">
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtArray.php');</xsl:if>
+<xsl:if test="/metadata/models/model/field/@dataType='XML'">
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtXML.php');</xsl:if>
+<xsl:if test="/metadata/models/model/field/@dataType='BigInt'">
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtBigInt.php');</xsl:if>
+<xsl:if test="/metadata/models/model/field/@dataType='SmallInt'">
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtSmallInt.php');</xsl:if>
+
+/**
+ * THIS FILE IS GENERATED FROM TEMPLATE build/templates/controllers/Controller_php.xsl
+ * ALL DIRECT MODIFICATIONS WILL BE LOST WITH THE NEXT BUILD PROCESS!!!
+ */
+
 </xsl:template>
 
 </xsl:stylesheet>

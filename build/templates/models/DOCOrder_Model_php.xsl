@@ -26,8 +26,8 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 		$link = $this->getDbLink();
 		$head=NULL;
 		$items=NULL;
-		DOCOrder_Controller::docDataForExt(
-			$link,$docId,$head,$items);
+		
+		DOCOrder_Controller::docDataForExt($link,$docId,$head,$items);
 		$res = array();
 		ExtProg::order($head,$items,$res);
 		
@@ -58,10 +58,13 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 		if (!is_array($ar) || !count($ar)){
 			throw new Exception("Документ не найден!");
 		}
-		
-		if (!is_null($ref) &amp;&amp; $ar['email_exists']=='t'){			
-			$tmp_file = ExtProg::print_order($ref,$_SESSION['user_ext_id'],1);
-		
+	
+		if (strlen($ar['ext_order_id']) &amp;&amp; $ar['email_exists']=='t'){			
+			$tmp_file = ExtProg::print_order(
+				$ar['ext_order_id'],$_SESSION['user_ext_id'],1,
+				array('name'=>('Счет_'.uniqid().'.pdf'),'toFile'=>TRUE)
+				);
+	
 			//отправить по мылу счет
 			$mail_id = PPEmailSender::addEMail(
 				$link,

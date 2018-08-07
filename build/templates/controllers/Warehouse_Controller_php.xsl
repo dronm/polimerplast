@@ -42,10 +42,11 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 	}
 	public function set_near_road($pm){
 		$zone = $pm->getParamValue('zone');
-		if ($zone){
+		if ($zone &amp;&amp; $zone!='null'){		
 			$pares = explode(',',$zone);
 			if (count($pares)){
-				$zone.=','.$pares[0];
+				$zone.=','.$pares[0];				
+				throw new Exception($zone);
 				$ar=$this->getDbLink()->query_first(sprintf(
 				"SELECT
 					replace(replace(st_astext(ST_Centroid(ST_GeomFromText('POLYGON((%s))'))),'POINT(',''),')','')
@@ -75,6 +76,43 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		$this->set_near_road($pm);
 		parent::update($pm);
 	}	
+	
+	public function get_list($pm){
+		if ($_SESSION['role_id']!='admin'){
+			$model = new WarehouseList_Model($this->getDbLink());
+		
+			$order = $this->orderFromParams($pm,$model);
+			$where = $this->conditionFromParams($pm,$model);
+			if (!$where){
+				$where = new ModelWhereSQL();
+			}
+			$from = null; $count = null;
+			$limit = $this->limitFromParams($pm,$from,$count);
+			$calc_total = ($count>0);
+			if ($from){
+				$model->setListFrom($from);
+			}
+			if ($count){
+				$model->setRowsPerPage($count);
+			}		
+		
+			//Фильтр по deleted		
+			$field = clone $model->getFieldById('deleted');
+			$field->setValue('FALSE');
+			$where->addField($field,'=',NULL,NULL);
+		
+			$model->select(FALSE,$where,$order,
+				$limit,NULL,NULL,NULL,
+				$calc_total,TRUE);
+			//
+			$this->addModel($model);
+		
+		}
+		else{
+			parent::get_list($pm);
+		}
+	}
+	
 	public function get_list_for_order($pm){
 		$link = $this->getDbLink();		
 		$params = new ParamsSQL($pm,$link);
