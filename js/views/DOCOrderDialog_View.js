@@ -878,7 +878,7 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 			}
 			
 			this.m_readOnly = ($.inArray(this.m_curState,read_only_states)>=0);
-			
+			console.log("this.m_readOnly="+this.m_readOnly)
 			if (this.m_readOnly){
 				this.setEnabled(false);
 				this.m_ctrlCancel.setEnabled(true);
@@ -893,7 +893,7 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 				if (this.m_delivTypeCtrl.getValue()=="by_supplier"){
 					this.m_clientDestCtrl.setEnabled(true);
 				}
-				
+				//this.m_delivAddToCostCtrl.setEnabled(false);
 			}
 			else{
 				

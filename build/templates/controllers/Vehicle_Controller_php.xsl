@@ -32,7 +32,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		parent::get_list($pm);
 	}
 	
-	private function get_driver_attrs($pm,&amp;$fields){
+	private function get_driver_attrs($pm,$p,&amp;$fields){
 		if ($pm->getParamValue('driver_cel_phone')){
 			$fields = 'cel_phone='.$p->getDbVal('driver_cel_phone');
 		}
@@ -42,7 +42,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		}	
 	}
 	
-	private function upadte_driver($pm){
+	private function update_driver($pm){
 		$p = new ParamsSQL($pm,$this->getDbLink());
 		$p->addAll();
 	
@@ -52,15 +52,15 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 			"SELECT * FROM drivers WHERE name=%s LIMIT 1",
 			$p->getDbVal('driver_descr')
 			));
-			if (count($ar)){
+			if (count($ar) &amp;&amp; isset($ar['id'])){
 				//есть такой водитель - изменяем
 				$fields = '';
-				$this->get_driver_attrs($pm,$fields);
+				$this->get_driver_attrs($pm,$p,$fields);
 				
 				if (strlen($fields)){
 					$this->getDbLink()->query(sprintf(
 					"UPDATE drivers SET %s WHERE id=%d",
-					$fields
+					$fields,
 					$ar['id']
 					));				
 				}
@@ -82,24 +82,24 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		else if ($pm->getParamValue('old_id')){
 			//возможно изменили данные старого водителя
 			$fields = '';
-			$this->get_driver_attrs($pm,$fields);
+			$this->get_driver_attrs($pm,$p,$fields);
 			if (strlen($fields)){
 				$this->getDbLink()->query(sprintf(
 				"UPDATE drivers SET %s WHERE id=(SELECT v.driver_id FROM vehicles v WHERE v.id=%d)",
-				$fields
+				$fields,
 				$p->getDbVal('old_id')
 				));				
 			}
 		}		
 	}
 	
-	public function upadte($pm){
-		$this->upadte_driver($pm);
-		parent::upadte($pm);
+	public function update($pm){
+		$this->update_driver($pm);
+		parent::update($pm);
 	}
 	
 	public function insert($pm){
-		$this->upadte_driver($pm);
+		$this->update_driver($pm);
 		parent::insert($pm);
 	}
 	

@@ -363,17 +363,17 @@ class ClientDestination_Controller extends ControllerSQL{
 				$osrm = new OSRM(OSRM_PROTOCOLE,OSRM_HOST,OSRM_PORT);
 				$road_lat=NULL;$road_lon=NULL;
 				
-				$pm->setParamValue('near_road_lon','65.697777');
-				$pm->setParamValue('near_road_lat','56.942547');
+				//$pm->setParamValue('near_road_lon','65.697777');
+				//$pm->setParamValue('near_road_lat','56.942547');
 				
-				/*
+				
 				$osrm->getNearestRoadCoord(
 					$points[1],$points[0],
 					$road_lat,$road_lon
 					);
 				$pm->setParamValue('near_road_lon',$road_lon);
 				$pm->setParamValue('near_road_lat',$road_lat);
-				*/
+				
 			}
 		}
 	}

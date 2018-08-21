@@ -20,6 +20,12 @@ function FirmList_View(id,options){
 	
 	var head = new GridHead();
 	var row = new GridRow(id+"_row1");	
+	
+	row.addElement(new GridDbHeadCellBool(id+"_col_deleted",{"value":"Удален",
+		"readBind":{"valueFieldId":"deleted"}
+		}));
+
+	
 	row.addElement(new GridDbHeadCell(id+"_col_id",{
 		"readBind":{"valueFieldId":"id"},"keyCol":true,
 		"visible":false
@@ -36,10 +42,6 @@ function FirmList_View(id,options){
 		}));
 		
 		
-	row.addElement(new GridDbHeadCellBool(id+"_col_deleted",{"value":"Удален",
-		"readBind":{"valueFieldId":"deleted"}
-		}));
-
 	row.addElement(new GridDbHeadCellBool(id+"_col_match_1c",{"value":"Соответствует 1с",
 		"readBind":{"valueFieldId":"match_1c"}
 		}));

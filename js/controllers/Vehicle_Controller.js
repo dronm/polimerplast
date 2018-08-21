@@ -207,6 +207,10 @@ extend(Vehicle_Controller,ControllerDb);
 	
 		var options = {};
 						
+		pm.addParam(new FieldString("driver_descr",options));
+	
+		var options = {};
+						
 		pm.addParam(new FieldString("driver_drive_perm",options));
 	
 		var options = {};

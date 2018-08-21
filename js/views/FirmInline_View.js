@@ -14,6 +14,18 @@ function FirmInline_View(id,options){
 	options = options || {};
 	FirmInline_View.superclass.constructor.call(this,
 		id,options);	
+		
+	this.addDataControl(
+		new EditCheckBox(id+"_deleted",
+		{
+		}),
+		{"modelId":"FirmList_Model",
+		"valueFieldId":"deleted",
+		"keyFieldIds":null},
+		{"valueFieldId":"deleted","keyFieldIds":null}
+	);
+	
+		
 	this.addDataControl(
 		new Edit(id+"_id",{"name":"id","visible":false}),
 		{"modelId":"FirmList_Model",
@@ -56,15 +68,5 @@ function FirmInline_View(id,options){
 		{"valueFieldId":"cash","keyFieldIds":null}
 	);
 
-	this.addDataControl(
-		new EditCheckBox(id+"_deleted",
-		{
-		}),
-		{"modelId":"FirmList_Model",
-		"valueFieldId":"deleted",
-		"keyFieldIds":null},
-		{"valueFieldId":"deleted","keyFieldIds":null}
-	);
-	
 }
 extend(FirmInline_View,ViewInlineGridEdit);

@@ -45,10 +45,6 @@ function WarehouseList_View(id,options){
 		"readBind":{"valueFieldId":"on_map"}
 		}));
 
-	row.addElement(new GridDbHeadCellBool(id+"_deleted",{"value":"Удален",
-		"readBind":{"valueFieldId":"deleted"}
-		}));
-		
 	head.addElement(row);
 	
 	this.addElement(new GridDb(id+"_grid",

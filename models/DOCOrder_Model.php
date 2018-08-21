@@ -518,7 +518,13 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$res = array();
 		ExtProg::order($head,$items,$res);
 		
-		if (!isset($head['ext_order_id']) && isset($res['orderRef'])){
+		if (
+		isset($res['orderRef'])
+		&&
+			(!isset($head['ext_order_id'])
+			|| ( isset($head['ext_order_id']) && $head['ext_order_num']!=$res['orderNum'] )
+			)
+		){
 			//Отметка о счете
 			$link->query(sprintf(
 			"UPDATE doc_orders

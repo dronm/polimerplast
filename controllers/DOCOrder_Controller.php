@@ -2488,6 +2488,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 			$osrm = new OSRM(OSRM_PROTOCOLE,OSRM_HOST,OSRM_PORT);
 				
 			//Маршрут от склада до клиента
+			//throw new Exception('wh_near_road_lat='.$ar['wh_near_road_lat'].' wh_near_road_lon='.$ar['wh_near_road_lon'].' dest_near_road_lat='.$ar['dest_near_road_lat'].' dest_near_road_lon='.$ar['dest_near_road_lon']);
 			$route = json_decode($osrm->getRoute(array(
 				$ar['wh_near_road_lat'].','.$ar['wh_near_road_lon'],
 				$ar['dest_near_road_lat'].','.$ar['dest_near_road_lon']
@@ -2496,7 +2497,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 			if ($route->status!=0){
 				throw new Exception($route->status_message);
 			}
-			
+			//throw new Exception(var_export($route->route_geometry,TRUE));
 			/* Собираем точки маршрута в линию*/
 			$q_points = '';
 			$points = decodePolylineToArray($route->route_geometry);
@@ -2820,6 +2821,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 					'vh_trailer_plate'=>$ar['vh_trailer_plate'],
 					'vh_trailer_model'=>$ar['vh_trailer_model'],
 					'ext_order_id'=>$ar['ext_order_id'],
+					'ext_order_num'=>$ar['ext_order_num'],
 					'ext_ship_id'=>$ar['ext_ship_id'],
 					'client_comment'=>$ar['client_comment'],
 					'sales_manager_comment'=>$ar['sales_manager_comment'],
@@ -3478,7 +3480,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 				cl.id AS client_id,
 				cl.ext_id AS client_ref,
 				cl.name AS client_descr,
-				
+				f.nds AS firm_nds,
 				SUM(
 					COALESCE(o.total,0)+
 					CASE
@@ -3514,6 +3516,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 						'ids'=>$ar['order_ids'],
 						'user_ref'=>$ar['user_ref'],
 						'firm_ref'=>$ar['firm_ref'],
+						'firm_nds'=>$ar['firm_nds'],
 						'client_ref'=>$ar['client_ref'],
 						'client_descr'=>$ar['client_descr']
 					)

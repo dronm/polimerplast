@@ -163,10 +163,11 @@ function VehicleDialog_View(id,options){
 		"keyFieldIds":null},
 		{"valueFieldId":"driver_descr","keyFieldIds":null});	
 	cont.addElement(ctrl);
+	
 	ctrl = new EditString(id+"_driver_drive_perm",
 		{"attrs":{"maxlength":20},
 		"labelCaption":"Вод.удост.водителя:",
-		"name":"driver_descr"}
+		"name":"driver_drive_perm"}
 	);
 	this.bindControl(ctrl,
 		{"modelId":model,

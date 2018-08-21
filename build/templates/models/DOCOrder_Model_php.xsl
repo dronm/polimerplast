@@ -31,7 +31,13 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 		$res = array();
 		ExtProg::order($head,$items,$res);
 		
-		if (!isset($head['ext_order_id']) &amp;&amp; isset($res['orderRef'])){
+		if (
+		isset($res['orderRef'])
+		&amp;&amp;
+			(!isset($head['ext_order_id'])
+			|| ( isset($head['ext_order_id']) &amp;&amp; $head['ext_order_num']!=$res['orderNum'] )
+			)
+		){
 			//Отметка о счете
 			$link->query(sprintf(
 			"UPDATE doc_orders

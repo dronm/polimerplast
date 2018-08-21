@@ -1215,6 +1215,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 					'vh_trailer_plate'=>$ar['vh_trailer_plate'],
 					'vh_trailer_model'=>$ar['vh_trailer_model'],
 					'ext_order_id'=>$ar['ext_order_id'],
+					'ext_order_num'=>$ar['ext_order_num'],
 					'ext_ship_id'=>$ar['ext_ship_id'],
 					'client_comment'=>$ar['client_comment'],
 					'sales_manager_comment'=>$ar['sales_manager_comment'],
@@ -1873,7 +1874,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 				cl.id AS client_id,
 				cl.ext_id AS client_ref,
 				cl.name AS client_descr,
-				
+				f.nds AS firm_nds,
 				SUM(
 					COALESCE(o.total,0)+
 					CASE
@@ -1909,6 +1910,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 						'ids'=>$ar['order_ids'],
 						'user_ref'=>$ar['user_ref'],
 						'firm_ref'=>$ar['firm_ref'],
+						'firm_nds'=>$ar['firm_nds'],
 						'client_ref'=>$ar['client_ref'],
 						'client_descr'=>$ar['client_descr']
 					)
