@@ -171,6 +171,16 @@ class VehicleList_Model extends ModelSQL{
 		$f_trailer_plate=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"trailer_plate",$f_opts);
 		$this->addField($f_trailer_plate);
 		//********************
+		
+		//*** Field driver_match_1c ***
+		$f_opts = array();
+		
+		$f_opts['alias']='Водитель связан с 1с';
+		$f_opts['id']="driver_match_1c";
+				
+		$f_driver_match_1c=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"driver_match_1c",$f_opts);
+		$this->addField($f_driver_match_1c);
+		//********************
 	
 	}
 

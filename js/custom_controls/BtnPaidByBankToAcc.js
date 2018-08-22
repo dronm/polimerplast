@@ -34,12 +34,14 @@ function BtnPaidByBankToAcc(options){
 						"callBack":function(){
 							self.setEnabled(true);
 						}
-						}
-					);					
+					});					
 				}
 			},
 			"cont":this,
-			"errControl":options.grid.getErrorControl()
+			"err":function(resp,errCode,errStr){				
+				self.setEnabled(true);	
+				WindowMessage.show({"text":errStr});
+			}
 		});
 	};		
 	BtnPaidByBankToAcc.superclass.constructor.call(this,

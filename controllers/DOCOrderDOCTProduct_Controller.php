@@ -333,7 +333,8 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 		$params->addAll();
 		
 		/* все кроме производства и разделения
-		там по-другому*/
+		 * там по-другому
+		 */
 		if ($_SESSION['role_id']!='production'
 		&&isset($_REQUEST['warehouse_id'])
 		&&isset($_REQUEST['client_id'])
@@ -425,9 +426,9 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 			}					
 		}
 		else if (isset($_REQUEST['quant_base_measure_unit'])){
-			/*изменилось базовое кол-во
-			!!!ЦЕНА НЕ ДОЛЖНА МЕНЯТЬСЯ!!!
-			*/
+			/* изменилось базовое кол-во
+			 * !!!ЦЕНА НЕ ДОЛЖНА МЕНЯТЬСЯ!!!
+			 */
 			$ar = $this->getDbLink()->query_first(sprintf(
 				"SELECT
 					tp.price,

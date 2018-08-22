@@ -38,9 +38,11 @@ BEGIN
 	FROM delivery_hours AS dh
 	WHERE dh.id = $3;
 	
+	/*
 	IF (now()::date = $4 AND EXTRACT(HOUR FROM now()) > v_h_to) THEN
 		RAISE 'Время доставки меньше текущего!';
 	END IF;
+	*/
 	
 	--масса и объем по ТС
 	SELECT vol,load_weight_t

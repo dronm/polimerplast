@@ -468,7 +468,7 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/DelivAssignedOrderGridCommands.js'));
 		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/DelivUnassignedOrderGridDb.js'));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/ClientDestinationEdit.js'));
+		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/ClientDestinationEdit2.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/EditMoneyEditable.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/ClientPriceListClientGridCom.js'));

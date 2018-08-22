@@ -2488,7 +2488,6 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 			$osrm = new OSRM(OSRM_PROTOCOLE,OSRM_HOST,OSRM_PORT);
 				
 			//Маршрут от склада до клиента
-			//throw new Exception('wh_near_road_lat='.$ar['wh_near_road_lat'].' wh_near_road_lon='.$ar['wh_near_road_lon'].' dest_near_road_lat='.$ar['dest_near_road_lat'].' dest_near_road_lon='.$ar['dest_near_road_lon']);
 			$route = json_decode($osrm->getRoute(array(
 				$ar['wh_near_road_lat'].','.$ar['wh_near_road_lon'],
 				$ar['dest_near_road_lat'].','.$ar['dest_near_road_lon']
@@ -2497,7 +2496,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 			if ($route->status!=0){
 				throw new Exception($route->status_message);
 			}
-			//throw new Exception(var_export($route->route_geometry,TRUE));
+			
 			/* Собираем точки маршрута в линию*/
 			$q_points = '';
 			$points = decodePolylineToArray($route->route_geometry);

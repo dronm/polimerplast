@@ -105,6 +105,7 @@ ClientDestinationEdit2.prototype.openForm = function(keys){
 		"onClose":function(res){
 			var n_val = self.m_extView.m_ctrlValue.getValue();
 			self.setValue(n_val);
+			//console.log("onClose lastInsertedId="+self.m_extView.m_lastInsertedId)
 			if (self.m_extView.m_lastInsertedId){
 				self.setAttr("fkey_deliv_destination_id",self.m_extView.m_lastInsertedId);
 				DOMHandler.removeClass(self.m_node,"error");
@@ -133,7 +134,7 @@ ClientDestinationEdit2.prototype.openForm = function(keys){
 		vwrite_m = "update";
 		this.m_extView.readData(true);					
 	}
-	console.log("Write mwthod="+vwrite_m)
+	//console.log("Write mwthod="+vwrite_m)
 	this.m_extView.setWriteMethodId(vwrite_m);
 	
 }

@@ -28,16 +28,18 @@
 <xsl:variable name="total">
 	<xsl:choose>
 		<xsl:when test="deliv_type='by_supplier' and deliv_add_cost_to_product!='t'">
-			<xsl:call-template name="format_money">
-				<xsl:with-param name="val" select="total+deliv_total+total_pack"/>
-			</xsl:call-template>																					
+			<xsl:value-of select="total+deliv_total+total_pack"/>
 		</xsl:when>
 		<xsl:otherwise>
-			<xsl:call-template name="format_money">
-				<xsl:with-param name="val" select="total+total_pack"/>
-			</xsl:call-template>																														
+			<xsl:value-of select="total+total_pack"/>
 		</xsl:otherwise>
 	</xsl:choose>
+</xsl:variable>
+
+<xsl:variable name="total_formatted">
+	<xsl:call-template name="format_money">
+		<xsl:with-param name="val" select="$total"/>
+	</xsl:call-template>																					
 </xsl:variable>
 
 
@@ -139,7 +141,8 @@
 					<td colspan="3" style="border:none;">
 						<div>Вес,т.:</div>
 						<div>Объем в баз.ед.:</div>
-						<div>Сумма:</div>
+						<div>Итого:</div>
+						<xsl:if test="firm_nds='t'"><div>В том числе НДС:</div></xsl:if>
 					</td>
 					<td style="border:none;">
 						<div>
@@ -152,7 +155,14 @@
 								<xsl:with-param name="val" select="total_quant"/>
 							</xsl:call-template>							
 						</div>
-						<div><xsl:value-of select="$total"/></div>
+						<div><xsl:value-of select="$total_formatted"/></div>
+						<xsl:if test="firm_nds='t'">
+							<div>
+							<xsl:call-template name="format_money">
+								<xsl:with-param name="val" select="round($total*18 div 118*100) div 100"/>
+							</xsl:call-template>																					
+							</div>
+						</xsl:if>
 					</td>
 				</tr>
 			</tfoot>
@@ -175,15 +185,15 @@
 				</xsl:otherwise>
 				</xsl:choose>
 			</xsl:variable>
-			<div>Всего наименований: <xsl:value-of select="$item_count"/>, на сумму: <xsl:value-of select="$total"/> руб.</div>
+			<div>Всего наименований: <xsl:value-of select="$item_count"/>, на сумму: <xsl:value-of select="$total_formatted"/> руб.</div>
 			<div> <xsl:value-of select="total_str"/></div>
 		</div>
 		
 		<br></br>
 		<br></br>
 		<div>
-			<span>Продавец __________________</span>
-			<span style="float:right;margin-right:50px;">Подпись ___________________</span>
+			<span>Отпустил __________________</span>
+			<span style="float:right;margin-right:50px;">Получил ___________________</span>
 		</div>
 	</div>
 	<div style="display:inline-block;width:25%;padding-left:10px;vertical-align:top">

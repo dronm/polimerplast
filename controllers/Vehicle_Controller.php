@@ -19,6 +19,9 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPolygon.php');
  */
 
 
+
+require_once('functions/ExtProg.php');
+
 class Vehicle_Controller extends ControllerSQL{
 	public function __construct($dbLinkMaster=NULL){
 		parent::__construct($dbLinkMaster);
@@ -48,7 +51,7 @@ class Vehicle_Controller extends ControllerSQL{
 				,array());
 		$pm->addParam($param);
 		$param = new FieldExtInt('driver_id'
-				,array('required'=>TRUE));
+				,array());
 		$pm->addParam($param);
 		$param = new FieldExtInt('deliv_cost_opt_id'
 				,array());
@@ -64,6 +67,11 @@ class Vehicle_Controller extends ControllerSQL{
 		$pm->addParam($param);
 		
 		$pm->addParam(new FieldExtInt('ret_id'));
+		
+			$f_params = array();
+			$param = new FieldExtString('driver_descr'
+			,$f_params);
+		$pm->addParam($param);		
 		
 			$f_params = array();
 			$param = new FieldExtString('driver_drive_perm'
@@ -243,7 +251,24 @@ class Vehicle_Controller extends ControllerSQL{
 	
 		if ($pm->getParamValue('driver_descr')){
 			//изменили ФИО водителя
-			$ar = $this->getDbLink()->query_first(sprintf(
+			
+			//1c
+			$res = array();
+			$ext_ref = ExtProg::getPersonRefOnName($pm->getParamValue('driver_descr'),$res);
+			if ($ext_ref){
+				if (
+				count($res)
+				&& $res['drive_perm'] && strlen($res['drive_perm'])
+				&& !$pm->getParamValue('driver_drive_perm')
+				){
+					$pm->setParamValue('driver_drive_perm',$res['drive_perm']);
+				}
+			}		
+			if (!$ext_ref){
+				throw new Exception(sprintf("Физ.лицо '%s' не найдено в 1с!",$pm->getParamValue('driver_descr')));
+			}
+			
+			$ar = $this->getDbLinkMaster()->query_first(sprintf(
 			"SELECT * FROM drivers WHERE name=%s LIMIT 1",
 			$p->getDbVal('driver_descr')
 			));
@@ -253,7 +278,11 @@ class Vehicle_Controller extends ControllerSQL{
 				$this->get_driver_attrs($pm,$p,$fields);
 				
 				if (strlen($fields)){
-					$this->getDbLink()->query(sprintf(
+					if ($ext_ref){
+						$fields.= ($field=='')? '':', ';
+						$fields.= sprintf("ext_id='%s'",$ext_ref);
+					}
+					$this->getDbLinkMaster()->query(sprintf(
 					"UPDATE drivers SET %s WHERE id=%d",
 					$fields,
 					$ar['id']
@@ -261,15 +290,17 @@ class Vehicle_Controller extends ControllerSQL{
 				}
 			}
 			else{
-				//нет такого - заводим
-				$ar = $this->getDbLink()->query_first(sprintf(
-				"INSERT INTO drivers (name,cel_phone,drive_perm)
-				VALUES (%s,%s,%s)
+				//нет такого - заводим								
+				$ar = $this->getDbLinkMaster()->query_first(sprintf(
+				"INSERT INTO drivers (name,cel_phone,drive_perm,ext_id)
+				VALUES (%s,%s,%s,'%s')
 				RETURNING id",
 				$p->getDbVal('driver_descr'),
 				($pm->getParamValue('driver_cel_phone'))? $p->getDbVal('driver_cel_phone'):'NULL',
-				($pm->getParamValue('driver_drive_perm'))? $p->getDbVal('driver_drive_perm'):'NULL'
+				($pm->getParamValue('driver_drive_perm'))? $p->getDbVal('driver_drive_perm'):'NULL',
+				$ext_ref? $ext_ref:'NULL'
 				));
+				
 				
 			}
 			$pm->setParamValue('driver_id',$ar['id']);
@@ -279,7 +310,7 @@ class Vehicle_Controller extends ControllerSQL{
 			$fields = '';
 			$this->get_driver_attrs($pm,$p,$fields);
 			if (strlen($fields)){
-				$this->getDbLink()->query(sprintf(
+				$this->getDbLinkMaster()->query(sprintf(
 				"UPDATE drivers SET %s WHERE id=(SELECT v.driver_id FROM vehicles v WHERE v.id=%d)",
 				$fields,
 				$p->getDbVal('old_id')
@@ -289,13 +320,29 @@ class Vehicle_Controller extends ControllerSQL{
 	}
 	
 	public function update($pm){
-		$this->update_driver($pm);
-		parent::update($pm);
+		try{
+			$this->getDbLinkMaster()->query("BEGIN");
+			$this->update_driver($pm);
+			parent::update($pm);
+			$this->getDbLinkMaster()->query("COMMIT");
+		}
+		catch(Exception $e){
+			$this->getDbLinkMaster()->query("ROLLBACK");
+			throw $e;
+		}
 	}
 	
 	public function insert($pm){
-		$this->update_driver($pm);
-		parent::insert($pm);
+		try{
+			$this->getDbLinkMaster()->query("BEGIN");
+			$this->update_driver($pm);
+			parent::insert($pm);
+			$this->getDbLinkMaster()->query("COMMIT");
+		}
+		catch(Exception $e){
+			$this->getDbLinkMaster()->query("ROLLBACK");
+			throw $e;
+		}			
 	}
 	
 	

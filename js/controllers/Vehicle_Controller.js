@@ -110,6 +110,10 @@ extend(Vehicle_Controller,ControllerDb);
 	
 		var options = {};
 						
+		pm.addParam(new FieldString("driver_descr",options));
+	
+		var options = {};
+						
 		pm.addParam(new FieldString("driver_drive_perm",options));
 	
 		var options = {};
@@ -248,6 +252,7 @@ extend(Vehicle_Controller,ControllerDb);
 	pm.addParam(new FieldString("carrier_descr",options));
 	pm.addParam(new FieldString("trailer_model",options));
 	pm.addParam(new FieldString("trailer_plate",options));
+	pm.addParam(new FieldString("driver_match_1c",options));
 }
 
 			Vehicle_Controller.prototype.add_get_select_list = function(){

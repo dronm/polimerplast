@@ -104,7 +104,6 @@ function Vehicle_Model(options){
 	filed_options.autoInc = false;	
 	
 	options.fields.driver_id = new FieldInt("driver_id",filed_options);
-	options.fields.driver_id.setRequired(true);
 	
 				
 	

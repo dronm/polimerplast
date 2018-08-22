@@ -23,7 +23,9 @@ CREATE OR REPLACE VIEW vehicles_list AS
 		cr.name AS carrier_descr,
 		
 		v.deliv_cost_opt_id,
-		dco.descr AS deliv_cost_opt_descr
+		dco.descr AS deliv_cost_opt_descr,
+		
+		(dr.ext_id IS NOT NULL AND dr.ext_id<>'') driver_match_1c
 		
 	FROM vehicles AS v
 	LEFT JOIN production_cities AS pct ON pct.id=v.production_city_id

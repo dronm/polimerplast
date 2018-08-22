@@ -15,6 +15,24 @@ function VehicleList_View(id,options){
 	//options.title = "Автомобили";
 	VehicleList_View.superclass.constructor.call(this,
 		id,options);
+	
+	this.m_fastFilter = new GridFastFilter(id+"_fast_filter",{
+		"tagName":"div",
+		"noSetControl":true,
+		"noUnsetControl":true,
+		"noToggleControl":true,
+		"className":"row"
+		});
+	//driver
+	this.m_fastFilter.addFilterControl(
+		new EditString(id+"_fast_filter_descr",
+			{"labelCaption":"Водитель:",
+			"contClassName":get_bs_col()+"4"
+		})		
+	,{"sign":"lk","valueFieldId":"driver_descr","r_wcards":"1","l_wcards":"1","icase":"1"}
+	);
+		
+		
 	var head = new GridHead();
 	var row = new GridRow(id+"_row1");	
 	row.addElement(new GridDbHeadCell(id+"_col_id",{
@@ -31,21 +49,27 @@ function VehicleList_View(id,options){
 		"readBind":{"valueFieldId":"production_city_descr",
 		"sortable":true,"sort":"asc"}
 		}));
-	row.addElement(new GridDbHeadCellBool(id+"_col_driver_descr",{"value":"Водитель",
+	row.addElement(new GridDbHeadCell(id+"_col_driver_descr",{"value":"Водитель",
 		"readBind":{"valueFieldId":"driver_descr"}
 		}));		
 	row.addElement(new GridDbHeadCellBool(id+"_col_employed",{"value":"Пост.",
 		"readBind":{"valueFieldId":"employed",
 		"sortable":true}
 		}));
-	row.addElement(new GridDbHeadCellBool(id+"_col_carrier_descr",{"value":"Перевозчик",
+	row.addElement(new GridDbHeadCell(id+"_col_carrier_descr",{"value":"Перевозчик",
 		"readBind":{"valueFieldId":"carrier_descr",
+		"sortable":true}
+		}));
+
+	row.addElement(new GridDbHeadCellBool(id+"_col_driver_match_1c",{"value":"1с",
+		"readBind":{"valueFieldId":"driver_match_1c",
 		"sortable":true}
 		}));
 		
 	head.addElement(row);
 	
-	this.addElement(new GridDb(id+"_grid",
+	
+	this.m_grid = new GridDb(id+"_grid",
 		{"head":head,
 		"body":new GridBody(),
 		"controller":options.controller ||
@@ -62,7 +86,18 @@ function VehicleList_View(id,options){
 		"onSelect":options.onSelect,
 		"winObj":options.winObj
 		}
-	));
+	);
+	
+	this.addElement(this.m_fastFilter);
+	this.addElement(this.m_grid);
+
+	var self = this;
+	this.m_grid.m_filterComplete = function(struc){
+		self.m_fastFilter.getParams(struc);
+	}
+	this.m_fastFilter.setOnRefresh(this.m_grid.onRefresh);
+	this.m_fastFilter.setClickContext(this.m_grid);		
+	
 }
 extend(VehicleList_View,ViewList);
 
@@ -70,3 +105,8 @@ VehicleList_View.prototype.getFormWidth = function(){
 	return "1000";
 }
 
+VehicleList_View.prototype.toDOM = function(parent){
+	VehicleList_View.superclass.toDOM.call(this,parent);
+	
+	this.m_fastFilter.setFocus();	
+}

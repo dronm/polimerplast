@@ -878,7 +878,7 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 			}
 			
 			this.m_readOnly = ($.inArray(this.m_curState,read_only_states)>=0);
-			console.log("this.m_readOnly="+this.m_readOnly)
+			//console.log("this.m_readOnly="+this.m_readOnly)
 			if (this.m_readOnly){
 				this.setEnabled(false);
 				this.m_ctrlCancel.setEnabled(true);
@@ -889,11 +889,17 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 				}
 				this.getViewControl(this.getId()+"_deliv_responsable_tel").setEnabled(true);
 				this.getViewControl(this.getId()+"_tel").setEnabled(true);
-				
+				/*
 				if (this.m_delivTypeCtrl.getValue()=="by_supplier"){
 					this.m_clientDestCtrl.setEnabled(true);
 				}
-				//this.m_delivAddToCostCtrl.setEnabled(false);
+				*/
+				this.m_clientDestCtrl.setEnabled(false);
+				this.m_delivAddToCostCtrl.setEnabled(false);
+				if (this.m_delivCost.setEditEnabled){
+					this.m_delivCost.setEditEnabled(false);
+				}
+				this.m_delivCostOptCtrl.setEnabled(false);
 			}
 			else{
 				
@@ -981,7 +987,7 @@ DOCOrderDialog_View.prototype.toDOM = function(parent){
 	this.setWarehouseId(this.m_wareHCtrl.getFieldValue());
 	this.setToThirdParty(this.m_toThirdPartyCtrl.getValue());
 	
-	this.changeDelivType();
+	if (this.getEnabled())this.changeDelivType();
 	/*
 	this.setDelivAddToCost(this.m_delivAddToCostCtrl.getValue());
 	this.setDelivTotal(this.m_delivCost.getValue());
@@ -1271,6 +1277,7 @@ DOCOrderDialog_View.prototype.updateDistanceInf = function(){
 	this.m_delivCostComment.setValue(com);
 }
 DOCOrderDialog_View.prototype.changeDelivType = function(){
+console.log("DOCOrderDialog_View.prototype.changeDelivType")
 	var vis=(this.m_delivTypeCtrl.getValue()=="by_supplier");
 	this.m_toThirdPartyCtrl.setEnabled(vis);	
 	this.m_delivCostOptCtrl.setEnabled(vis);

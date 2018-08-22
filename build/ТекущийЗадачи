@@ -73,3 +73,29 @@ pg_restore -U polimerplast -v -e -d plpl_test plpl.dump
 Например напишешь лугове, а выходит хабаровский край.
 
 
+
+************************************
+--DROP VIEW doc_orders_t_tmp_products_list;
+--DROP VIEW doc_orders_t_tmp_products_dialog;
+--ALTER TABLE public.doc_orders_t_tmp_products ALTER COLUMN quant TYPE numeric;
+--ALTER TABLE public.doc_orders_t_tmp_products ALTER COLUMN quant_confirmed TYPE numeric;
+--ALTER TABLE public.doc_orders_t_tmp_products ALTER COLUMN quant_confirmed_base_measure_unit TYPE numeric;
+ALTER TABLE public.doc_orders_t_tmp_products ALTER COLUMN quant_base_measure_unit TYPE numeric;
+
+
+
+--DROP VIEW doc_orders_print_h;
+--DROP VIEW rep_sales;
+--DROP VIEW doc_orders_print_products;
+--DROP VIEW doc_orders_t_products_dialog;
+--DROP VIEW doc_orders_all_for_client_list;
+--DROP VIEW doc_orders_all_for_production_list;
+--DROP VIEW doc_orders_all_list;
+--DROP VIEW doc_orders_current_for_client_list;
+--DROP VIEW doc_orders_new_list;
+--DROP VIEW doc_orders_list;
+--DROP VIEW doc_orders_data_for_ext;
+--ALTER TABLE public.doc_orders_t_products ALTER COLUMN quant TYPE numeric;
+--ALTER TABLE public.doc_orders_t_products ALTER COLUMN quant_confirmed TYPE numeric;
+--ALTER TABLE public.doc_orders_t_products ALTER COLUMN quant_confirmed_base_measure_unit TYPE numeric;
+--ALTER TABLE public.doc_orders_t_products ALTER COLUMN quant_base_measure_unit TYPE numeric;

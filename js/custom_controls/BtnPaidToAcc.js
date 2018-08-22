@@ -39,7 +39,10 @@ function BtnPaidToAcc(options){
 				}
 			},
 			"cont":this,
-			"errControl":options.grid.getErrorControl()
+			"err":function(resp,errCode,errStr){				
+				self.setEnabled(true);	
+				WindowMessage.show({"text":errStr});
+			}
 		});
 	};		
 	BtnPaidToAcc.superclass.constructor.call(this,

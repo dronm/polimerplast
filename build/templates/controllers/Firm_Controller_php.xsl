@@ -42,7 +42,9 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		parent::insert($pm);
 	}
 	public function update($pm){
-		$this->check_firm($pm);
+		if (!$pm->getParamValue('deleted')){
+			$this->check_firm($pm);
+		}
 		parent::update($pm);
 	}	
 </xsl:template>

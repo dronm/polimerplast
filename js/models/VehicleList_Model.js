@@ -157,6 +157,15 @@ function VehicleList_Model(options){
 	
 	options.fields.trailer_plate = new FieldString("trailer_plate",filed_options);
 	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	filed_options.alias = 'Водитель связан с 1с';
+	filed_options.autoInc = false;	
+	
+	options.fields.driver_match_1c = new FieldString("driver_match_1c",filed_options);
+	
 		VehicleList_Model.superclass.constructor.call(this,id,options);
 }
 extend(VehicleList_Model,Model);

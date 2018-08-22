@@ -154,7 +154,9 @@ class Firm_Controller extends ControllerSQL{
 		parent::insert($pm);
 	}
 	public function update($pm){
-		$this->check_firm($pm);
+		if (!$pm->getParamValue('deleted')){
+			$this->check_firm($pm);
+		}
 		parent::update($pm);
 	}	
 
