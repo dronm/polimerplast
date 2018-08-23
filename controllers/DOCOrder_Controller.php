@@ -2347,7 +2347,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 		}		
 		
 		$this->addNewModel(sprintf(
-		"SELECT %f AS quant",
+		"SELECT %s::numeric AS quant",
 		$quant		
 		),"calc_quant");
 		

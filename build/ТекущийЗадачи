@@ -99,3 +99,7 @@ ALTER TABLE public.doc_orders_t_tmp_products ALTER COLUMN quant_base_measure_uni
 --ALTER TABLE public.doc_orders_t_products ALTER COLUMN quant_confirmed TYPE numeric;
 --ALTER TABLE public.doc_orders_t_products ALTER COLUMN quant_confirmed_base_measure_unit TYPE numeric;
 --ALTER TABLE public.doc_orders_t_products ALTER COLUMN quant_base_measure_unit TYPE numeric;
+
+
+doc_order_totals 2 functions
+doc_order_calc_quant

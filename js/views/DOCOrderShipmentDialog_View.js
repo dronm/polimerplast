@@ -22,6 +22,7 @@ function DOCOrderShipmentDialog_View(id,options){
 		
 	var self = this;	
 	this.m_beforeOpen = function(contr,isInsert){
+		if (self.m_beforeOpenCalled)return;
 		var doc_id = 0;
 		
 		self.m_items.getGridControl().setViewId(self.m_viewId);
@@ -33,6 +34,7 @@ function DOCOrderShipmentDialog_View(id,options){
 			"doc_id":doc_id,
 			"view_id":self.m_viewId
 			}});
+		self.m_beforeOpenCalled = true;
 	}
 	
 	var model_id = "DOCOrderShipmentDialog_Model";
@@ -182,3 +184,8 @@ DOCOrderShipmentDialog_View.prototype.onWriteOk = function(resp){
 			)+"&doc_id="+this.m_idCtrl.getValue();	
 	}
 }
+
+DOCOrderShipmentDialog_View.prototype.getFormWidth = function(){
+	return "1000";
+}
+

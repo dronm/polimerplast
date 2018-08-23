@@ -148,9 +148,9 @@ function DOCOrderDOCTShipmentInline_View(id,options){
 	this.addDataControl(new EditFloat(id+"_quant_base_measure_unit",
 		{"name":"quant_base_measure_unit",
 		"tableLayout":false,
-		"precision":"6",
+		"precision":"9",
 		"enabled":false,
-		"attrs":{"size":"6","maxlength":"20"}
+		"attrs":{"size":"10","maxlength":"20"}
 		}
 		),
 		{"modelId":model_id,
@@ -161,9 +161,9 @@ function DOCOrderDOCTShipmentInline_View(id,options){
 	//Количество подтверждено базовое
 	this.addDataControl(new EditFloat(id+"_quant_confirmed_base_measure_unit",
 		{"name":"quant_confirmed_base_measure_unit",
-		"precision":"6",
+		"precision":"9",
 		"tableLayout":false,
-		"attrs":{"size":"6","maxlength":"20"},
+		"attrs":{"size":"10","maxlength":"20"},
 		"events":{
 			"input":function(){
 				self.onChangeBaseQuant();

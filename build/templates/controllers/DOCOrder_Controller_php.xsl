@@ -742,7 +742,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 		}		
 		
 		$this->addNewModel(sprintf(
-		"SELECT %f AS quant",
+		"SELECT %s::numeric AS quant",
 		$quant		
 		),"calc_quant");
 		

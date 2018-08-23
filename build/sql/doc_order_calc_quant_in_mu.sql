@@ -28,7 +28,7 @@ AS $body$
 		$1,--prod id		
 		$2, --mu to
 		$3,$4,$5,
-		--ROUND(
+		
 		CASE
 		WHEN 
 			(--базовая единица продукции

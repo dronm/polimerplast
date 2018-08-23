@@ -16,6 +16,7 @@ function DOCOrderDialog_View(id,options){
 	
 	var self = this;	
 	this.m_beforeOpen = function(contr,isInsert,isCopy){
+		if (self.m_beforeOpenCalled)return;
 		var doc_id = 0;		
 		
 		self.m_productDetails.getGridControl().setViewId(self.m_viewId);
@@ -34,6 +35,7 @@ function DOCOrderDialog_View(id,options){
 				"view_id":self.m_viewId
 			}
 		});
+		self.m_beforeOpenCalled = true;
 	}
 	
 	if (SERV_VARS.ROLE_ID=="sales_manager" || SERV_VARS.ROLE_ID=="representative" || SERV_VARS.ROLE_ID=="admin"){
@@ -1277,7 +1279,7 @@ DOCOrderDialog_View.prototype.updateDistanceInf = function(){
 	this.m_delivCostComment.setValue(com);
 }
 DOCOrderDialog_View.prototype.changeDelivType = function(){
-console.log("DOCOrderDialog_View.prototype.changeDelivType")
+//console.log("DOCOrderDialog_View.prototype.changeDelivType")
 	var vis=(this.m_delivTypeCtrl.getValue()=="by_supplier");
 	this.m_toThirdPartyCtrl.setEnabled(vis);	
 	this.m_delivCostOptCtrl.setEnabled(vis);

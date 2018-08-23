@@ -38,7 +38,7 @@ AS $body$
 	SELECT
 		CASE
 			WHEN (SELECT q.v FROM q)=0 THEN 0
-			ELSE ROUND($6/(SELECT q.v FROM q),4)
+			ELSE ROUND($6/(SELECT q.v FROM q), (SELECT CASE WHEN mu.is_int THEN 0 ELSE 9 END FROM measure_units AS mu WHERE mu.id=$2))
 		END AS quant
 	;
 $body$

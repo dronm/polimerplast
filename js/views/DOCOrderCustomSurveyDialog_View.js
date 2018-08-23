@@ -20,6 +20,7 @@ function DOCOrderCustSurveyDialog_View(id,options){
 		
 	var self = this;	
 	this.m_beforeOpen = function(contr,isInsert){
+		if (self.m_beforeOpenCalled)return;
 		var doc_id = 0;
 		
 		self.m_questions.getGridControl().setViewId(self.m_viewId);
@@ -31,6 +32,7 @@ function DOCOrderCustSurveyDialog_View(id,options){
 			"doc_id":doc_id,
 			"view_id":self.m_viewId
 			}});
+		self.m_beforeOpenCalled = true;
 	}
 	
 	var model_id = "DOCOrderCustSurveyDialog_Model";

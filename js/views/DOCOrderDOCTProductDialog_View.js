@@ -655,7 +655,7 @@ DOCOrderDOCTProductDialog_View.prototype.measureUnitsCheck = function(resp){
 }
 
 DOCOrderDOCTProductDialog_View.prototype.getFormWidth = function(){
-	return "800";
+	return "900";
 }
 DOCOrderDOCTProductDialog_View.prototype.getFormHeight = function(){
 	return "600";
