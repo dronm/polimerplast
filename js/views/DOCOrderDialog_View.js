@@ -324,8 +324,7 @@ function DOCOrderDialog_View(id,options){
 		"fieldId":"deliv_destination_id",
 		"winObj":options.winObj,
 		"options":{
-			"onSelect":function(){
-			console.log("onSelect")
+			"onSelected":function(){
 				self.calcVehicleCount();
 			}
 		}		
