@@ -323,9 +323,9 @@ function DOCOrderDialog_View(id,options){
 	this.m_clientDestCtrl = new ClientDestinationEdit2(id+"_deliv_destination",{
 		"fieldId":"deliv_destination_id",
 		"winObj":options.winObj,
+		"mainView":this,
 		"options":{
 			"onSelected":function(){
-			console.log("onSelect")
 				self.calcDelivCost();
 			}
 		}		

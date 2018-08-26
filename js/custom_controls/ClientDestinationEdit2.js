@@ -5,6 +5,8 @@ function ClientDestinationEdit2(id,opts){
 	this.m_paramId = "client_id";
 	this.m_pm.setParamValue(this.m_paramId,options.clientId);	
 	
+	this.m_mainView = opts.mainView;
+	
 	options =
 		{"attrs":{"required":"required"},
 		"noSelect":true,
@@ -109,6 +111,7 @@ ClientDestinationEdit2.prototype.openForm = function(keys){
 			if (self.m_extView.m_lastInsertedId){
 				self.setAttr("fkey_deliv_destination_id",self.m_extView.m_lastInsertedId);
 				DOMHandler.removeClass(self.m_node,"error");
+				self.m_mainView.calcDelivCost();
 			}
 			
 			self.m_extView.removeDOM();
