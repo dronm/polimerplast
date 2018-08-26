@@ -108,6 +108,7 @@ CREATE OR REPLACE VIEW doc_orders_data_for_ext AS
 		pg.ext_id AS product_group_ref,
 		
 		p.fin_group,
+		p.analit_group,
 		
 		products_descr(p,
 			t.mes_length,t.mes_width,t.mes_height,

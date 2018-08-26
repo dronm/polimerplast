@@ -1235,6 +1235,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 					'group_name'=>$ar['group_name'],
 					'product_group_ref'=>$ar['product_group_ref'],
 					'fin_group'=>$ar['fin_group'],
+					'analit_group'=>$ar['analit_group'],
 					'mes_length'=>$ar['mes_length'],
 					'mes_width'=>$ar['mes_width'],
 					'mes_height'=>$ar['mes_height'],
@@ -1289,6 +1290,9 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 	public function update_paid($pm,$field,$paid){
 		$params = new ParamsSQL($pm,$this->getDbLink());
 		$params->addAll();
+		
+		$this->check_for_pko($params->getDbVal('doc_id'));
+		
 		//Проверять будет не тип клиента cl.pay_type а атрибут фирмы f.cash
 		$ar = $this->getDbLink()->query_first(sprintf(
 		"SELECT
@@ -1298,7 +1302,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 		WHERE f.id=(SELECT o.firm_id
 				FROM doc_orders o
 				WHERE o.id=%d)",
-		$params->getParamById('doc_id')
+		$params->getDbVal('doc_id')
 		));
 		if (!is_array($ar) || !count($ar)){
 			throw new Exception("Не нашли организацию!");
@@ -1319,10 +1323,24 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 	public function set_paid($pm){
 		$this->update_paid($pm,'paid','TRUE');
 	}
+	
+	private function check_for_pko($docId){
+		$ar = $this->getDbLinkMaster()->query_first(sprintf(
+		"SELECT coalesce(acc_pko,FALSE) AS acc_pko FROM doc_orders WHERE id=%d",
+		$docId
+		));
+	
+		if (count($ar) &amp;&amp; $ar['acc_pko']=='t'){
+			throw new Exception('По документу уже выписан ПКО!');
+		}	
+	}
+	
 	public function set_not_paid($pm){
 		$params = new ParamsSQL($pm,$this->getDbLink());
 		$params->addAll();
-	
+
+		$this->check_for_pko($params->getDbVal('doc_id'));
+
 		$this->getDbLinkMaster()->query(sprintf(
 		"UPDATE doc_orders
 		SET paid=FALSE,paid_by_bank=FALSE,acc_pko=FALSE,acc_pko_total=0

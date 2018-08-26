@@ -21,7 +21,7 @@ function ClientDestinationEdit2(id,opts){
 		"patternParamId":"address",
 		"ic":null,
 		"mid":null,
-		"onSelected":null,
+		"onSelected":opts.options.onSelected,
 		"extraFields":null,
 		"resultFieldIdsToAttr":["is_old"],
 		"queryDelay":500,

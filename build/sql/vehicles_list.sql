@@ -32,6 +32,7 @@ CREATE OR REPLACE VIEW vehicles_list AS
 	LEFT JOIN drivers AS dr ON dr.id=v.driver_id
 	LEFT JOIN carriers AS cr ON cr.id=v.carrier_id
 	LEFT JOIN deliv_cost_opts_list AS dco ON dco.id=v.deliv_cost_opt_id
-	ORDER BY v.plate;
+	ORDER BY dr.name;
+	--v.plate;
 ALTER TABLE vehicles_list OWNER TO polimerplast;
 

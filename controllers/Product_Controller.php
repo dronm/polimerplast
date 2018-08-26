@@ -169,6 +169,9 @@ class Product_Controller extends ControllerSQL{
 		$param = new FieldExtText('fin_group'
 				,array());
 		$pm->addParam($param);
+		$param = new FieldExtText('analit_group'
+				,array());
+		$pm->addParam($param);
 		$param = new FieldExtBool('deleted'
 				,array());
 		$pm->addParam($param);
@@ -371,6 +374,10 @@ class Product_Controller extends ControllerSQL{
 			));
 			$pm->addParam($param);
 		$param = new FieldExtText('fin_group'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtText('analit_group'
 				,array(
 			));
 			$pm->addParam($param);

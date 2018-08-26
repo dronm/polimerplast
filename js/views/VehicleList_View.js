@@ -39,6 +39,11 @@ function VehicleList_View(id,options){
 		"readBind":{"valueFieldId":"id"},"keyCol":true,
 		"visible":false
 		}));
+	row.addElement(new GridDbHeadCell(id+"_col_driver_descr",{"value":"Водитель",
+		"readBind":{"valueFieldId":"driver_descr"},
+		"sortable":true,"sort":"asc"
+		}));		
+		
 	row.addElement(new GridDbHeadCell(id+"_col_plate",{"value":"Гос.номер",
 		"readBind":{"valueFieldId":"plate"},"descrCol":true,
 		"sortable":true}));
@@ -47,11 +52,8 @@ function VehicleList_View(id,options){
 		}));
 	row.addElement(new GridDbHeadCell(id+"_col_production_city_descr",{"value":"Город",
 		"readBind":{"valueFieldId":"production_city_descr",
-		"sortable":true,"sort":"asc"}
+		"sortable":true}
 		}));
-	row.addElement(new GridDbHeadCell(id+"_col_driver_descr",{"value":"Водитель",
-		"readBind":{"valueFieldId":"driver_descr"}
-		}));		
 	row.addElement(new GridDbHeadCellBool(id+"_col_employed",{"value":"Пост.",
 		"readBind":{"valueFieldId":"employed",
 		"sortable":true}

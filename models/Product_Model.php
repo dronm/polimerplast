@@ -412,6 +412,14 @@ class Product_Model extends ModelSQL{
 		$this->addField($f_fin_group);
 		//********************
 		
+		//*** Field analit_group ***
+		$f_opts = array();
+		$f_opts['id']="analit_group";
+				
+		$f_analit_group=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"analit_group",$f_opts);
+		$this->addField($f_analit_group);
+		//********************
+		
 		//*** Field deleted ***
 		$f_opts = array();
 		$f_opts['defaultValue']='FALSE';

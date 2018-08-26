@@ -322,7 +322,14 @@ function DOCOrderDialog_View(id,options){
 		
 	this.m_clientDestCtrl = new ClientDestinationEdit2(id+"_deliv_destination",{
 		"fieldId":"deliv_destination_id",
-		"winObj":options.winObj});
+		"winObj":options.winObj,
+		"options":{
+			"onSelect":function(){
+			console.log("onSelect")
+				self.calcVehicleCount();
+			}
+		}		
+	});
 	/*
 	this.m_clientDestCtrl = new ClientDestinationEdit(id+"_deliv_destination",{
 		"fieldId":"deliv_destination_id",

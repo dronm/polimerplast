@@ -312,6 +312,12 @@ extend(Product_Controller,ControllerDb);
 	
 	options = {};
 	
+	var param = new FieldText("analit_group",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
 	var param = new FieldBool("deleted",options);
 	
 	pm.addParam(param);
@@ -608,6 +614,12 @@ extend(Product_Controller,ControllerDb);
 	options = {};
 	
 	var param = new FieldText("fin_group",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("analit_group",options);
 	
 	pm.addParam(param);
 	

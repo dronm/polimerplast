@@ -61,8 +61,8 @@ CREATE OR REPLACE VIEW products_dialog AS
 		pg.name AS product_group_descr,
 		
 		p.fin_group,
-		p.deleted
-		
+		p.deleted,
+		p.analit_group		
 	
 	FROM products AS p
 	LEFT JOIN measure_units AS mu ON mu.id=p.base_measure_unit_id

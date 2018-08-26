@@ -96,6 +96,24 @@ function ProductDialog_View(id,options){
 		"keyFieldIds":null},
 	{"valueFieldId":"fin_group","keyFieldIds":null});	
 	this.addControl(ctrl);
+
+	//Группа аналит.учета для 1с
+	ctrl = new EditString(id+"_analit_group",
+		{"labelCaption":"Группа аналитического учета:",
+		"name":"analit_group",
+		"buttonClear":false,
+		"tableLayout":false,
+		"attrs":{"maxlength":500,
+			"size":100
+			}
+		}
+	);
+	this.bindControl(ctrl,
+		{"modelId":model_id,
+		"valueFieldId":"analit_group",
+		"keyFieldIds":null},
+	{"valueFieldId":"analit_group","keyFieldIds":null});	
+	this.addControl(ctrl);
 	
 	this.addDataControl(
 		new EditCheckBox(id+"_deleted",
