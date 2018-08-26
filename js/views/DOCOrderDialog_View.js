@@ -325,7 +325,8 @@ function DOCOrderDialog_View(id,options){
 		"winObj":options.winObj,
 		"options":{
 			"onSelected":function(){
-				self.calcVehicleCount();
+			console.log("onSelect")
+				self.calcDelivCost();
 			}
 		}		
 	});
