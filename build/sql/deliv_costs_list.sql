@@ -1,6 +1,6 @@
 -- View: deliv_costs_list
 
-DROP VIEW deliv_costs_list;
+--DROP VIEW deliv_costs_list;
 
 CREATE OR REPLACE VIEW deliv_costs_list AS 
 	SELECT
@@ -12,7 +12,8 @@ CREATE OR REPLACE VIEW deliv_costs_list AS
 		
 		dc.deliv_cost_type,
 		get_deliv_cost_types_descr(dc.deliv_cost_type) AS deliv_cost_type_descr,
-		dc.cost
+		dc.cost,
+		dc.cost2
 		
 	FROM deliv_costs AS dc
 	LEFT JOIN production_cities AS ct ON ct.id=dc.production_city_id

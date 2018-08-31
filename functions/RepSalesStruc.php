@@ -178,8 +178,21 @@ ORDER BY "Фирма","Клиент"
 				FROM deliveries dlv
 				LEFT JOIN vehicles AS vh ON vh.id=dlv.vehicle_id
 				LEFT JOIN drivers AS dr ON dr.id=vh.driver_id
-				) AS deliveries_virt ON deliveries_virt.doc_order_id=doc_orders.id"
+				) AS deliveries_virt ON deliveries_virt.doc_order_id=doc_orders.id AND doc_orders.driver_id IS NULL"
 		),
+		"order_deliv_virt"=>array(
+			"sub_joins"=>array("doc_orders"),
+			"clause"=>"
+				(SELECT
+					drv.id AS driver_id,
+					drv.name AS driver_descr,
+					vh.plate AS vehicle_descr,
+					vh.id AS vehicle_id
+				FROM drivers drv
+				LEFT JOIN vehicles AS vh ON vh.driver_id=drv.id
+				) AS order_deliv_virt ON order_deliv_virt.driver_id=doc_orders.driver_id"
+		),
+		
 		"doc_orders_states"=>array(
 			"sub_joins"=>array("doc_orders"),
 			"clause"=>"(
@@ -430,19 +443,20 @@ $field_resolver =
 		),
 			
 		"doc_driver_descr" => array(
-			"fieldWhere"=>"driver_id",
-			"field"=>"driver_descr",
-			"table"=>"deliveries_virt"
+			//"fieldWhere"=>"driver_id",
+			"fieldExprWhere"=>"(CASE WHEN doc_orders.driver_id IS NOT NULL THEN doc_orders.driver_id ELSE deliveries_virt.driver_id END)",
+			"fieldExpr"=>"(CASE WHEN doc_orders.driver_id IS NOT NULL THEN order_deliv_virt.driver_descr ELSE deliveries_virt.driver_descr END)",
+			"table"=>["order_deliv_virt","deliveries_virt"]
 		),			
 		"doc_driver_id" => array(
-			"field"=>"driver_id",
-			"table"=>"deliveries_virt"
+			"fieldExpr"=>"(CASE WHEN doc_orders.driver_id IS NOT NULL THEN doc_orders.driver_id ELSE deliveries_virt.driver_id END)",
+			"table"=>["order_deliv_virt","deliveries_virt"]
 		),			
 			
 		"doc_vehicle_descr" => array(
-			"fieldWhere"=>"vehicle_id",
-			"field"=>"vehicle_descr",
-			"table"=>"deliveries_virt"
+			"fieldExprWhere"=>"(CASE WHEN doc_orders.driver_id IS NOT NULL THEN order_deliv_virt.vehicle_descr ELSE deliveries_virt.vehicle_descr END)",
+			"fieldExpr"=>"(CASE WHEN doc_orders.driver_id IS NOT NULL THEN order_deliv_virt.vehicle_descr ELSE deliveries_virt.vehicle_descr END)",
+			"table"=>["order_deliv_virt","deliveries_virt"]
 		),				
 		
 		"doc_ext_order_num" => array(

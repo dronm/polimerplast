@@ -94,6 +94,15 @@ function DelivCostList_Model(options){
 	
 	options.fields.cost = new FieldFloat("cost",filed_options);
 	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	filed_options.alias = 'Себестоимость';
+	filed_options.autoInc = false;	
+	
+	options.fields.cost2 = new FieldFloat("cost2",filed_options);
+	
 		DelivCostList_Model.superclass.constructor.call(this,id,options);
 }
 extend(DelivCostList_Model,Model);

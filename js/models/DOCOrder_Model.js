@@ -536,7 +536,25 @@ function DOCOrder_Model(options){
 	
 	filed_options.autoInc = false;	
 	
+	options.fields.deliv_expenses_edit = new FieldBool("deliv_expenses_edit",filed_options);
+	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	
+	filed_options.autoInc = false;	
+	
 	options.fields.deliv_pay_bank = new FieldBool("deliv_pay_bank",filed_options);
+	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	
+	filed_options.autoInc = false;	
+	
+	options.fields.driver_id = new FieldInt("driver_id",filed_options);
 	
 			
 			

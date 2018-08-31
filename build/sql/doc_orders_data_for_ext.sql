@@ -3,9 +3,10 @@
 --DROP VIEW doc_orders_data_for_ext;
 
 /*
-АТРИБУТЫ ВОДИТЕЛЬ - ДЛЯ ЗАПИСИ В СВОЙСТВА!!!
+ * АТРИБУТЫ ВОДИТЕЛЬ - ДЛЯ ЗАПИСИ В СВОЙСТВА!!!
 */
 CREATE OR REPLACE VIEW doc_orders_data_for_ext AS 
+	/*
 	WITH
 	ttn_data AS (
 		SELECT
@@ -27,6 +28,7 @@ CREATE OR REPLACE VIEW doc_orders_data_for_ext AS
 		LEFT JOIN vehicles AS t_vh ON t_vh.id=t.vehicle_id
 		WHERE t.ord=carrier_orders_today_ord(now()::timestamp without time zone)
 	)
+	*/
 	SELECT
 		--t.doc_id,
 		h.id AS doc_id,
@@ -35,8 +37,8 @@ CREATE OR REPLACE VIEW doc_orders_data_for_ext AS
 		f.ext_id AS firm_ref,
 		w.ext_id AS warehouse_ref,
 		w.address AS warehouse_address,
-		c.ext_id AS client_ref,
-		(c.pay_type='cash'::payment_types) AS pay_cash,
+		cl.ext_id AS client_ref,
+		(cl.pay_type='cash'::payment_types) AS pay_cash,
 		
 		CASE
 		WHEN h.deliv_type='by_supplier'::delivery_types
@@ -53,52 +55,63 @@ CREATE OR REPLACE VIEW doc_orders_data_for_ext AS
 		CASE
 			WHEN coalesce(h.destination_to_ttn,FALSE) THEN
 				dest.address
-			ELSE c.addr_reg
+			ELSE cl.addr_reg
 		END AS deliv_address,
 		
 		CASE
-			WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.driver_ref FROM ttn_data)
+			--WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.driver_ref FROM ttn_data)
+			WHEN order_dr IS NOT NULL THEN order_dr.ext_id
 			ELSE dr.ext_id
 		END AS driver_ref,
 		CASE
-			WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.driver_name FROM ttn_data)
+			--WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.driver_name FROM ttn_data)
+			WHEN order_dr IS NOT NULL THEN order_dr.name
 			ELSE dr.name
 		END AS driver_name,
 		CASE
-			WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.driver_drive_perm FROM ttn_data)
+			--WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.driver_drive_perm FROM ttn_data)
+			WHEN order_dr IS NOT NULL THEN order_dr.drive_perm
 			ELSE dr.drive_perm
 		END AS driver_drive_perm,
 		CASE
-			WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.driver_cel_phone FROM ttn_data)
+			--WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.driver_cel_phone FROM ttn_data)
+			WHEN order_dr IS NOT NULL THEN order_dr.cel_phone
 			ELSE dr.cel_phone
 		END AS driver_cel_phone,
 
 		CASE
-			WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.vh_trailer_plate FROM ttn_data)
+			--WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.vh_trailer_plate FROM ttn_data)
+			WHEN order_vh IS NOT NULL THEN order_vh.trailer_plate
 			ELSE vh.trailer_plate
 		END AS vh_trailer_plate,
 		CASE
-			WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.vh_trailer_model FROM ttn_data)
+			--WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.vh_trailer_model FROM ttn_data)
+			WHEN order_vh IS NOT NULL THEN order_vh.trailer_model
 			ELSE vh.trailer_model
 		END AS vh_trailer_model,
 		CASE
-			WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.carrier_ref FROM ttn_data)
-			ELSE NULL
+			--WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.carrier_ref FROM ttn_data)
+			WHEN order_dr IS NOT NULL THEN order_carr_cl.ext_id
+			ELSE carr_cl.ext_id
 		END AS carrier_ref,
 		CASE
-			WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.vh_model FROM ttn_data)
+			--WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.vh_model FROM ttn_data)
+			WHEN order_vh IS NOT NULL THEN order_vh.model
 			ELSE vh.model
 		END AS vh_model,
 		CASE
-			WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.vh_plate FROM ttn_data)
+			--WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.vh_plate FROM ttn_data)
+			WHEN order_vh IS NOT NULL THEN order_vh.plate
 			ELSE vh.plate
 		END AS vh_plate,
 		CASE
-			WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.vh_vol FROM ttn_data)
+			--WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.vh_vol FROM ttn_data)
+			WHEN order_vh IS NOT NULL THEN order_vh.vol
 			ELSE vh.vol
 		END AS vh_vol,
 		CASE
-			WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.vh_load_weight_t FROM ttn_data)
+			--WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.vh_load_weight_t FROM ttn_data)
+			WHEN order_vh IS NOT NULL THEN order_vh.load_weight_t
 			ELSE vh.load_weight_t
 		END AS vh_load_weight_t,
 		
@@ -163,7 +176,7 @@ CREATE OR REPLACE VIEW doc_orders_data_for_ext AS
 	LEFT JOIN products p ON p.id=t.product_id
 	LEFT JOIN firms f ON f.id=h.firm_id
 	LEFT JOIN warehouses w ON w.id=h.warehouse_id
-	LEFT JOIN clients c ON c.id=h.client_id
+	LEFT JOIN clients cl ON cl.id=h.client_id
 	LEFT JOIN client_destinations_list dest ON dest.id=h.deliv_destination_id
 	LEFT JOIN measure_units mu ON mu.id=t.measure_unit_id
 	LEFT JOIN product_measure_units AS pmu
@@ -173,13 +186,20 @@ CREATE OR REPLACE VIEW doc_orders_data_for_ext AS
 	LEFT JOIN vehicles vh ON vh.id=dlv.vehicle_id
 	LEFT JOIN drivers dr ON dr.id=vh.driver_id
 	LEFT JOIN product_groups pg ON pg.id=p.product_group_id
+	LEFT JOIN drivers AS order_dr ON order_dr.id=h.driver_id
+	LEFT JOIN vehicles AS order_vh ON order_vh.driver_id=h.driver_id
+	LEFT JOIN carriers ON carriers.id=vh.carrier_id
+	LEFT JOIN clients AS carr_cl ON carr_cl.id=carriers.client_id
+	LEFT JOIN carriers AS order_carr ON order_carr.id=order_vh.carrier_id
+	LEFT JOIN clients AS order_carr_cl ON order_carr_cl.id=order_carr.client_id
+	/*
 	LEFT JOIN 
 		(SELECT
 			ttn_attr_pairs.warehouse_id,
 			ttn_attr_pairs.firm_id
 		FROM ttn_attr_pairs
 		) AS ttn_pairs ON ttn_pairs.firm_id=h.firm_id AND ttn_pairs.warehouse_id=h.warehouse_id
-	
+	*/
 	;
 ALTER TABLE doc_orders_data_for_ext OWNER TO polimerplast;
 

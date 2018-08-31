@@ -37,7 +37,14 @@ class DelivCost_Controller extends ControllerSQL{
 				,array('required'=>TRUE));
 		$pm->addParam($param);
 		$param = new FieldExtFloat('cost'
-				,array());
+				,array(
+				'alias'=>'Стоимость для контрагента'
+			));
+		$pm->addParam($param);
+		$param = new FieldExtFloat('cost2'
+				,array(
+				'alias'=>'Себестоимость'
+			));
 		$pm->addParam($param);
 		
 		$pm->addParam(new FieldExtInt('ret_id'));
@@ -74,6 +81,14 @@ class DelivCost_Controller extends ControllerSQL{
 			$pm->addParam($param);
 		$param = new FieldExtFloat('cost'
 				,array(
+			
+				'alias'=>'Стоимость для контрагента'
+			));
+			$pm->addParam($param);
+		$param = new FieldExtFloat('cost2'
+				,array(
+			
+				'alias'=>'Себестоимость'
 			));
 			$pm->addParam($param);
 		

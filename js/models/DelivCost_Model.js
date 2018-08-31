@@ -67,10 +67,19 @@ function DelivCost_Model(options){
 	
 	var filed_options = {};
 	filed_options.primaryKey = false;	
-	
+	filed_options.alias = 'Стоимость для контрагента';
 	filed_options.autoInc = false;	
 	
 	options.fields.cost = new FieldFloat("cost",filed_options);
+	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	filed_options.alias = 'Себестоимость';
+	filed_options.autoInc = false;	
+	
+	options.fields.cost2 = new FieldFloat("cost2",filed_options);
 	
 			
 		DelivCost_Model.superclass.constructor.call(this,id,options);

@@ -546,10 +546,20 @@ function DOCOrderDialog_View(id,options){
 	
 	if (SERV_VARS.ROLE_ID!="client"){
 		//себестоимость
-		this.m_delivExpCtrl = new EditString(id+"_deliv_expenses",
-			{"labelCaption":"Затраты на доставку:","name":"deliv_expenses",		
-			"tableLayout":false,"attrs":{"maxlength":"15"}}
-		);		
+		var ctrl_edit = new Control(id+"_deliv_expenses_edit","div",{
+			"name":"deliv_expenses_edit",
+			"tableLayout":false,
+			"visible":false,
+			"value":"false"});
+		this.bindControl(ctrl_edit,
+			{"modelId":model_id,"valueFieldId":"deliv_expenses_edit","keyFieldIds":null},
+			{"valueFieldId":"deliv_expenses_edit","keyFieldIds":null});	
+		sub_cont.addElement(ctrl_edit);				
+		this.m_delivExpCtrl = new EditMoneyEditable(id+"_deliv_expenses",
+			{"labelCaption":"Затраты на доставку (руб.):","name":"deliv_expenses",		
+			"tableLayout":false,
+			"editAllowedFieldCtrl":ctrl_edit
+		});		
 		this.bindControl(this.m_delivExpCtrl,
 			{"modelId":model_id,"valueFieldId":"deliv_expenses","keyFieldIds":null},
 			{"valueFieldId":"deliv_expenses","keyFieldIds":null});	
@@ -908,6 +918,9 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 				if (this.m_delivCost.setEditEnabled){
 					this.m_delivCost.setEditEnabled(false);
 				}
+				if (this.m_delivExpCtrl.setEditEnabled){
+					this.m_delivExpCtrl.setEditEnabled(false);
+				}				
 				this.m_delivCostOptCtrl.setEnabled(false);
 			}
 			else{
@@ -949,6 +962,10 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 			if (m.getFieldValue("deliv_total_edit")!="true"){
 				this.m_delivCost.setEnabled(false);
 			}
+			if (m.getFieldValue("deliv_expenses_edit")!="true"){
+				this.m_delivExpCtrl.setEnabled(false);
+			}
+			
 			this.m_savedVehCount = toInt(m.getFieldValue("deliv_vehicle_count"));
 			
 			if (this.m_clientCtrl){
@@ -1040,6 +1057,7 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 	
 	if (do_calc){
 		this.m_delivCost.setValue("");
+		this.m_delivExpCtrl.setValue("");
 	}
 	
 	var wh_id = this.m_wareHCtrl.getFieldValue();
@@ -1092,6 +1110,7 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 					if (do_calc){
 						var v_cnt = self.m_delivVehicleCntCtrl.getValue();					
 						self.m_delivCost.setValue(parseFloat(m.getFieldValue("total_cost")).toFixed(2)*v_cnt);
+						self.m_delivExpCtrl.setValue(parseFloat(m.getFieldValue("total_cost2")).toFixed(2)*v_cnt);
 					
 						self.recalcProductPrices();
 					}	
@@ -1291,7 +1310,6 @@ DOCOrderDialog_View.prototype.changeDelivType = function(){
 	this.m_toThirdPartyCtrl.setEnabled(vis);	
 	this.m_delivCostOptCtrl.setEnabled(vis);
 	if (SERV_VARS.ROLE_ID!="client"){
-		this.m_delivExpCtrl.setEnabled(vis);
 		this.m_delivPayBank.setEnabled(vis);
 	}	
 	this.m_delivAddToCostCtrl.setEnabled(vis);

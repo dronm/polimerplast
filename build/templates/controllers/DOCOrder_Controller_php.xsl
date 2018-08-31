@@ -857,9 +857,11 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 		$out_city_route='NULL';
 		$out_city_route_distance=0;
 		$out_city_cost=0;
+		$out_city_cost2=0;
 		$out_country_route='NULL';
 		$out_country_route_distance=0;
 		$out_country_cost=0;
+		$out_country_cost2=0;
 		
 		if ($ar['city_route_distance']||$ar['country_route_distance']){
 			//!!!cache data!!!
@@ -869,6 +871,8 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 			$out_country_route = $ar['country_route'];
 			$out_country_route_distance = $ar['country_route_distance'];
 			$out_country_cost = $ar['country_cost'];		
+			$out_city_cost2 = $ar['city_cost2'];
+			$out_country_cost2 = $ar['country_cost2'];
 		}
 		else if (is_array($ar)&amp;&amp;count($ar)){
 			if (!$ar['wh_near_road_lon']
@@ -911,7 +915,8 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 				costs AS(
 					SELECT
 						t.deliv_cost_type,						
-						t.cost
+						t.cost,
+						t.cost2
 					FROM deliv_costs t
 					WHERE t.production_city_id=%d
 						AND t.deliv_cost_opt_id=%d
@@ -935,7 +940,19 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 				(SELECT t.cost
 				FROM costs t
 				WHERE t.deliv_cost_type='country'
-				) AS country_cost
+				) AS country_cost,
+				
+				--Тариф city себест
+				(SELECT t.cost2
+				FROM costs t
+				WHERE t.deliv_cost_type='city'
+				) AS city_cost2,
+				--Тариф country себест
+				(SELECT t.cost2
+				FROM costs t
+				WHERE t.deliv_cost_type='country'
+				) AS country_cost2
+				
 				
 			FROM warehouses AS w
 			LEFT JOIN production_cities AS pc ON pc.id=w.production_city_id
@@ -1013,10 +1030,12 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 				$out_country_route='';
 			}
 			$out_city_cost = $ar['city_cost'];
+			$out_city_cost2 = $ar['city_cost2'];
 		}
 		
 		//Стоимость межгород за КМ
 		$out_country_cost = $ar['country_cost']*round($out_country_route_distance/1000);
+		$out_country_cost2 = $ar['country_cost2']*round($out_country_route_distance/1000);
 		
 		$m = new Model(array('id'=>'calc_deliv_cost'));
 		$m->addField(new Field('city_route',DT_STRING,array('value'=>$out_city_route)));
@@ -1026,6 +1045,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 		$m->addField(new Field('country_route_distance',DT_INT,array('value'=>$out_country_route_distance)));
 		$m->addField(new Field('country_cost',DT_FLOAT,array('value'=>$out_country_cost)));
 		$m->addField(new Field('total_cost',DT_FLOAT,array('value'=>$out_country_cost+$out_city_cost)));
+		$m->addField(new Field('total_cost2',DT_FLOAT,array('value'=>$out_country_cost2+$out_city_cost2)));
 		$m->insert();
 		$this->addModel($m);
 	}
@@ -1360,7 +1380,10 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 		$params->addAll();
 		
 		$doc_id = $params->getDbVal('doc_id');
-
+		
+		$driver_id = (strtolower($params->getDbVal('driver_id'))=='null'||!$params->getDbVal('driver_id'))? 0:$params->getDbVal('driver_id');
+		$deliv_vehicle_count = (strtolower($params->getDbVal('deliv_vehicle_count'))=='null'||!$params->getDbVal('deliv_vehicle_count'))? 0:$params->getDbVal('deliv_vehicle_count');
+		
 		$this->check_state($doc_id,"'produced'");
 		
 		//проверка на запрет
@@ -1373,9 +1396,11 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 		try{
 			//Отгрузка в БД
 			$link->query(sprintf(
-				"SELECT doc_orders_set_shipped(%d,%s)",
+				"SELECT doc_orders_set_shipped(%d,%s,%d,%d)",
 				$doc_id,
-				$params->getDbVal('view_id')
+				$params->getDbVal('view_id'),
+				$driver_id,
+				$deliv_vehicle_count
 			));
 			
 			//ДАННЫЕ ДЛЯ 1С

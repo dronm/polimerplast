@@ -82,7 +82,9 @@ CREATE OR REPLACE VIEW doc_orders_dialog AS
 		(SELECT sum(cld.def_debt) FROM client_debts cld WHERE cld.client_id=d.client_id AND cld.firm_id=d.firm_id) def_debt,
 		
 		d.deliv_expenses,
-		d.deliv_pay_bank
+		d.deliv_pay_bank,		
+		d.deliv_expenses_edit
+		
 		
 		
 	FROM doc_orders AS d

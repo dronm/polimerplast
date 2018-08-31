@@ -57,11 +57,24 @@ class DelivCost_Model extends ModelSQL{
 		
 		//*** Field cost ***
 		$f_opts = array();
+		
+		$f_opts['alias']='Стоимость для контрагента';
 		$f_opts['length']=15;
 		$f_opts['id']="cost";
 				
 		$f_cost=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"cost",$f_opts);
 		$this->addField($f_cost);
+		//********************
+		
+		//*** Field cost2 ***
+		$f_opts = array();
+		
+		$f_opts['alias']='Себестоимость';
+		$f_opts['length']=15;
+		$f_opts['id']="cost2";
+				
+		$f_cost2=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"cost2",$f_opts);
+		$this->addField($f_cost2);
 		//********************
 	
 	}

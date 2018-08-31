@@ -52,8 +52,14 @@ extend(DelivCost_Controller,ControllerDb);
 	pm.addParam(param);
 	
 	options = {};
-	
+	options["alias"]="Стоимость для контрагента";
 	var param = new FieldFloat("cost",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	options["alias"]="Себестоимость";
+	var param = new FieldFloat("cost2",options);
 	
 	pm.addParam(param);
 	
@@ -99,8 +105,14 @@ extend(DelivCost_Controller,ControllerDb);
 	pm.addParam(param);
 	
 	options = {};
-	
+	options["alias"]="Стоимость для контрагента";
 	var param = new FieldFloat("cost",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	options["alias"]="Себестоимость";
+	var param = new FieldFloat("cost2",options);
 	
 	pm.addParam(param);
 	
@@ -129,6 +141,7 @@ extend(DelivCost_Controller,ControllerDb);
 	pm.addParam(new FieldString("deliv_cost_type",options));
 	pm.addParam(new FieldString("deliv_cost_type_descr",options));
 	pm.addParam(new FieldFloat("cost",options));
+	pm.addParam(new FieldFloat("cost2",options));
 }
 
 			DelivCost_Controller.prototype.addGetObject = function(){

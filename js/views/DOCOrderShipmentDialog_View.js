@@ -86,6 +86,41 @@ function DOCOrderShipmentDialog_View(id,options){
 		{}
 	);
 	cont.addElement(ctrl);	
+	
+	//Кол авто
+	this.m_delivVehicleCountCtrl = new EditNum(id+"_deliv_vehicle_count",{
+			"visible":false,
+			"editContClassName":"input-group "+get_bs_col()+"4",
+			"name":"deliv_vehicle_count",
+			"labelCaption":"Кол-во автомоб.:",
+			"tableLayout":false,
+			"alwaysUpdate":true
+	});
+	this.bindControl(this.m_delivVehicleCountCtrl,
+		{"modelId":model_id,
+		"valueFieldId":"deliv_vehicle_count",
+		"keyFieldIds":null},
+		{"modelId":model_id,
+		"valueFieldId":"deliv_vehicle_count","keyFieldIds":null}
+	);
+	cont.addElement(this.m_delivVehicleCountCtrl);	
+	//Водитель
+	this.m_driverCtrl = new DriverEditObject("driver_id","driver",false,{
+		"options":{
+			"visible":false,
+			"attrs":{"fkey_driver_id":"driver_id"},
+			"alwaysUpdate":true
+		}
+	});
+	this.bindControl(this.m_driverCtrl,
+		{"modelId":model_id,
+		"valueFieldId":"driver_name",
+		"keyFieldIds":["driver_id"]},
+		{"modelId":model_id,
+		"valueFieldId":null,"keyFieldIds":["driver_id"]}
+	);
+	cont.addElement(this.m_driverCtrl);	
+	
 	this.addElement(cont);	
 	
 	//Табличная часть
@@ -159,6 +194,11 @@ DOCOrderShipmentDialog_View.prototype.onGetData= function(resp){
 	var m = resp.getModelById("DOCOrderShipmentDialog_Model",true);	
 	if (m.getNextRow()){
 		this.m_payType = m.getFieldValue("pay_type");
+		
+		if (m.getFieldValue("deliv_type")=="by_supplier"){
+			this.m_delivVehicleCountCtrl.setVisible(true);
+			this.m_driverCtrl.setVisible(true);
+		}
 	}
 }
 

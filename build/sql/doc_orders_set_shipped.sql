@@ -4,7 +4,10 @@
 
 CREATE OR REPLACE FUNCTION doc_orders_set_shipped(
 		in_doc_id integer,
-		in_view_id varchar(32))
+		in_view_id varchar(32),
+		in_driver_id integer,
+		in_deliv_vehicle_count integer
+)
   RETURNS void AS
 $BODY$
 DECLARE
@@ -23,6 +26,10 @@ DECLARE
 	v_firm_id integer;
 	v_client_id integer;
 	v_paid bool;
+	
+	v_new_doc_deliv_total numeric(15,2);
+	v_new_doc_deliv_expenses numeric(15,2);
+	
 BEGIN
 	--всегда оплачено
 	--UPDATE doc_orders SET paid=TRUE WHERE id=in_doc_id;
@@ -31,6 +38,9 @@ BEGIN
 	DELETE FROM doc_orders_t_products WHERE doc_id=in_doc_id;
 
 	v_new_doc_id = 0;
+	v_new_doc_deliv_total = 0;
+	v_new_doc_deliv_expenses = 0;
+	
 	FOR r IN
 	SELECT t.*,
 		p.base_measure_unit_vol_m,
@@ -67,11 +77,14 @@ BEGIN
 				deliv_period_id,
 				deliv_responsable,
 				deliv_destination_id,
-				client_user_id,
-				deliv_total_edit,
+				client_user_id,				
 				deliv_cost_opt_id,
 				deliv_responsable_tel,
+				deliv_total_edit,
 				deliv_total,
+				deliv_expenses_edit,
+				deliv_expenses,				
+				deliv_vehicle_count,
 				submit_user_id
 				)
 				(
@@ -103,18 +116,41 @@ BEGIN
 					h.deliv_responsable,
 					h.deliv_destination_id,
 					h.client_user_id,
-					h.deliv_total_edit,
 					h.deliv_cost_opt_id,
 					h.deliv_responsable_tel,
-					--ROUND(h.deliv_total*v_new_prod_k,2)
-					0,
+					h.deliv_total_edit,
+					CASE
+						WHEN h.deliv_type='by_supplier' AND h.deliv_vehicle_count=in_deliv_vehicle_count
+							THEN h.deliv_total
+						WHEN h.deliv_type='by_supplier' AND COALESCE(h.deliv_vehicle_count,0)>0
+							THEN ROUND(h.deliv_total/h.deliv_vehicle_count*in_deliv_vehicle_count,2)
+						ELSE 0
+					END,
+					h.deliv_expenses_edit,
+					CASE
+						WHEN h.deliv_type='by_supplier' AND h.deliv_vehicle_count=in_deliv_vehicle_count
+							THEN h.deliv_expenses
+						WHEN h.deliv_type='by_supplier' AND COALESCE(h.deliv_vehicle_count,0)>0
+							THEN ROUND(h.deliv_expenses/h.deliv_vehicle_count*in_deliv_vehicle_count,2)
+						ELSE 0
+					END,					
+					CASE
+						WHEN h.deliv_type='by_supplier' AND  COALESCE(h.deliv_vehicle_count,0)>in_deliv_vehicle_count
+							THEN h.deliv_vehicle_count-in_deliv_vehicle_count
+						ELSE 0
+					END,
 					h.submit_user_id
+
 				FROM doc_orders AS h
 				WHERE h.id=in_doc_id
 				)
-				RETURNING id,user_id
-					INTO v_new_doc_id,
-						v_new_doc_user_id;
+				RETURNING id,user_id,deliv_total,deliv_expenses
+				INTO
+					v_new_doc_id,
+					v_new_doc_user_id,
+					v_new_doc_deliv_total,
+					v_new_doc_deliv_expenses
+				;
 				
 				--Отметим связку
 				INSERT INTO doc_orders_links
@@ -341,11 +377,23 @@ BEGIN
 			AND client_id = v_client_id
 		;
 	END IF;
+	
+	--Обновить доставкибводителя если есть
+	IF in_driver_id>0 OR in_deliv_vehicle_count>0 THEN
+		UPDATE doc_orders
+		SET
+			driver_id = CASE WHEN in_driver_id>0 THEN in_driver_id ELSE NULL END,
+			deliv_vehicle_count = CASE WHEN in_deliv_vehicle_count>0 THEN in_deliv_vehicle_count ELSE deliv_vehicle_count END,
+			deliv_total = coalesce(deliv_total,0) - v_new_doc_deliv_total,
+			deliv_expenses = coalesce(deliv_expenses,0) - v_new_doc_deliv_expenses
+		WHERE
+			id=in_doc_id;
+	END IF;
 		
 	RETURN;
 END;		
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
-ALTER FUNCTION doc_orders_set_shipped(integer, varchar(32))
+ALTER FUNCTION doc_orders_set_shipped(integer, varchar(32),integer,integer)
   OWNER TO polimerplast;

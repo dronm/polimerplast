@@ -63,5 +63,14 @@ function DelivCostInline_View(id,options){
 		"keyFieldIds":null},
 		{"valueFieldId":"cost","keyFieldIds":null}
 	);	
+	this.addDataControl(
+		new EditMoney(id+"_cost2",
+		{"attrs":{"required":"required"}}),
+		{"modelId":model_id,
+		"valueFieldId":"cost2",
+		"keyFieldIds":null},
+		{"valueFieldId":"cost2","keyFieldIds":null}
+	);	
+	
 }
 extend(DelivCostInline_View,ViewInlineGridEdit);

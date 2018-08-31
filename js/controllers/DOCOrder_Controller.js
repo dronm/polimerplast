@@ -411,7 +411,19 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	options = {};
 	
+	var param = new FieldBool("deliv_expenses_edit",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
 	var param = new FieldBool("deliv_pay_bank",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldInt("driver_id",options);
 	
 	pm.addParam(param);
 	
@@ -767,7 +779,19 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	options = {};
 	
+	var param = new FieldBool("deliv_expenses_edit",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
 	var param = new FieldBool("deliv_pay_bank",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldInt("driver_id",options);
 	
 	pm.addParam(param);
 	
@@ -1196,6 +1220,12 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 				
 		pm.addParam(new FieldString("view_id"));
+	
+				
+		pm.addParam(new FieldInt("deliv_vehicle_count"));
+	
+				
+		pm.addParam(new FieldInt("driver_id"));
 	
 			
 }

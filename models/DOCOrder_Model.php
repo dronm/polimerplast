@@ -493,12 +493,28 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$this->addField($f_deliv_expenses);
 		//********************
 		
+		//*** Field deliv_expenses_edit ***
+		$f_opts = array();
+		$f_opts['id']="deliv_expenses_edit";
+				
+		$f_deliv_expenses_edit=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_expenses_edit",$f_opts);
+		$this->addField($f_deliv_expenses_edit);
+		//********************
+		
 		//*** Field deliv_pay_bank ***
 		$f_opts = array();
 		$f_opts['id']="deliv_pay_bank";
 				
 		$f_deliv_pay_bank=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_pay_bank",$f_opts);
 		$this->addField($f_deliv_pay_bank);
+		//********************
+		
+		//*** Field driver_id ***
+		$f_opts = array();
+		$f_opts['id']="driver_id";
+				
+		$f_driver_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"driver_id",$f_opts);
+		$this->addField($f_driver_id);
 		//********************
 	
 		$order = new ModelOrderSQL();		

@@ -46,8 +46,11 @@ function DelivCostList_View(id,options){
 	row.addElement(new GridDbHeadCell(id+"_col_deliv_cost_type_descr",{"value":"Тип",
 		"readBind":{"valueFieldId":"deliv_cost_type_descr"}
 		}));
-	row.addElement(new GridDbHeadCellBool(id+"_col_cost",{"value":"Цена",
+	row.addElement(new GridDbHeadCell(id+"_col_cost",{"value":"Цена",
 		"readBind":{"valueFieldId":"cost"}
+		}));
+	row.addElement(new GridDbHeadCell(id+"_col_cost2",{"value":"Себест.",
+		"readBind":{"valueFieldId":"cost2"}
 		}));
 		
 	head.addElement(row);

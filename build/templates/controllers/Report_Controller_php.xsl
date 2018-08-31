@@ -119,13 +119,20 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		
 		/*Функция добавления join рекурсией*/
 		function add_join($joinTable,&amp;$usedJoins,&amp;$joins){
-			if (!array_key_exists($joinTable,$usedJoins)){
-				if (array_key_exists($joinTable,$joins)){
-					//adding subjoins
-					foreach($joins[$joinTable]['sub_joins'] as $sub_join_table){
-						add_join($sub_join_table,$usedJoins,$joins);
+			if (is_array($joinTable)){
+				foreach($joinTable as $tb){
+					add_join($tb,$usedJoins,$joins);
+				}				
+			}
+			else{
+				if (!array_key_exists($joinTable,$usedJoins)){
+					if (array_key_exists($joinTable,$joins)){
+						//adding subjoins
+						foreach($joins[$joinTable]['sub_joins'] as $sub_join_table){
+							add_join($sub_join_table,$usedJoins,$joins);
+						}
+						$usedJoins[$joinTable] = 'LEFT JOIN '.$joins[$joinTable]['clause'];
 					}
-					$usedJoins[$joinTable] = 'LEFT JOIN '.$joins[$joinTable]['clause'];
 				}
 			}
 		}
@@ -224,7 +231,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 					$agg_fields[$i]
 				);
 				*/
-				if ($field_resolver[$agg_fields[$i]]['table']!='doc_orders_t_products'){
+				if (!is_array($field_resolver[$agg_fields[$i]]['table']) &amp;&amp;$field_resolver[$agg_fields[$i]]['table']!='doc_orders_t_products'){
 					//Если таблица выборки не базовая - не надо использовать функцию в базовом запросе!!!
 					$base_fact_ar[$agg_fields[$i]] = sprintf('%s AS %s',
 						$agg_sel_str,

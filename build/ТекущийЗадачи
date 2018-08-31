@@ -103,3 +103,15 @@ ALTER TABLE public.doc_orders_t_tmp_products ALTER COLUMN quant_base_measure_uni
 
 doc_order_totals 2 functions
 doc_order_calc_quant
+doc_order_deliv_cache 1 функция  с5 парам
+doc_orders_set_shipped
+doc_orders_data_for_ext
+ALTER TABLE public.doc_orders ADD COLUMN driver_id integer;
+
+DROP INDEX IF EXISTS vehicles_employed;
+CREATE UNIQUE INDEX vehicles_driver
+ON vehicles(driver_id);
+
+
+
+
