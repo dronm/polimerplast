@@ -2,7 +2,7 @@
 <metadata debug="TRUE" owner="polimerplast" dataSchema="public">
 	<versions>
 		<version dateOpen="2016-06-07 07:05" dateClose="2016-06-07 11:06:25">1.0021</version>
-		<lastBuild>2018-08-31 11:00:34</lastBuild>
+		<lastBuild>2018-09-01 09:51:01</lastBuild>
 		<version dateOpen="2016-06-07 11:06:56"/>
 		<version dateOpen="2016-06-07 11:06:57" dateClose="2016-06-07 14:06:30">1.0022</version>
 		<version dateOpen="2016-06-07 14:06:32" dateClose="2016-06-07 16:06:31">1.0023</version>
@@ -77,6 +77,7 @@
 		<version dateOpen="2018-08-26 09:08:36" dateClose="2018-08-26 09:08:36">1.0091</version>
 		<version dateOpen="2018-08-26 09:08:44" dateClose="2018-08-26 09:08:44">1.0092</version>
 		<version dateOpen="2018-08-31 10:08:57" dateClose="2018-08-31 11:08:00">1.0093</version>
+		<version dateOpen="2018-09-01 09:09:48" dateClose="2018-09-01 09:09:51">1.0094</version>
 	</versions>
 	<globalFilters>
 		<field id="client_id"/>
@@ -1378,6 +1379,7 @@
 			<field id="client_debt_days" dataType="String" alias="Просроченная дебиторская задолженность (дни)"/>
 			<field id="client_debt_total" dataType="String" length="19" precision="2" alias="Просроченная дебиторская задолженность (стоимость)"/>
 			<field id="doc_customer_survey_points" dataType="String" alias="Баллы опроса"/>
+			<field id="doc_deliv_expenses" dataType="String" alias="Затраты на доставку"/>
 			<field id="sys_level_val" dataType="String" sysCol="TRUE"/>
 			<field id="sys_level_count" dataType="String" sysCol="TRUE"/>
 			<field id="sys_level_col_count" dataType="String" sysCol="TRUE"/>
@@ -2488,7 +2490,9 @@
 			<publicMethod id="complete" modelId="VehicleSelectList" patternFieldId="plate"/>
 		</controller>
 		<controller id="ClientDestination" parentId="ControllerSQL" state="TRUE">
-			<publicMethod id="insert" modelId="ClientDestination"/>
+			<publicMethod id="insert" modelId="ClientDestination">
+				<field id="error_on_no_road" dataType="Int"/>
+			</publicMethod>
 			<publicMethod id="update" modelId="ClientDestination"/>
 			<publicMethod id="delete" modelId="ClientDestination"/>
 			<publicMethod id="get_list" modelId="ClientDestinationList"/>

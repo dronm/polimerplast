@@ -590,6 +590,16 @@ class RepSale_Model extends ModelReportSQL{
 		$this->addField($f_doc_customer_survey_points);
 		//********************
 		
+		//*** Field doc_deliv_expenses ***
+		$f_opts = array();
+		
+		$f_opts['alias']='Затраты на доставку';
+		$f_opts['id']="doc_deliv_expenses";
+				
+		$f_doc_deliv_expenses=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"doc_deliv_expenses",$f_opts);
+		$this->addField($f_doc_deliv_expenses);
+		//********************
+		
 		//*** Field sys_level_val ***
 		$f_opts = array();
 		$f_opts['sysCol']=TRUE;

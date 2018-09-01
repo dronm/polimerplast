@@ -145,6 +145,9 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 			throw new Exception("Не задан ни адрес, ни координаты объекта!");
 		}
 		$this->set_near_road($pm);
+		if ($pm->getParamValue("error_on_no_road")=="1" &amp;&amp; (!$pm->getParamValue('near_road_lon')||!$pm->getParamValue('near_road_lat'))){
+			throw new Exception("Не найдена ближайшая дорога!");
+		}
 		$pm->setParamValue("ret_id","1");
 		parent::insert($pm);
 	}

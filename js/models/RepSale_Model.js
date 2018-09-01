@@ -611,6 +611,15 @@ function RepSale_Model(options){
 	
 	var filed_options = {};
 	filed_options.primaryKey = false;	
+	filed_options.alias = 'Затраты на доставку';
+	filed_options.autoInc = false;	
+	
+	options.fields.doc_deliv_expenses = new FieldString("doc_deliv_expenses",filed_options);
+	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
 	
 	filed_options.autoInc = false;	
 	

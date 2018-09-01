@@ -123,7 +123,7 @@ BEGIN
 						WHEN h.deliv_type='by_supplier' AND h.deliv_vehicle_count=in_deliv_vehicle_count
 							THEN h.deliv_total
 						WHEN h.deliv_type='by_supplier' AND COALESCE(h.deliv_vehicle_count,0)>0
-							THEN ROUND(h.deliv_total/h.deliv_vehicle_count*in_deliv_vehicle_count,2)
+							THEN h.deliv_total - ROUND(h.deliv_total/h.deliv_vehicle_count*in_deliv_vehicle_count,2)
 						ELSE 0
 					END,
 					h.deliv_expenses_edit,
@@ -131,7 +131,7 @@ BEGIN
 						WHEN h.deliv_type='by_supplier' AND h.deliv_vehicle_count=in_deliv_vehicle_count
 							THEN h.deliv_expenses
 						WHEN h.deliv_type='by_supplier' AND COALESCE(h.deliv_vehicle_count,0)>0
-							THEN ROUND(h.deliv_expenses/h.deliv_vehicle_count*in_deliv_vehicle_count,2)
+							THEN h.deliv_expenses - ROUND(h.deliv_expenses/h.deliv_vehicle_count*in_deliv_vehicle_count,2)
 						ELSE 0
 					END,					
 					CASE

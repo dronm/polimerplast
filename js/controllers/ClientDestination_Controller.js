@@ -156,6 +156,10 @@ extend(ClientDestination_Controller,ControllerDb);
 	
 	pm.addParam(new FieldInt("ret_id",{}));
 	
+		var options = {};
+						
+		pm.addParam(new FieldInt("error_on_no_road",options));
+	
 	
 }
 

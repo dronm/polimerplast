@@ -100,6 +100,11 @@ class ClientDestination_Controller extends ControllerSQL{
 		
 		$pm->addParam(new FieldExtInt('ret_id'));
 		
+			$f_params = array();
+			$param = new FieldExtInt('error_on_no_road'
+			,$f_params);
+		$pm->addParam($param);		
+		
 		
 		$this->addPublicMethod($pm);
 		$this->setInsertModelId('ClientDestination_Model');
@@ -444,6 +449,9 @@ class ClientDestination_Controller extends ControllerSQL{
 			throw new Exception("Не задан ни адрес, ни координаты объекта!");
 		}
 		$this->set_near_road($pm);
+		if ($pm->getParamValue("error_on_no_road")=="1" && (!$pm->getParamValue('near_road_lon')||!$pm->getParamValue('near_road_lat'))){
+			throw new Exception("Не найдена ближайшая дорога!");
+		}
 		$pm->setParamValue("ret_id","1");
 		parent::insert($pm);
 	}

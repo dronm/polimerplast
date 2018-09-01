@@ -75,6 +75,12 @@ function DOCOrderDialog_View(id,options){
 	this.m_evFirmSelected = function(){
 		self.onFirmSelected();
 	};	
+	this.m_evDelivDestSelected= function(){
+		self.calcDelivCost();
+	};	
+	this.m_evDelivCostOptSelected= function(){
+		self.calcDelivCost();
+	};	
 	
 	this.m_viewId = hex_md5(uuid());
 	
@@ -257,10 +263,7 @@ function DOCOrderDialog_View(id,options){
 		"errorControl":this.getErrorControl(),
 		"warehouseCtrl":this.m_wareHCtrl,
 		"afterRefresh":function(){
-			//console.log("this.m_productDetails.afterRefresh")
 			self.refreshProdTotals();
-			if (self.m_productDetails.getModified())
-				self.calcVehicleCount();
 		}
 		});
 	this.m_details.addElement(this.m_productDetails);	
@@ -323,35 +326,6 @@ function DOCOrderDialog_View(id,options){
 		"mainView":this,
 		"options":{
 			"onSelected":function(){
-				/*
-				if (!parseInt(self.m_clientDestCtrl.getAttr("fkey_deliv_destination_id"))){
-					//запись нового адреса
-					WindowQuestion.show({
-						"text":"Записать новый адрес?",
-						"callBack":function(res){
-							if (res==WindowQuestion.RES_YES){
-								self.m_clientDestCtrl.setEnabled(false);
-								var contr = new ClientDestination_Controller(new ServConnector(HOST_NAME));
-								contr.run("insert",{
-									"params":{
-										"error_on_no_road":"1",
-										"client_id":self.m_clientCtrl.getAttr("fkey_client_id"),
-										"value":self.m_clientDestCtrl.getValue()
-									},
-									"func":function(resp){
-										self.m_clientDestCtrl.setEnabled(true);
-										console.dir(resp)
-									},
-									"err":function(resp,errCode,errStr){
-										self.m_clientDestCtrl.setEnabled(true);
-										WindowMessage.show({"text":errStr});	
-									}
-								});
-							}
-						}
-					});
-				}
-				*/
 				self.calcDelivCost();
 			}
 		}		
@@ -412,7 +386,7 @@ function DOCOrderDialog_View(id,options){
 			self.setToThirdParty(
 				self.m_toThirdPartyCtrl.getValue()
 			);
-			self.recalcPricesRefreshTotals();
+			self.recalcProductPrices();
 		}},
 		"attrs":{}}
 	);		
@@ -478,13 +452,13 @@ function DOCOrderDialog_View(id,options){
 	this.m_delivCostOptCtrl = new DelivCostOptEdit({
 		"fieldId":"deliv_cost_opt_id",
 		"controlId":id+"_deliv_cost_opt",
-		"inLine":false
-		,"options":{"events":{
+		"inLine":false,
+		"options":{"events":{
 			"change":function(){
 				self.calcVehicleCount();
 			}
 		}}
-	});		
+		});		
 	this.bindControl(this.m_delivCostOptCtrl,
 		{"modelId":model_id,"valueFieldId":"deliv_cost_opt_descr","keyFieldIds":["deliv_cost_opt_id"]},
 		{"valueFieldId":null,"keyFieldIds":["deliv_cost_opt_id"]});	
@@ -520,7 +494,6 @@ function DOCOrderDialog_View(id,options){
 			"events":{
 				"keyup":function(){
 					self.checkForVehicleCapacity();
-					self.calcDelivCost();
 				}
 			}
 	});	
@@ -557,7 +530,12 @@ function DOCOrderDialog_View(id,options){
 	opts.events={
 		"change":function(){
 			/*Пересчет только если от этого зависит тз*/
-			self.recalcPricesRefreshTotals();
+			if (self.m_delivAddToCostCtrl.getValue()=="true"){
+				self.recalcProductPrices();
+			}
+			else{
+				self.refreshProdTotals();
+			}
 		}
 	};	
 	this.m_delivCost = new ctrl_class(id+"_deliv_total",
@@ -1022,6 +1000,13 @@ DOCOrderDialog_View.prototype.toDOM = function(parent){
 		this.m_FirmCtrl.getNode(),
 		"change",this.m_evFirmSelected);		
 		
+	EventHandler.addEvent(
+		this.m_clientDestCtrl.getNode(),
+		"change",this.m_evDelivDestSelected);
+	EventHandler.addEvent(
+		this.m_delivCostOptCtrl.getNode(),
+		"change",this.m_evDelivCostOptSelected);
+
 	if (this.getIsNew()&&SERV_VARS.ROLE_ID=="client"){
 		this.setClientId(0,true);
 	}
@@ -1050,6 +1035,12 @@ DOCOrderDialog_View.prototype.removeDOM = function(){
 		this.m_FirmCtrl.getNode(),
 		"change",this.m_evFirmSelected);		
 		
+	EventHandler.removeEvent(
+		this.m_clientDestCtrl.getNode(),
+		"change",this.m_evDelivDestSelected);
+	EventHandler.removeEvent(
+		this.m_delivCostOptCtrl.getNode(),
+		"change",this.m_evDelivCostOptSelected);		
 }
 DOCOrderDialog_View.prototype.afterCopyData = function(){
 	if (SERV_VARS.ROLE_ID!="client"){
@@ -1057,7 +1048,6 @@ DOCOrderDialog_View.prototype.afterCopyData = function(){
 	}
 }
 DOCOrderDialog_View.prototype.calcDelivCost = function(){
-//console.log("DOCOrderDialog_View.prototype.calcDelivCost")
 	this.m_delivCostComment.setValue("");
 	
 	var do_calc = (!this.m_readOnly
@@ -1123,7 +1113,7 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 						self.m_delivCost.setValue(parseFloat(m.getFieldValue("total_cost")).toFixed(2)*v_cnt);
 						self.m_delivExpCtrl.setValue(parseFloat(m.getFieldValue("total_cost2")).toFixed(2)*v_cnt);
 					
-						self.recalcPricesRefreshTotals();
+						self.recalcProductPrices();
 					}	
 
 					
@@ -1137,22 +1127,8 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 			}
 		});
 	}
-	else{
-		this.recalcPricesRefreshTotals();
-	}
 }
-
-DOCOrderDialog_View.prototype.recalcPricesRefreshTotals = function(){
-	if (this.m_delivAddToCostCtrl.getValue()=="true"){
-		this.recalcProductPrices();
-	}
-	else{
-		this.refreshProdTotals();
-	}
-}
-
 DOCOrderDialog_View.prototype.recalcProductPrices = function(){
-//console.log("DOCOrderDialog_View.prototype.recalcProductPrices")
 	if (this.m_readOnly){
 		return;
 	}
@@ -1196,12 +1172,9 @@ DOCOrderDialog_View.prototype.recalcProductPrices = function(){
 				if (self.m_clientCtrl){
 					self.m_clientCtrl.setEnabled(true);				
 				}
-				//self.refreshProdTotals();
+				self.refreshProdTotals();
 			}
 		});
-	}
-	else{
-		this.refreshProdTotals();
 	}
 }
 DOCOrderDialog_View.prototype.getModified = function(){
@@ -1253,7 +1226,6 @@ DOCOrderDialog_View.prototype.onWriteOk = function(resp){
 }
 
 DOCOrderDialog_View.prototype.refreshProdTotals = function(){	
-//console.log("DOCOrderDialog_View.prototype.refreshProdTotals")
 	var gr = this.m_productDetails.getGridControl();
 	var rows = gr.getBody().getNode().getElementsByTagName("tr");
 	var cells;
@@ -1283,20 +1255,19 @@ DOCOrderDialog_View.prototype.refreshProdTotals = function(){
 	}
 	tot_sum+=tot_sum_pack;
 	this.m_totTotal.setValue(tot_sum.toFixed(2));	
-	/*
+	
 	if (!this.m_savedVehCount){
 		this.calcVehicleCount();
 	}
 	else{
 		this.checkForVehicleCapacity();
 	}
-	*/	
+		
 }
 DOCOrderDialog_View.prototype.getFormCaption = function(){
 	return "Заявка";
 }
 DOCOrderDialog_View.prototype.calcVehicleCount = function(){
-//console.log("DOCOrderDialog_View.prototype.calcVehicleCount")	
 	var ind = this.m_delivCostOptCtrl.m_node.selectedIndex;
 	var sel_n = this.m_delivCostOptCtrl.m_node.options[ind];
 	var v_max_vol = parseFloat(DOMHandler.getAttr(sel_n,"volume_m"));
@@ -1316,11 +1287,7 @@ DOCOrderDialog_View.prototype.calcVehicleCount = function(){
 	}
 	this.m_savedVehCount = 0;
 	
-	if (this.m_oldVehicleCount !=cnt){
-		this.m_oldVehicleCount = cnt;
-		this.checkForVehicleCapacity();
-		this.calcDelivCost();
-	}
+	this.checkForVehicleCapacity();
 }
 
 DOCOrderDialog_View.prototype.updateDistanceInf = function(){

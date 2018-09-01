@@ -2772,7 +2772,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 				$id = $l->query(sprintf(
 				"SELECT
 					line_number,
-					quant,
+					quant_base_measure_unit AS quant,
 					price,
 					total,
 					(SELECT
