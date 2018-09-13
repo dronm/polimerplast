@@ -29,7 +29,7 @@ function ClientDestinationEdit2(id,opts){
 		"queryDelay":500,
 		"fullTextSearch":true,
 		"className":"form-control addressEdit",
-		
+		"acUpdateInputOnCursor":true,
 		"objectView":null,
 		"noOpen":true,
 		"winObj":opts.winObj

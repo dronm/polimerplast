@@ -360,4 +360,7 @@ tr[is_old="t"]{
 	color:red;
 	font-weight:bolder;	
 }
+.acCurrent{
+	background:#E8F5E9;
+}
 
