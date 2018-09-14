@@ -115,6 +115,33 @@ extend(Delivery_Controller,ControllerDb);
 				
 		pm.addParam(new FieldDate("date"));
 	
+				
+		pm.addParam(new FieldString("cond_fields"));
+	
+				
+		pm.addParam(new FieldString("cond_vals"));
+	
+				
+		pm.addParam(new FieldString("cond_sgns"));
+	
+				
+		pm.addParam(new FieldString("cond_ic"));
+	
+				
+		pm.addParam(new FieldInt("from"));
+	
+				
+		pm.addParam(new FieldInt("count"));
+	
+				
+		pm.addParam(new FieldString("ord_fields"));
+	
+				
+		pm.addParam(new FieldString("ord_directs"));
+	
+				
+		pm.addParam(new FieldString("field_sep"));
+	
 			
 }
 

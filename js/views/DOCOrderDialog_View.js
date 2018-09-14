@@ -333,9 +333,15 @@ function DOCOrderDialog_View(id,options){
 							"value":self.m_clientDestCtrl.getValue()
 						},
 						"func":function(resp){
-
+							if (resp.modelExists("InsertedId_Model")){
+								var m = resp.getModelById("InsertedId_Model",true);
+								if (m.getNextRow()){
+									self.m_clientDestCtrl.setAttr("fkey_deliv_destination_id",m.getFieldValue("id"));
+									DOMHandler.removeClass(self.m_clientDestCtrl.m_node,"error");
+									self.calcDelivCost();
+								}
+							}
 							self.m_clientDestCtrl.setEnabled(true);
-							console.dir(resp)
 						},
 						"err":function(resp,errCode,errStr){
 							self.m_clientDestCtrl.setEnabled(true);
@@ -372,8 +378,8 @@ function DOCOrderDialog_View(id,options){
 						}
 					});
 				}
-				*/
 				self.calcDelivCost();
+				*/				
 			}
 		}		
 	});

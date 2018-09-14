@@ -156,6 +156,51 @@ class Delivery_Controller extends ControllerSQL{
 		$opts['required']=TRUE;				
 		$pm->addParam(new FieldExtDate('date',$opts));
 	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('cond_fields',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('cond_vals',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('cond_sgns',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('cond_ic',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtInt('from',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtInt('count',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('ord_fields',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('ord_directs',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('field_sep',$opts));
+	
 			
 		$this->addPublicMethod($pm);
 
@@ -428,37 +473,47 @@ class Delivery_Controller extends ControllerSQL{
 	
 	public function extra_veh_select_list($pm){
 		/* все НЕ постоянные и не добавленные на сегодня + 
-		все постоянные удаленные на сегодня
-		*/
+		 * все постоянные удаленные на сегодня
+		 * может быть фильтр по водителю!!!
+		 */
 		$p = new ParamsSQL($pm,$this->getDbLink());
 		$p->addAll();
-		$this->addNewModel(sprintf(
-		"(SELECT *
-		FROM vehicles_list AS v
-		WHERE 
-			(v.employed IS NULL OR v.employed=FALSE)
-			AND
-			v.id NOT IN (
-			SELECT ext.vehicle_id FROM delivery_extra_vehicles AS ext
-			WHERE ext.date=%s
-			))
-		UNION ALL
+		
+		$db_date = $p->getParamById('date');
+		
+		$model = new VehicleList_Model($this->getDbLink());
+		$where = $this->conditionFromParams($pm,$model);
+		$where_q = ($where)? ($where->getSQL().' AND '):'WHERE ';		
+		$q = sprintf(
+			"(SELECT *
+			FROM vehicles_list AS v
+			%s
+				(v.employed IS NULL OR v.employed=FALSE)
+				AND
+				v.id NOT IN (
+				SELECT ext.vehicle_id FROM delivery_extra_vehicles AS ext
+				WHERE ext.date=%s
+				)			
+			)
+			UNION ALL
 
-		(SELECT *
-		FROM vehicles_list AS v
-		WHERE 
-			v.employed
-			AND
-			v.id IN (
-			SELECT ext.vehicle_id FROM delivery_deleted_vehicles AS ext
-			WHERE ext.date=%s
-			))		
-		",
-			$p->getParamById('date'),
-			$p->getParamById('date')
-			),
-			'extra_veh_select_list'
-		);		
+			(SELECT *
+			FROM vehicles_list AS v
+			%s
+				v.employed
+				AND
+				v.id IN (
+				SELECT ext.vehicle_id FROM delivery_deleted_vehicles AS ext
+				WHERE ext.date=%s
+				)
+			)",
+			$where_q,
+			$db_date,
+			$where_q,
+			$db_date
+		);
+		//throw new Exception($q);
+		$this->addNewModel($q,'extra_veh_select_list');		
 	}
 	
 	public function get_order_descr($pm){

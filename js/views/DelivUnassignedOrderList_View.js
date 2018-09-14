@@ -213,7 +213,7 @@ function DelivUnassignedOrderList_View(id,options){
 	}
 	
 	this.m_grid.m_filterComplete = function(struc){
-		console.log("allOrdersCtrl="+self.m_allOrdersCtrl.getValue());
+		//console.log("allOrdersCtrl="+self.m_allOrdersCtrl.getValue());
 		if (self.m_allOrdersCtrl.getValue()=="1"){
 			struc.fields = null;
 			struc.signs = null;
