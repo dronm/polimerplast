@@ -115,6 +115,7 @@ doc_order_totals 2 functions
 doc_order_calc_quant
 doc_order_deliv_cache 1 функция  с5 парам
 doc_orders_set_shipped
+
 doc_orders_data_for_ext
 ALTER TABLE public.doc_orders ADD COLUMN driver_id integer;
 

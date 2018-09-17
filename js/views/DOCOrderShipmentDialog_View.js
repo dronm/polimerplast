@@ -22,7 +22,7 @@ function DOCOrderShipmentDialog_View(id,options){
 		
 	var self = this;	
 	this.m_beforeOpen = function(contr,isInsert){
-		if (self.m_beforeOpenCalled)return;
+		//if (self.m_beforeOpenCalled)return;
 		var doc_id = 0;
 		
 		self.m_items.getGridControl().setViewId(self.m_viewId);

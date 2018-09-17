@@ -279,8 +279,7 @@ class Vehicle_Controller extends ControllerSQL{
 				
 				if (strlen($fields)){
 					if ($ext_ref){
-						$fields.= ($field=='')? '':', ';
-						$fields.= sprintf("ext_id='%s'",$ext_ref);
+						$fields.= sprintf(",ext_id='%s'",$ext_ref);
 					}
 					$this->getDbLinkMaster()->query(sprintf(
 					"UPDATE drivers SET %s WHERE id=%d",
