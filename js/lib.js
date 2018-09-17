@@ -1738,7 +1738,7 @@ ViewDialog.prototype.onGetData=function(resp){ViewDialog.superclass.onGetData.ca
 ViewDialog.prototype.getWriteMethodId=function(){if(this.m_customWriteMethod){return this.m_writeMethodId;}
 else{return(this.getIsNew()||this.m_isCopy)?this.m_insertMethId:this.m_updateMethId;}}
 ViewDialog.prototype.setReadIdValue=function(fieldId,value){this.getReadController().getPublicMethodById(this.getReadMethodId()).setParamValue(fieldId,value);}
-ViewDialog.prototype.onWriteOk=function(resp){ViewDialog.superclass.onWriteOk.call(this,resp);if(this.getIsNew()&&resp){var contr=this.getWriteController();var meth_id=this.getWriteMethodId();var pm=contr.getPublicMethodById(meth_id);if(pm.paramExists(contr.PARAM_RET_ID)){if(resp.modelExists("LastIds")){var model=resp.getModelById("LastIds",true);if(model.getNextRow()){for(var id in model.m_fields){this.setReadIdValue(id,model.getFieldById(id).getValue());}
+ViewDialog.prototype.onWriteOk=function(resp){ViewDialog.superclass.onWriteOk.call(this,resp);if(this.getIsNew()&&resp){var contr=this.getWriteController();var meth_id=this.getWriteMethodId();var pm=contr.getPublicMethodById(meth_id);if(pm.paramExists(contr.PARAM_RET_ID)){if(resp.modelExists("InsertedId_Model")){var model=resp.getModelById("InsertedId_Model",true);if(model.getNextRow()){for(var id in model.m_fields){this.setReadIdValue(id,model.getFieldById(id).getValue());}
 this.setIsNew(false);}}}}}
 ViewDialog.prototype.onClickOk=function(){this.writeData(false);if(this.m_lastWriteResult&&this.getOnClose()){this.getOnClose().call(this,1);}
 return true;}
