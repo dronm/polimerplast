@@ -222,6 +222,25 @@ class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@par
 		$pm->addParam(new FieldExt<xsl:value-of select="@dataType"/>('<xsl:value-of select="@id"/>'
 		<xsl:if test="@dataType='Enum'">,',','<xsl:for-each select="/metadata/enums/enum[@id=$enum_id]/value"><xsl:if test="position() &gt; 1">,</xsl:if><xsl:value-of select="@id"/></xsl:for-each>'</xsl:if>));
 		</xsl:for-each>
+		<xsl:for-each select="field">
+			$f_params = array();
+			<xsl:if test="@alias">
+				$f_params['alias']='<xsl:value-of select="@alias"/>';
+			</xsl:if>
+			<xsl:if test="@required">
+				$f_params['required']=<xsl:value-of select="@required"/>;
+			</xsl:if>				
+			<xsl:choose>
+			<xsl:when test="@dataType='Enum'">
+			<xsl:variable name="enum_id" select="@enumId"/>
+			$param = new FieldExtEnum('<xsl:value-of select="@id"/>',',','<xsl:for-each select="/metadata/enums/enum[@id=$enum_id]/value"><xsl:if test="position() &gt; 1">,</xsl:if><xsl:value-of select="@id"/></xsl:for-each>'
+			</xsl:when>
+			<xsl:otherwise>$param = new FieldExt<xsl:value-of select="@dataType"/>('<xsl:value-of select="@id"/>'
+			</xsl:otherwise>
+		</xsl:choose>,$f_params);
+		$pm->addParam($param);		
+		</xsl:for-each>
+		
 		$this->addPublicMethod($pm);
 		$this->setObjectModelId('<xsl:value-of select="concat($cur_model_id,'_Model')"/>');		
 </xsl:template>

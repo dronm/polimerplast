@@ -2670,9 +2670,11 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 		$m->addField(new Field('city_route',DT_STRING,array('value'=>$out_city_route)));
 		$m->addField(new Field('city_route_distance',DT_INT,array('value'=>$out_city_route_distance)));
 		$m->addField(new Field('city_cost',DT_FLOAT,array('value'=>$out_city_cost)));
+		$m->addField(new Field('city_cost2',DT_FLOAT,array('value'=>$out_city_cost2)));
 		$m->addField(new Field('country_route',DT_STRING,array('value'=>$out_country_route)));
 		$m->addField(new Field('country_route_distance',DT_INT,array('value'=>$out_country_route_distance)));
 		$m->addField(new Field('country_cost',DT_FLOAT,array('value'=>$out_country_cost)));
+		$m->addField(new Field('country_cost2',DT_FLOAT,array('value'=>$out_country_cost2)));
 		$m->addField(new Field('total_cost',DT_FLOAT,array('value'=>$out_country_cost+$out_city_cost)));
 		$m->addField(new Field('total_cost2',DT_FLOAT,array('value'=>$out_country_cost2+$out_city_cost2)));
 		$m->insert();
@@ -2874,7 +2876,8 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 					'firm_nds'=>$ar['firm_nds'],
 					'delivery_plan_date'=>$ar['delivery_plan_date'],
 					'total_volume'=>$ar['total_volume'],
-					'total_weight'=>$ar['total_weight']
+					'total_weight'=>$ar['total_weight'],
+					'deliv_expenses'=>$ar['deliv_expenses']
 					);
 			}
 			if ($ar['product_name']){

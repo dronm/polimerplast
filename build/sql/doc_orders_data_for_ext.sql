@@ -166,7 +166,9 @@ CREATE OR REPLACE VIEW doc_orders_data_for_ext AS
 		f.nds AS firm_nds,
 		
 		h.total_volume AS total_volume,
-		h.total_weight AS total_weight
+		h.total_weight AS total_weight,
+		
+		h.deliv_expenses
 		
 	--FROM doc_orders_t_products t
 	--LEFT JOIN doc_orders h ON h.id=t.doc_id

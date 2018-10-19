@@ -22,7 +22,8 @@ require_once('common/OSRM.php');
 require_once('common/geo/yandex.php');
 require_once('common/geo/YndxReverseCode.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ParamsSQL.php');
-require_once(USER_CONTROLLERS_PATH.'Kladr_Controller.php');
+require_once(ABSOLUTE_PATH.'controllers/Kladr_Controller.php');
+require_once(ABSOLUTE_PATH.'models/ClientDestination_Model.php');
 
 require_once(ABSOLUTE_PATH.'functions/DadataSuggest.php');
 use Dadata\DadataSuggest as DadataSuggest;
@@ -438,10 +439,25 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		$addr_for_query = trim($p->getVal('address'));
 		//а если 1 слово - прибавим Тюменскаую область чтобы убрать лишнее
 		$addr_ar = explode(' ',$addr_for_query);
+		/*
 		if (count($addr_ar)==1){
 			$addr_for_query.= ' тюмен';
 		}
-		$ext_addresses = $dadata->address($addr_for_query,$ext_cnt);
+		*/
+		$ext_addresses = $dadata->address(
+				$addr_for_query,
+				$ext_cnt,
+				NULL,
+				array(
+					array('kladr_id'=>'72')
+					,array('kladr_id'=>'86')
+					,array('kladr_id'=>'89')
+					,array('kladr_id'=>'66')
+					,array('kladr_id'=>'55')
+					,array('kladr_id'=>'45')
+				)
+		);
+		
 		for($i=0;$i&lt;count($ext_addresses->suggestions);$i++){						
 			$row = array(
 				new Field('address',DT_STRING,array('value'=>$ext_addresses->suggestions[$i]->value)),

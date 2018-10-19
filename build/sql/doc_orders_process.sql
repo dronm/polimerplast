@@ -1,8 +1,8 @@
--- Function: doc_orders_process()
+-- Function: public.doc_orders_process()
 
--- DROP FUNCTION doc_orders_process();
+-- DROP FUNCTION public.doc_orders_process();
 
-CREATE OR REPLACE FUNCTION doc_orders_process()
+CREATE OR REPLACE FUNCTION public.doc_orders_process()
   RETURNS trigger AS
 $BODY$
 BEGIN
@@ -16,6 +16,9 @@ BEGIN
 			substr(t.number::varchar,1,length(const_new_order_prefix_val()))=const_new_order_prefix_val();
 		*/
 		NEW.date_time = now()::timestamp without time zone;
+		IF NEW.deliv_type='by_client' AND NEW.deliv_destination_id IS NOT NULL THEN
+			NEW.deliv_destination_id = NULL;
+		END IF;
 		
 		RETURN NEW;
 	ELSIF (TG_WHEN='AFTER' AND TG_OP='INSERT') THEN	
@@ -25,6 +28,9 @@ BEGIN
 	
 		RETURN NEW;
 	ELSIF (TG_WHEN='BEFORE' AND TG_OP='UPDATE') THEN
+		IF NEW.deliv_type='by_client' THEN
+			NEW.deliv_destination_id = NULL;
+		END IF;
 		
 		RETURN NEW;
 	ELSIF (TG_WHEN='AFTER' AND TG_OP='UPDATE') THEN
@@ -76,6 +82,8 @@ BEGIN
 	END IF;
 END;
 $BODY$
-LANGUAGE plpgsql VOLATILE COST 100;
-ALTER FUNCTION doc_orders_process()
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+ALTER FUNCTION public.doc_orders_process()
   OWNER TO polimerplast;
+

@@ -29,17 +29,24 @@ class DadataSuggest {
         return $result;
     }
     
-    public function address($query, $count, $from_bound = NULL, $to_bound = NULL) {
+    public function address($query, $count, $locations=NULL,$locationsBoost=NULL,$from_bound = NULL, $to_bound = NULL) {
         $data = array(
             'query' => $query,
             'count' => $count
         );
+        if (!is_null($locationsBoost)) {
+            $data['locations_boost'] = $locationsBoost;
+        }
+        if (!is_null($locations)) {
+            $data['locations'] = $locations;
+        }
+        
         if (!is_null($from_bound)) {
             $data['from_bound'] = array('value' => $from_bound);
         }
         if (!is_null($to_bound)) {
             $data['to_bound'] = array('value' => $to_bound);
-        }
+        }        
         return json_decode($this->suggest("address", $data));
     }
 }

@@ -339,5 +339,11 @@ class ExtProg{
 			$xml);
 	}			
 	
+	
+	public static function set_deliv_expenses(&$head){
+		$xml=null;
+		ExtProg::send_query('set_deliv_expenses',array('head'=>serialize($head)),$xml);
+	
+	}
 }
 ?>

@@ -350,6 +350,9 @@ function DOCOrderDialog_View(id,options){
 						}
 					});				
 				}
+				else{
+					self.calcDelivCost();
+				}
 				/*
 				if (!parseInt(self.m_clientDestCtrl.getAttr("fkey_deliv_destination_id"))){
 					//запись нового адреса
@@ -582,9 +585,10 @@ function DOCOrderDialog_View(id,options){
 		opts.editAllowedFieldCtrl = ctrl_edit;
 	}
 	opts.events={
-		"change":function(){
-			/*Пересчет только если от этого зависит тз*/
-			self.recalcPricesRefreshTotals();
+		"keyup":function(){
+			/*Пересчет только если от этого зависит трасп затраты*/
+			self.calcDelivCost();
+			//self.recalcPricesRefreshTotals();
 		}
 	};	
 	this.m_delivCost = new ctrl_class(id+"_deliv_total",
@@ -968,9 +972,9 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 				if (this.m_delivCost.setEditEnabled){
 					this.m_delivCost.setEditEnabled(false);
 				}
-				if (this.m_delivExpCtrl.setEditEnabled){
-					this.m_delivExpCtrl.setEditEnabled(false);
-				}				
+				//if (this.m_delivExpCtrl.setEditEnabled){
+				//	this.m_delivExpCtrl.setEditEnabled(false);
+				//}				
 				this.m_delivCostOptCtrl.setEnabled(false);
 			}
 			else{
@@ -1084,17 +1088,24 @@ DOCOrderDialog_View.prototype.afterCopyData = function(){
 	}
 }
 DOCOrderDialog_View.prototype.calcDelivCost = function(){
-//console.log("DOCOrderDialog_View.prototype.calcDelivCost")
-	this.m_delivCostComment.setValue("");
+console.log("DOCOrderDialog_View.prototype.calcDelivCost")
+	this.m_delivCostComment.setValue("-");
 	
-	var do_calc = (!this.m_readOnly
+	var do_calc_cost1 = (!this.m_readOnly
 		&& (SERV_VARS.ROLE_ID=="client"
 			|| (SERV_VARS.ROLE_ID!="client" && this.getViewControlValue(this.getId()+"_deliv_total_edit")!="true")
 	   	)
 	);			
+	var do_calc_cost2 = (!this.m_readOnly
+		&& (SERV_VARS.ROLE_ID=="client"
+			|| (SERV_VARS.ROLE_ID!="client" && this.getViewControlValue(this.getId()+"_deliv_expenses_edit")!="true")
+	   	)
+	);			
 	
-	if (do_calc){
-		this.m_delivCost.setValue("");
+	if (do_calc_cost1){
+		this.m_delivCost.setValue("");		
+	}
+	if (do_calc_cost2){
 		this.m_delivExpCtrl.setValue("");
 	}
 	
@@ -1145,12 +1156,41 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 					self.updateDistanceInf();
 					
 					//Расчеты
-					if (do_calc){
+					if (do_calc_cost1 || do_calc_cost2){
 						var v_cnt = self.m_delivVehicleCntCtrl.getValue();					
-						self.m_delivCost.setValue(parseFloat(m.getFieldValue("total_cost")).toFixed(2)*v_cnt);
-						self.m_delivExpCtrl.setValue(parseFloat(m.getFieldValue("total_cost2")).toFixed(2)*v_cnt);
-					
-						self.recalcPricesRefreshTotals();
+						if (do_calc_cost1){
+							self.m_delivCost.setValue(parseFloat(m.getFieldValue("total_cost")).toFixed(2)*v_cnt);
+						}
+						if (do_calc_cost2){
+							var cost2 = 0;
+							if (do_calc_cost1){
+								cost2 = parseFloat(m.getFieldValue("total_cost2")).toFixed(2);
+							}
+							else{
+								//стоимость доставки отредактирована вручную
+								var country_cost2 = parseFloat(m.getFieldValue("country_cost2"));
+								var country_cost1 = parseFloat(m.getFieldValue("country_cost"));
+								var city_cost2 = parseFloat(m.getFieldValue("city_cost2"));
+								var city_cost1 = parseFloat(m.getFieldValue("city_cost"));
+								
+								var dif = parseFloat(self.m_delivCost.getValue()) - city_cost1;
+								var distance_country = dif / (country_cost1? country_cost1:0);
+								cost2 = city_cost2 + (distance_country * country_cost2);
+								if (cost2 < city_cost2  ){
+									DOMHandler.addClass(self.m_delivExpCtrl.m_node,self.m_delivExpCtrl.INCORRECT_VAL_CLASS);
+									self.m_delivExpCtrl.setComment("Меньше ставки по городу");
+								}
+								else{
+									DOMHandler.removeClass(self.m_delivExpCtrl.m_node,self.m_delivExpCtrl.INCORRECT_VAL_CLASS);
+									self.m_delivExpCtrl.setComment("");
+								}
+							}
+							self.m_delivExpCtrl.setValue(cost2*v_cnt);
+						}
+						
+						if (do_calc_cost1){
+							self.recalcPricesRefreshTotals();
+						}
 					}	
 
 					
@@ -1323,7 +1363,7 @@ DOCOrderDialog_View.prototype.getFormCaption = function(){
 	return "Заявка";
 }
 DOCOrderDialog_View.prototype.calcVehicleCount = function(){
-//console.log("DOCOrderDialog_View.prototype.calcVehicleCount")	
+
 	var ind = this.m_delivCostOptCtrl.m_node.selectedIndex;
 	var sel_n = this.m_delivCostOptCtrl.m_node.options[ind];
 	var v_max_vol = parseFloat(DOMHandler.getAttr(sel_n,"volume_m"));
@@ -1343,11 +1383,11 @@ DOCOrderDialog_View.prototype.calcVehicleCount = function(){
 	}
 	this.m_savedVehCount = 0;
 	
-	if (this.m_oldVehicleCount !=cnt){
+	if (!this.m_oldVehicleCount || this.m_oldVehicleCount !=cnt){
 		this.m_oldVehicleCount = cnt;
-		this.checkForVehicleCapacity();
-		this.calcDelivCost();
+		this.checkForVehicleCapacity();		
 	}
+	this.calcDelivCost();
 }
 
 DOCOrderDialog_View.prototype.updateDistanceInf = function(){
@@ -1385,6 +1425,8 @@ DOCOrderDialog_View.prototype.changeDelivType = function(){
 		DOMHandler.removeAttr(this.m_clientDestCtrl.getNode(),"required");				
 		this.m_clientDestCtrl.resetValue();
 		this.m_delivCostOptCtrl.resetValue();
+		this.m_delivExpCtrl.resetValue();
+		this.m_delivCost.resetValue();
 	}
 	
 }

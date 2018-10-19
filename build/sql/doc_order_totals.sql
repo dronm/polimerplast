@@ -3,20 +3,19 @@
 -- DROP FUNCTION public.doc_order_totals(integer, integer, integer, integer, integer, integer, numeric, integer, boolean, boolean, boolean, boolean, numeric);
 
 CREATE OR REPLACE FUNCTION public.doc_order_totals(
-	warehouse_id integer,
-	client_id integer,
-	product_id integer,
-	mes_l integer,
-	mes_w integer,
-	mes_h integer,
-	quant numeric,
-	measure_unit_id integer,
-	pack boolean,
-	pack_in_price boolean,
-	to_third_party_only boolean,
-	price_edit boolean,
-	price numeric
-)
+    warehouse_id integer,
+    client_id integer,
+    product_id integer,
+    mes_l integer,
+    mes_w integer,
+    mes_h integer,
+    quant numeric,
+    measure_unit_id integer,
+    pack boolean,
+    pack_in_price boolean,
+    to_third_party_only boolean,
+    price_edit boolean,
+    price numeric)
   RETURNS record AS
 $BODY$
 	WITH
@@ -138,7 +137,7 @@ $BODY$
 			* (SELECT t.base_quant FROM product_params t)
 			* $7
 			--Скидка за объем
-			- (SELECT t.discount_total FROM price_list t)
+			- (SELECT coalesce(t.discount_total,0) FROM price_list t)
 		,2)
 		AS total,
 		

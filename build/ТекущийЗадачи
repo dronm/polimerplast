@@ -126,3 +126,18 @@ ON vehicles(driver_id);
 
 
 
+ПО РАЗБОРКАМ
+numbert=5492,	id=21533
+select * from doc_orders_t_tmp_products where view_id='dc203c9f2cf70a86ae423e285fd54014'
+--select * from doc_orders_t_products where doc_id=21533
+
+select
+line_number,price,total,mes_length,mes_width,mes_height,
+product_id,quant,quant_base_measure_unit,quant_confirmed_base_measure_unit,volume,weight
+from doc_orders_t_tmp_products where view_id='dc203c9f2cf70a86ae423e285fd54014'
+UNION ALL
+select
+line_number,price,total,mes_length,mes_width,mes_height,
+product_id,quant,quant_base_measure_unit,quant_confirmed_base_measure_unit,volume,weight
+from doc_orders_t_products where doc_id=21533
+

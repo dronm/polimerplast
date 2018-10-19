@@ -22,6 +22,12 @@ require_once('functions/PPEmailSender.php');
 class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/>{
 	<xsl:call-template name="add_constructor"/>
 
+	public function set_ship_deliv_expenses($extShipId,$delivExpenses){
+	
+		$head = ['ext_ship_id'=>$extShipId,'deliv_expenses'=>$delivExpenses];
+		ExtProg::set_deliv_expenses($head);
+	}
+
 	public function create_alter_order($docId){
 		$link = $this->getDbLink();
 		$head=NULL;
@@ -222,7 +228,7 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 				$new_state = 'waiting_for_us';
 			}
 			else if ($_SESSION['role_id']!='client'&amp;&amp;$closed_state){
-				//мы изменняем в закрытом статусе: коммент+телефон+дата
+				//мы изменняем в закрытом статусе: коммент+телефон+дата+расходы на доставку
 				$new_state = NULL;
 			}
 			else if ($_SESSION['role_id']!='client'
@@ -283,6 +289,8 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 					$sel = '';
 					$sel_no_modif = '';
 					
+					$deliv_expenses = NULL;
+					
 					$fields = $this->getFieldIterator();				
 					while($fields->valid()) {
 						$field = $fields->current();
@@ -291,8 +299,11 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 						if (!is_null($field->getValue())){
 							//значение изменилось
 							$f_val = $field->getValueForDb();
-							
-							if (array_key_exists($f_id,$fields_us_only)){
+
+							if ($f_id=='deliv_expenses'){
+								$deliv_expenses = $f_val;
+							}														
+							else if (array_key_exists($f_id,$fields_us_only)){
 								//изменилось наше поле - не фиксируем
 								$fields_us_modif = TRUE;
 							}
@@ -446,7 +457,11 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 				);
 				$q = $this->getUpdateQuery();
 				if ($q!=''){
-					$link->query($q);
+					if (!is_null($deliv_expenses)){
+						$q.=' RETURNING ext_ship_id';
+					}
+				
+					$q_id = $link->query($q);
 				}
 				
 				if ($new_state=='waiting_for_client'){
@@ -459,8 +474,16 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 						);
 				}				
 				
+				if (
+				!$create_alter_order
+				&amp;&amp; !is_null($deliv_expenses)
+				&amp;&amp; ($ar = $link->fetch_array($q_id))
+				&amp;&amp; $ar['ext_ship_id']
+				){
+					$this->set_ship_deliv_expenses($ar['ext_ship_id'],$deliv_expenses);
+				}				
 				//Выписка - изменение счета
-				if ($create_alter_order){
+				else if ($create_alter_order){
 					$this->create_alter_order($doc_id);
 				}
 				
