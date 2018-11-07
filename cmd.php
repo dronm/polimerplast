@@ -190,7 +190,7 @@ try{
 	
 	require_once($v_script);
 
-	$contrObj->runPablicMethod($meth,$_REQUEST);	
+	$contrObj->runPublicMethod($meth,$_REQUEST);	
 	$contrObj->write($view_class,$view);
 }
 catch (Exception $e){

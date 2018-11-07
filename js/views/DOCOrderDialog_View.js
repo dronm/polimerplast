@@ -1088,7 +1088,7 @@ DOCOrderDialog_View.prototype.afterCopyData = function(){
 	}
 }
 DOCOrderDialog_View.prototype.calcDelivCost = function(){
-console.log("DOCOrderDialog_View.prototype.calcDelivCost")
+//console.log("DOCOrderDialog_View.prototype.calcDelivCost")
 	this.m_delivCostComment.setValue("-");
 	
 	var do_calc_cost1 = (!this.m_readOnly
@@ -1185,7 +1185,9 @@ console.log("DOCOrderDialog_View.prototype.calcDelivCost")
 									self.m_delivExpCtrl.setComment("");
 								}
 							}
-							self.m_delivExpCtrl.setValue(cost2*v_cnt);
+							cost2 = cost2*v_cnt;
+							cost2 = isNaN(cost2)? 0:cost2;
+							self.m_delivExpCtrl.setValue(parseFloat(cost2).toFixed(2));
 						}
 						
 						if (do_calc_cost1){

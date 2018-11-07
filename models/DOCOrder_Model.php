@@ -803,9 +803,11 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 							//значение изменилось
 							$f_val = $field->getValueForDb();
 
-							if ($f_id=='deliv_expenses'){
-								$deliv_expenses = $f_val;
-							}														
+							if ($f_id=='deliv_expenses'||$f_id=='deliv_expenses_edit'){
+								if ($f_id=='deliv_expenses'){
+									$deliv_expenses = $f_val;
+								}
+							}
 							else if (array_key_exists($f_id,$fields_us_only)){
 								//изменилось наше поле - не фиксируем
 								$fields_us_modif = TRUE;
