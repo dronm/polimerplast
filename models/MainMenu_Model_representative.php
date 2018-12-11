@@ -11,6 +11,8 @@ class MainMenu_Model_representative extends Model{
 		
 		<item viewId="ClientList_View" descr="Клиенты" default=""/>
 		
+		<item viewId="VehicleList_View" descr="Автомобили" default=""/>
+		
 		<item viewId="Delivery_View" descr="Доставки" default=""/>
 		
 		<item viewId="RepClientDebts_View" descr="Долги клиентов" default=""/>
