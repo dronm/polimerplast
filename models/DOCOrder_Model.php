@@ -71,6 +71,14 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$this->addField($f_client_id);
 		//********************
 		
+		//*** Field gruzopoluchatel_id ***
+		$f_opts = array();
+		$f_opts['id']="gruzopoluchatel_id";
+				
+		$f_gruzopoluchatel_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"gruzopoluchatel_id",$f_opts);
+		$this->addField($f_gruzopoluchatel_id);
+		//********************
+		
 		//*** Field client_number ***
 		$f_opts = array();
 		$f_opts['length']=12;

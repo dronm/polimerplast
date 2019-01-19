@@ -211,6 +211,20 @@ function DOCOrderDialog_View(id,options){
 			{"modelId":model_id,"valueFieldId":"client_descr","keyFieldIds":["client_id"]},
 			{"valueFieldId":null,"keyFieldIds":["client_id"]});	
 		cont.addElement(this.m_clientCtrl);
+
+		//Грузополучатель
+		this.m_gruzpolCtrl = new ClientEditObject("gruzopoluchatel_id",id+"_gruzopoluchatel",false,{
+			"labelCaption":"Грузополучатель:",
+			"noOpen":true,
+			"onSelected":function(){
+				self.onClientSelected(true);
+			},
+			"winObj":options.winObj
+			});
+		this.bindControl(this.m_gruzpolCtrl,
+			{"modelId":model_id,"valueFieldId":"gruzopoluchatel_descr","keyFieldIds":["gruzopoluchatel_id"]},
+			{"valueFieldId":null,"keyFieldIds":["gruzopoluchatel_id"]});	
+		cont.addElement(this.m_gruzpolCtrl);
 			
 		//ответственный
 		this.m_clientUserCtrl = new ClientUserEditObject("client_user_id",id+"_client_user",false);

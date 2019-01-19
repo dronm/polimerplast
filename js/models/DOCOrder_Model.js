@@ -77,6 +77,15 @@ function DOCOrder_Model(options){
 	
 	filed_options.autoInc = false;	
 	
+	options.fields.gruzopoluchatel_id = new FieldInt("gruzopoluchatel_id",filed_options);
+	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	
+	filed_options.autoInc = false;	
+	
 	options.fields.client_number = new FieldString("client_number",filed_options);
 	
 				

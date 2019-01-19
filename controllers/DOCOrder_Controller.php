@@ -75,6 +75,9 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 		$param = new FieldExtInt('client_id'
 				,array());
 		$pm->addParam($param);
+		$param = new FieldExtInt('gruzopoluchatel_id'
+				,array());
+		$pm->addParam($param);
 		$param = new FieldExtString('client_number'
 				,array());
 		$pm->addParam($param);
@@ -279,6 +282,10 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 			));
 			$pm->addParam($param);
 		$param = new FieldExtInt('client_id'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtInt('gruzopoluchatel_id'
 				,array(
 			));
 			$pm->addParam($param);
@@ -2848,6 +2855,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 					'firm_ref'=>$ar['firm_ref'],
 					'user_ref'=>$ar['user_ref'],
 					'client_ref'=>$ar['client_ref'],
+					'gruzopoluchatel_ref'=>$ar['gruzopoluchatel_ref'],
 					'warehouse_ref'=>$ar['warehouse_ref'],
 					'warehouse_address'=>$ar['warehouse_address'],
 					'deliv_total'=>$ar['deliv_total'],

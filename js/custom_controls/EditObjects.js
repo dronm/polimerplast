@@ -189,7 +189,7 @@ function ClientEditObject(fieldId,controlId,inLine,opts){
 	for(var opt in opts){
 		options[opt] = opts[opt];
 	}					
-	if (inLine==undefined || (inLine!=undefined && !inLine)){
+	if ((inLine==undefined || (inLine!=undefined && !inLine)) && options.labelCaption==undefined){
 		options["labelCaption"] = "Заказчик:";
 	}
 	ClientEditObject.superclass.constructor.call(this,

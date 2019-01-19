@@ -83,12 +83,15 @@ CREATE OR REPLACE VIEW doc_orders_dialog AS
 		
 		d.deliv_expenses,
 		d.deliv_pay_bank,		
-		d.deliv_expenses_edit
+		d.deliv_expenses_edit,
 		
+		d.gruzopoluchatel_id,
+		cl2.name AS gruzopoluchatel_descr
 		
 		
 	FROM doc_orders AS d
 	LEFT JOIN clients AS cl ON cl.id=d.client_id
+	LEFT JOIN clients AS cl2 ON cl2.id=d.gruzopoluchatel_id
 
 	/*
 	LEFT JOIN (

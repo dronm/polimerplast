@@ -1219,6 +1219,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 					'firm_ref'=>$ar['firm_ref'],
 					'user_ref'=>$ar['user_ref'],
 					'client_ref'=>$ar['client_ref'],
+					'gruzopoluchatel_ref'=>$ar['gruzopoluchatel_ref'],
 					'warehouse_ref'=>$ar['warehouse_ref'],
 					'warehouse_address'=>$ar['warehouse_address'],
 					'deliv_total'=>$ar['deliv_total'],

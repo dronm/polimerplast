@@ -110,6 +110,12 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	options = {};
 	
+	var param = new FieldInt("gruzopoluchatel_id",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
 	var param = new FieldString("client_number",options);
 	
 	pm.addParam(param);
@@ -473,6 +479,12 @@ extend(DOCOrder_Controller,ControllerDb);
 	options = {};
 	
 	var param = new FieldInt("client_id",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldInt("gruzopoluchatel_id",options);
 	
 	pm.addParam(param);
 	

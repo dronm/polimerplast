@@ -168,7 +168,9 @@ CREATE OR REPLACE VIEW doc_orders_data_for_ext AS
 		h.total_volume AS total_volume,
 		h.total_weight AS total_weight,
 		
-		h.deliv_expenses
+		h.deliv_expenses,
+		
+		cl2.ext_id AS gruzopoluchatel_ref
 		
 	--FROM doc_orders_t_products t
 	--LEFT JOIN doc_orders h ON h.id=t.doc_id
@@ -179,6 +181,7 @@ CREATE OR REPLACE VIEW doc_orders_data_for_ext AS
 	LEFT JOIN firms f ON f.id=h.firm_id
 	LEFT JOIN warehouses w ON w.id=h.warehouse_id
 	LEFT JOIN clients cl ON cl.id=h.client_id
+	LEFT JOIN clients cl2 ON cl2.id=h.gruzopoluchatel_id
 	LEFT JOIN client_destinations_list dest ON dest.id=h.deliv_destination_id
 	LEFT JOIN measure_units mu ON mu.id=t.measure_unit_id
 	LEFT JOIN product_measure_units AS pmu
