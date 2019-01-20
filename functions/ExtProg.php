@@ -145,14 +145,27 @@ class ExtProg{
 		
 		return (string) $xml->ref[0];
 	}	
+	public static function getPersonRefCreate($params,&$res=NULL){
+		$xml=null;
+		ExtProg::send_query('get_person_create',array('params'=>serialize($params)),$xml);
+		
+		if (is_array($res)){
+			$res['drive_perm'] = (string) $xml->drive_perm[0];
+		}
+		
+		return (string) $xml->ref[0];
+	}	
+	
 	public static function getDriverAttrs($ref,&$res){
 		$xml=null;
 		ExtProg::send_query('get_driver_attrs',array('driver_ref'=>$ref),$xml);
 		
 		$res['plate'] = (string) $xml->plate[0];
 		$res['trailer_plate'] = (string) $xml->trailer_plate[0];
-		$res['trailer_model'] = (string) $xml->trailer_model[0];
-		$res['carrier_descr'] = (string) $xml->carrier_descr[0];
+		$res['model'] = (string) $xml->model[0];
+		$res['drive_perm'] = (string) $xml->drive_perm[0];
+		$res['carrier_descr'] = '';
+		$res['carrier_ref'] = (string) $xml->carrier_ref[0];
 	}
 	
 	public static function getUserRefOnName($name){

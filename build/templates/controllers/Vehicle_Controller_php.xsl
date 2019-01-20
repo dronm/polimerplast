@@ -54,7 +54,28 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 			
 			//1c
 			$res = array();
-			$ext_ref = ExtProg::getPersonRefOnName($pm->getParamValue('driver_descr'),$res);
+			$params = array(
+				'name'=>$pm->getParamValue('driver_descr')
+			);
+			if($pm->getParamValue('driver_drive_perm')){
+				$params['drive_perm'] = $pm->getParamValue('driver_drive_perm');
+				$params['cel_phone'] = $pm->getParamValue('driver_cel_phone');
+				$params['model'] = $pm->getParamValue('model');
+				$params['plate'] = $pm->getParamValue('plate');
+				$params['trailer_plate'] = $pm->getParamValue('trailer_plate');
+				if ($pm->getParamValue('carrier_id')){
+					$qr = $this->getDbLink()->query_first(sprintf(
+					"SELECT
+						cl.ext_id
+					FROM carriers AS cr
+					LEFT JOINclients cl ON cl.id=cr.client_id
+					WHERE cr.id=%d",
+					$p->getDbVal('carrier_id')
+					));				
+					$params['carrier_ref'] = $qr['ext_id'];					
+				}
+			}
+			$ext_ref = ExtProg::getPersonRefCreate($params,$res);
 			if ($ext_ref){
 				if (
 				count($res)
