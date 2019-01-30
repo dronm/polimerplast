@@ -201,6 +201,7 @@ function DOCOrderDialog_View(id,options){
 		//Заказчик
 		this.m_clientCtrl = new ClientEditObject("client_id",id+"_client",false,{
 			"noOpen":true,
+			"required":true,
 			"onSelected":function(){
 				self.onClientSelected(true);
 			},

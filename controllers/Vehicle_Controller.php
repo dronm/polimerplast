@@ -245,49 +245,64 @@ class Vehicle_Controller extends ControllerSQL{
 		}	
 	}
 	
-	private function update_driver($pm){
+	private function update_driver(&$pm){
 		$p = new ParamsSQL($pm,$this->getDbLink());
 		$p->addAll();
 	
 		if ($pm->getParamValue('driver_descr')){
 			//изменили ФИО водителя
 			
+			$param_fields = array(
+				'name'=>'driver_descr'
+				,'drive_perm'=>'driver_drive_perm'
+				,'cel_phone'=>'driver_cel_phone'
+				,'model'=>'model'
+				,'plate'=>'plate'
+				,'trailer_plate'=>'trailer_plate'
+			);
+			
 			//1c
 			$res = array();
-			$params = array(
-				'name'=>$pm->getParamValue('driver_descr')
-			);
-			if($pm->getParamValue('driver_drive_perm')){
-				$params['drive_perm'] = $pm->getParamValue('driver_drive_perm');
-				$params['cel_phone'] = $pm->getParamValue('driver_cel_phone');
-				$params['model'] = $pm->getParamValue('model');
-				$params['plate'] = $pm->getParamValue('plate');
-				$params['trailer_plate'] = $pm->getParamValue('trailer_plate');
-				if ($pm->getParamValue('carrier_id')){
-					$qr = $this->getDbLink()->query_first(sprintf(
-					"SELECT
-						cl.ext_id
-					FROM carriers AS cr
-					LEFT JOINclients cl ON cl.id=cr.client_id
-					WHERE cr.id=%d",
-					$p->getDbVal('carrier_id')
-					));				
-					$params['carrier_ref'] = $qr['ext_id'];					
+			$params = array();
+			foreach($param_fields as $par_1c=>$par_pm){
+				if($pm_v = $pm->getParamValue($par_pm)){
+					$params[$par_1c] = $pm_v;
 				}
 			}
+			
+			if ($pm->getParamValue('carrier_id')){
+				$qr = $this->getDbLink()->query_first(sprintf(
+				"SELECT
+					cl.ext_id
+				FROM carriers AS cr
+				LEFT JOIN clients cl ON cl.id=cr.client_id
+				WHERE cr.id=%d",
+				$p->getDbVal('carrier_id')
+				));				
+				$params['carrier_ref'] = $qr['ext_id'];					
+			}
+			
 			$ext_ref = ExtProg::getPersonRefCreate($params,$res);
-			if ($ext_ref){
-				if (
-				count($res)
-				&& $res['drive_perm'] && strlen($res['drive_perm'])
-				&& !$pm->getParamValue('driver_drive_perm')
-				){
-					$pm->setParamValue('driver_drive_perm',$res['drive_perm']);
-				}
-			}		
 			if (!$ext_ref){
-				throw new Exception(sprintf("Физ.лицо '%s' не найдено в 1с!",$pm->getParamValue('driver_descr')));
+				throw new Exception('Ошибка при получении данных из 1с!');
 			}
+			foreach($param_fields as $par_1c=>$par_pm){
+				if(
+				$res[$par_1c] && strlen($res[$par_1c])
+				&& !$pm->getParamValue($par_pm)
+				){
+					$pm->setParamValue($par_pm,$res[$par_1c]);
+				}
+			}
+			
+			/*
+			if(
+			$res['carrier_ref'] && strlen($res['carrier_ref'])
+			&& !$pm->getParamValue('carrier_ref')
+			){
+				$pm->setParamValue('carrier_id',$qr['carrier_id']);								
+			}
+			*/
 			
 			$ar = $this->getDbLinkMaster()->query_first(sprintf(
 			"SELECT * FROM drivers WHERE name=%s LIMIT 1",

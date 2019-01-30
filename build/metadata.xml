@@ -2,7 +2,7 @@
 <metadata debug="TRUE" owner="polimerplast" dataSchema="public">
 	<versions>
 		<version dateOpen="2016-06-07 07:05" dateClose="2016-06-07 11:06:25">1.0021</version>
-		<lastBuild>2019-01-20 09:22:27</lastBuild>
+		<lastBuild>2019-01-30 07:35:25</lastBuild>
 		<version dateOpen="2016-06-07 11:06:56"/>
 		<version dateOpen="2016-06-07 11:06:57" dateClose="2016-06-07 14:06:30">1.0022</version>
 		<version dateOpen="2016-06-07 14:06:32" dateClose="2016-06-07 16:06:31">1.0023</version>
@@ -88,6 +88,7 @@
 		<version dateOpen="2018-12-11 06:12:31" dateClose="2018-12-11 06:12:39">1.0102</version>
 		<version dateOpen="2018-12-11 06:12:40" dateClose="2019-01-19 06:01:31">1.0103</version>
 		<version dateOpen="2019-01-19 06:01:31" dateClose="2019-01-20 09:01:54">1.0104</version>
+		<version dateOpen="2019-01-20 09:01:54" dateClose="2019-01-30 08:01:24">1.0105</version>
 	</versions>
 	<globalFilters>
 		<field id="client_id"/>
@@ -1752,6 +1753,23 @@
 			<field id="ord" dataType="Int" alias="Порядок"/>
 			<field id="today_ord" dataType="Int" alias="На сегодня"/>
 		</model>
+		<model id="BankList" parent="ModelSQL" dataTable="banks_list" virtual="TRUE">
+			<defaultOrder>
+				<field id="codegr"/>
+				<field id="bik"/>
+			</defaultOrder>
+			<field id="bik" dataType="String" primaryKey="TRUE" autoInc="FALSE" length="9" alias="БИК"/>
+			<field id="codegr" dataType="String" length="9"/>
+			<field id="gr_descr" dataType="String" length="50" alias="Регион"/>
+			<field id="name" dataType="String" length="50" alias="Наименование"/>
+			<field id="korshet" dataType="String" length="20" alias="Кoр.счет"/>
+			<field id="adres" dataType="String" length="70" alias="Адрес"/>
+			<field id="gor" dataType="String" length="31" alias="Город"/>
+			<field id="tgoup" dataType="Int" length="31"/>
+			<index id="banks_codegr_idx">
+				<field id="codegr"/>
+			</index>
+		</model>
 	</models>
 	<constants>
 		<constant id="client_geo_zone_radius_m" name="Радиус (метры) геозон клиентов" descr="Геозона клиента представляет из себя окружность, которая строится на основании точки на карте, поставленной клиентом, и радиуса в метрах, заданного данной величиной" dataType="Int" defaultValue="50"/>
@@ -2703,103 +2721,115 @@
 			<publicMethod id="get_list" modelId="CarrierOrderList"/>
 			<publicMethod id="get_object" modelId="CarrierOrderList"/>
 		</controller>
+		<controller id="ClientSearch" parentId="ControllerSQL">
+			<publicMethod id="search">
+				<field id="query" dataType="String" length="250" required="TRUE"/>
+				<field id="checkIfExists" dataType="Int"/>
+			</publicMethod>
+		</controller>
+		<controller id="Bank" parentId="ControllerSQL" noState="FALSE">
+			<publicMethod id="get_list" modelId="BankList"/>
+			<publicMethod id="get_object" modelId="BankList"/>
+			<publicMethod id="complete" modelId="BankList" patternFieldId="bik"/>
+		</controller>
 	</controllers>
 	<permissions>
-		<allow controllerId="all" methodId="all" roleId="admin"/>
-		<allow controllerId="all" methodId="all" roleId="boss"/>
-		<allow controllerId="all" methodId="all" roleId="sales_manager"/>
-		<allow controllerId="all" methodId="all" roleId="production"/>
-		<allow controllerId="all" methodId="all" roleId="marketing"/>
-		<allow controllerId="all" methodId="all" roleId="representative"/>
-		<revoke controllerId="DOCOrder" methodId="set_not_paid" roleId="boss"/>
-		<revoke controllerId="DOCOrder" methodId="set_not_paid" roleId="sales_manager"/>
-		<revoke controllerId="DOCOrder" methodId="set_not_paid" roleId="production"/>
-		<revoke controllerId="DOCOrder" methodId="set_not_paid" roleId="marketing"/>
-		<revoke controllerId="DOCOrder" methodId="set_not_paid" roleId="representative"/>
+		<permission type="allow" controllerId="all" methodId="all" roleId="admin"/>
+		<permission type="allow" controllerId="all" methodId="all" roleId="boss"/>
+		<permission type="allow" controllerId="all" methodId="all" roleId="sales_manager"/>
+		<permission type="allow" controllerId="all" methodId="all" roleId="production"/>
+		<permission type="allow" controllerId="all" methodId="all" roleId="marketing"/>
+		<permission type="allow" controllerId="all" methodId="all" roleId="representative"/>
+		<permission type="revoke" controllerId="DOCOrder" methodId="set_not_paid" roleId="boss"/>
+		<permission type="revoke" controllerId="DOCOrder" methodId="set_not_paid" roleId="sales_manager"/>
+		<permission type="revoke" controllerId="DOCOrder" methodId="set_not_paid" roleId="production"/>
+		<permission type="revoke" controllerId="DOCOrder" methodId="set_not_paid" roleId="marketing"/>
+		<permission type="revoke" controllerId="DOCOrder" methodId="set_not_paid" roleId="representative"/>
 		<!-- client role -->
-		<allow controllerId="User" methodId="get_list" roleId="client"/>
-		<allow controllerId="User" methodId="get_object" roleId="client"/>
-		<allow controllerId="User" methodId="login" roleId="client"/>
-		<allow controllerId="User" methodId="logout" roleId="client"/>
-		<allow controllerId="User" methodId="login_html" roleId="client"/>
-		<allow controllerId="User" methodId="logged" roleId="client"/>
-		<allow controllerId="User" methodId="get_account" roleId="client"/>
-		<allow controllerId="User" methodId="update" roleId="client"/>
-		<allow controllerId="Constant" methodId="get_list" roleId="client"/>
-		<allow controllerId="Constant" methodId="get_object" roleId="client"/>
-		<allow controllerId="Constant" methodId="get_values" roleId="client"/>
-		<allow controllerId="Enum" methodId="get_enum_list" roleId="client"/>
-		<allow controllerId="Enum" methodId="get_enum_list" roleId="client"/>
-		<allow controllerId="Firm" methodId="get_list" roleId="client"/>
-		<allow controllerId="Warehouse" methodId="get_list" roleId="client"/>
-		<allow controllerId="Warehouse" methodId="get_list_for_order" roleId="client"/>
-		<allow controllerId="Product" methodId="get_list" roleId="client"/>
-		<allow controllerId="Product" methodId="get_list_for_order" roleId="client"/>
-		<allow controllerId="Product" methodId="get_object" roleId="client"/>
-		<allow controllerId="ProductWarehouse" methodId="get_list" roleId="client"/>
-		<allow controllerId="MeasureUnit" methodId="get_list" roleId="client"/>
-		<allow controllerId="ProductMeasureUnit" methodId="get_list" roleId="client"/>
-		<allow controllerId="Client" methodId="get_pop_firm" roleId="client"/>
-		<allow controllerId="ClientUser" methodId="get_list" roleId="client"/>
-		<allow controllerId="ClientUser" methodId="get_object" roleId="client"/>
-		<allow controllerId="DOCOrder" methodId="insert" roleId="client"/>
-		<allow controllerId="DOCOrder" methodId="update" roleId="client"/>
-		<allow controllerId="DOCOrder" methodId="delete" roleId="client"/>
-		<allow controllerId="DOCOrder" methodId="get_current_for_client_list" roleId="client"/>
-		<allow controllerId="DOCOrder" methodId="get_closed_list" roleId="client"/>
-		<allow controllerId="DOCOrder" methodId="get_object" roleId="client"/>
-		<allow controllerId="DOCOrder" methodId="before_open" roleId="client"/>
-		<allow controllerId="DOCOrder" methodId="get_products_descr" roleId="client"/>
-		<allow controllerId="DOCOrder" methodId="get_history" roleId="client"/>
-		<allow controllerId="DOCOrder" methodId="print_order" roleId="client"/>
-		<allow controllerId="DOCOrder" methodId="print_torg12" roleId="client"/>
-		<allow controllerId="DOCOrder" methodId="print_invoice" roleId="client"/>
-		<allow controllerId="DOCOrder" methodId="print_passport" roleId="client"/>
-		<allow controllerId="DOCOrder" methodId="print_ttn" roleId="client"/>
-		<allow controllerId="DOCOrder" methodId="print_ship_docs" roleId="client"/>
-		<allow controllerId="DOCOrder" methodId="pay_orders_list" roleId="client"/>
-		<allow controllerId="DOCOrder" methodId="calc_totals" roleId="client"/>
-		<allow controllerId="DOCOrder" methodId="recalc_product_prices" roleId="client"/>
-		<allow controllerId="DOCOrder" methodId="calc_deliv_cost" roleId="client"/>
-		<allow controllerId="DOCOrder" methodId="get_cancel_cause" roleId="client"/>
-		<allow controllerId="DOCOrder" methodId="get_children" roleId="client"/>
-		<allow controllerId="DOCOrder" methodId="ext_invoice_exists" roleId="client"/>
-		<allow controllerId="DOCOrder" methodId="ext_order_exists" roleId="client"/>
-		<allow controllerId="DOCOrder" methodId="ext_ship_exists" roleId="client"/>
-		<allow controllerId="DOCOrder" methodId="set_cancel_cause" roleId="client"/>
-		<allow controllerId="DOCOrder" methodId="get_pop_warehouse" roleId="client"/>
-		<allow controllerId="DOCOrderDOCTProduct" methodId="insert" roleId="client"/>
-		<allow controllerId="DOCOrderDOCTProduct" methodId="update" roleId="client"/>
-		<allow controllerId="DOCOrderDOCTProduct" methodId="delete" roleId="client"/>
-		<allow controllerId="DOCOrderDOCTProduct" methodId="get_list" roleId="client"/>
-		<allow controllerId="DOCOrderDOCTProduct" methodId="get_object" roleId="client"/>
-		<allow controllerId="DOCOrderDOCTProduct" methodId="get_object" roleId="client"/>
-		<allow controllerId="Delivery" methodId="assigned_orders_for_client" roleId="client"/>
-		<allow controllerId="Delivery" methodId="current_position_client" roleId="client"/>
-		<allow controllerId="Vehicle" methodId="get_select_list" roleId="client"/>
-		<allow controllerId="DeliveryPeriod" methodId="get_list" roleId="client"/>
-		<allow controllerId="DelivCostOpt" methodId="get_list" roleId="client"/>
-		<allow controllerId="ClientDestination" methodId="all" roleId="client"/>
-		<allow controllerId="Payment" methodId="all" roleId="client"/>
-		<allow controllerId="Kladr" methodId="get_region_list" roleId="client"/>
-		<allow controllerId="Kladr" methodId="get_raion_list" roleId="client"/>
-		<allow controllerId="Kladr" methodId="get_naspunkt_list" roleId="client"/>
-		<allow controllerId="Kladr" methodId="get_gorod_list" roleId="client"/>
-		<allow controllerId="Kladr" methodId="get_ulitsa_list" roleId="client"/>
-		<allow controllerId="Kladr" methodId="get_from_naspunkt" roleId="client"/>
-		<allow controllerId="Report" methodId="client_balance" roleId="client"/>
-		<allow controllerId="Report" methodId="naspunkt_cost" roleId="client"/>
-		<allow controllerId="ProductionCity" methodId="get_list" roleId="client"/>
-		<!--<allow controllerId="Report" methodId="current_position_all" roleId="client"/>      
+		<permission type="allow" controllerId="User" methodId="get_list" roleId="client"/>
+		<permission type="allow" controllerId="User" methodId="get_object" roleId="client"/>
+		<permission type="allow" controllerId="User" methodId="login" roleId="client"/>
+		<permission type="allow" controllerId="User" methodId="logout" roleId="client"/>
+		<permission type="allow" controllerId="User" methodId="login_html" roleId="client"/>
+		<permission type="allow" controllerId="User" methodId="logged" roleId="client"/>
+		<permission type="allow" controllerId="User" methodId="get_account" roleId="client"/>
+		<permission type="allow" controllerId="User" methodId="update" roleId="client"/>
+		<permission type="allow" controllerId="Constant" methodId="get_list" roleId="client"/>
+		<permission type="allow" controllerId="Constant" methodId="get_object" roleId="client"/>
+		<permission type="allow" controllerId="Constant" methodId="get_values" roleId="client"/>
+		<permission type="allow" controllerId="Enum" methodId="get_enum_list" roleId="client"/>
+		<permission type="allow" controllerId="Enum" methodId="get_enum_list" roleId="client"/>
+		<permission type="allow" controllerId="Firm" methodId="get_list" roleId="client"/>
+		<permission type="allow" controllerId="Warehouse" methodId="get_list" roleId="client"/>
+		<permission type="allow" controllerId="Warehouse" methodId="get_list_for_order" roleId="client"/>
+		<permission type="allow" controllerId="Product" methodId="get_list" roleId="client"/>
+		<permission type="allow" controllerId="Product" methodId="get_list_for_order" roleId="client"/>
+		<permission type="allow" controllerId="Product" methodId="get_object" roleId="client"/>
+		<permission type="allow" controllerId="ProductWarehouse" methodId="get_list" roleId="client"/>
+		<permission type="allow" controllerId="MeasureUnit" methodId="get_list" roleId="client"/>
+		<permission type="allow" controllerId="ProductMeasureUnit" methodId="get_list" roleId="client"/>
+		<permission type="allow" controllerId="Client" methodId="get_pop_firm" roleId="client"/>
+		<permission type="allow" controllerId="ClientUser" methodId="get_list" roleId="client"/>
+		<permission type="allow" controllerId="ClientUser" methodId="get_object" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrder" methodId="insert" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrder" methodId="update" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrder" methodId="delete" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrder" methodId="get_current_for_client_list" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrder" methodId="get_closed_list" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrder" methodId="get_object" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrder" methodId="before_open" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrder" methodId="get_products_descr" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrder" methodId="get_history" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrder" methodId="print_order" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrder" methodId="print_torg12" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrder" methodId="print_invoice" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrder" methodId="print_passport" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrder" methodId="print_ttn" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrder" methodId="print_ship_docs" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrder" methodId="pay_orders_list" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrder" methodId="calc_totals" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrder" methodId="recalc_product_prices" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrder" methodId="calc_deliv_cost" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrder" methodId="get_cancel_cause" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrder" methodId="get_children" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrder" methodId="ext_invoice_exists" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrder" methodId="ext_order_exists" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrder" methodId="ext_ship_exists" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrder" methodId="set_cancel_cause" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrder" methodId="get_pop_warehouse" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrderDOCTProduct" methodId="insert" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrderDOCTProduct" methodId="update" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrderDOCTProduct" methodId="delete" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrderDOCTProduct" methodId="get_list" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrderDOCTProduct" methodId="get_object" roleId="client"/>
+		<permission type="allow" controllerId="DOCOrderDOCTProduct" methodId="get_object" roleId="client"/>
+		<permission type="allow" controllerId="Delivery" methodId="assigned_orders_for_client" roleId="client"/>
+		<permission type="allow" controllerId="Delivery" methodId="current_position_client" roleId="client"/>
+		<permission type="allow" controllerId="Vehicle" methodId="get_select_list" roleId="client"/>
+		<permission type="allow" controllerId="DeliveryPeriod" methodId="get_list" roleId="client"/>
+		<permission type="allow" controllerId="DelivCostOpt" methodId="get_list" roleId="client"/>
+		<permission type="allow" controllerId="ClientDestination" methodId="all" roleId="client"/>
+		<permission type="allow" controllerId="Payment" methodId="all" roleId="client"/>
+		<permission type="allow" controllerId="Kladr" methodId="get_region_list" roleId="client"/>
+		<permission type="allow" controllerId="Kladr" methodId="get_raion_list" roleId="client"/>
+		<permission type="allow" controllerId="Kladr" methodId="get_naspunkt_list" roleId="client"/>
+		<permission type="allow" controllerId="Kladr" methodId="get_gorod_list" roleId="client"/>
+		<permission type="allow" controllerId="Kladr" methodId="get_ulitsa_list" roleId="client"/>
+		<permission type="allow" controllerId="Kladr" methodId="get_from_naspunkt" roleId="client"/>
+		<permission type="allow" controllerId="Report" methodId="client_balance" roleId="client"/>
+		<permission type="allow" controllerId="Report" methodId="naspunkt_cost" roleId="client"/>
+		<permission type="allow" controllerId="ProductionCity" methodId="get_list" roleId="client"/>
+		<permission type="allow" controllerId="ClientSearch" methodId="all" roleId="client"/>
+		<!--<permission type="allow" controllerId="Report" methodId="current_position_all" roleId="client"/>      
 		-->
 		<!-- geuest role - all unlogged users-->
-		<allow controllerId="Client" methodId="register" roleId="guest"/>
-		<allow controllerId="Client" methodId="check_on_user_name" roleId="guest"/>
-		<allow controllerId="Client" methodId="check_on_inn" roleId="guest"/>
-		<allow controllerId="User" methodId="login" roleId="guest"/>
-		<allow controllerId="User" methodId="login_html" roleId="guest"/>
-		<allow controllerId="User" methodId="logged" roleId="guest"/>
-		<allow controllerId="User" methodId="logout" roleId="guest"/>
+		<permission type="allow" controllerId="Client" methodId="register" roleId="guest"/>
+		<permission type="allow" controllerId="Client" methodId="check_on_user_name" roleId="guest"/>
+		<permission type="allow" controllerId="Client" methodId="check_on_inn" roleId="guest"/>
+		<permission type="allow" controllerId="User" methodId="login" roleId="guest"/>
+		<permission type="allow" controllerId="User" methodId="login_html" roleId="guest"/>
+		<permission type="allow" controllerId="User" methodId="logged" roleId="guest"/>
+		<permission type="allow" controllerId="User" methodId="logout" roleId="guest"/>
 	</permissions>
 	<mainMenu roleId="client">
 		<item viewId="DOCOrderList_View" descr="Заявки" default="TRUE"/>
@@ -3047,6 +3077,7 @@
 		<jsScript file="controlsBS/Kladr2_View.js"/>
 		<jsScript file="controlsBS/FileLoader.js"/>
 		<jsScript file="controlsBS/WindowFormModalBS.js"/>
+		<jsScript file="controlsBS/ButtonOrgSearch.js"/>
 		<!--openLayers-->
 		<jsScript file="extra/OpenLayers/OpenLayers.js" compressed="TRUE"/>
 		<jsScript file="custom_controls/TrackConstants.js"/>
@@ -3447,6 +3478,9 @@
 		<jsScript file="models/TTNAttrPairList_Model.js"/>
 		<jsScript file="models/CarrierOrder_Model.js"/>
 		<jsScript file="models/CarrierOrderList_Model.js"/>
+		<jsScript file="controllers/ClientSearch_Controller.js"/>
+		<jsScript file="controllers/Bank_Controller.js"/>
+		<jsScript file="models/BankList_Model.js"/>
 	</jsScripts>
 	<cssScripts>
 		<cssScript file="bootstrap.min.css" compressed="TRUE" standalone="TRUE"/>

@@ -146,9 +146,11 @@ try{
 		else{
 			$role_id = $_SESSION['role_id'];
 		}
-		require(FUNC_PATH.'role_permissions.php');
+		
+		//require(FUNC_PATH.'role_permissions.php');
+		require('permissions/permission_'.$role_id.'.php');
 		//throw new Exception($contr.'__'.$meth.'__'.$role_id);
-		if (!method_allowed_for_role($contr,$meth,$role_id)){
+		if (!method_allowed($contr,$meth,$role_id)){
 			if (!isset($_SESSION['LOGGED'])){
 				throw new Exception(ERR_AUTH_NOT_LOGGED);
 			}
@@ -156,6 +158,7 @@ try{
 				throw new Exception(ERR_COM_METH_PROHIB);
 			}
 		}
+		
 	}
 	
 	/* including controller */	

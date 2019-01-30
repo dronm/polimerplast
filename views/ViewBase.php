@@ -231,6 +231,7 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/Kladr2_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/FileLoader.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/WindowFormModalBS.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/ButtonOrgSearch.js'));
 		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'extra/OpenLayers/OpenLayers.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'custom_controls/TrackConstants.js'));
@@ -627,6 +628,9 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/TTNAttrPairList_Model.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/CarrierOrder_Model.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/CarrierOrderList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ClientSearch_Controller.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/Bank_Controller.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/BankList_Model.js'));
 				
 			if (isset($_SESSION['scriptId'])){
 				$script_id = $_SESSION['scriptId'];

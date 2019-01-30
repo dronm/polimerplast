@@ -134,38 +134,40 @@ class ExtProg{
 		$xml=null;
 		ExtProg::send_query('get_firm_on_name',array('name'=>$name),$xml);
 		return (string) $xml->ref[0];
+	}
+	
+	private static function set_person_attrs($xml,&$res=NULL){
+		if (is_array($res)){
+			$res['drive_perm'] = isset($xml->drive_perm)? (string) $xml->drive_perm[0]:null;
+			$res['plate'] = isset($xml->plate)? (string) $xml->plate[0]:null;
+			$res['trailer_plate'] = isset($xml->trailer_plate)? (string) $xml->trailer_plate[0]:null;
+			$res['model'] = isset($xml->model)? (string) $xml->model[0]:null;
+			$res['carrier_ref'] = isset($xml->carrier_ref)? (string) $xml->carrier_ref[0]:null;
+			$res['carrier_descr'] = '';
+		}	
 	}	
+	
 	public static function getPersonRefOnName($name,&$res=NULL){
 		$xml=null;
 		ExtProg::send_query('get_person_on_name',array('name'=>$name),$xml);
 		
-		if (is_array($res)){
-			$res['drive_perm'] = (string) $xml->drive_perm[0];
-		}
+		ExtProg::set_person_attrs($xml,$res);
 		
 		return (string) $xml->ref[0];
 	}	
 	public static function getPersonRefCreate($params,&$res=NULL){
+
 		$xml=null;
-		ExtProg::send_query('get_person_create',array('params'=>serialize($params)),$xml);
-		
-		if (is_array($res)){
-			$res['drive_perm'] = (string) $xml->drive_perm[0];
-		}
+		ExtProg::send_query('get_person_create',array('params'=>serialize($params)),$xml);		
+		ExtProg::set_person_attrs($xml,$res);
 		
 		return (string) $xml->ref[0];
 	}	
 	
 	public static function getDriverAttrs($ref,&$res){
 		$xml=null;
-		ExtProg::send_query('get_driver_attrs',array('driver_ref'=>$ref),$xml);
-		
-		$res['plate'] = (string) $xml->plate[0];
-		$res['trailer_plate'] = (string) $xml->trailer_plate[0];
-		$res['model'] = (string) $xml->model[0];
-		$res['drive_perm'] = (string) $xml->drive_perm[0];
-		$res['carrier_descr'] = '';
-		$res['carrier_ref'] = (string) $xml->carrier_ref[0];
+		ExtProg::send_query('get_driver_attrs',array('driver_ref'=>$ref),$xml);		
+		ExtProg::set_person_attrs($xml,$res);
 	}
 	
 	public static function getUserRefOnName($name){

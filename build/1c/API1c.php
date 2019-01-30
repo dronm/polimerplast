@@ -40,6 +40,13 @@
 	*/	
 	define('CMD_GET_PERSON_ON_NAME', 'get_person_on_name');
 
+		/*
+	Возвращает ссылку на физ лицо по имени если есть или создает нового
+	Параметры: params array
+	Возврат: ссылка
+	*/	
+	define('CMD_GET_PERSON_CREATE', 'get_person_create');
+
 /*
 	Возвращает атрибуты по врдителю
 	Параметры: ref
@@ -201,6 +208,13 @@
 		ext_order_id,ext_ship_id
 	*/		
 	define('CMD_DEL_DOCS', 'del_docs');
+
+	/*
+	Удаляет документы
+	Параметры:
+		head [ext_ship_id,deliv_expenses]
+	*/		
+	define('CMD_DELIV_EXPENSES', 'set_deliv_expenses');
 	
 	//********* команды *************
 
@@ -223,7 +237,8 @@
 	define('PAR_ITEMS', 'items');
 	define('PAR_FROM', 'from');
 	define('PAR_TO', 'to');
-	define('PAR_STAMP', 'stamp');	
+	define('PAR_STAMP', 'stamp');
+	define('PAR_PARAMS', 'params');	
 	//***** параметры команд ************
 
 	//***** значения по умолчанию ************
@@ -282,6 +297,11 @@
 		else if ($com==CMD_GET_PERSON_ON_NAME){
 			$xml_body = getPersonRefOnDescr();
 		}		
+		else if ($com==CMD_GET_PERSON_CREATE){
+			$params = unserialize(stripslashes($_REQUEST[PAR_PARAMS]));
+			$xml_body = getPersonRefCreate($params);
+		}		
+		
 		else if ($com==CMD_GET_DRIVER_ATTRS){
 			$xml_body = getPersonAttrs();
 		}		
@@ -542,6 +562,13 @@
 			$v8 = new COM(COM_OBJ_NAME);
 			del_docs($v8,$_REQUEST['ext_order_id'],$_REQUEST['ext_ship_id']);
 		}
+		
+		else if ($com==CMD_DELIV_EXPENSES){
+			$v8 = new COM(COM_OBJ_NAME);
+			$head = unserialize(stripslashes($_REQUEST[PAR_HEAD]));
+			set_deliv_expenses($v8,$head['ext_ship_id'],floatval($head['deliv_expenses']));
+		}
+		
 	}	
 	catch (Exception $e){
 		//error

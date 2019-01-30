@@ -9,7 +9,7 @@
  * @requires common/DOMHandler.js
 */
 /* constructor */
-function ClientAttrs(attrs){
+function ClientAttrs(attrs,formContext){
 	attrs["name"] = new EditString("Client_name",
 		{"labelCaption":"Наименование:","name":"name",
 		"buttonClear":false,
@@ -17,7 +17,12 @@ function ClientAttrs(attrs){
 		"attrs":{"maxlength":150,"size":70,"required":"required"}}
 	);
 	attrs["inn"] = new EditNum("Client_inn",
-		{"labelCaption":"ИНН:","name":"inn","buttonSelect":false,
+		{"labelCaption":"ИНН:",
+		"name":"inn",
+		"buttonSelect":new ButtonOrgSearch("Client_inn_btn_sel",
+			{"viewContext":formContext,
+			"checkIfExists":"1"
+		}),
 		"buttonClear":false,
 		"tableLayout":false,
 		"minLength":10,
@@ -67,12 +72,26 @@ function ClientAttrs(attrs){
 		"tableLayout":false,
 		"attrs":{"size":70,"required":"required"}}
 	);
-	attrs["bank_code"] = new EditNum("Client_bank_code",
+	attrs["bank_code"] = new EditObject("Client_bank_code",
 		{"labelCaption":"БИК:","name":"bank_code",
 		"buttonClear":false,
 		"tableLayout":false,
 		"fixedLength":true,
-		"attrs":{"maxlength":9,"size":20,"required":"required"}}
+		"attrs":{"maxlength":9,"size":20,"required":"required","placeholder":"Введите БИК для поиска"},
+		"methodId":"complete",
+		"modelId":"BankList_Model",
+		"lookupValueFieldId":"bik",
+		"lookupKeyFieldIds":["bik"],
+		"keyFieldIds":["bank_code"],
+		"controller":new Bank_Controller(new ServConnector(HOST_NAME)),
+		"minLengthForQuery":2,	
+		"noSelect":true,
+		"extraFields":["korshet","name"],
+		"onSelected":function(node){				
+				nd("Client_bank_acc").value = DOMHandler.getAttr(node,"korshet");
+				nd("Client_bank_name").value = DOMHandler.getAttr(node,"name");
+			}
+		}
 	);
 	
 	attrs["bank_acc"] = new EditNum("Client_bank_acc",

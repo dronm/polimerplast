@@ -693,11 +693,14 @@ class Client_Controller extends ControllerSQL{
 	}
 	public function register($pm){		
 		//checkings
+		
 		$ext_id = $this->get_1c_ref_on_inn($pm->getParamValue('inn'));
 		if (strlen($ext_id)){
 			throw new Exception(Client_Controller::ER_CLIENT_REGISTERED);
 		}
 		$ext_id="'".$ext_id."'";
+		
+		
 		$this->check_on_user_name($pm);
 		
 		$link_master = $this->getDbLinkMaster();
@@ -706,24 +709,46 @@ class Client_Controller extends ControllerSQL{
 		$params = new ParamsSQL($pm,$link);
 		$params->addAll();
 
-		//проверка по имени в нашей базе
-		$ar = $link->query_first(sprintf(
-		"SELECT 1 FROM clients WHERE name=%s",
-		$params->getParamById('name')
+		//проверка по имени и ИНН в нашей базе
+		$ar = $link->query_first(
+		sprintf("SELECT
+				(name=%s) AS same_name,
+				(inn=%s) AS same_inn
+			FROM clients
+			WHERE name=%s OR inn=%s",
+		$params->getParamById('name'),
+		$params->getParamById('inn'),
+		$params->getParamById('name'),
+		$params->getParamById('inn')
 		));
 		if (is_array($ar)&&count($ar)){
-			throw new Exception("Клиент с таким наименованием есть в базе!");
+			throw new Exception('Клиент с таким '.( ($ar['same_name']=='t')? 'наименованием':'ИНН') .'уже есть в базе!');
 		}
+		
+		$struc_1c = array(
+			'name'=>$params->getParamById('name')
+			,'name_full'=>$params->getParamById('name_full')
+			,'inn'=>$params->getParamById('inn')
+			,'kpp'=>$params->getParamById('kpp')
+			,'okpo'=>$params->getParamById('okpo')
+			,'ogrn'=>$params->getParamById('ogrn')
+			,'addr_reg'=>$params->getParamById('addr_reg')
+			,'addr_mail'=> $params->getParamById(($params->getParamById('addr_mail_same_as_reg')=='true')? 'addr_mail':'addr_reg')
+			,'acc'=>$params->getParamById('acc')
+			,'bank_name'=>$params->getParamById('bank_name')
+			,'bank_code'=>$params->getParamById('bank_code')
+			,'bank_acc'=>$params->getParamById('bank_acc')
+		);
+		$ext_id = ExtProg::addClient($struc_1c);
 		
 		try{
 			$link_master->query("BEGIN");
 							
-			$ar=$link_master->query_first(
-			sprintf("INSERT INTO clients
+			$ar=$link_master->query_first(sprintf("INSERT INTO clients
 			(name,inn,kpp,addr_reg,addr_mail,addr_mail_same_as_reg,telephones,
-			ogrn,okpo,acc,bank_name,bank_code,bank_acc,ext_id)
+			ogrn,okpo,acc,bank_name,bank_code,bank_acc,ext_id,registered)
 			VALUES (%s,%s,%s,%s,%s,%s,%s,
-			%s,%s,%s,%s,%s,%s,%s)
+			%s,%s,%s,%s,%s,%s,%s,TRUE)
 			RETURNING id",
 			$params->getParamById('name'),
 			$params->getParamById('inn'),
@@ -740,8 +765,8 @@ class Client_Controller extends ControllerSQL{
 			$params->getParamById('bank_acc'),
 			$ext_id
 			));
-			$link_master->query(
-			sprintf("INSERT INTO users
+			
+			$link_master->query(sprintf("INSERT INTO users
 			(name,name_full,role_id,email,pwd,cel_phone,client_id)
 			VALUES (%s,%s,'client'::role_types,%s,md5(%s),%s,%d)",
 			$params->getParamById('user_name'),
@@ -881,16 +906,83 @@ class Client_Controller extends ControllerSQL{
 		foreach($res as $key=>$val){			
 			$model->getFieldById($key)->setValue($val);
 		}			
-		$this->addModel($model);		
+		$this->addModel($model);			
 	}
+	
+	private function sync_with_1c($pm,$id=0){
+		$struc_1c = array();
+		
+		if($id){
+			$link = $this->getDbLink();
+			$ar = $link->query_first(sprintf(
+			"SELECT * FROM clients WHERE id=%d",
+			$id));
+			
+			foreach ($ar as $field_id=>$db_val){
+				$new_val = $pm->getParamValue($field_id);
+				$val = (strlen($new_val))? $new_val:$db_val;
+				$struc_1c[$field_id] = $val;
+			}
+	
+			//Договор
+			$ar = $link->query_first(sprintf(
+			"SELECT
+				c.number AS contract_number,
+				replace(c.date_from::text,'-','') AS contract_date_from,
+				replace(c.date_to::text,'-','') AS contract_date_to,
+				f.ext_id AS contract_firm_ext_id
+			FROM client_contracts c
+			LEFT JOIN firms f ON f.id=c.firm_id
+			WHERE c.client_id=%d AND c.date_to=(
+				SELECT MAX(t.date_to) FROM client_contracts t
+				WHERE t.client_id=%d
+				)",
+			$id,$id));
+			
+			if (is_array($ar) && count($ar)){
+				foreach ($ar as $field_id=>$db_val){
+					$struc_1c[$field_id] = $db_val;
+				}
+			}
+		}
+		else{
+			$params = $pm->getParamIterator();
+			while($params->valid()) {
+				$param_id = $params->key();
+				$param_val = $params->current();
+				if($param_val){
+					$struc_1c[$param_id] = $param_val->getValue();
+				}
+				$params->next();
+			}
+			
+		}		
+		
+		$ext_id = ExtProg::addClient($struc_1c);				
+		
+		$pm->setParamValue('ext_id',$ext_id);
+		$pm->setParamValue('registered','true');			
+	}
+	
+	public function insert($pm){
+		$this->sync_with_1c($pm);
+		
+		parent::insert($pm);
+	}
+	
+	
 	public function update($pm){
-		$link = $this->getDbLink();
+		
 		$params = new ParamsSQL($pm,$link);
 		$params->setValidated("old_id",DT_INT);
 		$old_id = $params->getParamById('old_id');
 		if (is_null($old_id)||$old_id=='null'){
 			throw new Exception("Пустой идентификатор клиента!");
 		}
+		
+		$this->sync_with_1c($pm,$old_id);
+		
+		/*
 		$ar = $link->query_first(sprintf(
 		"SELECT * FROM clients WHERE id=%d",
 		$old_id));
@@ -917,11 +1009,6 @@ class Client_Controller extends ControllerSQL{
 				WHERE t.client_id=%d
 				)",
 			$old_id,$old_id));
-			/*
-			if (!is_array($ar)||!count($ar)||!strlen($ar['contract_firm_ext_id'])){
-				throw new Exception("Заведите как минимум один договор с клиентом!");
-			}
-			*/
 			if (is_array($ar)){
 				foreach ($ar as $field_id=>$db_val){
 					$struc_1c[$field_id] = $db_val;
@@ -932,6 +1019,7 @@ class Client_Controller extends ControllerSQL{
 			$pm->setParamValue('ext_id',$ext_id);
 			$pm->setParamValue('registered','true');
 		}		
+		*/
 		parent::update($pm);
 	}
 	public function get_pop_firm($pm){

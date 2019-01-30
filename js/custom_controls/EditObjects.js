@@ -185,7 +185,7 @@ function ClientEditObject(fieldId,controlId,inLine,opts){
 		//"visible":opts.visible,
 		//"onSelected":opts.onSelected,
 		"attrs":{
-			"required":(opts.required==undefined)? opts.required:"required",
+			"required":(opts.required!=undefined)? opts.required:"required",
 			"fkey_client_id":opts.id||""
 		}
 	};

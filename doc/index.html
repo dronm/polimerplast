@@ -13,6 +13,7 @@
 <div class="section-title">Controllers</div>
 <ul>
 <li><a href="#AccPKO_Controller">AccPKO_Controller</a></li>
+<li><a href="#Bank_Controller">Bank_Controller</a></li>
 <li><a href="#Carrier_Controller">Carrier_Controller</a></li>
 <li><a href="#CarrierOrder_Controller">CarrierOrder_Controller</a></li>
 <li><a href="#Client_Controller">Client_Controller</a></li>
@@ -23,6 +24,7 @@
 <li><a href="#ClientPriceList_Controller">ClientPriceList_Controller</a></li>
 <li><a href="#ClientPriceListClient_Controller">ClientPriceListClient_Controller</a></li>
 <li><a href="#ClientPriceListProduct_Controller">ClientPriceListProduct_Controller</a></li>
+<li><a href="#ClientSearch_Controller">ClientSearch_Controller</a></li>
 <li><a href="#ClientUser_Controller">ClientUser_Controller</a></li>
 <li><a href="#Constant_Controller">Constant_Controller</a></li>
 <li><a href="#CustomerSurvey_Controller">CustomerSurvey_Controller</a></li>
@@ -209,6 +211,7 @@
 <li><a href="#TTNAttrPairList_Model">TTNAttrPairList_Model</a></li>
 <li><a href="#CarrierOrder_Model">CarrierOrder_Model</a></li>
 <li><a href="#CarrierOrderList_Model">CarrierOrderList_Model</a></li>
+<li><a href="#BankList_Model">BankList_Model</a></li>
 </ul>
 <div class="section-title">Enumerations</div>
 <ul>
@@ -235,6 +238,17 @@
 <h2>get_list</h2>
 <a href="#AccPKOList_Model">Model: AccPKOList_Model</a><h2>get_object</h2>
 <a href="#AccPKOList_Model">Model: AccPKOList_Model</a>
+</div>
+</div>
+<div id="Bank_Controller" class="content_box">
+<h1>Bank_Controller</h1>
+<div class="content_item">
+<p class="big"></p>
+<p>Методы:</p>
+<h2>get_list</h2>
+<a href="#BankList_Model">Model: BankList_Model</a><h2>get_object</h2>
+<a href="#BankList_Model">Model: BankList_Model</a><h2>complete</h2>
+<a href="#BankList_Model">Model: BankList_Model</a>
 </div>
 </div>
 <div id="Carrier_Controller" class="content_box">
@@ -784,6 +798,32 @@
 <p>Type:String</p>
 <p>Required:
 								Да</p>
+</div>
+</div>
+</div>
+</div>
+<div id="ClientSearch_Controller" class="content_box">
+<h1>ClientSearch_Controller</h1>
+<div class="content_item">
+<p class="big"></p>
+<p>Методы:</p>
+<h2>search</h2>
+<p>Arguments:</p>
+<div class="content_item content_item2">
+<h3>query</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Type:String</p>
+<p>Required:
+								Да</p>
+<p>Length:250</p>
+</div>
+<h3>checkIfExists</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Type:Int</p>
+<p>Required:
+								Нет</p>
 </div>
 </div>
 </div>
@@ -3061,6 +3101,60 @@
 <div>Primary key:</div>
 <div>Required:</div>
 <div>Length:</div>
+<div>Precision:</div>
+</div>
+</div>
+<div id="BankList_Model" class="content_box">
+<h1>BankList_Model</h1>
+<div class="content_item">
+<p>Поля:</p>
+<h2>bik</h2>
+<div>Type:String</div>
+<div>Primary key:TRUE</div>
+<div>Required:</div>
+<div>Length:9</div>
+<div>Precision:</div>
+<h2>codegr</h2>
+<div>Type:String</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:9</div>
+<div>Precision:</div>
+<h2>gr_descr</h2>
+<div>Type:String</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:50</div>
+<div>Precision:</div>
+<h2>name</h2>
+<div>Type:String</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:50</div>
+<div>Precision:</div>
+<h2>korshet</h2>
+<div>Type:String</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:20</div>
+<div>Precision:</div>
+<h2>adres</h2>
+<div>Type:String</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:70</div>
+<div>Precision:</div>
+<h2>gor</h2>
+<div>Type:String</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:31</div>
+<div>Precision:</div>
+<h2>tgoup</h2>
+<div>Type:Int</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:31</div>
 <div>Precision:</div>
 </div>
 </div>
