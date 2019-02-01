@@ -199,14 +199,14 @@ class Bank_Controller extends ControllerSQL{
 		while (!feof($resHandle)) {
 		  $contents .= fread($resHandle, 8192);
 		}
-		$fname = OUTPUT_PATH.uniqid();
+		$fname = ABSOLUTE_PATH.OUTPUT_PATH.uniqid();
 		file_put_contents($fname,$contents);
 
 //$fname = OUTPUT_PATH.'597f23b9749dd';
 		try{
 			$zip = new ZipArchive();
 			if ($zip->open($fname) === TRUE) {
-				$dir = OUTPUT_PATH.uniqid();
+				$dir = ABSOLUTE_PATH.OUTPUT_PATH.uniqid();
 				mkdir($dir);
 						
 				$zip->extractTo($dir.DIRECTORY_SEPARATOR);

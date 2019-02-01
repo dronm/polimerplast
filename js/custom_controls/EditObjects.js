@@ -185,10 +185,12 @@ function ClientEditObject(fieldId,controlId,inLine,opts){
 		//"visible":opts.visible,
 		//"onSelected":opts.onSelected,
 		"attrs":{
-			"required":(opts.required!=undefined)? opts.required:"required",
 			"fkey_client_id":opts.id||""
 		}
 	};
+	if(opts.required===true||opts.required==undefined){
+		options.attrs.required = "required";
+	}
 	for(var opt in opts){
 		options[opt] = opts[opt];
 	}					

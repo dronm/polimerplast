@@ -215,6 +215,7 @@ function DOCOrderDialog_View(id,options){
 
 		//Грузополучатель
 		this.m_gruzpolCtrl = new ClientEditObject("gruzopoluchatel_id",id+"_gruzopoluchatel",false,{
+			"required":false,
 			"labelCaption":"Грузополучатель:",
 			"noOpen":true,
 			"onSelected":function(){
