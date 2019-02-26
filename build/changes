@@ -25,8 +25,10 @@
 1.0106 01/02/19
 1) Грузополучатель исправлена обязательность при записи
 
-1.0107
+1.0107 26/02/19
 1) поле Автомобиль,адрес в ТТН в заявке, выведено в отгрузку
 	doc_orders_shipment_dialog
 	DOCOrder->set_shipped()
 	DOCOrderShipmentDialog doc_orders_shipment_dialog
+1.0102 26/02/19	
+Исправлены ошибки	

@@ -193,7 +193,8 @@ function DOCOrderShipmentDialog_View(id,options){
 		"buttonClear":false,"labelAlign":"left",
 		"tableLayout":false,
 		"attrs":{},
-		"visible":false
+		"visible":false,
+		"alwaysUpdate":true
 		}
 	);		
 	this.bindControl(this.m_destinationToTTN,
@@ -281,6 +282,8 @@ DOCOrderShipmentDialog_View.prototype.onGetData= function(resp){
 			this.m_vehicleCtrl.setVisible(true);
 			this.m_destinationToTTN.setVisible(true);
 			this.m_clientDestCtrl.setVisible(true);
+			
+			this.m_clientDestCtrl.setClientId(m.getFieldValue("client_id"));
 		}
 	}
 }
