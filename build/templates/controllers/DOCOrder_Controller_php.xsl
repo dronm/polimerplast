@@ -1387,6 +1387,9 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 		
 		$driver_id = (strtolower($params->getDbVal('driver_id'))=='null'||!$params->getDbVal('driver_id'))? 0:$params->getDbVal('driver_id');
 		$deliv_vehicle_count = (strtolower($params->getDbVal('deliv_vehicle_count'))=='null'||!$params->getDbVal('deliv_vehicle_count'))? 0:$params->getDbVal('deliv_vehicle_count');
+		$vehicle_id = (strtolower($params->getDbVal('vehicle_id'))=='null'||!$params->getDbVal('vehicle_id'))? 0:$params->getDbVal('vehicle_id');
+		$deliv_destination_id = (strtolower($params->getDbVal('deliv_destination_id'))=='null'||!$params->getDbVal('deliv_destination_id'))? 0:$params->getDbVal('deliv_destination_id');
+		$destination_to_ttn = (strtolower($params->getDbVal('destination_to_ttn'))=='null')? 'NULL':$params->getDbVal('destination_to_ttn');
 		
 		$this->check_state($doc_id,"'produced'");
 		
@@ -1400,11 +1403,14 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 		try{
 			//Отгрузка в БД
 			$link->query(sprintf(
-				"SELECT doc_orders_set_shipped(%d,%s,%d,%d)",
+				"SELECT doc_orders_set_shipped(%d,%s,%d,%d,%d,%d,%s)",
 				$doc_id,
 				$params->getDbVal('view_id'),
 				$driver_id,
-				$deliv_vehicle_count
+				$deliv_vehicle_count,
+				$vehicle_id,
+				$deliv_destination_id,
+				$destination_to_ttn
 			));
 			
 			//ДАННЫЕ ДЛЯ 1С

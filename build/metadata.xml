@@ -2,7 +2,7 @@
 <metadata debug="TRUE" owner="polimerplast" dataSchema="public">
 	<versions>
 		<version dateOpen="2016-06-07 07:05" dateClose="2016-06-07 11:06:25">1.0021</version>
-		<lastBuild>2019-02-01 07:22:23</lastBuild>
+		<lastBuild>2019-02-25 14:34:25</lastBuild>
 		<version dateOpen="2016-06-07 11:06:56"/>
 		<version dateOpen="2016-06-07 11:06:57" dateClose="2016-06-07 14:06:30">1.0022</version>
 		<version dateOpen="2016-06-07 14:06:32" dateClose="2016-06-07 16:06:31">1.0023</version>
@@ -90,6 +90,7 @@
 		<version dateOpen="2019-01-19 06:01:31" dateClose="2019-01-20 09:01:54">1.0104</version>
 		<version dateOpen="2019-01-20 09:01:54" dateClose="2019-01-30 08:01:24">1.0105</version>
 		<version dateOpen="2019-01-30 08:01:25" dateClose="2019-02-01 07:02:22">1.0106</version>
+		<version dateOpen="2019-02-01 07:02:22" dateClose="2019-02-26 06:02:08">1.0107</version>
 	</versions>
 	<globalFilters>
 		<field id="client_id"/>
@@ -820,6 +821,7 @@
 			<field id="deliv_expenses_edit" dataType="Bool"/>
 			<field id="deliv_pay_bank" dataType="Bool"/>
 			<field id="driver_id" dataType="Int" refTable="drivers" refField="id"/>
+			<field id="vehicle_id" dataType="Int" refTable="vehicles" refField="id"/>
 			<index id="doc_orders_date_time_index" unique="FALSE">
 				<field id="date_time"/>
 			</index>
@@ -2154,6 +2156,9 @@
 				<field id="view_id" dataType="String" length="32" required="TRUE"/>
 				<field id="deliv_vehicle_count" dataType="Int"/>
 				<field id="driver_id" dataType="Int"/>
+				<field id="vehicle_id" dataType="Int"/>
+				<field id="deliv_destination_id" dataType="Int"/>
+				<field id="destination_to_ttn" dataType="Bool" defaultValue="FALSE"/>
 			</publicMethod>
 			<publicMethod id="get_ship_docs">
 				<field id="doc_id" dataType="Int" required="TRUE"/>
@@ -2871,6 +2876,7 @@
 		<item viewId="ClientList_View" descr="Клиенты"/>
 		<item viewId="VehicleList_View" descr="Автомобили"/>
 		<item viewId="Delivery_View" descr="Доставки"/>
+		<item viewId="CarrierList_View" descr="Перевозчики"/>
 		<item viewId="RepClientDebts_View" descr="Долги клиентов"/>
 		<item viewId="UserAccount_View" descr="Учетная запись"/>
 	</mainMenu>

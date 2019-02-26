@@ -396,6 +396,8 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldExtXML.php');</xsl:if>
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtBigInt.php');</xsl:if>
 <xsl:if test="/metadata/models/model/field/@dataType='SmallInt'">
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtSmallInt.php');</xsl:if>
+<xsl:if test="/metadata/models/model/field/@dataType='Bytea'">
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtBytea.php');</xsl:if>
 
 /**
  * THIS FILE IS GENERATED FROM TEMPLATE build/templates/controllers/Controller_php.xsl

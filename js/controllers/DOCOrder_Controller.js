@@ -433,6 +433,12 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
+	options = {};
+	
+	var param = new FieldInt("vehicle_id",options);
+	
+	pm.addParam(param);
+	
 	pm.addParam(new FieldInt("ret_id",{}));
 	
 		var options = {};
@@ -804,6 +810,12 @@ extend(DOCOrder_Controller,ControllerDb);
 	options = {};
 	
 	var param = new FieldInt("driver_id",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldInt("vehicle_id",options);
 	
 	pm.addParam(param);
 	
@@ -1238,6 +1250,15 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 				
 		pm.addParam(new FieldInt("driver_id"));
+	
+				
+		pm.addParam(new FieldInt("vehicle_id"));
+	
+				
+		pm.addParam(new FieldInt("deliv_destination_id"));
+	
+				
+		pm.addParam(new FieldBool("destination_to_ttn"));
 	
 			
 }

@@ -565,6 +565,15 @@ function DOCOrder_Model(options){
 	
 	options.fields.driver_id = new FieldInt("driver_id",filed_options);
 	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	
+	filed_options.autoInc = false;	
+	
+	options.fields.vehicle_id = new FieldInt("vehicle_id",filed_options);
+	
 			
 			
 			

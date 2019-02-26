@@ -369,36 +369,6 @@ function DOCOrderDialog_View(id,options){
 				else{
 					self.calcDelivCost();
 				}
-				/*
-				if (!parseInt(self.m_clientDestCtrl.getAttr("fkey_deliv_destination_id"))){
-					//запись нового адреса
-					WindowQuestion.show({
-						"text":"Записать новый адрес?",
-						"callBack":function(res){
-							if (res==WindowQuestion.RES_YES){
-								self.m_clientDestCtrl.setEnabled(false);
-								var contr = new ClientDestination_Controller(new ServConnector(HOST_NAME));
-								contr.run("insert",{
-									"params":{
-										"error_on_no_road":"1",
-										"client_id":self.m_clientCtrl.getAttr("fkey_client_id"),
-										"value":self.m_clientDestCtrl.getValue()
-									},
-									"func":function(resp){
-										self.m_clientDestCtrl.setEnabled(true);
-										console.dir(resp)
-									},
-									"err":function(resp,errCode,errStr){
-										self.m_clientDestCtrl.setEnabled(true);
-										WindowMessage.show({"text":errStr});	
-									}
-								});
-							}
-						}
-					});
-				}
-				self.calcDelivCost();
-				*/				
 			}
 		}		
 	});

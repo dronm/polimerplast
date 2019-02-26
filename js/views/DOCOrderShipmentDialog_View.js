@@ -72,20 +72,20 @@ function DOCOrderShipmentDialog_View(id,options){
 	cont.addElement(ctrl);	
 	
 	//Заказчик
-	var ctrl = new Edit(id+"_client_descr",{
+	this.m_clientCtrl = new Edit(id+"_client_descr",{
 			"enabled":false,
 			"editContClassName":"input-group "+get_bs_col()+"4",
 			"name":"client_descr",
 			"labelCaption":"Заказчик:",
 			"tableLayout":false}
 	);
-	this.bindControl(ctrl,
+	this.bindControl(this.m_clientCtrl,
 		{"modelId":model_id,
 		"valueFieldId":"client_descr",
 		"keyFieldIds":null},
 		{}
 	);
-	cont.addElement(ctrl);	
+	cont.addElement(this.m_clientCtrl);	
 	
 	//Кол авто
 	this.m_delivVehicleCountCtrl = new EditNum(id+"_deliv_vehicle_count",{
@@ -120,6 +120,86 @@ function DOCOrderShipmentDialog_View(id,options){
 		"valueFieldId":null,"keyFieldIds":["driver_id"]}
 	);
 	cont.addElement(this.m_driverCtrl);	
+
+	//Автомобиль
+	this.m_vehicleCtrl = new VehicleEditObject({
+		"fieldId":"vehicle_id",
+		"controlId":"vehicle",
+		"inLine":false,
+		"options":{
+			"visible":false,
+			"attrs":{"fkey_vehicle_id":"vehicle_id"},
+			"alwaysUpdate":true
+		}
+	});
+	this.bindControl(this.m_vehicleCtrl,
+		{"modelId":model_id,
+		"valueFieldId":"vehicle_descr",
+		"keyFieldIds":["vehicle_id"]},
+		{"modelId":model_id,
+		"valueFieldId":null,"keyFieldIds":["vehicle_id"]}
+	);
+	cont.addElement(this.m_vehicleCtrl);	
+	
+	this.m_clientDestCtrl = new ClientDestinationEdit2(id+"_deliv_destination",{
+		"fieldId":"deliv_destination_id",
+		"winObj":options.winObj,
+		"mainView":this,
+		"options":{
+			"visible":false,
+			"attrs":{},
+			"onSelected":function(){
+				if (!parseInt(self.m_clientDestCtrl.getAttr("fkey_deliv_destination_id"))){
+					self.m_clientDestCtrl.setEnabled(false);
+					var contr = new ClientDestination_Controller(new ServConnector(HOST_NAME));
+					contr.run("insert",{
+						"params":{
+							"error_on_no_road":"1",
+							"client_id":self.m_clientCtrl.getAttr("fkey_client_id"),
+							"value":self.m_clientDestCtrl.getValue()
+						},
+						"func":function(resp){
+							if (resp.modelExists("InsertedId_Model")){
+								var m = resp.getModelById("InsertedId_Model",true);
+								if (m.getNextRow()){
+									self.m_clientDestCtrl.setAttr("fkey_deliv_destination_id",m.getFieldValue("id"));
+									DOMHandler.removeClass(self.m_clientDestCtrl.m_node,"error");
+									//self.calcDelivCost();
+								}
+							}
+							self.m_clientDestCtrl.setEnabled(true);
+						},
+						"err":function(resp,errCode,errStr){
+							self.m_clientDestCtrl.setEnabled(true);
+
+							WindowMessage.show({"text":errStr});	
+						}
+					});				
+				}
+				else{
+					//self.calcDelivCost();
+				}
+			}
+		}		
+	});
+	this.bindControl(this.m_clientDestCtrl,
+		{"modelId":model_id,"valueFieldId":"deliv_destination_descr","keyFieldIds":["deliv_destination_id"]},
+		{"valueFieldId":null,"keyFieldIds":["deliv_destination_id"]});	
+	cont.addElement(this.m_clientDestCtrl);		
+	
+	//Адрес в ТТН
+	this.m_destinationToTTN = new EditCheckBox(id+"_destination_to_ttn",
+		{"labelCaption":"Переносить адрес доставки в ТТН","name":"destination_to_ttn",
+		"buttonClear":false,"labelAlign":"left",
+		"tableLayout":false,
+		"attrs":{},
+		"visible":false
+		}
+	);		
+	this.bindControl(this.m_destinationToTTN,
+		{"modelId":model_id,"valueFieldId":"destination_to_ttn","keyFieldIds":null},
+		{"valueFieldId":"destination_to_ttn","keyFieldIds":null});	
+	cont.addElement(this.m_destinationToTTN);	
 	
 	this.addElement(cont);	
 	
@@ -198,6 +278,9 @@ DOCOrderShipmentDialog_View.prototype.onGetData= function(resp){
 		if (m.getFieldValue("deliv_type")=="by_supplier"){
 			this.m_delivVehicleCountCtrl.setVisible(true);
 			this.m_driverCtrl.setVisible(true);
+			this.m_vehicleCtrl.setVisible(true);
+			this.m_destinationToTTN.setVisible(true);
+			this.m_clientDestCtrl.setVisible(true);
 		}
 	}
 }

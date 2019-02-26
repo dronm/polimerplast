@@ -1,12 +1,15 @@
--- Function: doc_orders_set_shipped(integer, varchar(32))
+-- Function: doc_orders_set_shipped(integer, varchar(32),integer,integer,integer,integer,boolean)
 
--- DROP FUNCTION doc_orders_set_shipped(integer, varchar(32));
+-- DROP FUNCTION doc_orders_set_shipped(integer, varchar(32),integer,integer,integer,integer,boolean);
 
 CREATE OR REPLACE FUNCTION doc_orders_set_shipped(
 		in_doc_id integer,
 		in_view_id varchar(32),
 		in_driver_id integer,
-		in_deliv_vehicle_count integer
+		in_deliv_vehicle_count integer,
+		in_vehicle_id integer,
+		in_deliv_destination_id integer,
+		in_destination_to_ttn boolean
 )
   RETURNS void AS
 $BODY$
@@ -378,11 +381,19 @@ BEGIN
 		;
 	END IF;
 	
-	--Обновить доставкибводителя если есть
-	IF in_driver_id>0 OR in_deliv_vehicle_count>0 THEN
+	--Обновить доставки водителя если есть
+	IF in_driver_id>0
+		OR in_vehicle_id>0
+		OR in_deliv_vehicle_count>0
+		OR in_deliv_destination_id>0
+		OR in_destination_to_ttn IS NOT NULL
+	THEN
 		UPDATE doc_orders
 		SET
 			driver_id = CASE WHEN in_driver_id>0 THEN in_driver_id ELSE NULL END,
+			vehicle_id = CASE WHEN in_vehicle_id>0 THEN in_vehicle_id ELSE NULL END,
+			deliv_destination_id = CASE WHEN in_deliv_destination_id>0 THEN deliv_destination_id ELSE NULL END,
+			destination_to_ttn = CASE WHEN in_destination_to_ttn IS NOT NULL THEN in_destination_to_ttn ELSE destination_to_ttn END,
 			deliv_vehicle_count = CASE WHEN in_deliv_vehicle_count>0 THEN in_deliv_vehicle_count ELSE deliv_vehicle_count END,
 			deliv_total = coalesce(deliv_total,0) - v_new_doc_deliv_total,
 			deliv_expenses = coalesce(deliv_expenses,0) - v_new_doc_deliv_expenses
@@ -394,6 +405,6 @@ BEGIN
 END;		
 $BODY$
   LANGUAGE plpgsql VOLATILE
-  COST 100;
-ALTER FUNCTION doc_orders_set_shipped(integer, varchar(32),integer,integer)
+  COST 100 CALLED ON NULL INPUT;
+ALTER FUNCTION doc_orders_set_shipped(integer, varchar(32),integer,integer,integer,integer,boolean)
   OWNER TO polimerplast;

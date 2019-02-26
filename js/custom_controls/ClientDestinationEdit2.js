@@ -8,7 +8,8 @@ function ClientDestinationEdit2(id,opts){
 	this.m_mainView = opts.mainView;
 	
 	options =
-		{"attrs":{"required":"required"},
+		{"attrs":(opts.options.attrs!=undefined)? opts.options.attrs:{"required":"required"},
+		"visible":(opts.options.visible!=undefined)? opts.options.visible:true,
 		"noSelect":true,
 		"noOpen":true,
 		"tableLayout":false,

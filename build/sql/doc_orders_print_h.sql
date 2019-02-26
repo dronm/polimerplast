@@ -1,6 +1,6 @@
 -- View: doc_orders_print_h
 
---DROP VIEW doc_orders_print_h;
+DROP VIEW doc_orders_print_h;
 
 CREATE OR REPLACE VIEW doc_orders_print_h AS 
 	SELECT
@@ -11,7 +11,11 @@ CREATE OR REPLACE VIEW doc_orders_print_h AS
 		) AS delivery_fact_date_descr,
 		
 		date8_descr(
-			(SELECT st.date_time::date FROM doc_orders_states st WHERE st.doc_orders_id=d.id AND st.state='producing')
+			(SELECT st.date_time::date FROM doc_orders_states st
+			WHERE st.doc_orders_id=d.id AND st.state='producing'
+			ORDER BY st.date_time DESC
+			LIMIT 1
+			)
 		) AS to_production_date_descr,
 		
 		(SELECT sum(t.quant_base_measure_unit)::numeric(19,3)
