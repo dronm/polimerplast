@@ -135,6 +135,9 @@ class Client_Controller extends ControllerSQL{
 		$param = new FieldExtBool('deleted'
 				,array());
 		$pm->addParam($param);
+		$param = new FieldExtString('email'
+				,array());
+		$pm->addParam($param);
 		
 		$pm->addParam(new FieldExtInt('ret_id'));
 		
@@ -279,6 +282,10 @@ class Client_Controller extends ControllerSQL{
 			));
 			$pm->addParam($param);
 		$param = new FieldExtBool('deleted'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtString('email'
 				,array(
 			));
 			$pm->addParam($param);
@@ -912,16 +919,41 @@ class Client_Controller extends ControllerSQL{
 	private function sync_with_1c($pm,$id=0){
 		$struc_1c = array();
 		
+		$link = $this->getDbLink();
 		if($id){
-			$link = $this->getDbLink();
+			
 			$ar = $link->query_first(sprintf(
-			"SELECT * FROM clients WHERE id=%d",
+			"SELECT
+				c.*,
+				ca.name AS client_activity
+			FROM clients AS c
+			LEFT JOIN client_activities AS ca ON ca.id=c.client_activity_id
+			WHERE c.id=%d",
 			$id));
 			
 			foreach ($ar as $field_id=>$db_val){
-				$new_val = $pm->getParamValue($field_id);
-				$val = (strlen($new_val))? $new_val:$db_val;
-				$struc_1c[$field_id] = $val;
+				if($field_id=='client_activity'){					
+					$client_activity_id = $pm->getParamValue('client_activity_id');
+					if(isset($client_activity_id)){
+						$ar_act = $link->query_first(sprintf(
+						"SELECT name
+						FROM client_activities
+						WHERE id=%d",
+						intval($client_activity_id)
+						));
+						if(count($ar_act) && isset($ar_act['name'])){
+							$struc_1c['client_activity'] = $ar_act['name'];
+						}
+					
+					}
+				}
+				else{
+					$new_val = $pm->getParamValue($field_id);
+					//$val = (strlen($new_val))? $new_val:$db_val;
+					if(strlen($new_val) &&  $new_val!=$db_val){
+						$struc_1c[$field_id] = $val;
+					}
+				}
 			}
 	
 			//Договор
@@ -955,12 +987,24 @@ class Client_Controller extends ControllerSQL{
 				}
 				$params->next();
 			}
-			
+			$client_activity_id = $pm->getParamValue('client_activity_id');
+			if(isset($client_activity_id)){
+				$ar_act = $link->query_first(sprintf(
+				"SELECT name
+				FROM client_activities
+				WHERE id=%d",
+				intval($client_activity_id)
+				));
+				if(count($ar_act) && isset($ar_act['name'])){
+					$struc_1c['client_activity'] = $ar_act['name'];
+				}
+			}
 		}		
 		
-		$ext_id = ExtProg::addClient($struc_1c);				
-		
-		$pm->setParamValue('ext_id',$ext_id);
+		if(count($struc_1c)){
+			$ext_id = ExtProg::addClient($struc_1c);						
+			$pm->setParamValue('ext_id',$ext_id);			
+		}
 		$pm->setParamValue('registered','true');			
 	}
 	

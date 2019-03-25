@@ -338,6 +338,15 @@ function Client_Model(options){
 	
 	options.fields.deleted = new FieldBool("deleted",filed_options);
 	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	
+	filed_options.autoInc = false;	
+	
+	options.fields.email = new FieldString("email",filed_options);
+	
 			
 			
 		Client_Model.superclass.constructor.call(this,id,options);

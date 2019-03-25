@@ -36,7 +36,9 @@ class ExtProg{
 		foreach($params as $name=>$val){
 			$par_str.= '&'.$name.'='.$val;
 		}
-		//throw new Exception('http://'.HOST_1C.'/API1c.php?cmd='.$cmd.$par_str);
+		throw new Exception('http://'.HOST_1C.':'.PORT_1C.'/API1c.php?cmd='.$cmd.$par_str);
+		*/
+		/*
 		set_time_limit($CON_TIMEOUT);
 		$res = @fopen('http://'.HOST_1C.':'.PORT_1C.'/API1c.php?cmd='.$cmd.$par_str,'r');
 		if (!$res) {

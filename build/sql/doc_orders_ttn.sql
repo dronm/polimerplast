@@ -38,6 +38,7 @@ CREATE OR REPLACE VIEW doc_orders_ttn AS
 					)
 					) AS ttn_data
 				)
+			WHEN order_dr.id IS NOT NULL THEN order_dr.ext_id
 			ELSE dr.ext_id
 		END AS driver_ref,
 		CASE
@@ -61,6 +62,7 @@ CREATE OR REPLACE VIEW doc_orders_ttn AS
 					)
 					) AS ttn_data
 				)			
+			WHEN order_dr.id IS NOT NULL THEN order_dr.drive_perm
 			ELSE dr.drive_perm
 		END AS driver_drive_perm,		
 		CASE
@@ -84,6 +86,7 @@ CREATE OR REPLACE VIEW doc_orders_ttn AS
 					)
 					) AS ttn_data
 				)			
+			WHEN order_vh.id IS NOT NULL THEN order_vh.trailer_plate
 			ELSE vh.trailer_plate
 		END AS vh_trailer_plate,
 		CASE
@@ -107,6 +110,7 @@ CREATE OR REPLACE VIEW doc_orders_ttn AS
 					)
 					) AS ttn_data
 				)						
+			WHEN order_vh.id IS NOT NULL THEN order_vh.trailer_model
 			ELSE vh.trailer_model
 		END AS vh_trailer_model,
 		CASE
@@ -129,7 +133,8 @@ CREATE OR REPLACE VIEW doc_orders_ttn AS
 						(SELECT st.date_time FROM doc_orders_states AS st WHERE st.doc_orders_id=h.id AND st.state='shipped')
 					)
 					) AS ttn_data
-				)									
+				)
+			WHEN order_carr_cl.id IS NOT NULL THEN order_carr_cl.ext_id
 			ELSE NULL
 		END AS carrier_ref,
 		CASE
@@ -153,6 +158,7 @@ CREATE OR REPLACE VIEW doc_orders_ttn AS
 					)
 					) AS ttn_data
 				)									
+			WHEN order_vh.id IS NOT NULL THEN order_vh.plate
 			ELSE vh.plate
 		END AS vh_plate,
 		CASE
@@ -176,6 +182,7 @@ CREATE OR REPLACE VIEW doc_orders_ttn AS
 					)
 					) AS ttn_data
 				)									
+			WHEN order_vh.id IS NOT NULL THEN order_vh.model	
 			ELSE vh.model
 		END AS vh_model,
 		
@@ -199,6 +206,12 @@ CREATE OR REPLACE VIEW doc_orders_ttn AS
 	LEFT JOIN warehouses AS wh ON wh.id=h.warehouse_id
 	LEFT JOIN clients AS cl ON cl.id=h.client_id
 	LEFT JOIN client_destinations_list AS dest ON dest.id=h.deliv_destination_id
+	
+	LEFT JOIN drivers AS order_dr ON order_dr.id=h.driver_id
+	LEFT JOIN vehicles AS order_vh ON order_vh.id=h.vehicle_id
+	LEFT JOIN carriers AS order_carr ON order_carr.id=order_vh.carrier_id
+	LEFT JOIN clients AS order_carr_cl ON order_carr_cl.id=order_carr.client_id
+	
 	LEFT JOIN 
 		(SELECT
 			ttn_attr_pairs.warehouse_id,

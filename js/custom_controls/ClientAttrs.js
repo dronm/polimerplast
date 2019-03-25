@@ -58,6 +58,12 @@ function ClientAttrs(attrs,formContext){
 		"buttonClear":false,
 		"tableLayout":false,
 		"attrs":{"size":20,"required":"required"}});
+
+	attrs["email"] = new EditString("Client_email",
+		{"labelCaption":"Эл.почта:","name":"email",
+		"buttonClear":false,
+		"tableLayout":false,
+		"attrs":{"size":50,"required":"required"}});
 		
 	attrs["acc"] = new EditNum("Client_acc",
 		{"labelCaption":"Расчетный счет:","name":"acc",

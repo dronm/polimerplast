@@ -1,22 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?php
+require_once(FRAME_WORK_PATH.'basic_classes/ControllerSQL.php');
 
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-<xsl:import href="Controller_php.xsl"/>
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtInt.php');
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtString.php');
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtFloat.php');
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtEnum.php');
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtText.php');
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtDateTime.php');
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtDate.php');
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtPassword.php');
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtBool.php');
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPoint.php');
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPolygon.php');
 
-<!-- -->
-<xsl:variable name="CONTROLLER_ID" select="'Client'"/>
-<!-- -->
+/**
+ * THIS FILE IS GENERATED FROM TEMPLATE build/templates/controllers/Controller_php.xsl
+ * ALL DIRECT MODIFICATIONS WILL BE LOST WITH THE NEXT BUILD PROCESS!!!
+ */
 
-<xsl:output method="text" indent="yes"
-			doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN" 
-			doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"/>
-			
-<xsl:template match="/">
-	<xsl:apply-templates select="metadata/controllers/controller[@id=$CONTROLLER_ID]"/>
-</xsl:template>
 
-<xsl:template match="controller"><![CDATA[<?php]]>
-<xsl:call-template name="add_requirements"/>
 require_once(dirname(__FILE__).'/../functions/ExtProg.php');
 require_once(dirname(__FILE__).'/../functions/EmailSender.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ParamsSQL.php');
@@ -25,20 +27,634 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLInt.php');
 require_once('User_Controller.php');
 require_once(dirname(__FILE__).'/../models/ClientDebtList_Model.php');
 
-class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
+class Client_Controller extends ControllerSQL{
 
 	const ER_CLIENT_REGISTERED = 'Организация уже зарегистрирована!';
 	const ER_LOGIN_IN_USE = 'Логин занят!';
 	
 	public function __construct($dbLinkMaster=NULL){
-		parent::__construct($dbLinkMaster);<xsl:apply-templates/>
-	}	
-	<xsl:call-template name="extra_methods"/>
-}
-<![CDATA[?>]]>
-</xsl:template>
+		parent::__construct($dbLinkMaster);
+			
 
-<xsl:template name="extra_methods">
+		/* insert */
+		$pm = new PublicMethod('insert');
+		$param = new FieldExtString('name'
+				,array('required'=>TRUE));
+		$pm->addParam($param);
+		$param = new FieldExtText('name_full'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtString('inn'
+				,array('required'=>TRUE));
+		$pm->addParam($param);
+		$param = new FieldExtString('kpp'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtText('addr_reg'
+				,array('required'=>TRUE));
+		$pm->addParam($param);
+		$param = new FieldExtText('addr_mail'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtBool('addr_mail_same_as_reg'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtText('telephones'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtString('ogrn'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtString('okpo'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtString('acc'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtText('bank_name'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtString('bank_code'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtString('bank_acc'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtBool('registered'
+				,array());
+		$pm->addParam($param);
+		
+				$param = new FieldExtEnum('pay_type',',','cash,in_advance,with_delay'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtInt('pay_delay_days'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtBool('pay_fix_to_dow'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtString('pay_dow_days'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtBool('pay_ban_on_debt_days'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtInt('pay_debt_days'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtBool('pay_ban_on_debt_sum'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtFloat('pay_debt_sum'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtBool('login_allowed'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtBool('sms_on_order_change'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtBool('email_sert'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtBool('show_delivery_tab'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtString('ext_id'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtInt('client_activity_id'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtInt('def_firm_id'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtInt('def_warehouse_id'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtBool('deleted'
+				,array());
+		$pm->addParam($param);
+		
+		$pm->addParam(new FieldExtInt('ret_id'));
+		
+		
+		$this->addPublicMethod($pm);
+		$this->setInsertModelId('Client_Model');
+
+			
+		/* update */		
+		$pm = new PublicMethod('update');
+		
+		$pm->addParam(new FieldExtInt('old_id',array('required'=>TRUE)));
+		
+		$pm->addParam(new FieldExtInt('obj_mode'));
+		$param = new FieldExtInt('id'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtString('name'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtText('name_full'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtString('inn'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtString('kpp'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtText('addr_reg'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtText('addr_mail'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtBool('addr_mail_same_as_reg'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtText('telephones'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtString('ogrn'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtString('okpo'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtString('acc'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtText('bank_name'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtString('bank_code'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtString('bank_acc'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtBool('registered'
+				,array(
+			));
+			$pm->addParam($param);
+		
+				$param = new FieldExtEnum('pay_type',',','cash,in_advance,with_delay'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtInt('pay_delay_days'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtBool('pay_fix_to_dow'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtString('pay_dow_days'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtBool('pay_ban_on_debt_days'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtInt('pay_debt_days'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtBool('pay_ban_on_debt_sum'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtFloat('pay_debt_sum'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtBool('login_allowed'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtBool('sms_on_order_change'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtBool('email_sert'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtBool('show_delivery_tab'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtString('ext_id'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtInt('client_activity_id'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtInt('def_firm_id'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtInt('def_warehouse_id'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtBool('deleted'
+				,array(
+			));
+			$pm->addParam($param);
+		
+			$param = new FieldExtInt('id',array(
+			));
+			$pm->addParam($param);
+		
+		
+			$this->addPublicMethod($pm);
+			$this->setUpdateModelId('Client_Model');
+
+			
+		/* delete */
+		$pm = new PublicMethod('delete');
+		
+		$pm->addParam(new FieldExtInt('id'
+		));		
+		
+		$pm->addParam(new FieldExtInt('count'));
+		$pm->addParam(new FieldExtInt('from'));				
+		$this->addPublicMethod($pm);					
+		$this->setDeleteModelId('Client_Model');
+
+			
+		/* get_list */
+		$pm = new PublicMethod('get_list');
+		
+		$pm->addParam(new FieldExtInt('count'));
+		$pm->addParam(new FieldExtInt('from'));
+		$pm->addParam(new FieldExtString('cond_fields'));
+		$pm->addParam(new FieldExtString('cond_sgns'));
+		$pm->addParam(new FieldExtString('cond_vals'));
+		$pm->addParam(new FieldExtString('cond_ic'));
+		$pm->addParam(new FieldExtString('ord_fields'));
+		$pm->addParam(new FieldExtString('ord_directs'));
+		$pm->addParam(new FieldExtString('field_sep'));
+
+		$this->addPublicMethod($pm);
+		
+		$this->setListModelId('ClientList_Model');
+		
+			
+		/* get_object */
+		$pm = new PublicMethod('get_object');
+		$pm->addParam(new FieldExtInt('browse_mode'));
+		
+		$pm->addParam(new FieldExtInt('id'
+		));
+		
+		$this->addPublicMethod($pm);
+		$this->setObjectModelId('ClientDialog_Model');		
+
+			
+		/* complete  */
+		$pm = new PublicMethod('complete');
+		$pm->addParam(new FieldExtString('pattern'));
+		$pm->addParam(new FieldExtInt('count'));
+		$pm->addParam(new FieldExtInt('ic'));
+		$pm->addParam(new FieldExtInt('mid'));
+		$pm->addParam(new FieldExtString('name'));		
+		$this->addPublicMethod($pm);					
+		$this->setCompleteModelId('ClientComplete_Model');
+
+			
+		$pm = new PublicMethod('get_unreg_list');
+		
+		$this->addPublicMethod($pm);
+
+			
+		$pm = new PublicMethod('get_unreg_client_list');
+		
+		$this->addPublicMethod($pm);
+
+			
+		$pm = new PublicMethod('get_user_list');
+		
+				
+	$opts=array();
+	
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtInt('client_id',$opts));
+	
+			
+		$this->addPublicMethod($pm);
+
+			
+		$pm = new PublicMethod('get_contract_list');
+		
+				
+	$opts=array();
+	
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtInt('client_id',$opts));
+	
+			
+		$this->addPublicMethod($pm);
+
+			
+		$pm = new PublicMethod('complete_from_1c');
+		
+				
+	$opts=array();
+	
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtString('pattern',$opts));
+	
+			
+		$this->addPublicMethod($pm);
+
+			
+		$pm = new PublicMethod('attrs_from_1c');
+		
+				
+	$opts=array();
+	
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtString('name',$opts));
+	
+			
+		$this->addPublicMethod($pm);
+
+			
+		$pm = new PublicMethod('register');
+		
+				
+	$opts=array();
+	
+		$opts['alias']='Наименование';
+		$opts['length']=150;
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtString('name',$opts));
+	
+				
+	$opts=array();
+	
+		$opts['alias']='ИНН';
+		$opts['length']=12;
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtString('inn',$opts));
+	
+				
+	$opts=array();
+	
+		$opts['alias']='КПП';
+		$opts['length']=10;				
+		$pm->addParam(new FieldExtString('kpp',$opts));
+	
+				
+	$opts=array();
+	
+		$opts['alias']='Адрес юридический';
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtText('addr_reg',$opts));
+	
+				
+	$opts=array();
+	
+		$opts['alias']='Адрес почтовый';				
+		$pm->addParam(new FieldExtText('addr_mail',$opts));
+	
+				
+	$opts=array();
+	
+		$opts['alias']='Почтовый адрес совпадает с юридическим';				
+		$pm->addParam(new FieldExtBool('addr_mail_same_as_reg',$opts));
+	
+				
+	$opts=array();
+	
+		$opts['alias']='Телефоны';				
+		$pm->addParam(new FieldExtText('telephones',$opts));
+	
+				
+	$opts=array();
+	
+		$opts['alias']='ОГРН';
+		$opts['length']=15;				
+		$pm->addParam(new FieldExtString('ogrn',$opts));
+	
+				
+	$opts=array();
+	
+		$opts['alias']='ОКПО';
+		$opts['length']=20;				
+		$pm->addParam(new FieldExtString('okpo',$opts));
+	
+				
+	$opts=array();
+	
+		$opts['alias']='Расчетный счет';
+		$opts['length']=20;
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtString('acc',$opts));
+	
+				
+	$opts=array();
+	
+		$opts['alias']='Банк';
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtText('bank_name',$opts));
+	
+				
+	$opts=array();
+	
+		$opts['alias']='БИК';
+		$opts['length']=9;
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtString('bank_code',$opts));
+	
+				
+	$opts=array();
+	
+		$opts['alias']='Корр. счет';
+		$opts['length']=20;
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtString('bank_acc',$opts));
+	
+				
+	$opts=array();
+	
+		$opts['alias']='ФИО ответственного';
+		$opts['length']=150;
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtString('user_name_full',$opts));
+	
+				
+	$opts=array();
+	
+		$opts['alias']='Логин ответственного';
+		$opts['length']=50;
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtString('user_name',$opts));
+	
+				
+	$opts=array();
+	
+		$opts['alias']='Пароль ответственного';
+		$opts['length']=50;
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtString('user_pwd',$opts));
+	
+				
+	$opts=array();
+	
+		$opts['alias']='Адрес электронной почты ответственного';
+		$opts['length']=50;
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtString('user_email',$opts));
+	
+				
+	$opts=array();
+	
+		$opts['alias']='Номер телефона ответственного';
+		$opts['length']=15;
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtString('user_phone',$opts));
+	
+			
+		$this->addPublicMethod($pm);
+
+			
+		$pm = new PublicMethod('check_on_user_name');
+		
+				
+	$opts=array();
+	
+		$opts['length']=50;
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtString('user_name',$opts));
+	
+			
+		$this->addPublicMethod($pm);
+
+			
+		$pm = new PublicMethod('check_on_inn');
+		
+				
+	$opts=array();
+	
+		$opts['length']=12;
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtString('inn',$opts));
+	
+			
+		$this->addPublicMethod($pm);
+
+			
+		$pm = new PublicMethod('get_pop_firm');
+		
+				
+	$opts=array();
+	
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtInt('client_id',$opts));
+	
+			
+		$this->addPublicMethod($pm);
+
+			
+		$pm = new PublicMethod('get_debts_on_firm');
+		
+				
+	$opts=array();
+	
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtInt('firm_id',$opts));
+	
+				
+	$opts=array();
+	
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtInt('client_id',$opts));
+	
+			
+		$this->addPublicMethod($pm);
+
+			
+		$pm = new PublicMethod('get_debt_list');
+		
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('cond_fields',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('cond_vals',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('cond_sgns',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('cond_ic',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtInt('from',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtInt('count',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('ord_fields',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('ord_directs',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('field_sep',$opts));
+	
+			
+		$this->addPublicMethod($pm);
+
+			
+		$pm = new PublicMethod('refresh_debts');
+		
+		$this->addPublicMethod($pm);
+
+		
+	}	
+	
 	public function check_on_user_name($pm){
 		$link = $this->getDbLink();
 		
@@ -49,7 +665,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		sprintf("SELECT 1 AS res FROM users WHERE name=%s",
 		$params->getParamById('user_name'))
 		);
-		if (is_array($ar)&amp;&amp;count($ar)){
+		if (is_array($ar)&&count($ar)){
 			throw new Exception(Client_Controller::ER_LOGIN_IN_USE);
 		}
 	}
@@ -66,7 +682,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		"SELECT id FROM clients WHERE inn=%s",
 		$params->getParamById('inn')
 		));
-		if (is_array($ar)&amp;&amp;count($ar)){
+		if (is_array($ar)&&count($ar)){
 			throw new Exception(Client_Controller::ER_CLIENT_REGISTERED);
 		}
 		
@@ -105,7 +721,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		$params->getParamById('name'),
 		$params->getParamById('inn')
 		));
-		if (is_array($ar)&amp;&amp;count($ar)){
+		if (is_array($ar)&&count($ar)){
 			throw new Exception('Клиент с таким '.( ($ar['same_name']=='t')? 'наименованием':'ИНН') .'уже есть в базе!');
 		}
 		
@@ -296,41 +912,16 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 	private function sync_with_1c($pm,$id=0){
 		$struc_1c = array();
 		
-		$link = $this->getDbLink();
 		if($id){
-			
+			$link = $this->getDbLink();
 			$ar = $link->query_first(sprintf(
-			"SELECT
-				c.*,
-				ca.name AS client_activity
-			FROM clients AS c
-			LEFT JOIN client_activities AS ca ON ca.id=c.client_activity_id
-			WHERE c.id=%d",
+			"SELECT * FROM clients WHERE id=%d",
 			$id));
 			
 			foreach ($ar as $field_id=>$db_val){
-				if($field_id=='client_activity'){					
-					$client_activity_id = $pm->getParamValue('client_activity_id');
-					if(isset($client_activity_id)){
-						$ar_act = $link->query_first(sprintf(
-						"SELECT name
-						FROM client_activities
-						WHERE id=%d",
-						intval($client_activity_id)
-						));
-						if(count($ar_act) &amp;&amp; isset($ar_act['name'])){
-							$struc_1c['client_activity'] = $ar_act['name'];
-						}
-					
-					}
-				}
-				else{
-					$new_val = $pm->getParamValue($field_id);
-					//$val = (strlen($new_val))? $new_val:$db_val;
-					if(strlen($new_val) &amp;&amp;  $new_val!=$db_val){
-						$struc_1c[$field_id] = $val;
-					}
-				}
+				$new_val = $pm->getParamValue($field_id);
+				$val = (strlen($new_val))? $new_val:$db_val;
+				$struc_1c[$field_id] = $val;
 			}
 	
 			//Договор
@@ -348,7 +939,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 				)",
 			$id,$id));
 			
-			if (is_array($ar) &amp;&amp; count($ar)){
+			if (is_array($ar) && count($ar)){
 				foreach ($ar as $field_id=>$db_val){
 					$struc_1c[$field_id] = $db_val;
 				}
@@ -364,24 +955,12 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 				}
 				$params->next();
 			}
-			$client_activity_id = $pm->getParamValue('client_activity_id');
-			if(isset($client_activity_id)){
-				$ar_act = $link->query_first(sprintf(
-				"SELECT name
-				FROM client_activities
-				WHERE id=%d",
-				intval($client_activity_id)
-				));
-				if(count($ar_act) &amp;&amp; isset($ar_act['name'])){
-					$struc_1c['client_activity'] = $ar_act['name'];
-				}
-			}
+			
 		}		
 		
-		if(count($struc_1c)){
-			$ext_id = ExtProg::addClient($struc_1c);						
-			$pm->setParamValue('ext_id',$ext_id);			
-		}
+		$ext_id = ExtProg::addClient($struc_1c);				
+		
+		$pm->setParamValue('ext_id',$ext_id);
 		$pm->setParamValue('registered','true');			
 	}
 	
@@ -512,7 +1091,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 				FROM clients t WHERE t.ext_id=%s",
 				$par->getDbVal('clientRef'))
 			);
-			if (is_array($client_ar)&amp;&amp;count($client_ar)){
+			if (is_array($client_ar)&&count($client_ar)){
 				//есть такой клиент
 				
 				//фирма
@@ -545,7 +1124,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 					
 					$q.=($q=='')? '':',';
 					$q.= sprintf("(%d,%d,
-					(SELECT t.days_from FROM client_debt_periods t WHERE %d&gt;=t.days_from AND %d&lt;=t.days_to LIMIT 1),
+					(SELECT t.days_from FROM client_debt_periods t WHERE %d>=t.days_from AND %d<=t.days_to LIMIT 1),
 					%f,%d,%f)",
 					$firm_ids[$rec['firmRef']],
 					$client_ar['id'],
@@ -637,6 +1216,6 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		}
 	}
 	
-</xsl:template>
 
-</xsl:stylesheet>
+}
+?>

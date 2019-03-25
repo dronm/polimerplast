@@ -103,6 +103,15 @@ function ClientDialog_Model(options){
 	
 	options.fields.deleted = new FieldBool("deleted",filed_options);
 	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	
+	filed_options.autoInc = false;	
+	
+	options.fields.email = new FieldString("email",filed_options);
+	
 		ClientDialog_Model.superclass.constructor.call(this,id,options);
 }
 extend(ClientDialog_Model,Model);

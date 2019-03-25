@@ -382,17 +382,21 @@ BEGIN
 	END IF;
 	
 	--Обновить доставки водителя если есть
-	IF in_driver_id>0
+	--RAISE EXCEPTION 'in_deliv_destination_id=%, in_vehicle_id=%, in_destination_to_ttn=%',in_deliv_destination_id,in_vehicle_id,in_destination_to_ttn;
+	IF
+		in_driver_id>0
 		OR in_vehicle_id>0
 		OR in_deliv_vehicle_count>0
 		OR in_deliv_destination_id>0
 		OR in_destination_to_ttn IS NOT NULL
+		OR v_new_doc_deliv_total>0
+		OR v_new_doc_deliv_expenses>0
 	THEN
 		UPDATE doc_orders
 		SET
-			driver_id = CASE WHEN in_driver_id>0 THEN in_driver_id ELSE NULL END,
-			vehicle_id = CASE WHEN in_vehicle_id>0 THEN in_vehicle_id ELSE NULL END,
-			deliv_destination_id = CASE WHEN in_deliv_destination_id>0 THEN deliv_destination_id ELSE NULL END,
+			driver_id = CASE WHEN in_driver_id>0 THEN in_driver_id ELSE driver_id END,
+			vehicle_id = CASE WHEN in_vehicle_id>0 THEN in_vehicle_id ELSE vehicle_id END,
+			deliv_destination_id = CASE WHEN in_deliv_destination_id>0 THEN in_deliv_destination_id ELSE deliv_destination_id END,
 			destination_to_ttn = CASE WHEN in_destination_to_ttn IS NOT NULL THEN in_destination_to_ttn ELSE destination_to_ttn END,
 			deliv_vehicle_count = CASE WHEN in_deliv_vehicle_count>0 THEN in_deliv_vehicle_count ELSE deliv_vehicle_count END,
 			deliv_total = coalesce(deliv_total,0) - v_new_doc_deliv_total,

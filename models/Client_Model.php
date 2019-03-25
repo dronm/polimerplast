@@ -309,6 +309,15 @@ class Client_Model extends ModelSQL{
 		$f_deleted=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deleted",$f_opts);
 		$this->addField($f_deleted);
 		//********************
+		
+		//*** Field email ***
+		$f_opts = array();
+		$f_opts['length']=50;
+		$f_opts['id']="email";
+				
+		$f_email=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"email",$f_opts);
+		$this->addField($f_email);
+		//********************
 	
 		$order = new ModelOrderSQL();		
 		$this->setDefaultModelOrder($order);		

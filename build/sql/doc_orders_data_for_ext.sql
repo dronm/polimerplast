@@ -60,58 +60,58 @@ CREATE OR REPLACE VIEW doc_orders_data_for_ext AS
 		
 		CASE
 			--WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.driver_ref FROM ttn_data)
-			WHEN order_dr IS NOT NULL THEN order_dr.ext_id
+			WHEN order_dr.id IS NOT NULL THEN order_dr.ext_id
 			ELSE dr.ext_id
 		END AS driver_ref,
 		CASE
 			--WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.driver_name FROM ttn_data)
-			WHEN order_dr IS NOT NULL THEN order_dr.name
+			WHEN order_dr.id IS NOT NULL THEN order_dr.name
 			ELSE dr.name
 		END AS driver_name,
 		CASE
 			--WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.driver_drive_perm FROM ttn_data)
-			WHEN order_dr IS NOT NULL THEN order_dr.drive_perm
+			WHEN order_dr.id IS NOT NULL THEN order_dr.drive_perm
 			ELSE dr.drive_perm
 		END AS driver_drive_perm,
 		CASE
 			--WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.driver_cel_phone FROM ttn_data)
-			WHEN order_dr IS NOT NULL THEN order_dr.cel_phone
+			WHEN order_dr.id IS NOT NULL THEN order_dr.cel_phone
 			ELSE dr.cel_phone
 		END AS driver_cel_phone,
 
 		CASE
 			--WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.vh_trailer_plate FROM ttn_data)
-			WHEN order_vh IS NOT NULL THEN order_vh.trailer_plate
+			WHEN order_vh.id IS NOT NULL THEN order_vh.trailer_plate
 			ELSE vh.trailer_plate
 		END AS vh_trailer_plate,
 		CASE
 			--WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.vh_trailer_model FROM ttn_data)
-			WHEN order_vh IS NOT NULL THEN order_vh.trailer_model
+			WHEN order_vh.id IS NOT NULL THEN order_vh.trailer_model
 			ELSE vh.trailer_model
 		END AS vh_trailer_model,
 		CASE
 			--WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.carrier_ref FROM ttn_data)
-			WHEN order_dr IS NOT NULL THEN order_carr_cl.ext_id
+			WHEN order_carr_cl.id IS NOT NULL THEN order_carr_cl.ext_id
 			ELSE carr_cl.ext_id
 		END AS carrier_ref,
 		CASE
 			--WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.vh_model FROM ttn_data)
-			WHEN order_vh IS NOT NULL THEN order_vh.model
+			WHEN order_vh.id IS NOT NULL THEN order_vh.model
 			ELSE vh.model
 		END AS vh_model,
 		CASE
 			--WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.vh_plate FROM ttn_data)
-			WHEN order_vh IS NOT NULL THEN order_vh.plate
+			WHEN order_vh.id IS NOT NULL THEN order_vh.plate
 			ELSE vh.plate
 		END AS vh_plate,
 		CASE
 			--WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.vh_vol FROM ttn_data)
-			WHEN order_vh IS NOT NULL THEN order_vh.vol
+			WHEN order_vh.id IS NOT NULL THEN order_vh.vol
 			ELSE vh.vol
 		END AS vh_vol,
 		CASE
 			--WHEN ttn_pairs.firm_id IS NOT NULL THEN (SELECT ttn_data.vh_load_weight_t FROM ttn_data)
-			WHEN order_vh IS NOT NULL THEN order_vh.load_weight_t
+			WHEN order_vh.id IS NOT NULL THEN order_vh.load_weight_t
 			ELSE vh.load_weight_t
 		END AS vh_load_weight_t,
 		
@@ -192,7 +192,7 @@ CREATE OR REPLACE VIEW doc_orders_data_for_ext AS
 	LEFT JOIN drivers dr ON dr.id=vh.driver_id
 	LEFT JOIN product_groups pg ON pg.id=p.product_group_id
 	LEFT JOIN drivers AS order_dr ON order_dr.id=h.driver_id
-	LEFT JOIN vehicles AS order_vh ON order_vh.driver_id=h.driver_id
+	LEFT JOIN vehicles AS order_vh ON order_vh.id=h.vehicle_id
 	LEFT JOIN carriers ON carriers.id=vh.carrier_id
 	LEFT JOIN clients AS carr_cl ON carr_cl.id=carriers.client_id
 	LEFT JOIN carriers AS order_carr ON order_carr.id=order_vh.carrier_id
