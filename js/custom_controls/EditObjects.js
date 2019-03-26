@@ -176,6 +176,7 @@ function ClientEditObject(fieldId,controlId,inLine,opts){
 		"keyFieldIds":[fieldId],
 		"controller":new Client_Controller(new ServConnector(HOST_NAME)),
 		"minLengthForQuery":1,
+		"mid":"1",
 		"objectView":ClientDialog_View,
 		"noSelect":false,
 		"noOpen":opts.noOpen||false,

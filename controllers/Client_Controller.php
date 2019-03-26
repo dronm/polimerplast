@@ -947,11 +947,19 @@ class Client_Controller extends ControllerSQL{
 					
 					}
 				}
+				else if($field_id=='ext_id'){
+					$struc_1c[$field_id] = $db_val;
+				}				
 				else{
-					$new_val = $pm->getParamValue($field_id);
-					//$val = (strlen($new_val))? $new_val:$db_val;
-					if(strlen($new_val) &&  $new_val!=$db_val){
-						$struc_1c[$field_id] = $val;
+					if(!isset($ar['ext_id'])){
+						$struc_1c[$field_id] = (strlen($new_val))? $new_val:$db_val;
+					}
+					else{
+						$new_val = $pm->getParamValue($field_id);
+						//$val = (strlen($new_val))? $new_val:$db_val;
+						if(strlen($new_val) &&  $new_val!=$db_val){
+							$struc_1c[$field_id] = $new_val;
+						}
 					}
 				}
 			}
