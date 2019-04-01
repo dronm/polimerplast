@@ -274,8 +274,8 @@ extend(Vehicle_Controller,ControllerDb);
 	var options = {};
 	
 	var pm = this.getComplete();
-	pm.addParam(new FieldString("plate",options));
-	pm.getParamById(this.PARAM_ORD_FIELDS).setValue("plate");
+	pm.addParam(new FieldString("complete_descr",options));
+	pm.getParamById(this.PARAM_ORD_FIELDS).setValue("complete_descr");
 }
 
 		

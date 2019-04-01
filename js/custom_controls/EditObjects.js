@@ -907,7 +907,7 @@ function VehicleEditObject(opts){
 		{"methodId":"complete",
 		"tableLayout":false,
 		"modelId":"VehicleSelectList_Model",
-		"lookupValueFieldId":"plate",
+		"lookupValueFieldId":"complete_descr",//"plate"
 		"lookupKeyFieldIds":["id"],
 		"keyFieldIds":[opts.fieldId],
 		"controller":new Vehicle_Controller(new ServConnector(HOST_NAME)),

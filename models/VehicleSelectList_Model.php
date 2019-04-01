@@ -49,6 +49,16 @@ class VehicleSelectList_Model extends ModelSQL{
 		$f_plate=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"plate",$f_opts);
 		$this->addField($f_plate);
 		//********************
+		
+		//*** Field complete_descr ***
+		$f_opts = array();
+		
+		$f_opts['alias']='Автомобиль';
+		$f_opts['id']="complete_descr";
+				
+		$f_complete_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"complete_descr",$f_opts);
+		$this->addField($f_complete_descr);
+		//********************
 	
 	}
 

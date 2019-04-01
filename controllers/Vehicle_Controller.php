@@ -223,7 +223,7 @@ class Vehicle_Controller extends ControllerSQL{
 		$pm->addParam(new FieldExtInt('count'));
 		$pm->addParam(new FieldExtInt('ic'));
 		$pm->addParam(new FieldExtInt('mid'));
-		$pm->addParam(new FieldExtString('plate'));		
+		$pm->addParam(new FieldExtString('complete_descr'));		
 		$this->addPublicMethod($pm);					
 		$this->setCompleteModelId('VehicleSelectList_Model');
 

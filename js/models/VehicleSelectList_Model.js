@@ -49,6 +49,15 @@ function VehicleSelectList_Model(options){
 	
 	options.fields.plate = new FieldString("plate",filed_options);
 	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	filed_options.alias = 'Автомобиль';
+	filed_options.autoInc = false;	
+	
+	options.fields.complete_descr = new FieldString("complete_descr",filed_options);
+	
 		VehicleSelectList_Model.superclass.constructor.call(this,id,options);
 }
 extend(VehicleSelectList_Model,Model);
