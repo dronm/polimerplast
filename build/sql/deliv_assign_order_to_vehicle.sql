@@ -75,6 +75,12 @@ BEGIN
 			ARRAY[v_o_rec],
 			v_o_rec.vm,v_o_rec.wt
 	);
+	
+	--Setting order vehicle
+	UPDATE doc_orders
+	SET vehicle_id=$2
+	WHERE id=$1;
+	
 	/*
 		INSERT INTO deliveries (
 			vehicle_id,doc_order_id,

@@ -86,7 +86,10 @@ CREATE OR REPLACE VIEW doc_orders_dialog AS
 		d.deliv_expenses_edit,
 		
 		d.gruzopoluchatel_id,
-		cl2.name AS gruzopoluchatel_descr
+		cl2.name AS gruzopoluchatel_descr,
+		
+		d.vehicle_id AS vehicle_id,
+		o_v.plate AS vehicle_descr
 		
 		
 	FROM doc_orders AS d
@@ -112,6 +115,7 @@ CREATE OR REPLACE VIEW doc_orders_dialog AS
 	LEFT JOIN warehouses AS w ON w.id=d.warehouse_id
 	LEFT JOIN client_destinations_list AS cldest ON cldest.id=d.deliv_destination_id
 	LEFT JOIN deliv_cost_opts_list AS cost_opts ON cost_opts.id=d.deliv_cost_opt_id
+	LEFT JOIN vehicles AS o_v ON o_v.id=d.vehicle_id
 	;
 
 ALTER TABLE doc_orders_dialog OWNER TO polimerplast;

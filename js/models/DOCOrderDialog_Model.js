@@ -49,6 +49,24 @@ function DOCOrderDialog_Model(options){
 	
 	options.fields.debt_total = new FieldFloat("debt_total",filed_options);
 	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	
+	filed_options.autoInc = false;	
+	
+	options.fields.vehicle_id = new FieldInt("vehicle_id",filed_options);
+	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	
+	filed_options.autoInc = false;	
+	
+	options.fields.vehicle_descr = new FieldString("vehicle_descr",filed_options);
+	
 		DOCOrderDialog_Model.superclass.constructor.call(this,id,options);
 }
 extend(DOCOrderDialog_Model,Model);

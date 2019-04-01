@@ -927,7 +927,7 @@ function VehicleEditObject(opts){
 		options[opt] = opts.options[opt];
 	}		
 	if (opts.inLine==undefined || (opts.inLine!=undefined && !opts.inLine)){
-		options["labelCaption"] = "ТС:";
+		options["labelCaption"] = "Автомобиль:";
 	}
 	VehicleEditObject.superclass.constructor.call(this,
 		opts.controlId,options);		

@@ -233,9 +233,9 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 			}
 			else if ($_SESSION['role_id']!='client'
 				&amp;&amp;$ar['client_login_allowed']=='f'){
-				/* статус НЕ надо менять
-				Т.К у клиента нет личного кабинета
-				*/
+				/** статус НЕ надо менять
+				 * Т.К у клиента нет личного кабинета
+				 */
 				$new_state = NULL;
 			}
 			else{
@@ -275,16 +275,16 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 				if (is_array($res)&amp;&amp;count($res)){
 					//all differances
 					
-					/* список полей изменение которых
-					не передается клиенту
-					*/
+					/** список полей изменение которых
+					 * не передается клиенту
+					 */
 					$fields_us_only = array('sales_manager_comment');
 					$fields_us_modif = FALSE;
 
-					/* список полей изменение которых
-					не влияет на счет
-					*/
-					$fields_order_no_modif = array('delivery_plan_date','deliv_responsable_tel','tel');
+					/** список полей изменение которых
+					 * не влияет на счет
+					 */
+					$fields_order_no_modif = array('delivery_plan_date','deliv_responsable_tel','tel','vehicle_id');
 					
 					$sel = '';
 					$sel_no_modif = '';
@@ -417,8 +417,9 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 					//throw new Exception($q);				
 					
 					if (!$modif&amp;&amp;isset($new_state)&amp;&amp;$fields_us_modif){
-						/*если изменились только наши атрибуты
-						- удалим новый статус*/						
+						/** если изменились только наши атрибуты
+						 * удалим новый статус
+						 */
 						$link->query(sprintf(
 						"DELETE FROM doc_orders_states
 							WHERE id=%d",
@@ -427,8 +428,9 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 						$create_alter_order = TRUE;
 					}
 					else if (!$modif&amp;&amp;isset($new_state)){
-						/*если подтверждаем без изменений
-						то выписываем счет на оплату!*/					
+						/** если подтверждаем без изменений
+						 * то выписываем счет на оплату!
+						 */
 						//сменим статус
 						$link->query(sprintf(
 						"UPDATE doc_orders_states

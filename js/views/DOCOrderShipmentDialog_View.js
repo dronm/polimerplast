@@ -104,22 +104,6 @@ function DOCOrderShipmentDialog_View(id,options){
 		"valueFieldId":"deliv_vehicle_count","keyFieldIds":null}
 	);
 	cont.addElement(this.m_delivVehicleCountCtrl);	
-	//Водитель
-	this.m_driverCtrl = new DriverEditObject("driver_id","driver",false,{
-		"options":{
-			"visible":false,
-			"attrs":{"fkey_driver_id":"driver_id"},
-			"alwaysUpdate":true
-		}
-	});
-	this.bindControl(this.m_driverCtrl,
-		{"modelId":model_id,
-		"valueFieldId":"driver_name",
-		"keyFieldIds":["driver_id"]},
-		{"modelId":model_id,
-		"valueFieldId":null,"keyFieldIds":["driver_id"]}
-	);
-	cont.addElement(this.m_driverCtrl);	
 
 	//Автомобиль
 	this.m_vehicleCtrl = new VehicleEditObject({
@@ -278,7 +262,6 @@ DOCOrderShipmentDialog_View.prototype.onGetData= function(resp){
 		
 		if (m.getFieldValue("deliv_type")=="by_supplier"){
 			this.m_delivVehicleCountCtrl.setVisible(true);
-			this.m_driverCtrl.setVisible(true);
 			this.m_vehicleCtrl.setVisible(true);
 			this.m_destinationToTTN.setVisible(true);
 			this.m_clientDestCtrl.setVisible(true);

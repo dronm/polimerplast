@@ -752,9 +752,9 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 			}
 			else if ($_SESSION['role_id']!='client'
 				&&$ar['client_login_allowed']=='f'){
-				/* статус НЕ надо менять
-				Т.К у клиента нет личного кабинета
-				*/
+				/** статус НЕ надо менять
+				 * Т.К у клиента нет личного кабинета
+				 */
 				$new_state = NULL;
 			}
 			else{
@@ -794,16 +794,16 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 				if (is_array($res)&&count($res)){
 					//all differances
 					
-					/* список полей изменение которых
-					не передается клиенту
-					*/
+					/** список полей изменение которых
+					 * не передается клиенту
+					 */
 					$fields_us_only = array('sales_manager_comment');
 					$fields_us_modif = FALSE;
 
-					/* список полей изменение которых
-					не влияет на счет
-					*/
-					$fields_order_no_modif = array('delivery_plan_date','deliv_responsable_tel','tel');
+					/** список полей изменение которых
+					 * не влияет на счет
+					 */
+					$fields_order_no_modif = array('delivery_plan_date','deliv_responsable_tel','tel','vehicle_id');
 					
 					$sel = '';
 					$sel_no_modif = '';
@@ -936,8 +936,9 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 					//throw new Exception($q);				
 					
 					if (!$modif&&isset($new_state)&&$fields_us_modif){
-						/*если изменились только наши атрибуты
-						- удалим новый статус*/						
+						/** если изменились только наши атрибуты
+						 * удалим новый статус
+						 */
 						$link->query(sprintf(
 						"DELETE FROM doc_orders_states
 							WHERE id=%d",
@@ -946,8 +947,9 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 						$create_alter_order = TRUE;
 					}
 					else if (!$modif&&isset($new_state)){
-						/*если подтверждаем без изменений
-						то выписываем счет на оплату!*/					
+						/** если подтверждаем без изменений
+						 * то выписываем счет на оплату!
+						 */
 						//сменим статус
 						$link->query(sprintf(
 						"UPDATE doc_orders_states

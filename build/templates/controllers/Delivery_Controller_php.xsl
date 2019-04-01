@@ -277,12 +277,13 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		$p = new ParamsSQL($pm,$this->getDbLink());
 		$p->addAll();
 	
-		/*SMS принимающему об изменении времени
-		создадим список с существующими интервалами
-		doc_ordr_id
-		period_id
-		если что то поменяется - отправить SMS
-		*/
+		/**
+		 * SMS принимающему об изменении времени
+		 * создадим список с существующими интервалами
+		 * doc_ordr_id
+		 * period_id
+		 * если что то поменяется - отправить SMS
+		 */
 		$link = $this->getDbLink();
 		$q_id = $link->query(sprintf(
 		"SELECT
@@ -352,11 +353,27 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		$p = new ParamsSQL($pm,$this->getDbLink());
 		$p->addAll();
 	
-		$this->getDbLinkMaster()->query(sprintf(
-		"DELETE FROM deliveries
-		WHERE doc_order_id=%d",
-		$p->getParamById('order_id')
-		));
+		$link = $this->getDbLinkMaster();
+		$link->query('BEGIN');
+		try{		
+			$link->query(sprintf(
+			"DELETE FROM deliveries
+			WHERE doc_order_id=%d",
+			$p->getParamById('order_id')
+			));
+			
+			$link->query(sprintf(
+			"UPDATE doc_orders
+			SET vehicle_id=NULL
+			WHERE id=%d",
+			$p->getParamById('order_id')
+			));
+			$link->query('COMMIT');
+		}
+		catch(Exception $e){
+			$link->query('ROLLBACK');
+			throw $e;
+		}			
 	}
 	public function assigned_orders_for_client($pm){
 		$client_id = $_SESSION['client_id'];

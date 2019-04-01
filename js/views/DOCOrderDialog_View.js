@@ -545,6 +545,26 @@ function DOCOrderDialog_View(id,options){
 		{"valueFieldId":"deliv_vehicle_count","keyFieldIds":null});	
 	sub_cont.addElement(this.m_delivVehicleCntCtrl);	
 	
+	//Автомобиль
+	this.m_vehicleCtrl = new VehicleEditObject({
+		"fieldId":"vehicle_id",
+		"controlId":"vehicle",
+		"inLine":false,
+		"options":{
+			"attrs":{"fkey_vehicle_id":"vehicle_id"},
+			"alwaysUpdate":true
+		}
+	});
+	this.bindControl(this.m_vehicleCtrl,
+		{"modelId":model_id,
+		"valueFieldId":"vehicle_descr",
+		"keyFieldIds":["vehicle_id"]},
+		{"modelId":model_id,
+		"valueFieldId":null,"keyFieldIds":["vehicle_id"]}
+	);
+	sub_cont.addElement(this.m_vehicleCtrl);	
+	
+	
 	//Стоимость доставки
 	this.m_delivCostComment = new Control(id+"_deliv_comment","div",{});
 	sub_cont.addElement(this.m_delivCostComment);		
@@ -906,6 +926,9 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 			if (p>=0){
 				f_id = f_id.substring(0,p)
 			}
+			if (!this.m_bindings[id+"_"+f_id]){
+				continue;
+			}
 			var ctrl = this.getDataControl(id+"_"+f_id);
 			if (ctrl && ctrl.control && ctrl.control.m_node){
 				DOMHandler.addClass(ctrl.control.m_node,"field_changed");
@@ -948,6 +971,17 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 				}
 				this.getViewControl(this.getId()+"_deliv_responsable_tel").setEnabled(true);
 				this.getViewControl(this.getId()+"_tel").setEnabled(true);
+				
+				if (this.m_delivTypeCtrl.getValue()=="by_supplier"
+				&&(this.m_curState=="producing"
+					||this.m_curState=="produced"
+					||this.m_curState=="loading"
+					||this.m_curState=="waiting_for_us"
+					||this.m_curState=="waiting_for_client"
+				)
+				){
+					this.m_vehicleCtrl.setEnabled(true);
+				}
 				/*
 				if (this.m_delivTypeCtrl.getValue()=="by_supplier"){
 					this.m_clientDestCtrl.setEnabled(true);
@@ -1042,6 +1076,9 @@ DOCOrderDialog_View.prototype.toDOM = function(parent){
 	if (this.getIsNew()&&SERV_VARS.ROLE_ID=="client"){
 		this.setClientId(0,true);
 	}
+	else if (this.getIsNew()){
+		this.m_clientCtrl.getNode().focus();
+	}
 	
 	this.setWarehouseId(this.m_wareHCtrl.getFieldValue());
 	this.setToThirdParty(this.m_toThirdPartyCtrl.getValue());
@@ -1050,7 +1087,7 @@ DOCOrderDialog_View.prototype.toDOM = function(parent){
 	/*
 	this.setDelivAddToCost(this.m_delivAddToCostCtrl.getValue());
 	this.setDelivTotal(this.m_delivCost.getValue());
-	*/
+	*/	
 }
 DOCOrderDialog_View.prototype.removeDOM = function(){
 	DOCOrderDialog_View.superclass.removeDOM.call(this);
@@ -1404,6 +1441,7 @@ DOCOrderDialog_View.prototype.changeDelivType = function(){
 	this.m_delivAddToCostCtrl.setEnabled(vis);
 	this.m_DelivPeriodCtrl.setEnabled(vis);
 	this.m_clientDestCtrl.setEnabled(vis);
+	this.m_vehicleCtrl.setEnabled(vis);
 	if (vis){
 		DOMHandler.addAttr(this.m_delivCostOptCtrl.getNode(),"required","required");
 		DOMHandler.addAttr(this.m_clientDestCtrl.getNode(),"required","required");
@@ -1415,6 +1453,7 @@ DOCOrderDialog_View.prototype.changeDelivType = function(){
 		this.m_delivCostOptCtrl.resetValue();
 		this.m_delivExpCtrl.resetValue();
 		this.m_delivCost.resetValue();
+		this.m_vehicleCtrl.resetValue();
 	}
 	
 }

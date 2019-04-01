@@ -8,6 +8,7 @@
 
 require_once(FRAME_WORK_PATH.'basic_classes/ModelSQL.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLInt.php');
+require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLString.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLFloat.php');
  
 class DOCOrderDialog_Model extends ModelSQL{
@@ -44,6 +45,22 @@ class DOCOrderDialog_Model extends ModelSQL{
 				
 		$f_debt_total=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"debt_total",$f_opts);
 		$this->addField($f_debt_total);
+		//********************
+		
+		//*** Field vehicle_id ***
+		$f_opts = array();
+		$f_opts['id']="vehicle_id";
+				
+		$f_vehicle_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"vehicle_id",$f_opts);
+		$this->addField($f_vehicle_id);
+		//********************
+		
+		//*** Field vehicle_descr ***
+		$f_opts = array();
+		$f_opts['id']="vehicle_descr";
+				
+		$f_vehicle_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"vehicle_descr",$f_opts);
+		$this->addField($f_vehicle_descr);
 		//********************
 	
 	}
