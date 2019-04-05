@@ -4792,7 +4792,7 @@ DOCOrderDialog_View.prototype.onFirmSelected=function(){var wh=this.m_wareHCtrl.
 DOCOrderDialog_View.prototype.onGetData=function(resp){DOCOrderDialog_View.superclass.onGetData.call(this,resp,this.m_isCopy);if(this.m_saved){return;}
 var id=this.getId();if(SERV_VARS.ROLE_ID!="client"){this.onClientSelected(false);var data_ctrl=this.getDataControl(id+"_client_user");if(data_ctrl){var ctrl=data_ctrl.control;ctrl.setFieldValue("client_user_id",ctrl.getAttr("fkey_client_user_id"));this.onClientUserSelected();}}
 else{this.setClientId(0,false);}
-this.updateDistanceInf();this.changeDelivType();if(this.m_isCopy){}
+this.updateDistanceInf();this.changeDelivType();if(this.m_isCopy){var vh_n=this.m_vehicleCtrl.getNode();if(vh_n){vh_n.value="";vh_n.setAttribute("fkey_vehicle_id","");vh_n.setAttribute("last_fkey_vehicle_id","");}}
 else{var m=resp.getModelById("head_history");m.setActive(true);while(m.getNextRow()){var f_id=m.getFieldValue("field");var p=f_id.indexOf("_id");if(p>=0){f_id=f_id.substring(0,p)}
 if(!this.m_bindings[id+"_"+f_id]){continue;}
 var ctrl=this.getDataControl(id+"_"+f_id);if(ctrl&&ctrl.control&&ctrl.control.m_node){DOMHandler.addClass(ctrl.control.m_node,"field_changed");ctrl.control.setAttr("old_field_val",m.getFieldValue("old_val"));}}

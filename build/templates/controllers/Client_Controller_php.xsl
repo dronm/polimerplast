@@ -306,7 +306,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 			FROM clients AS c
 			LEFT JOIN client_activities AS ca ON ca.id=c.client_activity_id
 			WHERE c.id=%d",
-			$id));
+			$id,$_SESSION['user_id']));
 			
 			foreach ($ar as $field_id=>$db_val){
 				if($field_id=='client_activity'){					

@@ -915,7 +915,13 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 	
 	//голова
 	if (this.m_isCopy){
-		//копирование		
+		//копирование
+		var vh_n = this.m_vehicleCtrl.getNode();
+		if(vh_n){
+			vh_n.value = "";
+			vh_n.setAttribute("fkey_vehicle_id","");
+			vh_n.setAttribute("last_fkey_vehicle_id","");				
+		}
 	}
 	else{
 		var m = resp.getModelById("head_history");
