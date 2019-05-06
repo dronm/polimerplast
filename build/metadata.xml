@@ -2,7 +2,7 @@
 <metadata debug="TRUE" owner="polimerplast" dataSchema="public">
 	<versions>
 		<version dateOpen="2016-06-07 07:05" dateClose="2016-06-07 11:06:25">1.0021</version>
-		<lastBuild>2019-04-05 07:26:36</lastBuild>
+		<lastBuild>2019-05-04 06:28:42</lastBuild>
 		<version dateOpen="2016-06-07 11:06:56"/>
 		<version dateOpen="2016-06-07 11:06:57" dateClose="2016-06-07 14:06:30">1.0022</version>
 		<version dateOpen="2016-06-07 14:06:32" dateClose="2016-06-07 16:06:31">1.0023</version>
@@ -98,6 +98,7 @@
 		<version dateOpen="2019-04-01 06:04:38" dateClose="2019-04-01 07:04:05">1.01012</version>
 		<version dateOpen="2019-04-01 15:04:02" dateClose="2019-04-01 15:04:03">1.01013</version>
 		<version dateOpen="2019-04-05 07:04:16" dateClose="2019-04-05 07:04:26">1.01014</version>
+		<version dateOpen="2019-05-04 06:05:28" dateClose="2019-05-06 07:05:13">1.01015</version>
 	</versions>
 	<globalFilters>
 		<field id="client_id"/>
@@ -2367,6 +2368,7 @@
 				<field id="from" dataType="Int"/>
 				<field id="count" dataType="Int"/>
 			</publicMethod>
+			<publicMethod id="get_prior_region_list"/>
 		</controller>
 		<controller id="CustomerSurveyQuestion" parentId="ControllerSQL" state="TRUE">
 			<publicMethod id="insert" modelId="CustomerSurveyQuestion"/>
@@ -2571,6 +2573,7 @@
 			<publicMethod id="complete_address">
 				<field id="client_id" dataType="Int" required="TRUE"/>
 				<field id="address" dataType="Text" required="TRUE"/>
+				<field id="region" dataType="Int" required="TRUE"/>
 			</publicMethod>
 		</controller>
 		<controller id="SMSTemplate" parentId="ControllerSQL" state="TRUE">

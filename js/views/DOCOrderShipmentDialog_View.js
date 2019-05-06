@@ -17,9 +17,6 @@ function DOCOrderShipmentDialog_View(id,options){
 	options.writeMethodId = "set_shipped";
 	options.customWriteMethod = true;
 	
-	DOCOrderShipmentDialog_View.superclass.constructor.call(this,
-		id,options);
-		
 	var self = this;	
 	this.m_beforeOpen = function(contr,isInsert){
 		//if (self.m_beforeOpenCalled)return;
@@ -36,6 +33,8 @@ function DOCOrderShipmentDialog_View(id,options){
 			}});
 		self.m_beforeOpenCalled = true;
 	}
+	
+	DOCOrderShipmentDialog_View.superclass.constructor.call(this,id,options);
 	
 	var model_id = "DOCOrderShipmentDialog_Model";
 	

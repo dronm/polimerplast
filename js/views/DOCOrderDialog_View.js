@@ -60,8 +60,7 @@ function DOCOrderDialog_View(id,options){
 		options.cmdControls = [this.m_ctrlSetShipped];	
 	}
 		
-	DOCOrderDialog_View.superclass.constructor.call(this,
-		id,options);
+	DOCOrderDialog_View.superclass.constructor.call(this,id,options);
 	
 	var model_id = "DOCOrderDialog_Model";
 	
@@ -412,6 +411,7 @@ function DOCOrderDialog_View(id,options){
 		"defaultId":"by_client",
 		"options":{"events":{"change":function(){
 			self.changeDelivType();
+			self.refreshProdTotals();
 		}}},
 	});
 	this.bindControl(this.m_delivTypeCtrl,

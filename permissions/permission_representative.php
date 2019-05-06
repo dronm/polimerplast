@@ -388,6 +388,8 @@ $permissions = array();
 				
 					$permissions['Kladr_Controller_get_from_naspunkt']=TRUE;
 				
+					$permissions['Kladr_Controller_get_prior_region_list']=TRUE;
+				
 					$permissions['CustomerSurveyQuestion_Controller_insert']=TRUE;
 				
 					$permissions['CustomerSurveyQuestion_Controller_update']=TRUE;

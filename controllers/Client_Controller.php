@@ -1007,6 +1007,17 @@ class Client_Controller extends ControllerSQL{
 					$struc_1c['client_activity'] = $ar_act['name'];
 				}
 			}
+			
+			$ar_user = $link->query_first(sprintf(
+			"SELECT
+				ext_id,
+				name_full
+			FROM users
+			WHERE id=%d",
+			$_SESSION['user_id']
+			));
+			$struc_1c['user_ext_id'] = $ar_user['ext_id'];
+			//$struc_1c['user_name_full'] = $ar_user['name_full'];
 		}		
 		
 		if(count($struc_1c)){

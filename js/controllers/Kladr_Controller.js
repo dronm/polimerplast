@@ -22,6 +22,7 @@ function Kladr_Controller(servConnector){
 	this.add_get_gorod_list();
 	this.add_get_ulitsa_list();
 	this.add_get_from_naspunkt();
+	this.add_get_prior_region_list();
 	
 }
 extend(Kladr_Controller,ControllerDb);
@@ -114,6 +115,11 @@ extend(Kladr_Controller,ControllerDb);
 		pm.addParam(new FieldInt("count"));
 	
 			
+}
+
+			Kladr_Controller.prototype.add_get_prior_region_list = function(){
+	var pm = this.addMethodById('get_prior_region_list');
+	
 }
 
 		

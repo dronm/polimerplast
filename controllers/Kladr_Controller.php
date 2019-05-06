@@ -174,6 +174,11 @@ class Kladr_Controller extends ControllerSQL{
 			
 		$this->addPublicMethod($pm);
 
+			
+		$pm = new PublicMethod('get_prior_region_list');
+		
+		$this->addPublicMethod($pm);
+
 		
 	}	
 	public function get_region_list($pm){
@@ -350,5 +355,9 @@ class Kladr_Controller extends ControllerSQL{
 	public function query_first($q,&$res){
 		$res = $this->getDbLink()->query_first($q);
 	}
+	
+	public function get_prior_region_list($pm){
+		$this->addNewModel("SELECT * FROM plpl_prior_regions ORDER BY sort");		
+	}	
 }
 ?>

@@ -240,6 +240,10 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 	public function query_first($q,&amp;$res){
 		$res = $this->getDbLink()->query_first($q);
 	}
+	
+	public function get_prior_region_list($pm){
+		$this->addNewModel("SELECT * FROM plpl_prior_regions ORDER BY sort");		
+	}	
 }
 <![CDATA[?>]]>
 </xsl:template>

@@ -3056,7 +3056,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 		if ($_SESSION['client_ship_not_allowed']){
 			throw new Exception("Отгрузка клиенту запрещена!");
 		}
-		
+	
 		$link = $this->getDbLinkMaster();
 		$link->query('BEGIN');		
 		try{

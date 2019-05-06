@@ -33,6 +33,7 @@ function ClientDestinationEdit2(id,opts){
 		"acUpdateInputOnCursor":true,
 		"objectView":null,
 		"noOpen":true,
+		"contClassName":"aaa",
 		"winObj":opts.winObj
 	};
 	if (opts.inLine==undefined||(opts.inLine!=undefined&&!inLine)){
@@ -77,7 +78,7 @@ function ClientDestinationEdit2(id,opts){
 		}
 	}
 	});
-	
+
 	ClientDestinationEdit2.superclass.constructor.call(this,id,options);	
 		
 	this.m_buttons.addElement(this.m_btnEdit);
@@ -146,4 +147,90 @@ ClientDestinationEdit2.prototype.setEnabled = function(val){
 	ClientDestinationEdit2.superclass.setEnabled.call(this,val);
 	this.m_btnEdit.setEnabled(val);
 	this.m_btnDelete.setEnabled(val);
+	if(this.m_regSelectNode && val){
+		this.m_regSelectNode.removeAttribute("disabled");
+	}
+	else if(this.m_regSelectNode){
+		this.m_regSelectNode.setAttribute("disabled","disabled");
+	}
+}
+
+ClientDestinationEdit2.prototype.addRegion = function(code,descr){	
+	var opt = document.createElement("OPTION");
+	opt.setAttribute("value",code);
+	opt.appendChild(document.createTextNode(descr));
+	this.m_regSelectNode.appendChild(opt);	
+}
+
+ClientDestinationEdit2.prototype.toDOMCont = function(){	
+	for (var i=0;i<window.prior_regions.length;i++){
+		this.addRegion(window.prior_regions[i].code,window.prior_regions[i]["name"]);
+	}
+	
+	//all regions
+	this.addRegion("0","* Все регионы");
+	
+	var sel_cont = document.createElement("DIV");
+	sel_cont.className = "input-group-btn";
+	sel_cont.appendChild(this.m_regSelectNode);
+	this.m_node.parentNode.insertBefore(sel_cont,this.m_node);
+	
+	this.m_pm.setParamValue("region",this.m_regSelectNode.value);	
+	
+	var self = this;
+	EventHandler.addEvent(this.m_regSelectNode, "change", function(e){
+		self.m_pm.setParamValue("region",self.m_regSelectNode.value);	
+		self.m_regSelectNode.focus();
+	});
+}
+
+ClientDestinationEdit2.prototype.toDOM = function(parent){	
+	ClientDestinationEdit2.superclass.toDOM.call(this,parent);
+	
+	var opt;
+	this.m_regSelectNode = document.createElement("SELECT");
+	this.m_regSelectNode.setAttribute("style","width:100px;");
+	this.m_regSelectNode.setAttribute("disabled","disabled");
+	this.m_regSelectNode.className = "form-control";
+	
+	if(!window.prior_regions){
+		var self = this;
+		(new Kladr_Controller(new ServConnector(HOST_NAME))).run("get_prior_region_list",{
+			"async":true,
+			"func":function(resp){
+				window.prior_regions = [];
+				var m = resp.getModelById("Kladr_Model");
+				m.setActive(true);
+				while(m.getNextRow()){
+					window.prior_regions.push({
+						"code":m.getFieldById("code").getValue(),
+						"name":m.getFieldById("name").getValue()
+					});
+				}
+				self.toDOMCont();
+			}
+		});							
+	}
+	else{
+		this.toDOMCont();
+	}
+	/*
+	for (var i=0;i<window.prior_regions.length;i++){
+		opt = document.createElement("OPTION");
+		opt.setAttribute("value",window.prior_regions[i].code);
+		opt.appendChild(document.createTextNode(window.prior_regions[i]["name"]));
+		this.m_regSelectNode.appendChild(opt);	
+	}
+	
+	var sel_cont = document.createElement("DIV");
+	sel_cont.className = "input-group-btn";
+	sel_cont.appendChild(this.m_regSelectNode);
+	this.m_node.parentNode.insertBefore(sel_cont,this.m_node);
+	
+	var self = this;
+	EventHandler.addEvent(this.m_regSelectNode, "change", function(e){
+		self.m_pm.setParamValue("region",self.m_regSelectNode.value);	
+		self.m_regSelectNode.focus();
+	});
+	*/
 }

@@ -381,6 +381,9 @@ extend(ClientDestination_Controller,ControllerDb);
 				
 		pm.addParam(new FieldText("address"));
 	
+				
+		pm.addParam(new FieldInt("region"));
+	
 			
 }
 

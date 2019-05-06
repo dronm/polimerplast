@@ -337,6 +337,12 @@ class ClientDestination_Controller extends ControllerSQL{
 		$opts['required']=TRUE;				
 		$pm->addParam(new FieldExtText('address',$opts));
 	
+				
+	$opts=array();
+	
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtInt('region',$opts));
+	
 			
 		$this->addPublicMethod($pm);
 
@@ -741,25 +747,70 @@ class ClientDestination_Controller extends ControllerSQL{
 		
 		$dadata = new DadataSuggest(DADATA_KEY);
 		$addr_for_query = trim($p->getVal('address'));
-		//а если 1 слово - прибавим Тюменскаую область чтобы убрать лишнее
-		$addr_ar = explode(' ',$addr_for_query);
+				
+		$region = $p->getDbVal('region');
+		if($region==0){
+			if(!isset($_SESSION['prior_regions'])){
+				$kladr_link = new DB_Sql();
+				$kladr_link->appname		= APP_NAME;
+				$kladr_link->technicalemail	= TECH_EMAIL;
+				$kladr_link->reporterror	= DEBUG;
+				$kladr_link->database		= 'kladr';
+				$kladr_link->connect(DB_SERVER,DB_USER,DB_PASSWORD);
+		
+				$_SESSION['prior_regions'] = array();
+				$q_id = $kladr_link->query("SELECT code,name FROM plpl_prior_regions ORDER BY sort");
+				while($ar = $kladr_link->fetch_array($q_id)){
+					$_SESSION['prior_regions'] = array('code'=>$ar['code'],'name'=>$ar['name']);
+				}
+			}
+			$ext_reg = &$_SESSION['prior_regions'];
+		}
+		else{
+			$ext_reg = array(array('kladr_id'=>$region));
+		}
 		/*
-		if (count($addr_ar)==1){
-			$addr_for_query.= ' тюмен';
+		$selected_region = $p->getDbVal('region');
+		if(!isset($_SESSION['prior_regions'])){
+			$kladr_link = new DB_Sql();
+			$kladr_link->appname		= APP_NAME;
+			$kladr_link->technicalemail	= TECH_EMAIL;
+			$kladr_link->reporterror	= DEBUG;
+			$kladr_link->database		= 'kladr';
+			$kladr_link->connect(DB_SERVER,DB_USER,DB_PASSWORD);
+		
+			$_SESSION['prior_regions'] = array();
+			$q_id = $kladr_link->query("SELECT code,name FROM plpl_prior_regions ORDER BY sort");
+			while($ar = $kladr_link->fetch_array($q_id)){
+				$_SESSION['prior_regions'] = array('code'=>$ar['code'],'name'=>$ar['name']);
+			}
+		}
+		
+		$ext_reg = array();
+		if($selected_region==$_SESSION['prior_regions'][0]['kladr_id']){
+			$ext_reg = &$_SESSION['prior_regions'];
+		}
+		else{
+			foreach($_SESSION['prior_regions'] as $reg){
+				if($reg['kladr_id']==$selected_region){
+					array_push($ext_reg,array('kladr_id'=>$reg['kladr_id']));
+					break;
+				}
+			}
+		
+			foreach($_SESSION['prior_regions'] as $reg){
+				if($reg['kladr_id']!=$selected_region){
+					array_push($ext_reg,array('kladr_id'=>$reg['kladr_id']));
+				}
+			}
 		}
 		*/
+		
 		$ext_addresses = $dadata->address(
 				$addr_for_query,
 				$ext_cnt,
 				NULL,
-				array(
-					array('kladr_id'=>'72')
-					,array('kladr_id'=>'86')
-					,array('kladr_id'=>'89')
-					,array('kladr_id'=>'66')
-					,array('kladr_id'=>'55')
-					,array('kladr_id'=>'45')
-				)
+				$ext_reg
 		);
 		
 		for($i=0;$i<count($ext_addresses->suggestions);$i++){						
