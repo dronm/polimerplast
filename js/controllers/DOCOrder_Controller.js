@@ -439,6 +439,18 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
+	options = {};
+	
+	var param = new FieldString("client_contract_ext_id",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldString("client_contract_name",options);
+	
+	pm.addParam(param);
+	
 	pm.addParam(new FieldInt("ret_id",{}));
 	
 		var options = {};
@@ -816,6 +828,18 @@ extend(DOCOrder_Controller,ControllerDb);
 	options = {};
 	
 	var param = new FieldInt("vehicle_id",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldString("client_contract_ext_id",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldString("client_contract_name",options);
 	
 	pm.addParam(param);
 	

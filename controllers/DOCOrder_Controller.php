@@ -241,6 +241,12 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 		$param = new FieldExtInt('vehicle_id'
 				,array());
 		$pm->addParam($param);
+		$param = new FieldExtString('client_contract_ext_id'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtString('client_contract_name'
+				,array());
+		$pm->addParam($param);
 		
 		$pm->addParam(new FieldExtInt('ret_id'));
 		
@@ -506,6 +512,14 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 			));
 			$pm->addParam($param);
 		$param = new FieldExtInt('vehicle_id'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtString('client_contract_ext_id'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtString('client_contract_name'
 				,array(
 			));
 			$pm->addParam($param);
@@ -2362,9 +2376,9 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 	}
 	
 	/* расчет количества по количеству в любой единице
-	из любой единицы, если measure_unit_id_from=0
-	то пересчет из базовой единицы продукции
-	*/
+	 * из любой единицы, если measure_unit_id_from=0
+	 * то пересчет из базовой единицы продукции
+	 */
 	public function calc_quant($pm){
 		$params = new ParamsSQL($pm,$this->getDbLink());
 		$params->addAll();	
@@ -2908,7 +2922,8 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 					'delivery_plan_date'=>$ar['delivery_plan_date'],
 					'total_volume'=>$ar['total_volume'],
 					'total_weight'=>$ar['total_weight'],
-					'deliv_expenses'=>$ar['deliv_expenses']
+					'deliv_expenses'=>$ar['deliv_expenses'],
+					'client_contract_ext_id'=>$ar['client_contract_ext_id']
 					);
 			}
 			if ($ar['product_name']){

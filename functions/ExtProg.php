@@ -213,6 +213,17 @@ class ExtProg{
 			$struc[(string) $ref[0]]=$ref['name'];
 		}
 	}
+	public static function getClientContractList($firmExtId,$clientExtId,&$xml){
+		ExtProg::send_query(
+			'get_client_contract_list',
+			array(
+				'firm_ext_id'=>$firmExtId,
+				'client_ext_id'=>$clientExtId
+			),
+			$xml
+		);
+	}
+	
 	public static function completeUser($pattern,&$struc){
 		$xml=null;
 		ExtProg::send_query('complete_user',array('templ'=>$pattern),$xml);

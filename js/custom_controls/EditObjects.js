@@ -991,3 +991,59 @@ function ClientDebtPeriodEdit(opts){
 		opts.controlId,options);	
 }
 extend(ClientDebtPeriodEdit,EditSelectObject);
+
+function ClientExtContractEdit(opts){
+	options = 
+		{"methodId":"complete",
+		"tableLayout":false,
+		"modelId":"ClientExtContractList_Model",
+		"lookupValueFieldId":"name",
+		"lookupKeyFieldIds":["ext_id"],
+		"keyFieldIds":[opts.fieldId],
+		"noAutoComplete":true,
+		"winObj":this.m_winObj,
+		"listView":ClientExtContractList_View,
+		"attrs":{"fkey_vehicle_id":opts.id||""},
+		"buttonSelect":new ButtonSelectObject(opts.controlId+'_btn_select',
+			{"controller":new Client_Controller(new ServConnector(HOST_NAME)),
+			"modelId":"ClientExtContractList_Model",
+			"listView":ClientExtContractList_View,
+			"keyFieldIds":[opts.fieldId],
+			"lookupKeyFieldIds":["ext_id"],
+			"onSelected":null,
+			"multySelect":false,
+			"extraFields":null,
+			"controlId":opts.controlId,
+			"methParams":{"client_id":null,"firm_id":null},
+			"onBeforeViewCreate":function(){
+					var pm = this.m_controller.getPublicMethodById("get_client_ext_contract_list");
+					pm.setParamValue("client_id",opts.mainView.m_clientCtrl.getAttr("fkey_client_id"));
+					pm.setParamValue("firm_id",opts.mainView.m_FirmCtrl.getFieldValue());
+				}
+			})		
+	};
+	
+	opts.options=opts.options||{};
+	for(var opt in opts.options){
+		options[opt] = opts.options[opt];
+	}	
+	
+	if (opts.inLine==undefined || (opts.inLine!=undefined && !opts.inLine)){
+		options["labelCaption"] = "Договор:";
+	}	
+	ClientExtContractEdit.superclass.constructor.call(this,opts.controlId,options);	
+	
+	this.setAttr("disabled","disabled");
+}
+extend(ClientExtContractEdit,EditObject);
+
+ClientExtContractEdit.prototype.setEnabled = function(enabled){
+	if (this.m_label){
+		this.m_label.setEnabled(enabled);
+	}
+	if (this.m_buttons){
+		this.m_buttons.setEnabled(enabled);
+	}
+	//ClientExtContractEdit.superclass.setEnabled.call(this,enabled);
+}
+

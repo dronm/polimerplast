@@ -320,6 +320,7 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientContractList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientContractInline_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/UserWarehouseList_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientExtContractList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/UserWarehouseInline_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/FirmList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/FirmInline_View.js'));

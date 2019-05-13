@@ -154,6 +154,8 @@ $permissions = array();
 				
 					$permissions['Client_Controller_refresh_debts']=TRUE;
 				
+					$permissions['Client_Controller_get_client_ext_contract_list']=TRUE;
+				
 					$permissions['ClientContract_Controller_insert']=TRUE;
 				
 					$permissions['ClientContract_Controller_update']=TRUE;

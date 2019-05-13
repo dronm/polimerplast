@@ -212,6 +212,20 @@ function DOCOrderDialog_View(id,options){
 			{"valueFieldId":null,"keyFieldIds":["client_id"]});	
 		cont.addElement(this.m_clientCtrl);
 
+		//Договор
+		this.m_clientContractCtrl = new ClientExtContractEdit({
+			"fieldId":"client_contract_ext_id",
+			"controlId":(id+"client_contract_ext_id"),
+			"contr":(new Client_Controller(new ServConnector(HOST_NAME))),
+			"noOpen":true,
+			"winObj":options.winObj,
+			"mainView":this
+			});
+		this.bindControl(this.m_clientContractCtrl,
+			{"modelId":model_id,"valueFieldId":"client_contract_name","keyFieldIds":["client_contract_ext_id"]},
+			{"valueFieldId":null,"keyFieldIds":["client_contract_ext_id"]});	
+		cont.addElement(this.m_clientContractCtrl);
+
 		//Грузополучатель
 		this.m_gruzpolCtrl = new ClientEditObject("gruzopoluchatel_id",id+"_gruzopoluchatel",false,{
 			"required":false,
@@ -863,6 +877,7 @@ DOCOrderDialog_View.prototype.onWarehouseSelected = function(){
 	this.calcDelivCost();
 }
 DOCOrderDialog_View.prototype.onFirmSelected = function(){
+
 	var wh = this.m_wareHCtrl.getFieldValue();
 	if (!wh){
 		var contr = new DOCOrder_Controller(new ServConnector(HOST_NAME));
@@ -1327,6 +1342,8 @@ DOCOrderDialog_View.prototype.writeData = function(){
 	var contr = this.getWriteController();
 	if (!contr)return;
 	contr.getPublicMethodById(this.getWriteMethodId()).setParamValue("view_id",this.m_viewId);
+alert(this.m_clientContractCtrl.getValue())	
+	contr.getPublicMethodById(this.getWriteMethodId()).setParamValue("client_contract_name",this.m_clientContractCtrl.getValue());
 	
 	DOCOrderDialog_View.superclass.writeData.call(this);
 /*

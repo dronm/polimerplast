@@ -761,7 +761,7 @@ class ClientDestination_Controller extends ControllerSQL{
 				$_SESSION['prior_regions'] = array();
 				$q_id = $kladr_link->query("SELECT code,name FROM plpl_prior_regions ORDER BY sort");
 				while($ar = $kladr_link->fetch_array($q_id)){
-					$_SESSION['prior_regions'] = array('code'=>$ar['code'],'name'=>$ar['name']);
+					array_push($_SESSION['prior_regions'],array('kladr_id'=>$ar['code']));
 				}
 			}
 			$ext_reg = &$_SESSION['prior_regions'];

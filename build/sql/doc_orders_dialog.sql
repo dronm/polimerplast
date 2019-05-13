@@ -89,7 +89,10 @@ CREATE OR REPLACE VIEW doc_orders_dialog AS
 		cl2.name AS gruzopoluchatel_descr,
 		
 		d.vehicle_id AS vehicle_id,
-		o_v.plate||coalesce(' '||o_dr.name,'') AS vehicle_descr
+		o_v.plate||coalesce(' '||o_dr.name,'') AS vehicle_descr,
+		
+		d.client_contract_name,
+		d.client_contract_ext_id
 		
 		
 	FROM doc_orders AS d

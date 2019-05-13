@@ -574,6 +574,24 @@ function DOCOrder_Model(options){
 	
 	options.fields.vehicle_id = new FieldInt("vehicle_id",filed_options);
 	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	
+	filed_options.autoInc = false;	
+	
+	options.fields.client_contract_ext_id = new FieldString("client_contract_ext_id",filed_options);
+	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	
+	filed_options.autoInc = false;	
+	
+	options.fields.client_contract_name = new FieldString("client_contract_name",filed_options);
+	
 			
 			
 			

@@ -532,6 +532,24 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$f_vehicle_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"vehicle_id",$f_opts);
 		$this->addField($f_vehicle_id);
 		//********************
+		
+		//*** Field client_contract_ext_id ***
+		$f_opts = array();
+		$f_opts['length']=36;
+		$f_opts['id']="client_contract_ext_id";
+				
+		$f_client_contract_ext_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_contract_ext_id",$f_opts);
+		$this->addField($f_client_contract_ext_id);
+		//********************
+		
+		//*** Field client_contract_name ***
+		$f_opts = array();
+		$f_opts['length']=150;
+		$f_opts['id']="client_contract_name";
+				
+		$f_client_contract_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_contract_name",$f_opts);
+		$this->addField($f_client_contract_name);
+		//********************
 	
 		$order = new ModelOrderSQL();		
 		$this->setDefaultModelOrder($order);		

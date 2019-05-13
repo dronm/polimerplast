@@ -659,6 +659,69 @@ class Client_Controller extends ControllerSQL{
 		
 		$this->addPublicMethod($pm);
 
+			
+		$pm = new PublicMethod('get_client_ext_contract_list');
+		
+				
+	$opts=array();
+	
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtInt('firm_id',$opts));
+	
+				
+	$opts=array();
+	
+		$opts['required']=TRUE;				
+		$pm->addParam(new FieldExtInt('client_id',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('cond_fields',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('cond_vals',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('cond_sgns',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('cond_ic',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtInt('from',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtInt('count',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('ord_fields',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('ord_directs',$opts));
+	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtString('field_sep',$opts));
+	
+			
+		$this->addPublicMethod($pm);
+
 		
 	}	
 	
@@ -1277,6 +1340,37 @@ class Client_Controller extends ControllerSQL{
 		else{
 			parent::get_list($pm);
 		}
+	}
+	
+	public function get_client_ext_contract_list($pm){
+		$params = new ParamsSQL($pm,$this->getDbLink());
+		$params->addAll();
+	
+		$ar = $this->getDbLink()->query_first(sprintf(
+		"SELECT
+			(SELECT ext_id FROM firms WHERE firms.id=%d) AS firm_ext_id,
+			(SELECT ext_id FROM clients WHERE clients.id=%d) AS client_ext_id",
+		$params->getParamById('firm_id'),
+		$params->getParamById('client_id')
+		));
+	
+		if(!is_array($ar) || !count($ar) || !isset($ar['firm_ext_id']) || !isset($ar['client_ext_id']) ){
+			throw new Exception('Неверные парамтеры!');
+		}
+	
+		$xml = NULL;
+		ExtProg::getClientContractList($ar['firm_ext_id'],$ar['client_ext_id'],$xml);
+		
+		$model = new Model(array("id"=>"ClientExtContractList_Model"));
+		$model->addField(new Field("ext_id",DT_STRING));
+		$model->addField(new Field("name",DT_STRING));
+		
+		foreach($xml->contracts as $contract){
+			$model->insert();
+			$model->getFieldById('ext_id')->setValue((string) $contract->contract->ref);
+			$model->getFieldById('name')->setValue((string) $contract->contract->name);			
+		}
+		$this->addModel($model);
 	}
 	
 

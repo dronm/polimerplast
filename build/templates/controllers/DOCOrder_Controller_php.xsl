@@ -703,9 +703,9 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 	}
 	
 	/* расчет количества по количеству в любой единице
-	из любой единицы, если measure_unit_id_from=0
-	то пересчет из базовой единицы продукции
-	*/
+	 * из любой единицы, если measure_unit_id_from=0
+	 * то пересчет из базовой единицы продукции
+	 */
 	public function calc_quant($pm){
 		$params = new ParamsSQL($pm,$this->getDbLink());
 		$params->addAll();	
@@ -1249,7 +1249,8 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 					'delivery_plan_date'=>$ar['delivery_plan_date'],
 					'total_volume'=>$ar['total_volume'],
 					'total_weight'=>$ar['total_weight'],
-					'deliv_expenses'=>$ar['deliv_expenses']
+					'deliv_expenses'=>$ar['deliv_expenses'],
+					'client_contract_ext_id'=>$ar['client_contract_ext_id']
 					);
 			}
 			if ($ar['product_name']){

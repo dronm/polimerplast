@@ -37,6 +37,7 @@ function Client_Controller(servConnector){
 	this.add_get_debts_on_firm();
 	this.add_get_debt_list();
 	this.add_refresh_debts();
+	this.add_get_client_ext_contract_list();
 	
 }
 extend(Client_Controller,ControllerDb);
@@ -695,6 +696,45 @@ extend(Client_Controller,ControllerDb);
 			Client_Controller.prototype.add_refresh_debts = function(){
 	var pm = this.addMethodById('refresh_debts');
 	
+}
+
+			Client_Controller.prototype.add_get_client_ext_contract_list = function(){
+	var pm = this.addMethodById('get_client_ext_contract_list');
+	
+				
+		pm.addParam(new FieldInt("firm_id"));
+	
+				
+		pm.addParam(new FieldInt("client_id"));
+	
+				
+		pm.addParam(new FieldString("cond_fields"));
+	
+				
+		pm.addParam(new FieldString("cond_vals"));
+	
+				
+		pm.addParam(new FieldString("cond_sgns"));
+	
+				
+		pm.addParam(new FieldString("cond_ic"));
+	
+				
+		pm.addParam(new FieldInt("from"));
+	
+				
+		pm.addParam(new FieldInt("count"));
+	
+				
+		pm.addParam(new FieldString("ord_fields"));
+	
+				
+		pm.addParam(new FieldString("ord_directs"));
+	
+				
+		pm.addParam(new FieldString("field_sep"));
+	
+			
 }
 
 		

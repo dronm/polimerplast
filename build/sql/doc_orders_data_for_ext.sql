@@ -129,7 +129,9 @@ CREATE OR REPLACE VIEW doc_orders_data_for_ext AS
 		
 		h.deliv_expenses,
 		
-		cl2.ext_id AS gruzopoluchatel_ref
+		cl2.ext_id AS gruzopoluchatel_ref,
+		
+		h.client_contract_ext_id
 		
 	--FROM doc_orders_t_products t
 	--LEFT JOIN doc_orders h ON h.id=t.doc_id
