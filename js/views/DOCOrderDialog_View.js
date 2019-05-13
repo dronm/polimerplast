@@ -1342,7 +1342,7 @@ DOCOrderDialog_View.prototype.writeData = function(){
 	var contr = this.getWriteController();
 	if (!contr)return;
 	contr.getPublicMethodById(this.getWriteMethodId()).setParamValue("view_id",this.m_viewId);
-alert(this.m_clientContractCtrl.getValue())	
+
 	contr.getPublicMethodById(this.getWriteMethodId()).setParamValue("client_contract_name",this.m_clientContractCtrl.getValue());
 	
 	DOCOrderDialog_View.superclass.writeData.call(this);

@@ -676,14 +676,12 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		ExtProg::getClientContractList($ar['firm_ext_id'],$ar['client_ext_id'],$xml);
 		
 		$model = new Model(array("id"=>"ClientExtContractList_Model"));
-		$model->addField(new Field("ext_id",DT_STRING));
-		$model->addField(new Field("name",DT_STRING));
-		
-		foreach($xml->contracts as $contract){
-			$model->insert();
-			$model->getFieldById('ext_id')->setValue((string) $contract->contract->ref);
-			$model->getFieldById('name')->setValue((string) $contract->contract->name);			
-		}
+                foreach($xml->contracts->contract as $contr){
+                        $fields = array();
+                        array_push($fields,new Field('ref',DT_STRING,array('value'=>(string) $contr->ref)));
+                        array_push($fields,new Field('name',DT_STRING,array('value'=>(string) $contr->name)));
+                        $model->insert($fields);
+		}		
 		$this->addModel($model);
 	}
 	
