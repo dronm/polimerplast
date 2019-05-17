@@ -1364,7 +1364,7 @@ class Client_Controller extends ControllerSQL{
 		$model = new Model(array("id"=>"ClientExtContractList_Model"));
                 foreach($xml->contracts->contract as $contr){
                         $fields = array();
-                        array_push($fields,new Field('ref',DT_STRING,array('value'=>(string) $contr->ref)));
+                        array_push($fields,new Field('ext_id',DT_STRING,array('value'=>(string) $contr->ref)));
                         array_push($fields,new Field('name',DT_STRING,array('value'=>(string) $contr->name)));
                         $model->insert($fields);
 		}		

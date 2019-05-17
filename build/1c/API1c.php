@@ -5,60 +5,60 @@
 	
 	//********* команды *************
 	set_time_limit(300);
-	/*
-	Возвращает ссылку клиента по ИНН
-	Параметры: inn
-	Возврат: ссылка
-	*/
+	/**
+	 * Возвращает ссылку клиента по ИНН
+	 * Параметры: inn
+	 * Возврат: ссылка
+	 */
 	define('CMD_GET_CLIENT_ON_INN', 'get_client_on_inn');	
 
-	/*
-	Возвращает атрибуты клиента по имени
-	Параметры: name
-	Возврат: атрибуты контрагента
-	*/
+	/**
+	 * Возвращает атрибуты клиента по имени
+	 * Параметры: name
+	 * Возврат: атрибуты контрагента
+	 */
 	define('CMD_GET_CLIENT_ATTRS', 'get_client_attrs_on_name');	
 	
-	/*
-	Возвращает ссылку на организацию по имени
-	Параметры: name
-	Возврат: ссылка
+	/**
+	 * Возвращает ссылку на организацию по имени
+	 * Параметры: name
+	 * Возврат: ссылка
 	*/	
 	define('CMD_GET_FIRM_ON_NAME', 'get_firm_on_name');
 
-	/*
-	Возвращает ссылку на номенклатурную группу по имени
-	Параметры: name
-	Возврат: ссылка
-	*/	
+	/**
+	 * Возвращает ссылку на номенклатурную группу по имени
+	 * Параметры: name
+	 * Возврат: ссылка
+	 */	
 	define('CMD_GET_PRODUCT_GROUP_ON_NAME', 'get_product_group_on_name');
 	
-	/*
-	Возвращает ссылку на физ лицо по имени
-	Параметры: name
-	Возврат: ссылка
-	*/	
+	/**
+	 * Возвращает ссылку на физ лицо по имени
+	 * Параметры: name
+	 * Возврат: ссылка
+	 */	
 	define('CMD_GET_PERSON_ON_NAME', 'get_person_on_name');
 
-		/*
-	Возвращает ссылку на физ лицо по имени если есть или создает нового
-	Параметры: params array
-	Возврат: ссылка
-	*/	
+	/**
+	 * Возвращает ссылку на физ лицо по имени если есть или создает нового
+	 * Параметры: params array
+	 * Возврат: ссылка
+	 */	
 	define('CMD_GET_PERSON_CREATE', 'get_person_create');
 
-/*
-	Возвращает атрибуты по врдителю
-	Параметры: ref
-	Возврат: набор атрибутов
-	*/	
+	/**
+	 * Возвращает атрибуты по врдителю
+	 * Параметры: ref
+	 * Возврат: набор атрибутов
+	 */	
 	define('CMD_GET_DRIVER_ATTRS', 'get_driver_attrs');
 	
 	/*
 	Возвращает ссылку на пользователя по имени
 	Параметры: name
 	Возврат: ссылка
-	*/	
+	 */	
 	define('CMD_GET_USER_ON_NAME', 'get_user_on_name');
 	
 	/*
@@ -68,83 +68,83 @@
 	*/	
 	define('CMD_GET_CLIENT_ACTIVITY_ON_NAME', 'get_client_activity_on_name');
 	
-	/*
-	Возвращает ссылку склада по имени
-	Параметры: name
-	Возврат: ссылка
-	*/	
+	/**
+	 * Возвращает ссылку склада по имени
+	 * Параметры: name
+	 * Возврат: ссылка
+	 */	
 	define('CMD_GET_WAREHOUSE_ON_NAME', 'get_warehouse_on_name');
 
-	/*
-	Возвращает ссылку единицы измерения по имени
-	Параметры: name
-	Возврат: ссылка
-	*/	
+	/**
+	 * Возвращает ссылку единицы измерения по имени
+	 * Параметры: name
+	 * Возврат: ссылка
+	 */	
 	define('CMD_GET_MEASURE_ON_NAME', 'get_measure_on_name');
 	
-	/*
-	Добавляет нового клиента
-	Параметры: все реквизиты
-	Возврат:
-	*/		
+	/**
+	 * Добавляет нового клиента
+	 * Параметры: все реквизиты
+	 * Возврат:
+	 */		
 	define('CMD_ADD_CLIENT', 'add_client');
 
-	/*
-	Возвращает список контрагентов по маске
-	Параметры: templ
-	Возврат: ссылка
-	*/			
+	/**
+	 * Возвращает список контрагентов по маске
+	 * Параметры: templ
+	 * Возврат: ссылка
+	 */			
 	define('CMD_COMPLETE_CLIENT', 'complete_client');
 
-	/*
-	Возвращает список пользователей по маске
-	Параметры: templ
-	Возврат: ссылка
+	/**
+	 * Возвращает список пользователей по маске
+	 * Параметры: templ
+	 * Возврат: ссылка
 	*/			
 	define('CMD_COMPLETE_USER', 'complete_user');
 	
-	/*
-	Возвращает строку с шапкой реквизитами фирмы
-	Параметры: firm_ref
-	Возврат: строка
-	*/			
+	/**
+	 * Возвращает строку с шапкой реквизитами фирмы
+	 * Параметры: firm_ref
+	 * Возврат: строка
+	 */			
 	define('CMD_FIRM_DATA', 'firm_data');
 	
-	/*
-	Создает новую продажу
-	Параметры:
-		head serialized строка,			
-		items - serialized строка
-		
-	Возврат: значения из 1с
-	*/			
+	/**
+	 * Создает новую продажу
+	 * Параметры:
+	 *	head serialized строка,			
+	 *	items - serialized строка
+	 *	
+	 * Возврат: значения из 1с
+	 */			
 	define('CMD_SALE', 'sale');
 
-	/*
-	Печатать счет
-	Параметры:
-		doc_ref строка,			
-		stamp - 1/0 не обязательный, по умолчанию 0
-	Возврат: печатная форма PDF
-	*/			
+	/**
+	 * Печатать счет
+	 * Параметры:
+	 *	doc_ref строка,			
+	 *	stamp - 1/0 не обязательный, по умолчанию 0
+	 * Возврат: печатная форма PDF
+	 */			
 	define('CMD_PRINT_ORDER', 'print_order');
 	
-	/*
-	Создает новый счет
-	Параметры:
-		head serialized строка,			
-		items - serialized строка
+	/**
+	 * Создает новый счет
+	 * Параметры:
+	 * 	head serialized строка,			
+	 *	items - serialized строка
 		
-	Возврат: значения из 1с
-	*/			
+	 * Возврат: значения из 1с
+	 */			
 	define('CMD_ORDER', 'order');
 	
-	/*
-	Параметры:
-		doc_ref ссылка документ реализации
-		stamp - 1/0 не обязательный, по умолчанию 0
-	Возврат: печатная форма
-	*/			
+	/**
+	 * Параметры:
+	 *	doc_ref ссылка документ реализации
+	 *	stamp - 1/0 не обязательный, по умолчанию 0
+	 * Возврат: печатная форма
+	 */			
 	define('CMD_TORG12', 'print_torg12');
 
 	/*
@@ -154,67 +154,75 @@
 	*/			
 	define('CMD_INVOICE', 'print_invoice');
 
-	/*
-	Создать АКТ сверки
-	Параметры
-		from date
-		to date
-		client_ref
-		firm_ref
-	ВОЗВРАТ печатная форма
-	*/
+	/**
+	 * Создать АКТ сверки
+	 * Параметры
+	 *	from date
+	 *	to date
+	 * 	client_ref
+	 *	firm_ref
+	 * ВОЗВРАТ печатная форма
+	 */
 	define('CMD_BALANCE','print_balance');
 	
-	/*
-	Параметры:
-		doc_ref ссылка документ реализации
-		stamp - 1/0 не обязательный, по умолчанию 0
-	Возврат: печатная форма УПД
-	*/			
+	/**
+	 * Параметры:
+	 * 	doc_ref ссылка документ реализации
+	 * 	stamp - 1/0 не обязательный, по умолчанию 0
+	 * Возврат: печатная форма УПД
+	 */			
 	define('CMD_UPD', 'print_upd');
 
-	/*
-	Параметры:
-		doc_ref ссылка документ реализации
-		stamp - 1/0 не обязательный, по умолчанию 0
-	Возврат: печатная форма УПД+ТТН
-	*/			
+	/**
+	 * Параметры:
+	 *	doc_ref ссылка документ реализации
+	 * 	stamp - 1/0 не обязательный, по умолчанию 0
+	 * Возврат: печатная форма УПД+ТТН
+	 */			
 	define('CMD_SHIP', 'print_shipment');
 	
-	/*
-	Параметры:
-		doc_ref ссылка документ реализации
-		stamp - 1/0 не обязательный, по умолчанию 0
-		head - сериализованная строка
-	Возврат: печатная форма ТТН
-	*/			
+	/**
+	 * Параметры:
+	 *	doc_ref ссылка документ реализации
+	 *	stamp - 1/0 не обязательный, по умолчанию 0
+	 *	head - сериализованная строка
+	 * Возврат: печатная форма ТТН
+	 */			
 	define('CMD_TTN', 'print_ttn');
 	
-	/*
+	/**
 	Параметры:
 		head serialized строка,			
 		pkoType (cash/bank)
 	*/	
 	define('CMD_PAID_TO_ACC', 'paid_to_acc');
 	
-	/*
-	Возвращает список долгов клиентов
-	*/		
+	/**
+	 * Возвращает список долгов клиентов
+	 */		
 	define('CMD_GET_DEBT_LIST', 'get_debt_list');
 
-	/*
-	Удаляет документы
-	Параметры:
-		ext_order_id,ext_ship_id
-	*/		
+	/**
+	 * Удаляет документы
+	 * Параметры:
+	 *	ext_order_id,ext_ship_id
+	 */		
 	define('CMD_DEL_DOCS', 'del_docs');
 
-	/*
-	Удаляет документы
-	Параметры:
-		head [ext_ship_id,deliv_expenses]
-	*/		
+	/**
+	 * Удаляет документы
+	 * Параметры:
+	 *	head [ext_ship_id,deliv_expenses]
+	 */		
 	define('CMD_DELIV_EXPENSES', 'set_deliv_expenses');
+
+	/**
+	 * Возвращает список договоров клиента по нашей фирме и клиенту
+	 * Параметры:
+	 * 		firm_ext_id
+	 * 		client_ext_id
+  	 */		
+	define('CMD_GET_CLIENT_CONTRACT_LIST', 'get_client_contract_list');
 	
 	//********* команды *************
 
@@ -249,7 +257,7 @@
 	
 	define('COM_OBJ_NAME', 'v8Server.Connection');
 	define('API_EPF', dirname(__FILE__).'\API1C.epf');
-	
+
 	$xml_status = 'true';
 	$xml_body = '';
 	$SENT_FILE = FALSE;
@@ -297,8 +305,8 @@
 		else if ($com==CMD_GET_PERSON_ON_NAME){
 			$xml_body = getPersonRefOnDescr();
 		}		
-		else if ($com==CMD_GET_PERSON_CREATE){
-			$params = unserialize(stripslashes($_REQUEST[PAR_PARAMS]));
+		else if ($com==CMD_GET_PERSON_CREATE){			
+			$params = unserialize(stripslashes($_REQUEST[PAR_PARAMS]));			
 			$xml_body = getPersonRefCreate($params);
 		}		
 		
@@ -567,6 +575,11 @@
 			$v8 = new COM(COM_OBJ_NAME);
 			$head = unserialize(stripslashes($_REQUEST[PAR_HEAD]));
 			set_deliv_expenses($v8,$head['ext_ship_id'],floatval($head['deliv_expenses']));
+		}
+		else if ($com==CMD_GET_CLIENT_CONTRACT_LIST){
+			$v8 = new COM(COM_OBJ_NAME);
+			$str = get_client_contract_list($v8,$_REQUEST['firm_ext_id'],$_REQUEST['client_ext_id']);
+			$xml_body.='<contracts>'.$str.'</contracts>';			
 		}
 		
 	}	

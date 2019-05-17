@@ -320,14 +320,15 @@
 		ИЗ Справочник.ФизическиеЛица КАК Спр
 		'.get_person_attr_query().'		
 		ГДЕ Спр.Наименование="'.$par.'"';
-		
+
 		$sel = $q_obj->Выполнить()->Выбрать();
 		return ($sel->Следующий());
 	}
 	function getPersonRefCreate($params){
-		if (!$params['name']){
+		if (!isset($params['name'])){
 			throw new Exception("Не задано наименование");
 		}
+		
 		$v8 = new COM(COM_OBJ_NAME);
 		$sel = NULL;
 		if (get_person_ref_sel($v8,$params['name'],$sel)){
@@ -339,7 +340,8 @@
 				<plate>%s</plate>',
 				$v8->String($sel->ref->УникальныйИдентификатор()),
 				$v8->String($sel->drive_perm),
-				$v8->String($sel->carrier_ref->УникальныйИдентификатор()),
+				//($sel->carrier_ref->Пустая())? '':$v8->String($sel->carrier_ref->УникальныйИдентификатор()),
+				'',
 				$v8->String($sel->model),
 				$v8->String($sel->trailer_plate),
 				$v8->String($sel->plate)
@@ -836,12 +838,15 @@
 		return $acc_ref;
 	}
 
-	function get_client_acc($v8,$clientRef){
+	function get_client_acc($v8,$clientRef,$acc=NULL){
 		$acc_ref = NULL;
 		$q_obj = $v8->NewObject('Запрос');
 		$q_obj->Текст ='ВЫБРАТЬ ПЕРВЫЕ 1 Счет.Ссылка ИЗ Справочник.БанковскиеСчетаКонтрагентов КАК Счет
-		ГДЕ Счет.Владелец = &client И НЕ Счет.Закрыт И НЕ Счет.ПометкаУдаления';		
+		ГДЕ Счет.Владелец = &client И '.(is_null($acc)? 'НЕ Счет.Закрыт И НЕ Счет.ПометкаУдаления':'Счет.НомерСчета=&acc');		
 		$q_obj->УстановитьПараметр('client',$clientRef);
+		if(!is_null($acc)){
+			$q_obj->УстановитьПараметр('acc',$acc);
+		}	
 		$sel = $q_obj->Выполнить()->Выбрать();
 		if ($sel->Следующий()){
 				$acc_ref = $sel->Ссылка;
@@ -849,14 +854,17 @@
 		return $acc_ref;
 	}
 
-	function get_partner($v8,$attrs,$name,$nameFull){
-		$partner_ref = $v8->Справочники->Партнеры->НайтиПоНаименованию($name,TRUE());
+	function get_partner($v8,$attrs,$name,$nameFull,$managerRef=NULL){
+		$partner_ref = $v8->Справочники->Партнеры->НайтиПоНаименованию($name,TRUE);
 		if ($partner_ref->Пустая()){
 			$obj = $v8->Справочники->Партнеры->СоздатьЭлемент();
 			$obj->Клиент				= TRUE;
 			$obj->Комментарий			= 'Web';
 			$obj->НаименованиеПолное	= $nameFull;
+			$obj->Наименование			= $name;
 			$obj->ЮрФизЛицо				= (strlen($attrs['inn'])==10)? $v8->Перечисления->КомпанияЧастноеЛицо->Компания:$v8->Перечисления->КомпанияЧастноеЛицо->ЧастноеЛицо;
+			$obj->ДатаРегистрации		= date('YmdHis');
+			$obj->ОсновнойМенеджер		= $managerRef;
 			$obj->Записать();
 			
 			$partner_ref = $obj->Ссылка;
@@ -864,10 +872,130 @@
 		return $partner_ref;
 	}
 	
+	function set_1c_addr($v8,&$kiLine,$addrType,$addr){
+		$kiLine->Тип				= $v8->Перечисления->ТипыКонтактнойИнформации->Адрес;
+		$kiLine->Вид		 		= $addrType;
+		$kiLine->Представление		= $addr;
+		$kiLine->ВидДляСписка		= $kiLine->Вид;
+		$xdto = $v8->УправлениеКонтактнойИнформациейСлужебный->КонтактнаяИнформацияXDTOПоПредставлению($addr,$addrType);
+		$kiLine->ЗначенияПолей = $v8->УправлениеКонтактнойИнформациейСлужебный->КонтактнаяИнформацияXDTOВXML($xdto);
+		$kiLine->Значение = $v8->УправлениеКонтактнойИнформациейСлужебный->СтруктураВСтрокуJSON($v8->УправлениеКонтактнойИнформациейСлужебный->КонтактнаяИнформацияВСтруктуруJSON($kiLine->ЗначенияПолей, $addrType));		
+	}
+	
+	function set_1c_tel($v8,&$kiLine,$clientTel,$isClient){
+		$kind = $isClient? $v8->Справочники->ВидыКонтактнойИнформации->ТелефонКонтрагента:$v8->Справочники->ВидыКонтактнойИнформации->ТелефонПартнера;
+		
+		$kiLine->Тип				= $v8->Перечисления->ТипыКонтактнойИнформации->Телефон;
+		$kiLine->Вид		 		= $kind;
+		$kiLine->Представление		= $clientTel;
+		$kiLine->ВидДляСписка		= $kiLine->Вид;				
+		$tel = str_replace('-','',$clientTel);
+		$tel = str_replace('+','',$tel);
+		$kiLine->НомерТелефона = $tel;
+		$kiLine->НомерТелефонаБезКодов = $tel;
+		$xdto = $v8->УправлениеКонтактнойИнформациейСлужебный->КонтактнаяИнформацияXDTOПоПредставлению($clientTel,$kind);
+		$kiLine->ЗначенияПолей = $v8->УправлениеКонтактнойИнформациейСлужебный->КонтактнаяИнформацияXDTOВXML($xdto);
+		$kiLine->Значение = $v8->УправлениеКонтактнойИнформациейСлужебный->СтруктураВСтрокуJSON($v8->УправлениеКонтактнойИнформациейСлужебный->КонтактнаяИнформацияВСтруктуруJSON($kiLine->ЗначенияПолей,$kind));
+		
+	}
+
+	function set_1c_email($v8,&$kiLine,$clientEmail,$isClient){
+		$at_p = strpos($clientEmail,'@');
+		if($at_p!==FALSE){
+			$dom = substr($clientEmail,$at_p+1);
+		}
+		else{
+				$dom = $clientEmail;
+		}
+		$kind = $isClient? $v8->Справочники->ВидыКонтактнойИнформации->EmailКонтрагента:$v8->Справочники->ВидыКонтактнойИнформации->EmailПартнера;
+		$kiLine->АдресЭП			= $clientEmail;
+		$kiLine->ДоменноеИмяСервера	= $dom;
+		$kiLine->Тип				= $v8->Перечисления->ТипыКонтактнойИнформации->АдресЭлектроннойПочты;
+		$kiLine->Вид		 		= $kind;
+		$kiLine->Представление		= $clientEmail;
+		$kiLine->ВидДляСписка		= $kiLine->Вид;				
+		$xdto = $v8->УправлениеКонтактнойИнформациейСлужебный->КонтактнаяИнформацияXDTOПоПредставлению($clientEmail,$kind);
+		$kiLine->ЗначенияПолей = $v8->УправлениеКонтактнойИнформациейСлужебный->КонтактнаяИнформацияXDTOВXML($xdto);
+		$kiLine->Значение = $v8->УправлениеКонтактнойИнформациейСлужебный->СтруктураВСтрокуJSON($v8->УправлениеКонтактнойИнформациейСлужебный->КонтактнаяИнформацияВСтруктуруJSON($kiLine->ЗначенияПолей, $kind));		
+	}
+	
+	function get_client_contract_list($v8,$firmExtId,$clientExtId){
+		$firm_id = $v8->NewObject('УникальныйИдентификатор',$firmExtId);
+		$firm_ref = $v8->Справочники->Организации->ПолучитьСсылку($firm_id);			
+		
+		$client_id = $v8->NewObject('УникальныйИдентификатор',$clientExtId);
+		$client_ref = $v8->Справочники->Контрагенты->ПолучитьСсылку($client_id);			
+
+		$q_obj = $v8->NewObject('Запрос');
+		$q_obj->Текст ='ВЫБРАТЬ Ссылка,Наименование ИЗ Справочник.ДоговорыКонтрагентов
+		ГДЕ Контрагент=&client И Организация=&firm И ТипДоговора=ЗНАЧЕНИЕ(Перечисление.ТипыДоговоров.СПокупателем) И Статус<>ЗНАЧЕНИЕ(Перечисление.СтатусыДоговоровКонтрагентов.Закрыт) И НЕ ПометкаУдаления';
+		$q_obj->УстановитьПараметр('client',$client_ref);
+		$q_obj->УстановитьПараметр('firm',$firm_ref);		
+		$sel = $q_obj->Выполнить()->Выбрать();
+		$xml = '';
+		while ($sel->Следующий()){
+			$xml.= sprintf(
+				'<contract>
+				<ref>%s</ref>
+				<name>%s</name>
+				</contract>',		
+				$v8->String($sel->Ссылка->УникальныйИдентификатор()),
+				cyr_str_encode($sel->Наименование)
+			);			
+		}
+		//throw new Exception($xml);
+		return $xml;
+	}
+	
 	function client($v8,$attrs){
-		$obj = NULL;
-		$client_ref = get_client_ref_on_inn($v8,$attrs['inn']);
+		$client_ref = NULL;
+
+		if(isset($attrs['ext_id'])){
+			$client_id = $v8->NewObject('УникальныйИдентификатор',$attrs['ext_id']);
+			$client_ref = $v8->Справочники->Контрагенты->ПолучитьСсылку($client_id);			
+		}
+		else if(isset($attrs['inn'])){
+			$client_ref = get_client_ref_on_inn($v8,$attrs['inn']);
+		}
+		else{
+			throw new Exception('В 1с не отправлен ни ИНН ни ссылка!');
+		}
+
+		$q = $v8->NewObject('Запрос');
+		$q->Текст ='ВЫБРАТЬ ПЕРВЫЕ 1 Ссылка
+		ИЗ ПланВидовХарактеристик.ДополнительныеРеквизитыИСведения
+		ГДЕ НаборСвойств = ЗНАЧЕНИЕ(Справочник.НаборыДополнительныхРеквизитовИСведений.Справочник_Контрагенты)
+		И Имя="ТипКлиента"';
+		$sel = $q->Выполнить()->Выбрать();
+		if (!$sel->Следующий()){
+			throw new Exception('Не найдено доп.свойство контрагента ТипКлиента!');
+		}
+		$sv_cl_type = $sel->Ссылка;
+		
+		$q = $v8->NewObject('Запрос');
+		$q->Текст ='ВЫБРАТЬ ПЕРВЫЕ 1 Ссылка
+		ИЗ ПланВидовХарактеристик.ДополнительныеРеквизитыИСведения
+		ГДЕ Имя="ОГРН"';
+		$sel = $q->Выполнить()->Выбрать();
+		if (!$sel->Следующий()){
+			throw new Exception('Не найдено доп.свойство контрагента ОГРН!');
+		}
+		$sv_cl_ogrn = $sel->Ссылка;
+//throw new Exception('UserId='.$attrs['user_ext_id']);
 		if (is_null($client_ref)){
+			//Новый клиент
+		
+			//Менеджер
+			$manager_ref = NULL;
+			//throw new Exception('UserId='.$attrs['user_ext_id']);
+			if (isset($attrs['user_ext_id'])){				
+				$user_id = $v8->NewObject('УникальныйИдентификатор',$attrs['user_ext_id']);			
+				$manager_ref = $v8->Справочники->Пользователи->ПолучитьСсылку($user_id);							
+			}
+			else{
+				$manager_ref = $v8->Справочники->Пользователи->ПустаяСсылка();
+			}
+		
 			$obj = $v8->Справочники->Контрагенты->СоздатьЭлемент();
 			$obj->Наименование					= stripslashes(cyr_str_decode($attrs['name']));
 			$obj->НаименованиеПолное			= stripslashes(cyr_str_decode($attrs['name_full']));
@@ -876,15 +1004,358 @@
 			$obj->ИНН							= $attrs['inn'];
 			$obj->КодПоОКПО						= $attrs['okpo'];
 			$obj->КПП							= $attrs['kpp'];
-			$obj->Партнер						= get_partner($v8,$attrs,$obj->Наименование,$obj->НаименованиеПолное);
-			$obj->Записать();
+			$obj->СтранаРегистрации				= $v8->Справочники->СтраныМира->Россия;
+			$obj->Партнер						= get_partner($v8,$attrs,$obj->Наименование,$obj->НаименованиеПолное,$manager_ref);
 			
+			if(isset($attrs['addr_reg'])){
+				$addr = $obj->КонтактнаяИнформация->Добавить();
+				$addr_str = stripslashes(cyr_str_decode($attrs['addr_reg']));
+				set_1c_addr($v8,$addr,$v8->Справочники->ВидыКонтактнойИнформации->ЮрАдресКонтрагента,$addr_str);
+			}
+			$addr_mail = NULL;
+			if(isset($attrs['addr_mail_same_as_reg']) && $attrs['addr_mail_same_as_reg']){
+					$addr_mail = stripslashes(cyr_str_decode($attrs['addr_reg']));
+			}
+			else if(isset($attrs['addr_mail'])){
+					$addr_mail = stripslashes(cyr_str_decode($attrs['addr_mail']));
+			}
+			if(isset($addr_mail)){
+				$addr = $obj->КонтактнаяИнформация->Добавить();
+				set_1c_addr($v8,$addr,$v8->Справочники->ВидыКонтактнойИнформации->ФактАдресКонтрагента,$addr_mail);
+			}
+			
+			if( isset($attrs['telephones']) ){
+				$addr = $obj->КонтактнаяИнформация->Добавить();
+				set_1c_tel($v8,$addr,$attrs['telephones'],TRUE);
+				$obj->ДополнительнаяИнформация = $attrs['telephones'];
+			}
+
+			if( isset($attrs['email']) ){
+				$email = stripslashes(cyr_str_decode($attrs['email']));
+				$addr = $obj->КонтактнаяИнформация->Добавить();
+				set_1c_email($v8,$addr,$email,TRUE);
+			}
+			
+			$obj->Записать();
 			$client_ref = $obj->Ссылка;
+		
+			$obj_p = NULL;
+			if(isset($attrs['client_activity'])){
+				$client_activity = stripslashes(cyr_str_decode($attrs['client_activity']));
+			}
+			if(isset($attrs['client_activity'])){
+				if(is_null($obj_p)){
+					$obj_p = $client_ref->Партнер->ПолучитьОбъект();
+				}
+				$p_attr = $obj_p->ДополнительныеРеквизиты->Добавить();
+				$p_attr->Свойство = $sv_cl_type;
+				$p_attr->Значение = get_svoistvo($v8,$sv_cl_type,$client_activity);
+			}
+			if( isset($attrs['telephones']) ){
+				if(is_null($obj_p)){
+					$obj_p = $client_ref->Партнер->ПолучитьОбъект();
+				}				
+				$addr = $obj_p->КонтактнаяИнформация->Добавить();
+				set_1c_tel($v8,$addr,$attrs['telephones'],FALSE);
+				$obj_p->ДополнительнаяИнформация = $attrs['telephones'];
+			}
+
+			if( isset($attrs['email']) ){
+				if(is_null($obj_p)){
+					$obj_p = $client_ref->Партнер->ПолучитьОбъект();
+				}				
+				$email = stripslashes(cyr_str_decode($attrs['email']));
+				$addr = $obj_p->КонтактнаяИнформация->Добавить();
+				set_1c_email($v8,$addr,$email,FALSE);
+			}
+
+			//ogrn			
+			if(isset($attrs['ogrn'])){
+				if(is_null($obj_p)){
+					$obj_p = $client_ref->Партнер->ПолучитьОбъект();
+				}
+				$p_attr = $obj_p->ДополнительныеРеквизиты->Добавить();
+				$p_attr->Свойство = $sv_cl_ogrn;
+				$p_attr->Значение = $attrs['ogrn'];				
+			}
+			
+			if(!is_null($obj_p)){
+					$obj_p->Записать();
+			}
+		}
+		else if(isset($attrs['inn']) && $client_ref->ИНН<>$attrs['inn']){
+			throw new Exception('У данного клиента в 1с другой ИНН:'.$client_ref->ИНН);
+		}
+		else{
+			//что-то изменилось
+
+			$obj = NULL;
+			if(isset($attrs['name'])){
+				$name = stripslashes(cyr_str_decode($attrs['name']));
+				if($client_ref->Наименование<>$name){
+					if(is_null($obj)){
+						$obj = $client_ref->ПолучитьОбъект();
+					}
+					$obj->Наименование=$name;
+				}
+			}
+			if(isset($attrs['name_full'])){
+				$name_full = stripslashes(cyr_str_decode($attrs['name_full']));
+				if($client_ref->НаименованиеПолное<>$name_full){
+					if(is_null($obj)){
+						$obj = $client_ref->ПолучитьОбъект();
+					}
+					$obj->НаименованиеПолное=$name_full;
+				}
+			}
+			if($client_ref->КодПоОКПО<>$attrs['okpo']){
+				if(is_null($obj)){
+					$obj = $client_ref->ПолучитьОбъект();
+				}
+				$obj->КодПоОКПО=$attrs['okpo'];
+			}
+			if($client_ref->КПП<>$attrs['kpp']){
+				if(is_null($obj)){
+					$obj = $client_ref->ПолучитьОбъект();
+				}
+				$obj->КПП=$attrs['kpp'];
+			}
+			
+			//Найдем адреса
+			$addr_reg = (isset($attrs['addr_reg']))? stripslashes(cyr_str_decode($attrs['addr_reg'])):NULL;
+			$mail_addr_1c = NULL;
+			$reg_addr_1c = NULL;
+			$mail_addr_1c_line = NULL;
+			$reg_addr_1c_line = NULL;			
+			$tel_1c_line = NULL;
+			$tel_1c = NULL;
+			$email_1c_line = NULL;
+			$email_1c = NULL;						
+			for($i=0;$i<$client_ref->КонтактнаяИнформация->Количество();$i++){				
+				$addr = $client_ref->КонтактнаяИнформация->Получить($i);								
+				if($v8->String($addr->Тип) == $v8->String($v8->Перечисления->ТипыКонтактнойИнформации->Адрес)){
+					if($v8->String($addr->Вид) == $v8->String($v8->Справочники->ВидыКонтактнойИнформации->ФактАдресКонтрагента)){
+						$mail_addr_1c = trim($addr->Представление);
+						$mail_addr_1c_line = $i;
+					}
+					else if($v8->String($addr->Вид) == $v8->String($v8->Справочники->ВидыКонтактнойИнформации->ЮрАдресКонтрагента)){
+						$reg_addr_1c = trim($addr->Представление);
+						$reg_addr_1c_line = $i;
+					}					
+				}
+				else if(
+				$v8->String($addr->Тип) == $v8->String($v8->Перечисления->ТипыКонтактнойИнформации->АдресЭлектроннойПочты)
+				&& $v8->String($addr->Вид) == $v8->String($v8->Справочники->ВидыКонтактнойИнформации->EmailКонтрагента)
+				){
+						$email_1c = trim($addr->Представление);
+						$email_1c_line = $i;
+				}
+				else if($v8->String($addr->Тип) == $v8->String($v8->Перечисления->ТипыКонтактнойИнформации->Телефон)){
+						$tel_1c = trim($addr->Представление);
+						$tel_1c_line = $i;					
+				}
+			}				
+			$obj_p = NULL;
+			//Данные партнера
+			$p_tel_1c_line = NULL;
+			$p_tel_1c = NULL;
+			$p_email_1c_line = NULL;
+			$p_email_1c = NULL;			
+			for($i=0;$i<$client_ref->Партнер->КонтактнаяИнформация->Количество();$i++){				
+				$addr = $client_ref->Партнер->КонтактнаяИнформация->Получить($i);								
+				if(
+				$v8->String($addr->Тип) == $v8->String($v8->Перечисления->ТипыКонтактнойИнформации->АдресЭлектроннойПочты)
+				&& $v8->String($addr->Вид) == $v8->String($v8->Справочники->ВидыКонтактнойИнформации->EmailКонтрагента)
+				){
+						$p_email_1c = trim($addr->Представление);
+						$p_email_1c_line = $i;
+				}
+				else if($v8->String($addr->Тип) == $v8->String($v8->Перечисления->ТипыКонтактнойИнформации->Телефон)){
+						$p_tel_1c = trim($addr->Представление);
+						$p_tel_1c_line = $i;					
+				}
+			}
+			
+			//throw new Exception('ext_id='.$attrs['ext_id']);
+			//throw new Exception('ИНН='.$client_ref->ИНН);
+			//throw new Exception('!!!telephonesForSetting='.$attrs['telephones'].' Str='.$tel_1c_line.' Tel1c='.$tel_1c);
+			if(isset($addr_reg)&& (!is_null($reg_addr_1c)&&$reg_addr_1c!=$addr_reg) ){
+				if(is_null($obj)){
+					$obj = $client_ref->ПолучитьОбъект();
+				}
+				$addr = $obj->КонтактнаяИнформация->Получить($reg_addr_1c_line);
+				set_1c_addr($v8,$addr,$v8->Справочники->ВидыКонтактнойИнформации->ЮрАдресКонтрагента,$addr_reg);
+			}
+			else if(isset($addr_reg)&& is_null($reg_addr_1c) ){
+				if(is_null($obj)){
+					$obj = $client_ref->ПолучитьОбъект();
+				}
+				$addr = $obj->КонтактнаяИнформация->Добавить();
+				set_1c_addr($v8,$addr,$v8->Справочники->ВидыКонтактнойИнформации->ЮрАдресКонтрагента,$addr_reg);
+			}
+			
+			$addr_mail = NULL;
+			if(isset($addr_reg) && isset($attrs['addr_mail_same_as_reg']) && $attrs['addr_mail_same_as_reg']===TRUE){
+					$addr_mail = $addr_reg;
+			}
+			else if(isset($attrs['addr_mail'])){
+					$addr_mail = stripslashes(cyr_str_decode($attrs['addr_mail']));
+			}
+						
+			if(isset($addr_mail)&& (!is_null($mail_addr_1c)&&$mail_addr_1c!=$addr_mail) ){
+				if(is_null($obj)){
+					$obj = $client_ref->ПолучитьОбъект();
+				}
+				$addr = $obj->КонтактнаяИнформация->Получить($mail_addr_1c_line);
+				set_1c_addr($v8,$addr,$v8->Справочники->ВидыКонтактнойИнформации->ФактАдресКонтрагента,$addr_mail);
+			}
+			else if(isset($addr_mail)&& is_null($mail_addr_1c) ){
+				if(is_null($obj)){
+					$obj = $client_ref->ПолучитьОбъект();
+				}
+				$addr = $obj->КонтактнаяИнформация->Добавить();
+				set_1c_addr($v8,$addr,$v8->Справочники->ВидыКонтактнойИнформации->ФактАдресКонтрагента,$addr_mail);
+			}
+			
+			//Telephones			
+			if( isset($attrs['telephones']) && (!is_null($p_tel_1c)&&$p_tel_1c!=$attrs['telephones']) ){
+				if(is_null($obj_p)){
+					$obj_p = $client_ref->Партнер->ПолучитьОбъект();
+				}
+				$addr = $obj_p->КонтактнаяИнформация->Получить($p_tel_1c_line);
+				set_1c_tel($v8,$addr,$attrs['telephones'],FALSE);
+			}
+			else if( isset($attrs['telephones']) && is_null($p_tel_1c) ){
+				if(is_null($obj_p)){
+					$obj_p = $client_ref->Партнер->ПолучитьОбъект();
+				}
+				$addr = $obj_p->КонтактнаяИнформация->Добавить();
+				set_1c_tel($v8,$addr,$attrs['telephones'],FALSE);
+			}
+
+			//Email
+			if( isset($attrs['email']) && (!is_null($p_email_1c)&&$p_email_1c!=$attrs['email']) ){
+				if(is_null($obj_p)){
+					$obj_p = $client_ref->Партнер->ПолучитьОбъект();
+				}
+				$email = stripslashes(cyr_str_decode($attrs['email']));
+				$addr = $obj_p->КонтактнаяИнформация->Получить($p_email_1c_line);
+				set_1c_email($v8,$addr,$email,FALSE);
+			}
+			else if( isset($attrs['email']) && is_null($p_email_1c) ){
+				if(is_null($obj_p)){
+					$obj_p = $client_ref->Партнер->ПолучитьОбъект();
+				}
+				$email = stripslashes(cyr_str_decode($attrs['email']));
+				$addr = $obj_p->КонтактнаяИнформация->Добавить();
+				set_1c_email($v8,$addr,$email,FALSE);
+			}
+
+			//Telephones			
+			if( isset($attrs['telephones']) && (!is_null($tel_1c)&&$tel_1c!=$attrs['telephones']) ){
+				if(is_null($obj)){
+					$obj = $client_ref->ПолучитьОбъект();
+				}
+				$addr = $obj->КонтактнаяИнформация->Получить($tel_1c_line);
+				set_1c_tel($v8,$addr,$attrs['telephones'],TRUE);
+			}
+			else if( isset($attrs['telephones']) && is_null($tel_1c) ){
+				if(is_null($obj)){
+					$obj = $client_ref->ПолучитьОбъект();
+				}
+				$addr = $obj->КонтактнаяИнформация->Добавить();
+				set_1c_tel($v8,$addr,$attrs['telephones'],TRUE);
+			}
+//throw new Exception('!!!ИНН='.$client_ref->ИНН);
+			//Email
+			if( isset($attrs['email']) && (!is_null($email_1c)&&$email_1c!=$attrs['email']) ){
+				if(is_null($obj)){
+					$obj = $client_ref->ПолучитьОбъект();
+				}
+				$email = stripslashes(cyr_str_decode($attrs['email']));
+				$addr = $obj->КонтактнаяИнформация->Получить($email_1c_line);
+				set_1c_email($v8,$addr,$email,TRUE);
+			}
+			else if( isset($attrs['email']) && is_null($email_1c) ){
+				if(is_null($obj)){
+					$obj = $client_ref->ПолучитьОбъект();
+				}
+				$email = stripslashes(cyr_str_decode($attrs['email']));
+				$addr = $obj->КонтактнаяИнформация->Добавить();
+				set_1c_email($v8,$addr,$email,TRUE);
+			}
+			
+			
+			$cl_type = NULL;
+			$cl_type_line = 0;
+			$cl_ogrn = NULL;
+			$cl_ogrn_line = 0;
+			if( (isset($attrs['client_activity'])||isset($attrs['ogrn'])) && !$client_ref->Партнер->Пустая() ){
+				for($i=0;$i<$client_ref->Партнер->ДополнительныеРеквизиты->Количество();$i++){
+					$extra_att = $client_ref->Партнер->ДополнительныеРеквизиты->Получить($i);
+					if($v8->String($extra_att->Свойство) == $v8->String($sv_cl_type)){
+						$cl_type = $v8->String($extra_att->Значение);
+						$cl_type_line = $i;
+					}
+					else if($v8->String($extra_att->Свойство) == $v8->String($sv_cl_ogrn)){
+						$cl_ogrn = $v8->String($extra_att->Значение);
+						$cl_ogrn_line = $i;
+					}					
+				}
+			}
+			
+			if(isset($attrs['client_activity'])){
+				$client_activity = stripslashes(cyr_str_decode($attrs['client_activity']));
+			}
+			//throw new Exception('client_activity='.$client_activity);
+			if(isset($attrs['client_activity']) && isset($cl_type) && $cl_type!=$attrs['client_activity']){
+				if(is_null($obj_p)){
+					$obj_p = $client_ref->Партнер->ПолучитьОбъект();
+				}
+				$p_attr = $obj_p->ДополнительныеРеквизиты->Получить($cl_type_line);
+				$p_attr->Значение = get_svoistvo($v8,$sv_cl_type,$client_activity);
+			}
+			else if(isset($attrs['client_activity']) && !isset($cl_type)){
+				if(is_null($obj_p)){
+					$obj_p = $client_ref->Партнер->ПолучитьОбъект();
+				}
+				$p_attr = $obj_p->ДополнительныеРеквизиты->Добавить();
+				$p_attr->Свойство = $sv_cl_type;
+				$p_attr->Значение = get_svoistvo($v8,$sv_cl_type,$client_activity);
+			}
+
+			//ogrn
+			
+			if(isset($attrs['ogrn']) && isset($cl_ogrn) && $cl_ogrn!=$attrs['ogrn']){
+				if(is_null($obj_p)){
+					$obj_p = $client_ref->Партнер->ПолучитьОбъект();
+				}
+				$p_attr = $obj_p->ДополнительныеРеквизиты->Получить($cl_ogrn_line);
+				$p_attr->Значение = $attrs['ogrn'];				
+			}
+			else if(isset($attrs['ogrn']) && !isset($cl_ogrn)){
+				if(is_null($obj_p)){
+					$obj_p = $client_ref->Партнер->ПолучитьОбъект();
+				}
+				$p_attr = $obj_p->ДополнительныеРеквизиты->Добавить();
+				$p_attr->Свойство = $sv_cl_ogrn;
+				$p_attr->Значение = $attrs['ogrn'];				
+			}
+			
+			if(!is_null($obj_p)){
+					$obj_p->Записать();
+			}
+
+			//throw new Exception('!!!');
+			if(!is_null($obj)){
+					$obj->Записать();
+			}
 		}
 		
-		$acc = get_client_acc($v8,$client_ref);
+		$acc = get_client_acc($v8,$client_ref,$attrs['acc']);
+		//throw new Exception(var_export($attrs,TRUE));
 		
-		if (is_null($acc)){
+		if (is_null($acc) && isset($attrs['bank_code']) && isset($attrs['acc'])){
 			$acc = $v8->Справочники->БанковскиеСчетаКонтрагентов->СоздатьЭлемент();
 			$acc->Владелец				= $client_ref;
 			$acc->Наименование			= 'Основной счет';
@@ -893,7 +1364,7 @@
 			$bank_ref = $v8->Справочники->КлассификаторБанков->НайтиПоКоду($attrs['bank_code']);
 			if ($bank_ref->Пустая()){
 				//нет такого банка
-				throw new Exception('Банк БИК '.$attrs['bank_code'].' в 1с не найден!');
+				throw new Exception('БИК банка '.$attrs['bank_code'].' в 1с не найден!');
 			}
 			$acc->Банк = $bank_ref;		
 			$acc->Записать();			
@@ -983,8 +1454,17 @@
 													$v8->Перечисления->ТипыНалогообложенияНДС->ПродажаНеОблагаетсяНДС;
 		$doc->ХозяйственнаяОперация				= $v8->Перечисления->ХозяйственныеОперации->РеализацияКлиенту;
 		$doc->Комментарий						= get_doc_comment($head);
-											
-		$doc->Договор							= get_client_dog($v8,$client_ref,$firm_ref,$attrs,$acc_ref);
+		
+		if (isset($head['client_contract_ext_id'])){		
+			$client_contract_id = $v8->NewObject('УникальныйИдентификатор',$head['client_contract_ext_id']);
+			$doc->Договор = $v8->Справочники->ДоговорыКонтрагентов->ПолучитьСсылку($client_contract_id);
+			if($doc->Договор->Пустая()){
+				$doc->Договор = get_client_dog($v8,$client_ref,$firm_ref,$attrs,$acc_ref);
+			}
+		}
+		else{
+			$doc->Договор = get_client_dog($v8,$client_ref,$firm_ref,$attrs,$acc_ref);
+		}
 		
 		$doc->ПорядокРасчетов					= $doc->Договор->ПорядокРасчетов; //$v8->Перечисления->ПорядокРасчетов->ПоЗаказамНакладным;
 		$doc->СпособДоставки					= $v8->Перечисления->СпособыДоставки->Самовывоз;		
@@ -1300,13 +1780,13 @@
 			$carrier_id = $v8->NewObject('УникальныйИдентификатор',$head['carrier_ref']);
 			$carrier_ref = $v8->Справочники->Контрагенты->ПолучитьСсылку($carrier_id);							
 		}
-		else if ($head['deliv_type']=='by_supplier'){
-			//org->>client
+		/*else if ($head['deliv_type']=='by_supplier'){
+			//Перевозчик по-умолчанию сама НАША фирма, которая отгружает
 			$carrier_ref = get_client_ref_on_inn($v8,$firm_ref->ИНН);	
 			if (is_null($carrier_ref)){
 				throw new Exception('Не найдена организация '.$firm_ref->Наименование.' в справочнике контрагентов по ИНН для перевочика в ТТН!');
 			}			
-		}
+		}*/
 		
 		$doc->Дата						= $head['date'];
 		
@@ -1340,7 +1820,19 @@
 		$attrs['pay_delay_days'] = 0;
 		$attrs['pay_ban_on_debt_sum'] = FALSE;
 		$attrs['pay_ban_on_debt_days'] = FALSE;					
-		$doc->Договор					= get_client_dog($v8,$client_ref,$firm_ref,$attrs,NULL);		
+		
+		//$doc->Договор					= get_client_dog($v8,$client_ref,$firm_ref,$attrs,NULL);		
+		if (isset($head['client_contract_ext_id'])){		
+			$client_contract_id = $v8->NewObject('УникальныйИдентификатор',$head['client_contract_ext_id']);
+			$doc->Договор = $v8->Справочники->ДоговорыКонтрагентов->ПолучитьСсылку($client_contract_id);
+			if($doc->Договор->Пустая()){
+				$doc->Договор = get_client_dog($v8,$client_ref,$firm_ref,$attrs,NULL);
+			}
+		}
+		else{
+			$doc->Договор = get_client_dog($v8,$client_ref,$firm_ref,$attrs,NULL);
+		}
+		
 		$doc->Основание					= $doc->Договор->Наименование;
 		$doc->ОснованиеДата	 			= $doc->Договор->Дата;
 		$doc->ОснованиеНомер			= $doc->Договор->Номер;
@@ -1586,8 +2078,8 @@
 			$doc_ttn->АвтомобильВместимостьВКубическихМетрах	= $head['vh_vol'];//$doc_transp->АвтомобильВместимостьВКубическихМетрах;
 			$doc_ttn->АвтомобильГосударственныйНомер			= cyr_str_decode($head['vh_plate']);//$doc_transp->АвтомобильГосударственныйНомер;
 			$doc_ttn->АвтомобильГрузоподъемностьВТоннах			= $head['vh_load_weight_t'];//$doc_transp->АвтомобильГрузоподъемностьВТоннах;
-			$doc_ttn->АвтомобильМарка							= '';//$doc_transp->АвтомобильМарка;
-			$doc_ttn->АвтомобильТип								= cyr_str_decode($head['vh_model']);//$doc_transp->АвтомобильТип;
+			$doc_ttn->АвтомобильМарка							= cyr_str_decode($head['vh_model']);//$doc_transp->АвтомобильМарка;
+			$doc_ttn->АвтомобильТип								= '';//$doc_transp->АвтомобильТип;
 			$doc_ttn->АдресДоставки								= $doc->АдресДоставки;
 			$doc_ttn->АдресПогрузки								= cyr_str_decode($head['warehouse_address']);
 			$doc_ttn->Водитель									= cyr_str_decode($head['driver_name']);//$doc_transp->ВодительФИО;
@@ -1685,7 +2177,7 @@
 			throw new Exception('Документ открыт для редактирования!');
 		}
 		setDocDelivExpenses($v8,$doc,$delivExpenses);
-		$doc->Записать($v8->РежимЗаписиДокумента->Запись);
+		$doc->Записать($v8->РежимЗаписиДокумента->Проведение);
 			
 	}
 	

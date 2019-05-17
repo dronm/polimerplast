@@ -606,9 +606,9 @@ function DOCOrderDialog_View(id,options){
 	}
 	opts.events={
 		"keyup":function(){
-			/*Пересчет только если от этого зависит трасп затраты*/
-			self.calcDelivCost();
-			//self.recalcPricesRefreshTotals();
+			/*Пересчет только если от этого зависит трансп затраты*/
+			//self.calcDelivCost();
+			self.recalcPricesRefreshTotals();
 		}
 	};	
 	this.m_delivCost = new ctrl_class(id+"_deliv_total",
@@ -937,6 +937,8 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 			vh_n.setAttribute("fkey_vehicle_id","");
 			vh_n.setAttribute("last_fkey_vehicle_id","");				
 		}
+		
+		this.m_clientContractCtrl.setEnabled(true);
 	}
 	else{
 		var m = resp.getModelById("head_history");
@@ -1152,7 +1154,7 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 	if (do_calc_cost2){
 		this.m_delivExpCtrl.setValue("");
 	}
-	
+
 	var wh_id = this.m_wareHCtrl.getFieldValue();
 	var dest_id = this.m_clientDestCtrl.getFieldValue();
 	var cost_opt_id = this.m_delivCostOptCtrl.getFieldValue();
@@ -1180,6 +1182,8 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 			"err":function(resp,errCode,errStr){
 				self.getErrorControl().setValue(errStr);
 				
+				self.recalcPricesRefreshTotals();
+				
 				if (former_state){
 					self.m_wareHCtrl.setEnabled(true);
 					self.m_delivCostOptCtrl.setEnabled(true);				
@@ -1187,6 +1191,14 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 				self.m_clientDestCtrl.setEnabled(true);				
 			},
 			"func":function(resp){
+			
+				//old values
+				/*
+				self.m_old_wh_id = wh_id;
+				self.m_old_cost_opt_id = cost_opt_id;
+				self.m_old_dest_id = dest_id;
+				*/
+				
 				var m = resp.getModelById("calc_deliv_cost");
 				m.setActive(true);
 				if (m.getNextRow()){
@@ -1238,7 +1250,9 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 							self.recalcPricesRefreshTotals();
 						}
 					}	
-
+					else{
+						self.recalcPricesRefreshTotals();
+					}
 					
 					if (former_state){
 						self.m_wareHCtrl.setEnabled(true);
