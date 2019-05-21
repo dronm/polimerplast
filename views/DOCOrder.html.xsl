@@ -258,7 +258,18 @@
 
 <!--<br/><br/><br/><br/><br/>-->
 
-<div class="doc_order_print_order_bottom">
+<xsl:variable name="order_bottom_style">
+	<xsl:choose>
+	<xsl:when test="count(/document/model[@id='products']/row)>6">
+		<xsl:value-of select="''"/>
+	</xsl:when>
+	<xsl:otherwise>
+		<xsl:value-of select="'position:absolute;'"/>
+	</xsl:otherwise>
+	</xsl:choose>
+</xsl:variable>	
+
+<div class="doc_order_print_order_bottom" style="{$order_bottom_style}">
 	<div class="small_text">отрывной талон водителя</div>
 	<div>Адрес доставки: <xsl:value-of select="deliv_destination_descr"/>
 	</div>

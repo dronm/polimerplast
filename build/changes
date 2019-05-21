@@ -50,3 +50,18 @@
 
 1.0109 13/05
 1) Выбо договора в заявке, перенос в Счет/Накладную
+
+
+1.0112 17/05
+1) Доступ к договору при копировании
+2) Добавление машин в доставке, сказалось исправление ButtonSelectObject->onBeforeSelect, теперь исправил DelivAssignedOrderGridCommands.prototype.addInsert
+
+
+1.0113 21/05
+1) Договор доступен при записанной, статус ожидание оплаты
+2) Печать DOCOrder.html.xsl нашлепка с адресом убрал absolute позицию при печати >6 строк
+3)product_measure_units_check при единице ид=6 пересчет по-другому чкрез функцию doc_order_calc_quant_in_mu
+doc_order_totals при единице ид=6 пересчет по-другому чкрез функцию doc_order_calc_quant_in_mu
+4) doc_order_calc_quant_in_mu автономна без doc_order_calc_quant
+
+

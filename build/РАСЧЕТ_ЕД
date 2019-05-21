@@ -1,0 +1,38 @@
+--select doc_order_calc_quant_in_mu(15,7,2000,1000,50,901.6,6)
+--select * from measure_units
+
+SELECT
+	CASE
+		WHEN coalesce((SELECT mu.is_int FROM measure_units AS mu WHERE mu.id=7),FALSE) THEN ceil(val*901.6)
+		ELSE round(val*901.6,9)
+	END,
+	val*901.6
+FROM
+(
+	SELECT
+		eval(
+			eval_params(
+				(SELECT
+					pmu.calc_formula
+				FROM product_measure_units AS pmu
+				WHERE pmu.product_id=15 AND pmu.measure_unit_id=6
+				),
+				2000,1000,50
+			)
+		)
+		/eval(
+			eval_params(
+				(SELECT
+					pmu.calc_formula
+				FROM product_measure_units AS pmu
+				WHERE pmu.product_id=15 AND pmu.measure_unit_id=7
+				),
+				2000,1000,50
+			)
+		)
+		AS val
+) AS q
+
+1 лист=0,1м3
+1м2 = 0,05м3
+0,05*901,6/0,1 = 450,8 = 451 лист

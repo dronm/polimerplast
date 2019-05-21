@@ -89,22 +89,17 @@ $BODY$
 	SELECT			
 		--БАЗОВОЕ КОЛИЧЕСТВО
 		round(
-		(SELECT t.base_quant FROM product_params t)*
-			$7
-		,6) AS base_quant,
+		(SELECT t.base_quant FROM product_params t) * $7
+		,CASE WHEN $8=6 THEN 1 ELSE 6 END) AS base_quant,
 		
 		--ОБЪЕМ
 		round(
-		(SELECT t.base_measure_unit_vol_m FROM product_params t)*
-		(SELECT t.base_quant FROM product_params t)*
-		$7
+		(SELECT t.base_measure_unit_vol_m FROM product_params t) * (SELECT t.base_quant FROM product_params t) * $7
 		,2) AS volume_m,
 
 		--МАССА
 		round(
-		(SELECT t.base_measure_unit_weight_t FROM product_params t)*
-		(SELECT t.base_quant FROM product_params t)*
-		$7
+		(SELECT t.base_measure_unit_weight_t FROM product_params t) * (SELECT t.base_quant FROM product_params t) * $7
 		,3) AS weight_t,
 		
 		--ЦЕНА БЕЗ ТР - чистая		
@@ -115,7 +110,7 @@ $BODY$
 			--цена
 			(SELECT price.val FROM price)
 			--Количество
-			* (SELECT t.base_quant FROM product_params t)*$7
+			* (SELECT t.base_quant FROM product_params t) * $7
 			--Скидка за объем
 			- (SELECT t.discount_total FROM price_list t)
 		,2)
@@ -125,7 +120,7 @@ $BODY$
 			WHEN $9 AND $10=FALSE THEN
 				(SELECT t.price_pack FROM price_list t)
 				--Количество
-				* (SELECT t.base_quant FROM product_params t)*$7				
+				* (SELECT t.base_quant FROM product_params t) * $7				
 			ELSE 0
 		END AS total_pack
 		

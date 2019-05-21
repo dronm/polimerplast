@@ -19,19 +19,56 @@ CREATE OR REPLACE FUNCTION public.doc_order_totals(
   RETURNS record AS
 $BODY$
 	WITH
+		prod_int_mu AS (SELECT
+				t_pmu.measure_unit_id AS mu_id
+			FROM product_measure_units AS t_pmu
+			LEFT JOIN measure_units AS t_mu ON t_mu.id=t_pmu.measure_unit_id
+			WHERE t_pmu.product_id=$3 AND t_mu.is_int AND t_pmu.in_use					
+			LIMIT 1
+		),
+		prod_base_mu AS (SELECT
+				products.base_measure_unit_id AS mu_id
+			FROM products
+			WHERE products.id=$3
+		),
+	
 		product_params AS (
 		SELECT
 			coalesce(p.base_measure_unit_vol_m,0) AS base_measure_unit_vol_m,
 			coalesce(p.base_measure_unit_weight_t,0) AS base_measure_unit_weight_t,
-			
-			eval(
-				eval_params(
-					pmu.calc_formula,
-					$4,
-					$5,
-					$6
+			CASE
+			--м2
+			WHEN $8=6 THEN
+				(SELECT
+					--перевод из целой в базовую
+					doc_order_calc_quant_in_mu(
+						$3,
+						(SELECT prod_base_mu.mu_id FROM prod_base_mu),
+						$4,$5,$6,
+						--количество в целых единицах
+						doc_order_calc_quant_in_mu(
+							$3,
+							--целая единица
+							(SELECT prod_int_mu.mu_id FROM prod_int_mu),
+							$4,$5,$6,
+							$7,--quant
+							6 --measure from
+						),
+						(SELECT prod_int_mu.mu_id FROM prod_int_mu)
+					)
 				)
-			) AS base_quant,
+			ELSE
+				eval(
+					eval_params(
+						pmu.calc_formula,
+						$4,
+						$5,
+						$6
+					)
+				) * $7
+			END
+			AS base_quant,
+			
 			--настандартные размеры
 			CASE
 				WHEN $12=TRUE THEN $13 --цена вручную
@@ -81,9 +118,8 @@ $BODY$
 				),
 				$11,
 				$3,
-				(SELECT t.base_quant
-				FROM product_params t)
-				)				
+				(SELECT t.base_quant FROM product_params t) / $7
+			)				
 			AS (price numeric,price_pack numeric,discount_total numeric)
 		),
 		
@@ -101,23 +137,18 @@ $BODY$
 		
 	SELECT			
 		--БАЗОВОЕ КОЛИЧЕСТВО
-		round(
-		(SELECT t.base_quant FROM product_params t)*
-			$7
-		,6) AS base_quant,
+		round( (SELECT t.base_quant FROM product_params t) ,6) AS base_quant,--*$7
 		
 		--ОБЪЕМ
 		round(
 		(SELECT t.base_measure_unit_vol_m FROM product_params t)*
-		(SELECT t.base_quant FROM product_params t)*
-		$7
+		(SELECT t.base_quant FROM product_params t)--*$7
 		,2) AS volume_m,
 
 		--МАССА
 		round(
 		(SELECT t.base_measure_unit_weight_t FROM product_params t)*
-		(SELECT t.base_quant FROM product_params t)*
-		$7
+		(SELECT t.base_quant FROM product_params t)--*$7
 		,3) AS weight_t,
 		
 		--ЦЕНА БЕЗ ТР - чистая		
@@ -134,8 +165,7 @@ $BODY$
 			ELSE (SELECT price.val FROM price)
 			END
 			--Количество
-			* (SELECT t.base_quant FROM product_params t)
-			* $7
+			* (SELECT t.base_quant FROM product_params t) --* $7
 			--Скидка за объем
 			- (SELECT coalesce(t.discount_total,0) FROM price_list t)
 		,2)
@@ -145,7 +175,7 @@ $BODY$
 			WHEN $9 AND $10=FALSE THEN
 				(SELECT t.price_pack FROM price_list t)
 				--Количество
-				* (SELECT t.base_quant FROM product_params t)*$7				
+				* (SELECT t.base_quant FROM product_params t)--*$7				
 			ELSE 0
 		END AS total_pack
 		

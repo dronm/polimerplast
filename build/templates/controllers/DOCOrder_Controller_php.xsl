@@ -712,7 +712,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 		
 		$mu_from = $params->getParamById('measure_unit_id_from');
 		$prod_id = $params->getParamById('product_id');
-		if (!strlen($mu_from)||$mu_from=='0'){
+		if (!strlen($mu_from)||$mu_from=='0'||$mu_from=='null'){
 			$ar = $this->getDbLink()->query_first(sprintf(
 			"SELECT p.base_measure_unit_id AS id
 			FROM products p WHERE p.id=%d",$prod_id)
@@ -793,7 +793,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 			$params->getParamById('mes_height'),		
 			$params->getParamById('quant')				
 		);
-
+		
 		$this->addNewModel(
 		sprintf("SELECT * FROM doc_order_totals(
 			%d,%d,%d,%d,%d,%d,%f,%d,%s,%s,%s,%s,%f)

@@ -929,6 +929,7 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 	this.changeDelivType();
 	
 	//голова
+	this.m_clientContractCtrl.setEnabled(true);
 	if (this.m_isCopy){
 		//копирование
 		var vh_n = this.m_vehicleCtrl.getNode();
@@ -937,8 +938,6 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 			vh_n.setAttribute("fkey_vehicle_id","");
 			vh_n.setAttribute("last_fkey_vehicle_id","");				
 		}
-		
-		this.m_clientContractCtrl.setEnabled(true);
 	}
 	else{
 		var m = resp.getModelById("head_history");

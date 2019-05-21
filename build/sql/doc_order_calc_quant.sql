@@ -8,9 +8,10 @@ DROP function doc_order_calc_quant(
 		quant numeric		
 );
 */
-/*
-Пересчитывает базовое количество в количество 
-в любой единице
+
+/**
+ * Пересчитывает базовое количество в количество 
+ * в любой единице
 */
 CREATE or REPLACE function doc_order_calc_quant(
 		product_id integer,

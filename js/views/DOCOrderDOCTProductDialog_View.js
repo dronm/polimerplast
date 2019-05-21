@@ -462,6 +462,8 @@ DOCOrderDOCTProductDialog_View.prototype.onGetData = function(resp,isNew){
 		this.onProductSelected(product_id);
 		
 		this.m_totPriceCtrl.setEnabled((model.getFieldValue("price_edit")=="true"));
+		
+		this.m_oldMeasureUnitId = model.getFieldValue("measure_unit_id");
 	}		
 	model.setRowBOF();
 	DOCOrderDOCTProductDialog_View.superclass.onGetData.call(this,resp,isNew);	
@@ -621,6 +623,7 @@ DOCOrderDOCTProductDialog_View.prototype.calcQuant = function(){
 			"params":{
 					"product_id":par_product_id,
 					"measure_unit_id":par_measure_unit_id,
+					//"measure_unit_id_from":self.m_oldMeasureUnitId,
 					"mes_length":par_mes_l,
 					"mes_width":par_mes_w,
 					"mes_height":par_mes_h,
@@ -636,6 +639,7 @@ DOCOrderDOCTProductDialog_View.prototype.calcQuant = function(){
 				}				
 				//measure units check
 				self.measureUnitsCheck(resp);
+				self.m_oldMeasureUnitId = par_measure_unit_id;
 			}
 		}
 		);
@@ -646,7 +650,7 @@ DOCOrderDOCTProductDialog_View.prototype.measureUnitsCheck = function(resp){
 	var m = resp.getModelById("product_measure_units_check");
 	m.setActive(true);
 	while (m.getNextRow()){
-		this.m_measureCheckText+=(this.m_measureCheckText!="")? ", ":"Дробные значения для единиц:";
+		this.m_measureCheckText+=(this.m_measureCheckText!="")? ", ":"Дробные значения для единиц: ";
 		this.m_measureCheckText+=
 			m.getFieldValue("measure_unit_descr")+" ("+
 			m.getFieldValue("quant")+")";
