@@ -286,10 +286,11 @@ function DOCOrderDialog_View(id,options){
 		"errorControl":this.getErrorControl(),
 		"warehouseCtrl":this.m_wareHCtrl,
 		"afterRefresh":function(){
-			//console.log("this.m_productDetails.afterRefresh")
 			self.refreshProdTotals();
-			if (self.m_productDetails.getModified())
+			
+			if (self.m_productDetails.getModified()){
 				self.calcVehicleCount();
+			}
 		}
 		});
 	this.m_details.addElement(this.m_productDetails);	
@@ -1321,14 +1322,17 @@ DOCOrderDialog_View.prototype.recalcProductPrices = function(){
 				}
 			},
 			"func":function(resp){
+				/* ЗАЦИКЛИВАНИЕ!!!
 				if (self.m_productDetails.onRefresh){
 					self.m_productDetails.onRefresh();
-				}
+				}*/
+				self.refreshProdTotals();
+				
 				self.m_wareHCtrl.setEnabled(true);
 				if (self.m_clientCtrl){
 					self.m_clientCtrl.setEnabled(true);				
 				}
-				//self.refreshProdTotals();
+				
 			}
 		});
 	}
@@ -1631,9 +1635,8 @@ DOCOrderDialog_View.prototype.checkForVehicleCapacity = function(){
 }
 
 DOCOrderDialog_View.prototype.onCancel = function(){
-	var n = nd("undefined_ClientDestinationDialog");
-	console.log("ClientDialog_View.prototype.onCancel found="+n)
-	if(!n){
+//|| !nd("DOCOrderDOCTProductList_gridEditView")
+	if(!nd("undefined_ClientDestinationDialog") ){
 		DOCOrderDialog_View.superclass.onCancel.call(this);
 	}
 }

@@ -30,8 +30,8 @@ DECLARE
 	v_client_id integer;
 	v_paid bool;
 	
-	v_new_doc_deliv_total numeric(15,2);
-	v_new_doc_deliv_expenses numeric(15,2);
+	--v_new_doc_deliv_total numeric(15,2);
+	--v_new_doc_deliv_expenses numeric(15,2);
 BEGIN
 	--всегда оплачено
 	--UPDATE doc_orders SET paid=TRUE WHERE id=in_doc_id;
@@ -40,8 +40,6 @@ BEGIN
 	DELETE FROM doc_orders_t_products WHERE doc_id=in_doc_id;
 
 	v_new_doc_id = 0;
-	v_new_doc_deliv_total = 0;
-	v_new_doc_deliv_expenses = 0;
 	
 	--in_deliv_vehicle_count is ALWAYS SET!!!
 	/*IF in_deliv_vehicle_count IS NULL THEN
@@ -156,12 +154,10 @@ BEGIN
 				FROM doc_orders AS h
 				WHERE h.id=in_doc_id
 				)
-				RETURNING id,user_id,deliv_total,deliv_expenses
+				RETURNING id,user_id
 				INTO
 					v_new_doc_id,
-					v_new_doc_user_id,
-					v_new_doc_deliv_total,
-					v_new_doc_deliv_expenses
+					v_new_doc_user_id
 				;
 				
 				--Отметим связку
@@ -399,18 +395,25 @@ BEGIN
 		OR in_deliv_vehicle_count IS NOT NULL
 		OR in_deliv_destination_id>0
 		OR in_destination_to_ttn IS NOT NULL
-		OR v_new_doc_deliv_total>0
-		OR v_new_doc_deliv_expenses>0
 	THEN
 		UPDATE doc_orders
 		SET
 			driver_id = CASE WHEN in_driver_id>0 THEN in_driver_id ELSE driver_id END,
 			vehicle_id = CASE WHEN in_vehicle_id>0 THEN in_vehicle_id ELSE vehicle_id END,
 			deliv_destination_id = CASE WHEN in_deliv_destination_id>0 THEN in_deliv_destination_id ELSE deliv_destination_id END,
-			destination_to_ttn = CASE WHEN in_destination_to_ttn IS NOT NULL THEN in_destination_to_ttn ELSE destination_to_ttn END,
-			deliv_vehicle_count = in_deliv_vehicle_count,
-			deliv_total = coalesce(deliv_total,0) - v_new_doc_deliv_total,
-			deliv_expenses = coalesce(deliv_expenses,0) - v_new_doc_deliv_expenses
+			destination_to_ttn = CASE WHEN in_destination_to_ttn IS NOT NULL THEN in_destination_to_ttn ELSE destination_to_ttn END,			
+			deliv_total =
+				CASE
+					WHEN coalesce(deliv_vehicle_count,0)=0 THEN deliv_total
+					ELSE deliv_total/deliv_vehicle_count*in_deliv_vehicle_count
+				END,
+			deliv_expenses = 
+				CASE
+					WHEN coalesce(deliv_vehicle_count,0)=0 THEN deliv_expenses
+					ELSE deliv_expenses/deliv_vehicle_count*in_deliv_vehicle_count
+				END,
+			deliv_vehicle_count = in_deliv_vehicle_count
+			
 		WHERE
 			id=in_doc_id;
 	END IF;
