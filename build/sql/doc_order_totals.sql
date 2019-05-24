@@ -36,7 +36,7 @@ $BODY$
 		SELECT
 			coalesce(p.base_measure_unit_vol_m,0) AS base_measure_unit_vol_m,
 			coalesce(p.base_measure_unit_weight_t,0) AS base_measure_unit_weight_t,
-			CASE
+			/*CASE
 			--м2
 			WHEN $8=6 THEN
 				(SELECT
@@ -66,7 +66,16 @@ $BODY$
 						$6
 					)
 				) * $7
-			END
+			END*/
+				eval(
+					eval_params(
+						pmu.calc_formula,
+						$4,
+						$5,
+						$6
+					)
+				) * $7
+			
 			AS base_quant,
 			
 			--настандартные размеры

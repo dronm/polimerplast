@@ -24,7 +24,7 @@ CREATE or REPLACE function doc_order_calc_quant_in_mu(
 )
 	RETURNS numeric
 AS $body$
-	
+	/*
 	SELECT
 		CASE
 			WHEN coalesce((SELECT mu.is_int FROM measure_units AS mu WHERE mu.id=in_measure_unit_id),FALSE) THEN ceil(val * in_quant)
@@ -32,18 +32,10 @@ AS $body$
 		END
 	FROM
 	(
+		WITH
+		measure_unit_in_base AS (
 		SELECT
 			eval(
-				eval_params(
-					(SELECT
-						pmu.calc_formula
-					FROM product_measure_units AS pmu
-					WHERE pmu.product_id=in_product_id AND pmu.measure_unit_id=in_measure_unit_id_from
-					),
-					in_mes_l,in_mes_w,in_mes_h
-				)
-			)
-			/eval(
 				eval_params(
 					(SELECT
 						pmu.calc_formula
@@ -52,11 +44,27 @@ AS $body$
 					),
 					in_mes_l,in_mes_w,in_mes_h
 				)
-			)
+			) AS val		
+		)
+		SELECT
+			CASE WHEN (SELECT val FROM measure_unit_in_base)=0 THEN 0
+			ELSE
+				eval(
+					eval_params(
+						(SELECT
+							pmu.calc_formula
+						FROM product_measure_units AS pmu
+						WHERE pmu.product_id=in_product_id AND pmu.measure_unit_id=in_measure_unit_id_from
+						),
+						in_mes_l,in_mes_w,in_mes_h
+					)
+				)
+				/ (SELECT val FROM measure_unit_in_base)
+			END
 			AS val
 	) AS q
+	*/
 	
-	/*
 	SELECT doc_order_calc_quant(
 		in_product_id,--prod id		
 		in_measure_unit_id, --mu to
@@ -87,7 +95,7 @@ AS $body$
 		END
 		*in_quant
 	)
-	*/
+	
 	;
 $body$
 language sql;

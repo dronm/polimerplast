@@ -112,10 +112,13 @@ ClientDestinationEdit2.prototype.openForm = function(keys){
 			//console.log("onClose lastInsertedId="+self.m_extView.m_lastInsertedId)
 			if (self.m_extView.m_lastInsertedId){
 				self.setAttr("fkey_deliv_destination_id",self.m_extView.m_lastInsertedId);
-				DOMHandler.removeClass(self.m_node,"error");
+				DOMHandler.removeClass(self.m_node,"error");				
+			}
+			if (self.m_extView.m_lastInsertedId || res ){
+				//Всегда пересчет!!!
 				self.m_mainView.calcDelivCost();
 			}
-			
+						
 			self.m_extView.removeDOM();
 			delete self.m_extView;
 

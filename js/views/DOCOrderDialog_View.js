@@ -930,6 +930,8 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 	
 	//голова
 	this.m_clientContractCtrl.setEnabled(true);
+	this.m_gruzpolCtrl.setEnabled(true);
+	
 	if (this.m_isCopy){
 		//копирование
 		var vh_n = this.m_vehicleCtrl.getNode();
@@ -994,15 +996,19 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 				this.getViewControl(this.getId()+"_deliv_responsable_tel").setEnabled(true);
 				this.getViewControl(this.getId()+"_tel").setEnabled(true);
 				
-				if (this.m_delivTypeCtrl.getValue()=="by_supplier"
-				&&(this.m_curState=="producing"
+				//not completely closed
+				if (this.m_curState=="producing"
 					||this.m_curState=="produced"
 					||this.m_curState=="loading"
 					||this.m_curState=="waiting_for_us"
 					||this.m_curState=="waiting_for_client"
-				)
 				){
-					this.m_vehicleCtrl.setEnabled(true);
+					if (this.m_delivTypeCtrl.getValue()=="by_supplier"){
+						this.m_vehicleCtrl.setEnabled(true);
+					}
+					
+					this.m_clientContractCtrl.setEnabled(true);
+					this.m_gruzpolCtrl.setEnabled(true);
 				}
 				/*
 				if (this.m_delivTypeCtrl.getValue()=="by_supplier"){

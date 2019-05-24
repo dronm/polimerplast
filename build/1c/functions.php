@@ -1833,7 +1833,7 @@
 			$doc->Договор = get_client_dog($v8,$client_ref,$firm_ref,$attrs,NULL);
 		}
 		
-		$doc->Основание					= $doc->Договор->Наименование;
+		$doc->Основание					= $doc->Договор->НаименованиеДляПечати;
 		$doc->ОснованиеДата	 			= $doc->Договор->Дата;
 		$doc->ОснованиеНомер			= $doc->Договор->Номер;
 		$doc->Соглашение				= get_client_sogl($v8,$client_ref,$firm_ref,$attrs);

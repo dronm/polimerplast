@@ -855,7 +855,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 									d.%s::text,
 									%s::text
 								FROM doc_orders AS d
-								WHERE d.id=%d AND d.%s<>%s)",
+								WHERE d.id=%d AND coalesce(d.%s::text,'')<>%s::text)",
 								$res['id'], $f_id, $f_id,$f_val,
 								$doc_id, $f_id, $f_val);							
 							}							
@@ -867,7 +867,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 									d.%s::text,
 									%s::text
 								FROM doc_orders AS d
-								WHERE d.id=%d AND d.%s<>%s)",
+								WHERE d.id=%d AND coalesce(d.%s::text,'')<>%s::text)",
 								$res['id'], $f_id, $f_id,$f_val,
 								$doc_id, $f_id, $f_val);							
 							}
@@ -977,8 +977,8 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 					
 						$create_alter_order = TRUE;
 					}					
-					/*Мы изменили заявку  и не надо отдавать клиенту
-					*/
+					/* Мы изменили заявку  и не надо отдавать клиенту
+					 */
 					else if ($modif&&!isset($new_state)){
 						$create_alter_order = TRUE;
 					}

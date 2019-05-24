@@ -32,7 +32,6 @@ DECLARE
 	
 	v_new_doc_deliv_total numeric(15,2);
 	v_new_doc_deliv_expenses numeric(15,2);
-	v_deliv_vehicle_count int;
 BEGIN
 	--всегда оплачено
 	--UPDATE doc_orders SET paid=TRUE WHERE id=in_doc_id;
@@ -44,14 +43,15 @@ BEGIN
 	v_new_doc_deliv_total = 0;
 	v_new_doc_deliv_expenses = 0;
 	
-	IF in_deliv_vehicle_count IS NULL THEN
+	--in_deliv_vehicle_count is ALWAYS SET!!!
+	/*IF in_deliv_vehicle_count IS NULL THEN
 		SELECT deliv_vehicle_count
 		INTO v_deliv_vehicle_count
 		FROM doc_orders
 		WHERE id=in_doc_id;
 	ELSE
 		v_deliv_vehicle_count = in_deliv_vehicle_count;
-	END IF;
+	END IF;*/
 	
 	FOR r IN
 	SELECT t.*,
@@ -132,23 +132,23 @@ BEGIN
 					h.deliv_responsable_tel,
 					h.deliv_total_edit,
 					CASE
-						WHEN h.deliv_type='by_supplier' AND h.deliv_vehicle_count=v_deliv_vehicle_count
-							THEN h.deliv_total
+						WHEN h.deliv_type='by_supplier' AND h.deliv_vehicle_count=in_deliv_vehicle_count
+							THEN 0
 						WHEN h.deliv_type='by_supplier' AND COALESCE(h.deliv_vehicle_count,0)>0
-							THEN h.deliv_total - ROUND(h.deliv_total/h.deliv_vehicle_count*v_deliv_vehicle_count,2)
+							THEN h.deliv_total - ROUND(h.deliv_total/h.deliv_vehicle_count*in_deliv_vehicle_count,2)
 						ELSE 0
 					END,
 					h.deliv_expenses_edit,
 					CASE
-						WHEN h.deliv_type='by_supplier' AND h.deliv_vehicle_count=v_deliv_vehicle_count
-							THEN h.deliv_expenses
+						WHEN h.deliv_type='by_supplier' AND h.deliv_vehicle_count=in_deliv_vehicle_count
+							THEN 0
 						WHEN h.deliv_type='by_supplier' AND COALESCE(h.deliv_vehicle_count,0)>0
-							THEN h.deliv_expenses - ROUND(h.deliv_expenses/h.deliv_vehicle_count*v_deliv_vehicle_count,2)
+							THEN h.deliv_expenses - ROUND(h.deliv_expenses/h.deliv_vehicle_count*in_deliv_vehicle_count,2)
 						ELSE 0
 					END,					
 					CASE
-						WHEN h.deliv_type='by_supplier' AND  COALESCE(h.deliv_vehicle_count,0)>v_deliv_vehicle_count
-							THEN h.deliv_vehicle_count-v_deliv_vehicle_count
+						WHEN h.deliv_type='by_supplier' AND  COALESCE(h.deliv_vehicle_count,0)>in_deliv_vehicle_count
+							THEN h.deliv_vehicle_count-in_deliv_vehicle_count
 						ELSE 0
 					END,
 					h.submit_user_id
@@ -391,6 +391,7 @@ BEGIN
 	END IF;
 	
 	--Обновить доставки водителя если есть
+	--RAISE EXCEPTION 'v_new_doc_deliv_total=%, in_deliv_vehicle_count=%',v_new_doc_deliv_total,in_deliv_vehicle_count;
 	--RAISE EXCEPTION 'in_deliv_destination_id=%, in_vehicle_id=%, in_destination_to_ttn=%',in_deliv_destination_id,in_vehicle_id,in_destination_to_ttn;
 	IF
 		in_driver_id>0
@@ -407,7 +408,7 @@ BEGIN
 			vehicle_id = CASE WHEN in_vehicle_id>0 THEN in_vehicle_id ELSE vehicle_id END,
 			deliv_destination_id = CASE WHEN in_deliv_destination_id>0 THEN in_deliv_destination_id ELSE deliv_destination_id END,
 			destination_to_ttn = CASE WHEN in_destination_to_ttn IS NOT NULL THEN in_destination_to_ttn ELSE destination_to_ttn END,
-			deliv_vehicle_count = CASE WHEN in_deliv_vehicle_count IS NOT NULL THEN in_deliv_vehicle_count ELSE deliv_vehicle_count END,
+			deliv_vehicle_count = in_deliv_vehicle_count,
 			deliv_total = coalesce(deliv_total,0) - v_new_doc_deliv_total,
 			deliv_expenses = coalesce(deliv_expenses,0) - v_new_doc_deliv_expenses
 		WHERE

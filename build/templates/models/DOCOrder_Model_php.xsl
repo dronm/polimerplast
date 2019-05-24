@@ -318,7 +318,7 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 									d.%s::text,
 									%s::text
 								FROM doc_orders AS d
-								WHERE d.id=%d AND d.%s&lt;&gt;%s)",
+								WHERE d.id=%d AND coalesce(d.%s::text,'')&lt;&gt;%s::text)",
 								$res['id'], $f_id, $f_id,$f_val,
 								$doc_id, $f_id, $f_val);							
 							}							
@@ -330,7 +330,7 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 									d.%s::text,
 									%s::text
 								FROM doc_orders AS d
-								WHERE d.id=%d AND d.%s&lt;&gt;%s)",
+								WHERE d.id=%d AND coalesce(d.%s::text,'')&lt;&gt;%s::text)",
 								$res['id'], $f_id, $f_id,$f_val,
 								$doc_id, $f_id, $f_val);							
 							}
@@ -440,8 +440,8 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 					
 						$create_alter_order = TRUE;
 					}					
-					/*Мы изменили заявку  и не надо отдавать клиенту
-					*/
+					/* Мы изменили заявку  и не надо отдавать клиенту
+					 */
 					else if ($modif&amp;&amp;!isset($new_state)){
 						$create_alter_order = TRUE;
 					}
