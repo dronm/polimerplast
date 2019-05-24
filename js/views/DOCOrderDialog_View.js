@@ -1630,3 +1630,11 @@ DOCOrderDialog_View.prototype.checkForVehicleCapacity = function(){
 	}
 }
 
+DOCOrderDialog_View.prototype.onCancel = function(){
+	var n = nd("undefined_ClientDestinationDialog");
+	console.log("ClientDialog_View.prototype.onCancel found="+n)
+	if(!n){
+		DOCOrderDialog_View.superclass.onCancel.call(this);
+	}
+}
+

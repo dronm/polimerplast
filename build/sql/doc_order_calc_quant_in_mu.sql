@@ -12,6 +12,7 @@ DROP function doc_order_calc_quant_in_mu(
 /**
  * Пересчитывает количество в любой единице
  * в количество в другой единице
+ * От этой функции завасит doc_orders_print_products!!!
  */
 CREATE or REPLACE function doc_order_calc_quant_in_mu(
 		in_product_id integer,
@@ -24,46 +25,6 @@ CREATE or REPLACE function doc_order_calc_quant_in_mu(
 )
 	RETURNS numeric
 AS $body$
-	/*
-	SELECT
-		CASE
-			WHEN coalesce((SELECT mu.is_int FROM measure_units AS mu WHERE mu.id=in_measure_unit_id),FALSE) THEN ceil(val * in_quant)
-			ELSE round(val * in_quant,9)
-		END
-	FROM
-	(
-		WITH
-		measure_unit_in_base AS (
-		SELECT
-			eval(
-				eval_params(
-					(SELECT
-						pmu.calc_formula
-					FROM product_measure_units AS pmu
-					WHERE pmu.product_id=in_product_id AND pmu.measure_unit_id=in_measure_unit_id
-					),
-					in_mes_l,in_mes_w,in_mes_h
-				)
-			) AS val		
-		)
-		SELECT
-			CASE WHEN (SELECT val FROM measure_unit_in_base)=0 THEN 0
-			ELSE
-				eval(
-					eval_params(
-						(SELECT
-							pmu.calc_formula
-						FROM product_measure_units AS pmu
-						WHERE pmu.product_id=in_product_id AND pmu.measure_unit_id=in_measure_unit_id_from
-						),
-						in_mes_l,in_mes_w,in_mes_h
-					)
-				)
-				/ (SELECT val FROM measure_unit_in_base)
-			END
-			AS val
-	) AS q
-	*/
 	
 	SELECT doc_order_calc_quant(
 		in_product_id,--prod id		

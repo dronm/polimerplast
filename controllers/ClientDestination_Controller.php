@@ -53,48 +53,6 @@ class ClientDestination_Controller extends ControllerSQL{
 		$param = new FieldExtFloat('near_road_lat'
 				,array());
 		$pm->addParam($param);
-		$param = new FieldExtText('region'
-				,array());
-		$pm->addParam($param);
-		$param = new FieldExtText('region_code'
-				,array());
-		$pm->addParam($param);
-		$param = new FieldExtText('raion'
-				,array());
-		$pm->addParam($param);
-		$param = new FieldExtText('raion_code'
-				,array());
-		$pm->addParam($param);
-		$param = new FieldExtText('gorod'
-				,array());
-		$pm->addParam($param);
-		$param = new FieldExtText('gorod_code'
-				,array());
-		$pm->addParam($param);
-		$param = new FieldExtText('naspunkt'
-				,array());
-		$pm->addParam($param);
-		$param = new FieldExtText('naspunkt_code'
-				,array());
-		$pm->addParam($param);
-		$param = new FieldExtText('ulitza'
-				,array());
-		$pm->addParam($param);
-		$param = new FieldExtText('ulitza_code'
-				,array());
-		$pm->addParam($param);
-		$param = new FieldExtText('dom'
-				,array());
-		$pm->addParam($param);
-		$param = new FieldExtText('korpus'
-				,array());
-		$pm->addParam($param);
-		$param = new FieldExtText('kvartira'
-				,array());
-		$pm->addParam($param);
-		$param = new FieldExtText('addr_index'
-				,array());
-		$pm->addParam($param);
 		$param = new FieldExtText('value'
 				,array());
 		$pm->addParam($param);
@@ -138,62 +96,6 @@ class ClientDestination_Controller extends ControllerSQL{
 			));
 			$pm->addParam($param);
 		$param = new FieldExtFloat('near_road_lat'
-				,array(
-			));
-			$pm->addParam($param);
-		$param = new FieldExtText('region'
-				,array(
-			));
-			$pm->addParam($param);
-		$param = new FieldExtText('region_code'
-				,array(
-			));
-			$pm->addParam($param);
-		$param = new FieldExtText('raion'
-				,array(
-			));
-			$pm->addParam($param);
-		$param = new FieldExtText('raion_code'
-				,array(
-			));
-			$pm->addParam($param);
-		$param = new FieldExtText('gorod'
-				,array(
-			));
-			$pm->addParam($param);
-		$param = new FieldExtText('gorod_code'
-				,array(
-			));
-			$pm->addParam($param);
-		$param = new FieldExtText('naspunkt'
-				,array(
-			));
-			$pm->addParam($param);
-		$param = new FieldExtText('naspunkt_code'
-				,array(
-			));
-			$pm->addParam($param);
-		$param = new FieldExtText('ulitza'
-				,array(
-			));
-			$pm->addParam($param);
-		$param = new FieldExtText('ulitza_code'
-				,array(
-			));
-			$pm->addParam($param);
-		$param = new FieldExtText('dom'
-				,array(
-			));
-			$pm->addParam($param);
-		$param = new FieldExtText('korpus'
-				,array(
-			));
-			$pm->addParam($param);
-		$param = new FieldExtText('kvartira'
-				,array(
-			));
-			$pm->addParam($param);
-		$param = new FieldExtText('addr_index'
 				,array(
 			));
 			$pm->addParam($param);
@@ -339,8 +241,7 @@ class ClientDestination_Controller extends ControllerSQL{
 	
 				
 	$opts=array();
-	
-		$opts['required']=TRUE;				
+					
 		$pm->addParam(new FieldExtInt('region',$opts));
 	
 			

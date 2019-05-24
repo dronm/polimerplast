@@ -93,6 +93,50 @@ function ClientAttrs(attrs,formContext){
 		"minLengthForQuery":2,	
 		"noSelect":true,
 		"extraFields":["korshet","name"],
+		"buttonSelect":new ButtonCtrl("Client_bank_code_btn_sel",
+			{
+			"glyph":"glyphicon-search",
+			"title":"Найти по БИК",
+			"onClick":function(){
+					var node = nd("Client_bank_code");
+					if (!node.value || !node.value.length){
+						throw new Error("Не задан параметр поиска!");
+					}
+					
+					var contr = new Bank_Controller(new ServConnector(HOST_NAME));
+					var self = this;
+					contr.run("get_object",{
+						"params":{
+							"bik":node.value
+						},
+						"func":function(resp){
+							var m = resp.getModelById("BankList_Model",true);
+							if(m.getNextRow()){
+								nd("Client_bank_name").value = m.getFieldValue("name");
+								nd("Client_bank_acc").value = m.getFieldValue("korshet");
+								node.setAttribute("fkey_bank_code",node.value);
+								DOMHandler.removeClass(node,"error");
+								attrs["bank_code"].setValid();
+								attrs["bank_code"].setComment("");
+							}
+							else{
+								nd("Client_bank_name").value = "";
+								nd("Client_bank_acc").value = "";
+								node.setAttribute("fkey_bank_code","");
+								if(!DOMHandler.hasClass(node,"error")){
+									DOMHandler.addClass(node,"error");
+								}
+								if(!DOMHandler.hasClass(node,"incorrect_val")){
+									DOMHandler.addClass(node,"incorrect_val");
+								}
+								
+								attrs["bank_code"].setComment("Банк не найден!");
+							}
+						}
+					});
+				}
+			}
+		),		
 		"onSelected":function(node){				
 				nd("Client_bank_acc").value = DOMHandler.getAttr(node,"korshet");
 				nd("Client_bank_name").value = DOMHandler.getAttr(node,"name");

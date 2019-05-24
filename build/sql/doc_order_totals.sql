@@ -36,17 +36,17 @@ $BODY$
 		SELECT
 			coalesce(p.base_measure_unit_vol_m,0) AS base_measure_unit_vol_m,
 			coalesce(p.base_measure_unit_weight_t,0) AS base_measure_unit_weight_t,
-			/*CASE
+			CASE
 			--м2
 			WHEN $8=6 THEN
 				(SELECT
 					--перевод из целой в базовую
-					doc_order_calc_quant_in_mu(
+					doc_order_calc_quant_in_mu_for_totals(
 						$3,
 						(SELECT prod_base_mu.mu_id FROM prod_base_mu),
 						$4,$5,$6,
 						--количество в целых единицах
-						doc_order_calc_quant_in_mu(
+						doc_order_calc_quant_in_mu_for_totals(
 							$3,
 							--целая единица
 							(SELECT prod_int_mu.mu_id FROM prod_int_mu),
@@ -66,15 +66,15 @@ $BODY$
 						$6
 					)
 				) * $7
-			END*/
-				eval(
+			END
+				/*eval(
 					eval_params(
 						pmu.calc_formula,
 						$4,
 						$5,
 						$6
 					)
-				) * $7
+				) * $7*/
 			
 			AS base_quant,
 			
