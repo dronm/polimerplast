@@ -1188,7 +1188,8 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 			"err":function(resp,errCode,errStr){
 				self.getErrorControl().setValue(errStr);
 				
-				self.recalcPricesRefreshTotals();
+				//self.recalcPricesRefreshTotals();
+				self.refreshProdTotals();
 				
 				if (former_state){
 					self.m_wareHCtrl.setEnabled(true);
@@ -1253,11 +1254,13 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 						}
 						
 						if (do_calc_cost1){
-							self.recalcPricesRefreshTotals();
+							//self.recalcPricesRefreshTotals();
+							self.refreshProdTotals();
 						}
 					}	
 					else{
-						self.recalcPricesRefreshTotals();
+						//self.recalcPricesRefreshTotals();
+						self.refreshProdTotals();
 					}
 					
 					if (former_state){
@@ -1271,7 +1274,8 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 		});
 	}
 	else{
-		this.recalcPricesRefreshTotals();
+		//this.recalcPricesRefreshTotals();
+		this.refreshProdTotals();
 	}
 }
 
@@ -1322,11 +1326,9 @@ DOCOrderDialog_View.prototype.recalcProductPrices = function(){
 				}
 			},
 			"func":function(resp){
-				/* ЗАЦИКЛИВАНИЕ!!!
 				if (self.m_productDetails.onRefresh){
 					self.m_productDetails.onRefresh();
-				}*/
-				self.refreshProdTotals();
+				}				
 				
 				self.m_wareHCtrl.setEnabled(true);
 				if (self.m_clientCtrl){
