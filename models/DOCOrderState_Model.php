@@ -26,7 +26,7 @@ class DOCOrderState_Model extends ModelSQL{
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['autoInc']=TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -34,7 +34,7 @@ class DOCOrderState_Model extends ModelSQL{
 		//*** Field doc_orders_id ***
 		$f_opts = array();
 		$f_opts['id']="doc_orders_id";
-				
+						
 		$f_doc_orders_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"doc_orders_id",$f_opts);
 		$this->addField($f_doc_orders_id);
 		//********************
@@ -42,7 +42,7 @@ class DOCOrderState_Model extends ModelSQL{
 		//*** Field date_time ***
 		$f_opts = array();
 		$f_opts['id']="date_time";
-				
+						
 		$f_date_time=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_time",$f_opts);
 		$this->addField($f_date_time);
 		//********************
@@ -50,7 +50,7 @@ class DOCOrderState_Model extends ModelSQL{
 		//*** Field state ***
 		$f_opts = array();
 		$f_opts['id']="state";
-				
+						
 		$f_state=new FieldSQLEnum($this->getDbLink(),$this->getDbName(),$this->getTableName(),"state",$f_opts);
 		$this->addField($f_state);
 		//********************
@@ -58,7 +58,7 @@ class DOCOrderState_Model extends ModelSQL{
 		//*** Field user_id ***
 		$f_opts = array();
 		$f_opts['id']="user_id";
-				
+						
 		$f_user_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"user_id",$f_opts);
 		$this->addField($f_user_id);
 		//********************
@@ -67,7 +67,7 @@ class DOCOrderState_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=15;
 		$f_opts['id']="tracker_id";
-				
+						
 		$f_tracker_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"tracker_id",$f_opts);
 		$this->addField($f_tracker_id);
 		//********************
@@ -75,7 +75,7 @@ class DOCOrderState_Model extends ModelSQL{
 		//*** Field client_zone ***
 		$f_opts = array();
 		$f_opts['id']="client_zone";
-				
+						
 		$f_client_zone=new FieldSQLGeometry($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_zone",$f_opts);
 		$this->addField($f_client_zone);
 		//********************
@@ -83,7 +83,7 @@ class DOCOrderState_Model extends ModelSQL{
 		//*** Field production_zone ***
 		$f_opts = array();
 		$f_opts['id']="production_zone";
-				
+						
 		$f_production_zone=new FieldSQLGeometry($this->getDbLink(),$this->getDbName(),$this->getTableName(),"production_zone",$f_opts);
 		$this->addField($f_production_zone);
 		//********************

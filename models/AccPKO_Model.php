@@ -27,7 +27,7 @@ class AccPKO_Model extends ModelSQL{
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['autoInc']=TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -35,7 +35,7 @@ class AccPKO_Model extends ModelSQL{
 		//*** Field date_time ***
 		$f_opts = array();
 		$f_opts['id']="date_time";
-				
+						
 		$f_date_time=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_time",$f_opts);
 		$this->addField($f_date_time);
 		//********************
@@ -43,7 +43,7 @@ class AccPKO_Model extends ModelSQL{
 		//*** Field acc_pko_type ***
 		$f_opts = array();
 		$f_opts['id']="acc_pko_type";
-				
+						
 		$f_acc_pko_type=new FieldSQLEnum($this->getDbLink(),$this->getDbName(),$this->getTableName(),"acc_pko_type",$f_opts);
 		$this->addField($f_acc_pko_type);
 		//********************
@@ -52,7 +52,7 @@ class AccPKO_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=15;
 		$f_opts['id']="total";
-				
+						
 		$f_total=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total",$f_opts);
 		$this->addField($f_total);
 		//********************
@@ -60,7 +60,7 @@ class AccPKO_Model extends ModelSQL{
 		//*** Field order_list ***
 		$f_opts = array();
 		$f_opts['id']="order_list";
-				
+						
 		$f_order_list=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"order_list",$f_opts);
 		$this->addField($f_order_list);
 		//********************
@@ -68,7 +68,7 @@ class AccPKO_Model extends ModelSQL{
 		//*** Field order_ids ***
 		$f_opts = array();
 		$f_opts['id']="order_ids";
-				
+						
 		$f_order_ids=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"order_ids",$f_opts);
 		$this->addField($f_order_ids);
 		//********************

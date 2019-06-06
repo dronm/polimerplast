@@ -23,7 +23,7 @@ class DOCOrderProdPassport_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="doc_order_id";
-				
+						
 		$f_doc_order_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"doc_order_id",$f_opts);
 		$this->addField($f_doc_order_id);
 		//********************
@@ -32,7 +32,7 @@ class DOCOrderProdPassport_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="product_id";
-				
+						
 		$f_product_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_id",$f_opts);
 		$this->addField($f_product_id);
 		//********************
@@ -40,7 +40,7 @@ class DOCOrderProdPassport_Model extends ModelSQL{
 		//*** Field content ***
 		$f_opts = array();
 		$f_opts['id']="content";
-				
+						
 		$f_content=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"content",$f_opts);
 		$this->addField($f_content);
 		//********************

@@ -23,7 +23,7 @@ class DeliveryDeletedVehicle_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="vehicle_id";
-				
+						
 		$f_vehicle_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"vehicle_id",$f_opts);
 		$this->addField($f_vehicle_id);
 		//********************
@@ -32,7 +32,7 @@ class DeliveryDeletedVehicle_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="date";
-				
+						
 		$f_date=new FieldSQLDate($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date",$f_opts);
 		$this->addField($f_date);
 		//********************

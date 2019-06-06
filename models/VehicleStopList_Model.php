@@ -24,7 +24,7 @@ class VehicleStopList_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['sysCol']=TRUE;
 		$f_opts['id']="vh_id";
-				
+						
 		$f_vh_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"vh_id",$f_opts);
 		$this->addField($f_vh_id);
 		//********************
@@ -33,7 +33,7 @@ class VehicleStopList_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['sysCol']=TRUE;
 		$f_opts['id']="vh_id_list";
-				
+						
 		$f_vh_id_list=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"vh_id_list",$f_opts);
 		$this->addField($f_vh_id_list);
 		//********************
@@ -43,7 +43,7 @@ class VehicleStopList_Model extends ModelSQL{
 		
 		$f_opts['alias']='ТС';
 		$f_opts['id']="vh_descr";
-				
+						
 		$f_vh_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"vh_descr",$f_opts);
 		$this->addField($f_vh_descr);
 		//********************
@@ -53,7 +53,7 @@ class VehicleStopList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Дата';
 		$f_opts['id']="date_time_descr";
-				
+						
 		$f_date_time_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_time_descr",$f_opts);
 		$this->addField($f_date_time_descr);
 		//********************
@@ -62,7 +62,7 @@ class VehicleStopList_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['sysCol']=TRUE;
 		$f_opts['id']="date_time";
-				
+						
 		$f_date_time=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_time",$f_opts);
 		$this->addField($f_date_time);
 		//********************
@@ -72,7 +72,7 @@ class VehicleStopList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Продолжит.стоянки';
 		$f_opts['id']="duration";
-				
+						
 		$f_duration=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"duration",$f_opts);
 		$this->addField($f_duration);
 		//********************
@@ -82,7 +82,7 @@ class VehicleStopList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Адрес';
 		$f_opts['id']="address";
-				
+						
 		$f_address=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"address",$f_opts);
 		$this->addField($f_address);
 		//********************

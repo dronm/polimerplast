@@ -23,7 +23,7 @@ class DOCOrderHeadHistory_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="doc_orders_states_id";
-				
+						
 		$f_doc_orders_states_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"doc_orders_states_id",$f_opts);
 		$this->addField($f_doc_orders_states_id);
 		//********************
@@ -32,7 +32,7 @@ class DOCOrderHeadHistory_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="field";
-				
+						
 		$f_field=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"field",$f_opts);
 		$this->addField($f_field);
 		//********************
@@ -40,7 +40,7 @@ class DOCOrderHeadHistory_Model extends ModelSQL{
 		//*** Field old_val ***
 		$f_opts = array();
 		$f_opts['id']="old_val";
-				
+						
 		$f_old_val=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"old_val",$f_opts);
 		$this->addField($f_old_val);
 		//********************

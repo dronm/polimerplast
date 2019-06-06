@@ -22,7 +22,7 @@ class ProductDialog_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************

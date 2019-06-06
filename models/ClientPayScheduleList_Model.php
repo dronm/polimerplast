@@ -25,7 +25,7 @@ class ClientPayScheduleList_Model extends ModelSQL{
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['sysCol']=TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -34,7 +34,7 @@ class ClientPayScheduleList_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['sysCol']=TRUE;
 		$f_opts['id']="date";
-				
+						
 		$f_date=new FieldSQLDate($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date",$f_opts);
 		$this->addField($f_date);
 		//********************
@@ -44,7 +44,7 @@ class ClientPayScheduleList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Дата';
 		$f_opts['id']="date_descr";
-				
+						
 		$f_date_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_descr",$f_opts);
 		$this->addField($f_date_descr);
 		//********************
@@ -53,7 +53,7 @@ class ClientPayScheduleList_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['sysCol']=TRUE;
 		$f_opts['id']="firm_id";
-				
+						
 		$f_firm_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"firm_id",$f_opts);
 		$this->addField($f_firm_id);
 		//********************
@@ -63,7 +63,7 @@ class ClientPayScheduleList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Организация';
 		$f_opts['id']="firm_descr";
-				
+						
 		$f_firm_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"firm_descr",$f_opts);
 		$this->addField($f_firm_descr);
 		//********************
@@ -72,7 +72,7 @@ class ClientPayScheduleList_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['sysCol']=TRUE;
 		$f_opts['id']="client_id";
-				
+						
 		$f_client_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_id",$f_opts);
 		$this->addField($f_client_id);
 		//********************
@@ -82,7 +82,7 @@ class ClientPayScheduleList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Клиент';
 		$f_opts['id']="client_descr";
-				
+						
 		$f_client_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_descr",$f_opts);
 		$this->addField($f_client_descr);
 		//********************

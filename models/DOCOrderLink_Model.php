@@ -22,7 +22,7 @@ class DOCOrderLink_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="main_doc_id";
-				
+						
 		$f_main_doc_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"main_doc_id",$f_opts);
 		$this->addField($f_main_doc_id);
 		//********************
@@ -31,7 +31,7 @@ class DOCOrderLink_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="child_doc_id";
-				
+						
 		$f_child_doc_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"child_doc_id",$f_opts);
 		$this->addField($f_child_doc_id);
 		//********************

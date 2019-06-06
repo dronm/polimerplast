@@ -29,7 +29,7 @@ class AccPKOList_Model extends ModelSQL{
 		$f_opts['autoInc']=TRUE;
 		$f_opts['sysCol']=TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -38,7 +38,7 @@ class AccPKOList_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['sysCol']=TRUE;
 		$f_opts['id']="date_time";
-				
+						
 		$f_date_time=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_time",$f_opts);
 		$this->addField($f_date_time);
 		//********************
@@ -48,7 +48,7 @@ class AccPKOList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Дата';
 		$f_opts['id']="date_time_descr";
-				
+						
 		$f_date_time_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_time_descr",$f_opts);
 		$this->addField($f_date_time_descr);
 		//********************
@@ -57,7 +57,7 @@ class AccPKOList_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['sysCol']=TRUE;
 		$f_opts['id']="acc_pko_type";
-				
+						
 		$f_acc_pko_type=new FieldSQLEnum($this->getDbLink(),$this->getDbName(),$this->getTableName(),"acc_pko_type",$f_opts);
 		$this->addField($f_acc_pko_type);
 		//********************
@@ -67,7 +67,7 @@ class AccPKOList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Тип ПКО';
 		$f_opts['id']="acc_pko_type_descr";
-				
+						
 		$f_acc_pko_type_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"acc_pko_type_descr",$f_opts);
 		$this->addField($f_acc_pko_type_descr);
 		//********************
@@ -78,7 +78,7 @@ class AccPKOList_Model extends ModelSQL{
 		$f_opts['alias']='Сумма';
 		$f_opts['length']=15;
 		$f_opts['id']="total";
-				
+						
 		$f_total=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total",$f_opts);
 		$this->addField($f_total);
 		//********************
@@ -88,7 +88,7 @@ class AccPKOList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Заявки';
 		$f_opts['id']="order_list";
-				
+						
 		$f_order_list=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"order_list",$f_opts);
 		$this->addField($f_order_list);
 		//********************

@@ -24,7 +24,7 @@ class ProductGroupList_Model extends ModelSQL{
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['sysCol']=TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -35,7 +35,7 @@ class ProductGroupList_Model extends ModelSQL{
 		$f_opts['alias']='Наименование';
 		$f_opts['length']=100;
 		$f_opts['id']="name";
-				
+						
 		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
 		//********************
@@ -46,7 +46,7 @@ class ProductGroupList_Model extends ModelSQL{
 		$f_opts['alias']='Соответствие 1с';
 		$f_opts['length']=36;
 		$f_opts['id']="match_1c";
-				
+						
 		$f_match_1c=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"match_1c",$f_opts);
 		$this->addField($f_match_1c);
 		//********************

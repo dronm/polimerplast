@@ -26,7 +26,7 @@ class DOCOrderDOCTProduct_Model extends ModelSQLDOCT20{
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['length']=32;
 		$f_opts['id']="view_id";
-				
+						
 		$f_view_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"view_id",$f_opts);
 		$this->addField($f_view_id);
 		//********************
@@ -35,7 +35,7 @@ class DOCOrderDOCTProduct_Model extends ModelSQLDOCT20{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="line_number";
-				
+						
 		$f_line_number=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"line_number",$f_opts);
 		$this->addField($f_line_number);
 		//********************
@@ -43,7 +43,7 @@ class DOCOrderDOCTProduct_Model extends ModelSQLDOCT20{
 		//*** Field login_id ***
 		$f_opts = array();
 		$f_opts['id']="login_id";
-				
+						
 		$f_login_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"login_id",$f_opts);
 		$this->addField($f_login_id);
 		//********************
@@ -53,7 +53,7 @@ class DOCOrderDOCTProduct_Model extends ModelSQLDOCT20{
 		
 		$f_opts['alias']='Продукция';
 		$f_opts['id']="product_id";
-				
+						
 		$f_product_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_id",$f_opts);
 		$this->addField($f_product_id);
 		//********************
@@ -61,7 +61,7 @@ class DOCOrderDOCTProduct_Model extends ModelSQLDOCT20{
 		//*** Field mes_length ***
 		$f_opts = array();
 		$f_opts['id']="mes_length";
-				
+						
 		$f_mes_length=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"mes_length",$f_opts);
 		$this->addField($f_mes_length);
 		//********************
@@ -69,7 +69,7 @@ class DOCOrderDOCTProduct_Model extends ModelSQLDOCT20{
 		//*** Field mes_width ***
 		$f_opts = array();
 		$f_opts['id']="mes_width";
-				
+						
 		$f_mes_width=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"mes_width",$f_opts);
 		$this->addField($f_mes_width);
 		//********************
@@ -77,7 +77,7 @@ class DOCOrderDOCTProduct_Model extends ModelSQLDOCT20{
 		//*** Field mes_height ***
 		$f_opts = array();
 		$f_opts['id']="mes_height";
-				
+						
 		$f_mes_height=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"mes_height",$f_opts);
 		$this->addField($f_mes_height);
 		//********************
@@ -85,7 +85,7 @@ class DOCOrderDOCTProduct_Model extends ModelSQLDOCT20{
 		//*** Field measure_unit_id ***
 		$f_opts = array();
 		$f_opts['id']="measure_unit_id";
-				
+						
 		$f_measure_unit_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"measure_unit_id",$f_opts);
 		$this->addField($f_measure_unit_id);
 		//********************
@@ -96,7 +96,7 @@ class DOCOrderDOCTProduct_Model extends ModelSQLDOCT20{
 		$f_opts['alias']='Количество';
 		$f_opts['length']=19;
 		$f_opts['id']="quant";
-				
+						
 		$f_quant=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"quant",$f_opts);
 		$this->addField($f_quant);
 		//********************
@@ -105,7 +105,7 @@ class DOCOrderDOCTProduct_Model extends ModelSQLDOCT20{
 		$f_opts = array();
 		$f_opts['length']=19;
 		$f_opts['id']="quant_confirmed";
-				
+						
 		$f_quant_confirmed=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"quant_confirmed",$f_opts);
 		$this->addField($f_quant_confirmed);
 		//********************
@@ -116,7 +116,7 @@ class DOCOrderDOCTProduct_Model extends ModelSQLDOCT20{
 		$f_opts['alias']='Количество';
 		$f_opts['length']=19;
 		$f_opts['id']="quant_base_measure_unit";
-				
+						
 		$f_quant_base_measure_unit=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"quant_base_measure_unit",$f_opts);
 		$this->addField($f_quant_base_measure_unit);
 		//********************
@@ -125,7 +125,7 @@ class DOCOrderDOCTProduct_Model extends ModelSQLDOCT20{
 		$f_opts = array();
 		$f_opts['length']=19;
 		$f_opts['id']="quant_confirmed_base_measure_unit";
-				
+						
 		$f_quant_confirmed_base_measure_unit=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"quant_confirmed_base_measure_unit",$f_opts);
 		$this->addField($f_quant_confirmed_base_measure_unit);
 		//********************
@@ -134,7 +134,7 @@ class DOCOrderDOCTProduct_Model extends ModelSQLDOCT20{
 		$f_opts = array();
 		$f_opts['length']=19;
 		$f_opts['id']="volume";
-				
+						
 		$f_volume=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"volume",$f_opts);
 		$this->addField($f_volume);
 		//********************
@@ -143,7 +143,7 @@ class DOCOrderDOCTProduct_Model extends ModelSQLDOCT20{
 		$f_opts = array();
 		$f_opts['length']=19;
 		$f_opts['id']="weight";
-				
+						
 		$f_weight=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"weight",$f_opts);
 		$this->addField($f_weight);
 		//********************
@@ -154,7 +154,7 @@ class DOCOrderDOCTProduct_Model extends ModelSQLDOCT20{
 		$f_opts['alias']='Цена';
 		$f_opts['length']=15;
 		$f_opts['id']="price";
-				
+						
 		$f_price=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"price",$f_opts);
 		$this->addField($f_price);
 		//********************
@@ -162,7 +162,7 @@ class DOCOrderDOCTProduct_Model extends ModelSQLDOCT20{
 		//*** Field price_edit ***
 		$f_opts = array();
 		$f_opts['id']="price_edit";
-				
+						
 		$f_price_edit=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"price_edit",$f_opts);
 		$this->addField($f_price_edit);
 		//********************
@@ -173,7 +173,7 @@ class DOCOrderDOCTProduct_Model extends ModelSQLDOCT20{
 		$f_opts['alias']='Сумма';
 		$f_opts['length']=15;
 		$f_opts['id']="total";
-				
+						
 		$f_total=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total",$f_opts);
 		$this->addField($f_total);
 		//********************
@@ -184,7 +184,7 @@ class DOCOrderDOCTProduct_Model extends ModelSQLDOCT20{
 		$f_opts['alias']='Сумма';
 		$f_opts['length']=15;
 		$f_opts['id']="total_pack";
-				
+						
 		$f_total_pack=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total_pack",$f_opts);
 		$this->addField($f_total_pack);
 		//********************
@@ -192,7 +192,7 @@ class DOCOrderDOCTProduct_Model extends ModelSQLDOCT20{
 		//*** Field pack_exists ***
 		$f_opts = array();
 		$f_opts['id']="pack_exists";
-				
+						
 		$f_pack_exists=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"pack_exists",$f_opts);
 		$this->addField($f_pack_exists);
 		//********************
@@ -200,7 +200,7 @@ class DOCOrderDOCTProduct_Model extends ModelSQLDOCT20{
 		//*** Field pack_in_price ***
 		$f_opts = array();
 		$f_opts['id']="pack_in_price";
-				
+						
 		$f_pack_in_price=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"pack_in_price",$f_opts);
 		$this->addField($f_pack_in_price);
 		//********************

@@ -26,7 +26,7 @@ class TrackerServer_Model extends ModelSQL{
 		$f_opts['autoInc']=TRUE;
 		$f_opts['sysCol']=TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -37,7 +37,7 @@ class TrackerServer_Model extends ModelSQL{
 		$f_opts['alias']='IP адрес';
 		$f_opts['length']=15;
 		$f_opts['id']="ip";
-				
+						
 		$f_ip=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ip",$f_opts);
 		$this->addField($f_ip);
 		//********************
@@ -48,7 +48,7 @@ class TrackerServer_Model extends ModelSQL{
 		$f_opts['alias']='Описание';
 		$f_opts['length']=50;
 		$f_opts['id']="name";
-				
+						
 		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
 		//********************

@@ -24,7 +24,7 @@ class ProductionState_Model extends ModelSQL{
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['autoInc']=TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -32,7 +32,7 @@ class ProductionState_Model extends ModelSQL{
 		//*** Field ord ***
 		$f_opts = array();
 		$f_opts['id']="ord";
-				
+						
 		$f_ord=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ord",$f_opts);
 		$this->addField($f_ord);
 		//********************
@@ -41,7 +41,7 @@ class ProductionState_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=100;
 		$f_opts['id']="name";
-				
+						
 		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
 		//********************

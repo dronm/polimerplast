@@ -27,7 +27,7 @@ class VehicleList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Код';
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -37,7 +37,7 @@ class VehicleList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Гос.номер';
 		$f_opts['id']="plate";
-				
+						
 		$f_plate=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"plate",$f_opts);
 		$this->addField($f_plate);
 		//********************
@@ -47,7 +47,7 @@ class VehicleList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Модель';
 		$f_opts['id']="model";
-				
+						
 		$f_model=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"model",$f_opts);
 		$this->addField($f_model);
 		//********************
@@ -57,7 +57,7 @@ class VehicleList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Город код';
 		$f_opts['id']="production_city_id";
-				
+						
 		$f_production_city_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"production_city_id",$f_opts);
 		$this->addField($f_production_city_id);
 		//********************
@@ -67,7 +67,7 @@ class VehicleList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Город';
 		$f_opts['id']="production_city_descr";
-				
+						
 		$f_production_city_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"production_city_descr",$f_opts);
 		$this->addField($f_production_city_descr);
 		//********************
@@ -77,7 +77,7 @@ class VehicleList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Водитель код';
 		$f_opts['id']="driver_id";
-				
+						
 		$f_driver_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"driver_id",$f_opts);
 		$this->addField($f_driver_id);
 		//********************
@@ -87,7 +87,7 @@ class VehicleList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Водитель';
 		$f_opts['id']="driver_descr";
-				
+						
 		$f_driver_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"driver_descr",$f_opts);
 		$this->addField($f_driver_descr);
 		//********************
@@ -97,7 +97,7 @@ class VehicleList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Постоянный';
 		$f_opts['id']="employed";
-				
+						
 		$f_employed=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"employed",$f_opts);
 		$this->addField($f_employed);
 		//********************
@@ -107,7 +107,7 @@ class VehicleList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Объем';
 		$f_opts['id']="vol";
-				
+						
 		$f_vol=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"vol",$f_opts);
 		$this->addField($f_vol);
 		//********************
@@ -117,7 +117,7 @@ class VehicleList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Грузоподъемность';
 		$f_opts['id']="load_weight_t";
-				
+						
 		$f_load_weight_t=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"load_weight_t",$f_opts);
 		$this->addField($f_load_weight_t);
 		//********************
@@ -127,7 +127,7 @@ class VehicleList_Model extends ModelSQL{
 		
 		$f_opts['alias']='объем/грузоподъемность';
 		$f_opts['id']="vl_wt";
-				
+						
 		$f_vl_wt=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"vl_wt",$f_opts);
 		$this->addField($f_vl_wt);
 		//********************
@@ -137,7 +137,7 @@ class VehicleList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Перевозчник';
 		$f_opts['id']="carrier_id";
-				
+						
 		$f_carrier_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"carrier_id",$f_opts);
 		$this->addField($f_carrier_id);
 		//********************
@@ -147,7 +147,7 @@ class VehicleList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Перевозчник';
 		$f_opts['id']="carrier_descr";
-				
+						
 		$f_carrier_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"carrier_descr",$f_opts);
 		$this->addField($f_carrier_descr);
 		//********************
@@ -157,7 +157,7 @@ class VehicleList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Модель прицепа';
 		$f_opts['id']="trailer_model";
-				
+						
 		$f_trailer_model=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"trailer_model",$f_opts);
 		$this->addField($f_trailer_model);
 		//********************
@@ -167,7 +167,7 @@ class VehicleList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Номер прицепа';
 		$f_opts['id']="trailer_plate";
-				
+						
 		$f_trailer_plate=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"trailer_plate",$f_opts);
 		$this->addField($f_trailer_plate);
 		//********************
@@ -177,7 +177,7 @@ class VehicleList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Водитель связан с 1с';
 		$f_opts['id']="driver_match_1c";
-				
+						
 		$f_driver_match_1c=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"driver_match_1c",$f_opts);
 		$this->addField($f_driver_match_1c);
 		//********************

@@ -31,7 +31,6 @@ DECLARE
 	v_paid bool;
 	
 	--v_new_doc_deliv_total numeric(15,2);
-	--v_new_doc_deliv_expenses numeric(15,2);
 BEGIN
 	--всегда оплачено
 	--UPDATE doc_orders SET paid=TRUE WHERE id=in_doc_id;

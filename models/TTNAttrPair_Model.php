@@ -23,7 +23,7 @@ class TTNAttrPair_Model extends ModelSQL{
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['autoInc']=TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -33,7 +33,7 @@ class TTNAttrPair_Model extends ModelSQL{
 		
 		$f_opts['alias']='Фирма';
 		$f_opts['id']="firm_id";
-				
+						
 		$f_firm_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"firm_id",$f_opts);
 		$this->addField($f_firm_id);
 		//********************
@@ -43,7 +43,7 @@ class TTNAttrPair_Model extends ModelSQL{
 		
 		$f_opts['alias']='Склад';
 		$f_opts['id']="warehouse_id";
-				
+						
 		$f_warehouse_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"warehouse_id",$f_opts);
 		$this->addField($f_warehouse_id);
 		//********************

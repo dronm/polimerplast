@@ -39,9 +39,9 @@ AS $body$
 	SELECT
 		CASE
 			WHEN (SELECT q.v FROM q)=0 THEN 0
-			WHEN coalesce((SELECT mu.is_int FROM measure_units AS mu WHERE mu.id=$2),FALSE) THEN ceil($6/(SELECT q.v FROM q))
-			ELSE ROUND($6/(SELECT q.v FROM q), 9)
-			--(SELECT CASE WHEN mu.is_int THEN 0 ELSE 9 END FROM measure_units AS mu WHERE mu.id=$2)
+			--WHEN coalesce((SELECT mu.is_int FROM measure_units AS mu WHERE mu.id=$2),FALSE) THEN ceil($6/(SELECT q.v FROM q))
+			ELSE ROUND($6/(SELECT q.v FROM q), (SELECT CASE WHEN mu.is_int THEN 0 ELSE 9 END FROM measure_units AS mu WHERE mu.id=$2))
+			--
 		END AS quant
 	;
 $body$

@@ -24,7 +24,7 @@ class CarrierOrderList_Model extends ModelSQL{
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['autoInc']=TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -34,7 +34,7 @@ class CarrierOrderList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Перевозчик код';
 		$f_opts['id']="carrier_id";
-				
+						
 		$f_carrier_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"carrier_id",$f_opts);
 		$this->addField($f_carrier_id);
 		//********************
@@ -44,7 +44,7 @@ class CarrierOrderList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Перевозчик';
 		$f_opts['id']="carrier_descr";
-				
+						
 		$f_carrier_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"carrier_descr",$f_opts);
 		$this->addField($f_carrier_descr);
 		//********************
@@ -54,7 +54,7 @@ class CarrierOrderList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Водитель код';
 		$f_opts['id']="driver_id";
-				
+						
 		$f_driver_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"driver_id",$f_opts);
 		$this->addField($f_driver_id);
 		//********************
@@ -64,7 +64,7 @@ class CarrierOrderList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Водитель';
 		$f_opts['id']="driver_descr";
-				
+						
 		$f_driver_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"driver_descr",$f_opts);
 		$this->addField($f_driver_descr);
 		//********************
@@ -74,7 +74,7 @@ class CarrierOrderList_Model extends ModelSQL{
 		
 		$f_opts['alias']='ТС код';
 		$f_opts['id']="vehicle_id";
-				
+						
 		$f_vehicle_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"vehicle_id",$f_opts);
 		$this->addField($f_vehicle_id);
 		//********************
@@ -84,7 +84,7 @@ class CarrierOrderList_Model extends ModelSQL{
 		
 		$f_opts['alias']='ТС';
 		$f_opts['id']="vehicle_descr";
-				
+						
 		$f_vehicle_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"vehicle_descr",$f_opts);
 		$this->addField($f_vehicle_descr);
 		//********************
@@ -94,7 +94,7 @@ class CarrierOrderList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Порядок';
 		$f_opts['id']="ord";
-				
+						
 		$f_ord=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ord",$f_opts);
 		$this->addField($f_ord);
 		//********************
@@ -104,7 +104,7 @@ class CarrierOrderList_Model extends ModelSQL{
 		
 		$f_opts['alias']='На сегодня';
 		$f_opts['id']="today_ord";
-				
+						
 		$f_today_ord=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"today_ord",$f_opts);
 		$this->addField($f_today_ord);
 		//********************

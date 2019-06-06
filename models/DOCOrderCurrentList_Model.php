@@ -26,7 +26,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -34,7 +34,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field number ***
 		$f_opts = array();
 		$f_opts['id']="number";
-				
+						
 		$f_number=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"number",$f_opts);
 		$this->addField($f_number);
 		//********************
@@ -42,7 +42,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field date_time ***
 		$f_opts = array();
 		$f_opts['id']="date_time";
-				
+						
 		$f_date_time=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_time",$f_opts);
 		$this->addField($f_date_time);
 		//********************
@@ -50,7 +50,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field date_time_descr ***
 		$f_opts = array();
 		$f_opts['id']="date_time_descr";
-				
+						
 		$f_date_time_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_time_descr",$f_opts);
 		$this->addField($f_date_time_descr);
 		//********************
@@ -58,7 +58,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field client_id ***
 		$f_opts = array();
 		$f_opts['id']="client_id";
-				
+						
 		$f_client_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_id",$f_opts);
 		$this->addField($f_client_id);
 		//********************
@@ -66,7 +66,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field client_descr ***
 		$f_opts = array();
 		$f_opts['id']="client_descr";
-				
+						
 		$f_client_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_descr",$f_opts);
 		$this->addField($f_client_descr);
 		//********************
@@ -74,7 +74,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field product_plan_date ***
 		$f_opts = array();
 		$f_opts['id']="product_plan_date";
-				
+						
 		$f_product_plan_date=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_plan_date",$f_opts);
 		$this->addField($f_product_plan_date);
 		//********************
@@ -82,7 +82,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field product_plan_date_descr ***
 		$f_opts = array();
 		$f_opts['id']="product_plan_date_descr";
-				
+						
 		$f_product_plan_date_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_plan_date_descr",$f_opts);
 		$this->addField($f_product_plan_date_descr);
 		//********************
@@ -90,7 +90,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field address_descr ***
 		$f_opts = array();
 		$f_opts['id']="address_descr";
-				
+						
 		$f_address_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"address_descr",$f_opts);
 		$this->addField($f_address_descr);
 		//********************
@@ -98,7 +98,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field warehouse_id ***
 		$f_opts = array();
 		$f_opts['id']="warehouse_id";
-				
+						
 		$f_warehouse_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"warehouse_id",$f_opts);
 		$this->addField($f_warehouse_id);
 		//********************
@@ -106,7 +106,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field warehouse_descr ***
 		$f_opts = array();
 		$f_opts['id']="warehouse_descr";
-				
+						
 		$f_warehouse_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"warehouse_descr",$f_opts);
 		$this->addField($f_warehouse_descr);
 		//********************
@@ -114,7 +114,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field products_descr ***
 		$f_opts = array();
 		$f_opts['id']="products_descr";
-				
+						
 		$f_products_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"products_descr",$f_opts);
 		$this->addField($f_products_descr);
 		//********************
@@ -122,7 +122,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field product_ids ***
 		$f_opts = array();
 		$f_opts['id']="product_ids";
-				
+						
 		$f_product_ids=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_ids",$f_opts);
 		$this->addField($f_product_ids);
 		//********************
@@ -130,7 +130,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field total ***
 		$f_opts = array();
 		$f_opts['id']="total";
-				
+						
 		$f_total=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total",$f_opts);
 		$this->addField($f_total);
 		//********************
@@ -138,7 +138,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field total_descr ***
 		$f_opts = array();
 		$f_opts['id']="total_descr";
-				
+						
 		$f_total_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total_descr",$f_opts);
 		$this->addField($f_total_descr);
 		//********************
@@ -146,7 +146,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field total_quant ***
 		$f_opts = array();
 		$f_opts['id']="total_quant";
-				
+						
 		$f_total_quant=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total_quant",$f_opts);
 		$this->addField($f_total_quant);
 		//********************
@@ -154,7 +154,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field state ***
 		$f_opts = array();
 		$f_opts['id']="state";
-				
+						
 		$f_state=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"state",$f_opts);
 		$this->addField($f_state);
 		//********************
@@ -162,7 +162,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field state_descr ***
 		$f_opts = array();
 		$f_opts['id']="state_descr";
-				
+						
 		$f_state_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"state_descr",$f_opts);
 		$this->addField($f_state_descr);
 		//********************
@@ -170,7 +170,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field ext_order_num ***
 		$f_opts = array();
 		$f_opts['id']="ext_order_num";
-				
+						
 		$f_ext_order_num=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ext_order_num",$f_opts);
 		$this->addField($f_ext_order_num);
 		//********************
@@ -178,7 +178,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field ext_ship_num ***
 		$f_opts = array();
 		$f_opts['id']="ext_ship_num";
-				
+						
 		$f_ext_ship_num=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ext_ship_num",$f_opts);
 		$this->addField($f_ext_ship_num);
 		//********************
@@ -186,7 +186,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field delivery_fact_date ***
 		$f_opts = array();
 		$f_opts['id']="delivery_fact_date";
-				
+						
 		$f_delivery_fact_date=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"delivery_fact_date",$f_opts);
 		$this->addField($f_delivery_fact_date);
 		//********************
@@ -194,7 +194,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field delivery_fact_date_descr ***
 		$f_opts = array();
 		$f_opts['id']="delivery_fact_date_descr";
-				
+						
 		$f_delivery_fact_date_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"delivery_fact_date_descr",$f_opts);
 		$this->addField($f_delivery_fact_date_descr);
 		//********************
@@ -202,7 +202,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field delivery_plan_date ***
 		$f_opts = array();
 		$f_opts['id']="delivery_plan_date";
-				
+						
 		$f_delivery_plan_date=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"delivery_plan_date",$f_opts);
 		$this->addField($f_delivery_plan_date);
 		//********************
@@ -210,7 +210,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field delivery_plan_date_descr ***
 		$f_opts = array();
 		$f_opts['id']="delivery_plan_date_descr";
-				
+						
 		$f_delivery_plan_date_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"delivery_plan_date_descr",$f_opts);
 		$this->addField($f_delivery_plan_date_descr);
 		//********************
@@ -218,7 +218,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field client_number ***
 		$f_opts = array();
 		$f_opts['id']="client_number";
-				
+						
 		$f_client_number=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_number",$f_opts);
 		$this->addField($f_client_number);
 		//********************
@@ -226,7 +226,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field printed ***
 		$f_opts = array();
 		$f_opts['id']="printed";
-				
+						
 		$f_printed=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"printed",$f_opts);
 		$this->addField($f_printed);
 		//********************
@@ -234,7 +234,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field cust_surv_date_time ***
 		$f_opts = array();
 		$f_opts['id']="cust_surv_date_time";
-				
+						
 		$f_cust_surv_date_time=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"cust_surv_date_time",$f_opts);
 		$this->addField($f_cust_surv_date_time);
 		//********************
@@ -242,7 +242,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field cust_surv_date_time_descr ***
 		$f_opts = array();
 		$f_opts['id']="cust_surv_date_time_descr";
-				
+						
 		$f_cust_surv_date_time_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"cust_surv_date_time_descr",$f_opts);
 		$this->addField($f_cust_surv_date_time_descr);
 		//********************
@@ -250,7 +250,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field total_volume ***
 		$f_opts = array();
 		$f_opts['id']="total_volume";
-				
+						
 		$f_total_volume=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total_volume",$f_opts);
 		$this->addField($f_total_volume);
 		//********************
@@ -258,7 +258,7 @@ class DOCOrderCurrentList_Model extends ModelSQL{
 		//*** Field is_current ***
 		$f_opts = array();
 		$f_opts['id']="is_current";
-				
+						
 		$f_is_current=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"is_current",$f_opts);
 		$this->addField($f_is_current);
 		//********************

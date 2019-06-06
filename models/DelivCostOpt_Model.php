@@ -24,7 +24,7 @@ class DelivCostOpt_Model extends ModelSQL{
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['autoInc']=TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -32,7 +32,7 @@ class DelivCostOpt_Model extends ModelSQL{
 		//*** Field volume_m ***
 		$f_opts = array();
 		$f_opts['id']="volume_m";
-				
+						
 		$f_volume_m=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"volume_m",$f_opts);
 		$this->addField($f_volume_m);
 		//********************
@@ -41,7 +41,7 @@ class DelivCostOpt_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=19;
 		$f_opts['id']="weight_t";
-				
+						
 		$f_weight_t=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"weight_t",$f_opts);
 		$this->addField($f_weight_t);
 		//********************

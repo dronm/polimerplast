@@ -21,7 +21,7 @@ class DOCOrderPrintSeq_Model extends ModelSQL{
 		//*** Field doc_id ***
 		$f_opts = array();
 		$f_opts['id']="doc_id";
-				
+						
 		$f_doc_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"doc_id",$f_opts);
 		$this->addField($f_doc_id);
 		//********************
@@ -29,7 +29,7 @@ class DOCOrderPrintSeq_Model extends ModelSQL{
 		//*** Field cnt ***
 		$f_opts = array();
 		$f_opts['id']="cnt";
-				
+						
 		$f_cnt=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"cnt",$f_opts);
 		$this->addField($f_cnt);
 		//********************

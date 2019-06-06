@@ -25,7 +25,7 @@ class SertTypeAttr_Model extends ModelSQL{
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['autoInc']=TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -33,7 +33,7 @@ class SertTypeAttr_Model extends ModelSQL{
 		//*** Field sert_type_id ***
 		$f_opts = array();
 		$f_opts['id']="sert_type_id";
-				
+						
 		$f_sert_type_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"sert_type_id",$f_opts);
 		$this->addField($f_sert_type_id);
 		//********************
@@ -42,7 +42,7 @@ class SertTypeAttr_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=250;
 		$f_opts['id']="attr_text";
-				
+						
 		$f_attr_text=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"attr_text",$f_opts);
 		$this->addField($f_attr_text);
 		//********************
@@ -51,7 +51,7 @@ class SertTypeAttr_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=50;
 		$f_opts['id']="attr_val_norm";
-				
+						
 		$f_attr_val_norm=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"attr_val_norm",$f_opts);
 		$this->addField($f_attr_val_norm);
 		//********************
@@ -60,7 +60,7 @@ class SertTypeAttr_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=50;
 		$f_opts['id']="attr_val";
-				
+						
 		$f_attr_val=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"attr_val",$f_opts);
 		$this->addField($f_attr_val);
 		//********************
@@ -69,7 +69,7 @@ class SertTypeAttr_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=19;
 		$f_opts['id']="attr_val_min";
-				
+						
 		$f_attr_val_min=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"attr_val_min",$f_opts);
 		$this->addField($f_attr_val_min);
 		//********************
@@ -78,7 +78,7 @@ class SertTypeAttr_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=19;
 		$f_opts['id']="attr_val_max";
-				
+						
 		$f_attr_val_max=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"attr_val_max",$f_opts);
 		$this->addField($f_attr_val_max);
 		//********************

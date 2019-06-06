@@ -26,7 +26,7 @@ class TrackerList_Model extends ModelSQL{
 		$f_opts['alias']='Идентификатор';
 		$f_opts['length']=15;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -35,7 +35,7 @@ class TrackerList_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['sysCol']=TRUE;
 		$f_opts['id']="tracker_server_id";
-				
+						
 		$f_tracker_server_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"tracker_server_id",$f_opts);
 		$this->addField($f_tracker_server_id);
 		//********************
@@ -45,7 +45,7 @@ class TrackerList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Сервер';
 		$f_opts['id']="tracker_server_descr";
-				
+						
 		$f_tracker_server_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"tracker_server_descr",$f_opts);
 		$this->addField($f_tracker_server_descr);
 		//********************
@@ -55,7 +55,7 @@ class TrackerList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Номер SIM';
 		$f_opts['id']="sim_number";
-				
+						
 		$f_sim_number=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"sim_number",$f_opts);
 		$this->addField($f_sim_number);
 		//********************
@@ -65,7 +65,7 @@ class TrackerList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Идентификатор SIM';
 		$f_opts['id']="sim_id";
-				
+						
 		$f_sim_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"sim_id",$f_opts);
 		$this->addField($f_sim_id);
 		//********************

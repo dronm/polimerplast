@@ -23,7 +23,7 @@ class UserWarehouse_Model extends ModelSQL{
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['autoInc']=TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -31,7 +31,7 @@ class UserWarehouse_Model extends ModelSQL{
 		//*** Field user_id ***
 		$f_opts = array();
 		$f_opts['id']="user_id";
-				
+						
 		$f_user_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"user_id",$f_opts);
 		$this->addField($f_user_id);
 		//********************
@@ -39,7 +39,7 @@ class UserWarehouse_Model extends ModelSQL{
 		//*** Field warehouse_id ***
 		$f_opts = array();
 		$f_opts['id']="warehouse_id";
-				
+						
 		$f_warehouse_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"warehouse_id",$f_opts);
 		$this->addField($f_warehouse_id);
 		//********************

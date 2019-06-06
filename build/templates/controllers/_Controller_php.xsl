@@ -237,7 +237,7 @@ class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@par
 			</xsl:when>
 			<xsl:otherwise>$param = new FieldExt<xsl:value-of select="@dataType"/>('<xsl:value-of select="@id"/>'
 			</xsl:otherwise>
-		</xsl:choose>,$f_params);
+		</xsl:choose>,$f_params);		
 		$pm->addParam($param);		
 		</xsl:for-each>
 		

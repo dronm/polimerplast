@@ -25,7 +25,7 @@ class VehicleSelectList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Код';
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -35,7 +35,7 @@ class VehicleSelectList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Автомобиль';
 		$f_opts['id']="descr";
-				
+						
 		$f_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"descr",$f_opts);
 		$this->addField($f_descr);
 		//********************
@@ -45,7 +45,7 @@ class VehicleSelectList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Гос.номер';
 		$f_opts['id']="plate";
-				
+						
 		$f_plate=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"plate",$f_opts);
 		$this->addField($f_plate);
 		//********************
@@ -55,7 +55,7 @@ class VehicleSelectList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Автомобиль';
 		$f_opts['id']="complete_descr";
-				
+						
 		$f_complete_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"complete_descr",$f_opts);
 		$this->addField($f_complete_descr);
 		//********************

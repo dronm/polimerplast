@@ -24,7 +24,7 @@ class DOCOrderProductHistory_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="doc_orders_states_id";
-				
+						
 		$f_doc_orders_states_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"doc_orders_states_id",$f_opts);
 		$this->addField($f_doc_orders_states_id);
 		//********************
@@ -33,7 +33,7 @@ class DOCOrderProductHistory_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="product_id";
-				
+						
 		$f_product_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_id",$f_opts);
 		$this->addField($f_product_id);
 		//********************
@@ -42,7 +42,7 @@ class DOCOrderProductHistory_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="fields";
-				
+						
 		$f_fields=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"fields",$f_opts);
 		$this->addField($f_fields);
 		//********************
@@ -51,7 +51,7 @@ class DOCOrderProductHistory_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=8;
 		$f_opts['id']="oper";
-				
+						
 		$f_oper=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"oper",$f_opts);
 		$this->addField($f_oper);
 		//********************
@@ -59,7 +59,7 @@ class DOCOrderProductHistory_Model extends ModelSQL{
 		//*** Field old_vals ***
 		$f_opts = array();
 		$f_opts['id']="old_vals";
-				
+						
 		$f_old_vals=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"old_vals",$f_opts);
 		$this->addField($f_old_vals);
 		//********************

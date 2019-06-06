@@ -25,7 +25,7 @@ class ClientDialog_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -33,7 +33,7 @@ class ClientDialog_Model extends ModelSQL{
 		//*** Field name ***
 		$f_opts = array();
 		$f_opts['id']="name";
-				
+						
 		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
 		//********************
@@ -41,7 +41,7 @@ class ClientDialog_Model extends ModelSQL{
 		//*** Field name_full ***
 		$f_opts = array();
 		$f_opts['id']="name_full";
-				
+						
 		$f_name_full=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name_full",$f_opts);
 		$this->addField($f_name_full);
 		//********************
@@ -49,7 +49,7 @@ class ClientDialog_Model extends ModelSQL{
 		//*** Field occupation ***
 		$f_opts = array();
 		$f_opts['id']="occupation";
-				
+						
 		$f_occupation=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"occupation",$f_opts);
 		$this->addField($f_occupation);
 		//********************
@@ -57,7 +57,7 @@ class ClientDialog_Model extends ModelSQL{
 		//*** Field inn ***
 		$f_opts = array();
 		$f_opts['id']="inn";
-				
+						
 		$f_inn=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"inn",$f_opts);
 		$this->addField($f_inn);
 		//********************
@@ -65,7 +65,7 @@ class ClientDialog_Model extends ModelSQL{
 		//*** Field banned ***
 		$f_opts = array();
 		$f_opts['id']="banned";
-				
+						
 		$f_banned=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"banned",$f_opts);
 		$this->addField($f_banned);
 		//********************
@@ -73,7 +73,7 @@ class ClientDialog_Model extends ModelSQL{
 		//*** Field def_firm_id ***
 		$f_opts = array();
 		$f_opts['id']="def_firm_id";
-				
+						
 		$f_def_firm_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"def_firm_id",$f_opts);
 		$this->addField($f_def_firm_id);
 		//********************
@@ -81,7 +81,7 @@ class ClientDialog_Model extends ModelSQL{
 		//*** Field def_warehouse_id ***
 		$f_opts = array();
 		$f_opts['id']="def_warehouse_id";
-				
+						
 		$f_def_warehouse_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"def_warehouse_id",$f_opts);
 		$this->addField($f_def_warehouse_id);
 		//********************
@@ -89,7 +89,7 @@ class ClientDialog_Model extends ModelSQL{
 		//*** Field deleted ***
 		$f_opts = array();
 		$f_opts['id']="deleted";
-				
+						
 		$f_deleted=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deleted",$f_opts);
 		$this->addField($f_deleted);
 		//********************
@@ -97,7 +97,7 @@ class ClientDialog_Model extends ModelSQL{
 		//*** Field email ***
 		$f_opts = array();
 		$f_opts['id']="email";
-				
+						
 		$f_email=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"email",$f_opts);
 		$this->addField($f_email);
 		//********************

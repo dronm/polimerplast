@@ -20,6 +20,25 @@ BEGIN
 			NEW.deliv_destination_id = NULL;
 		END IF;
 		
+		
+		--delivery costs
+		/*
+		IF NEW.deliv_type='by_supplier'
+		AND NEW.deliv_cost_opt_id IS NOT NULL
+		AND coalesce(NEW.deliv_expenses_edit,FALSE) = FALSE
+		AND coalesce(NEW.deliv_expenses,0) = 0
+		THEN
+			SELECT coalesce(dc.cost2,0) INTO NEW.deliv_expenses
+			FROM deliv_costs AS dc
+			WHERE
+				dc.production_city_id=(SELECT w.production_city_id FROM warehouses w WHERE w.id = NEW.warehouse_id)
+				AND dc.deliv_cost_type = 'city'
+				AND dc.deliv_cost_opt_id = NEW.deliv_cost_opt_id
+			LIMIT 1
+			;		
+		END IF;
+		*/
+		
 		RETURN NEW;
 	ELSIF (TG_WHEN='AFTER' AND TG_OP='INSERT') THEN	
 		--log

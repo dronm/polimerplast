@@ -26,7 +26,7 @@ class SMSTemplate_Model extends ModelSQL{
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['autoInc']=TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -38,7 +38,7 @@ class SMSTemplate_Model extends ModelSQL{
 		
 		$f_opts['alias']='Тип SMS';
 		$f_opts['id']="sms_type";
-				
+						
 		$f_sms_type=new FieldSQLEnum($this->getDbLink(),$this->getDbName(),$this->getTableName(),"sms_type",$f_opts);
 		$this->addField($f_sms_type);
 		//********************
@@ -48,7 +48,7 @@ class SMSTemplate_Model extends ModelSQL{
 		
 		$f_opts['alias']='Шаблон';
 		$f_opts['id']="template";
-				
+						
 		$f_template=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"template",$f_opts);
 		$this->addField($f_template);
 		//********************
@@ -58,7 +58,7 @@ class SMSTemplate_Model extends ModelSQL{
 		
 		$f_opts['alias']='Комментарий';
 		$f_opts['id']="comment_text";
-				
+						
 		$f_comment_text=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"comment_text",$f_opts);
 		$this->addField($f_comment_text);
 		//********************
@@ -68,7 +68,7 @@ class SMSTemplate_Model extends ModelSQL{
 		
 		$f_opts['alias']='Поля';
 		$f_opts['id']="fields";
-				
+						
 		$f_fields=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"fields",$f_opts);
 		$this->addField($f_fields);
 		//********************

@@ -26,7 +26,7 @@ class ReportVariant_Model extends ModelSQL{
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['autoInc']=TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -34,7 +34,7 @@ class ReportVariant_Model extends ModelSQL{
 		//*** Field user_id ***
 		$f_opts = array();
 		$f_opts['id']="user_id";
-				
+						
 		$f_user_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"user_id",$f_opts);
 		$this->addField($f_user_id);
 		//********************
@@ -42,7 +42,7 @@ class ReportVariant_Model extends ModelSQL{
 		//*** Field report_type ***
 		$f_opts = array();
 		$f_opts['id']="report_type";
-				
+						
 		$f_report_type=new FieldSQLEnum($this->getDbLink(),$this->getDbName(),$this->getTableName(),"report_type",$f_opts);
 		$this->addField($f_report_type);
 		//********************
@@ -50,7 +50,7 @@ class ReportVariant_Model extends ModelSQL{
 		//*** Field name ***
 		$f_opts = array();
 		$f_opts['id']="name";
-				
+						
 		$f_name=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
 		//********************
@@ -58,7 +58,7 @@ class ReportVariant_Model extends ModelSQL{
 		//*** Field data ***
 		$f_opts = array();
 		$f_opts['id']="data";
-				
+						
 		$f_data=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"data",$f_opts);
 		$this->addField($f_data);
 		//********************

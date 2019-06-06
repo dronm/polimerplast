@@ -23,7 +23,7 @@ class ClientContractList_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -31,7 +31,7 @@ class ClientContractList_Model extends ModelSQL{
 		//*** Field client_id ***
 		$f_opts = array();
 		$f_opts['id']="client_id";
-				
+						
 		$f_client_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_id",$f_opts);
 		$this->addField($f_client_id);
 		//********************
@@ -39,7 +39,7 @@ class ClientContractList_Model extends ModelSQL{
 		//*** Field firm_descr ***
 		$f_opts = array();
 		$f_opts['id']="firm_descr";
-				
+						
 		$f_firm_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"firm_descr",$f_opts);
 		$this->addField($f_firm_descr);
 		//********************
@@ -47,7 +47,7 @@ class ClientContractList_Model extends ModelSQL{
 		//*** Field state ***
 		$f_opts = array();
 		$f_opts['id']="state";
-				
+						
 		$f_state=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"state",$f_opts);
 		$this->addField($f_state);
 		//********************
@@ -55,7 +55,7 @@ class ClientContractList_Model extends ModelSQL{
 		//*** Field state_descr ***
 		$f_opts = array();
 		$f_opts['id']="state_descr";
-				
+						
 		$f_state_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"state_descr",$f_opts);
 		$this->addField($f_state_descr);
 		//********************
@@ -63,7 +63,7 @@ class ClientContractList_Model extends ModelSQL{
 		//*** Field date_to_descr ***
 		$f_opts = array();
 		$f_opts['id']="date_to_descr";
-				
+						
 		$f_date_to_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_to_descr",$f_opts);
 		$this->addField($f_date_to_descr);
 		//********************

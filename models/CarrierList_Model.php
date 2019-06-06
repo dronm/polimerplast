@@ -24,7 +24,7 @@ class CarrierList_Model extends ModelSQL{
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['autoInc']=TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -33,7 +33,7 @@ class CarrierList_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=100;
 		$f_opts['id']="name";
-				
+						
 		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
 		//********************
@@ -41,7 +41,7 @@ class CarrierList_Model extends ModelSQL{
 		//*** Field client_id ***
 		$f_opts = array();
 		$f_opts['id']="client_id";
-				
+						
 		$f_client_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_id",$f_opts);
 		$this->addField($f_client_id);
 		//********************
@@ -49,7 +49,7 @@ class CarrierList_Model extends ModelSQL{
 		//*** Field client_name ***
 		$f_opts = array();
 		$f_opts['id']="client_name";
-				
+						
 		$f_client_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_name",$f_opts);
 		$this->addField($f_client_name);
 		//********************

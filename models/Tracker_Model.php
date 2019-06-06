@@ -24,7 +24,7 @@ class Tracker_Model extends ModelSQL{
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['length']=15;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -32,7 +32,7 @@ class Tracker_Model extends ModelSQL{
 		//*** Field tracker_server_id ***
 		$f_opts = array();
 		$f_opts['id']="tracker_server_id";
-				
+						
 		$f_tracker_server_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"tracker_server_id",$f_opts);
 		$this->addField($f_tracker_server_id);
 		//********************
@@ -41,7 +41,7 @@ class Tracker_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=15;
 		$f_opts['id']="sim_number";
-				
+						
 		$f_sim_number=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"sim_number",$f_opts);
 		$this->addField($f_sim_number);
 		//********************
@@ -50,7 +50,7 @@ class Tracker_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=36;
 		$f_opts['id']="sim_id";
-				
+						
 		$f_sim_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"sim_id",$f_opts);
 		$this->addField($f_sim_id);
 		//********************

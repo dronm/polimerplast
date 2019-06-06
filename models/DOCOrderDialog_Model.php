@@ -24,7 +24,7 @@ class DOCOrderDialog_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -33,7 +33,7 @@ class DOCOrderDialog_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=19;
 		$f_opts['id']="def_debt";
-				
+						
 		$f_def_debt=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"def_debt",$f_opts);
 		$this->addField($f_def_debt);
 		//********************
@@ -42,7 +42,7 @@ class DOCOrderDialog_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=19;
 		$f_opts['id']="debt_total";
-				
+						
 		$f_debt_total=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"debt_total",$f_opts);
 		$this->addField($f_debt_total);
 		//********************
@@ -50,7 +50,7 @@ class DOCOrderDialog_Model extends ModelSQL{
 		//*** Field vehicle_id ***
 		$f_opts = array();
 		$f_opts['id']="vehicle_id";
-				
+						
 		$f_vehicle_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"vehicle_id",$f_opts);
 		$this->addField($f_vehicle_id);
 		//********************
@@ -58,7 +58,7 @@ class DOCOrderDialog_Model extends ModelSQL{
 		//*** Field vehicle_descr ***
 		$f_opts = array();
 		$f_opts['id']="vehicle_descr";
-				
+						
 		$f_vehicle_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"vehicle_descr",$f_opts);
 		$this->addField($f_vehicle_descr);
 		//********************

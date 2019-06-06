@@ -66,6 +66,90 @@ extend(ClientDestination_Controller,ControllerDb);
 	
 	options = {};
 	
+	var param = new FieldText("region",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("region_code",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("raion",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("raion_code",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("gorod",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("gorod_code",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("naspunkt",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("naspunkt_code",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("ulitza",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("ulitza_code",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("dom",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("korpus",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("kvartira",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("addr_index",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
 	var param = new FieldText("value",options);
 	
 	pm.addParam(param);
@@ -120,6 +204,90 @@ extend(ClientDestination_Controller,ControllerDb);
 	options = {};
 	
 	var param = new FieldFloat("near_road_lat",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("region",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("region_code",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("raion",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("raion_code",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("gorod",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("gorod_code",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("naspunkt",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("naspunkt_code",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("ulitza",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("ulitza_code",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("dom",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("korpus",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("kvartira",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("addr_index",options);
 	
 	pm.addParam(param);
 	

@@ -24,7 +24,7 @@ class TemplateParamList_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['sysCol']=TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -32,7 +32,7 @@ class TemplateParamList_Model extends ModelSQL{
 		//*** Field template ***
 		$f_opts = array();
 		$f_opts['id']="template";
-				
+						
 		$f_template=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"template",$f_opts);
 		$this->addField($f_template);
 		//********************
@@ -40,7 +40,7 @@ class TemplateParamList_Model extends ModelSQL{
 		//*** Field param ***
 		$f_opts = array();
 		$f_opts['id']="param";
-				
+						
 		$f_param=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"param",$f_opts);
 		$this->addField($f_param);
 		//********************
@@ -48,7 +48,7 @@ class TemplateParamList_Model extends ModelSQL{
 		//*** Field val ***
 		$f_opts = array();
 		$f_opts['id']="val";
-				
+						
 		$f_val=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"val",$f_opts);
 		$this->addField($f_val);
 		//********************

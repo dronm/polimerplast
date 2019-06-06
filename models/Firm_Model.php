@@ -27,7 +27,7 @@ class Firm_Model extends ModelSQL{
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['autoInc']=TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -36,7 +36,7 @@ class Firm_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=100;
 		$f_opts['id']="name";
-				
+						
 		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
 		//********************
@@ -45,7 +45,7 @@ class Firm_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=36;
 		$f_opts['id']="ext_id";
-				
+						
 		$f_ext_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ext_id",$f_opts);
 		$this->addField($f_ext_id);
 		//********************
@@ -53,7 +53,7 @@ class Firm_Model extends ModelSQL{
 		//*** Field sert_header ***
 		$f_opts = array();
 		$f_opts['id']="sert_header";
-				
+						
 		$f_sert_header=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"sert_header",$f_opts);
 		$this->addField($f_sert_header);
 		//********************
@@ -61,7 +61,7 @@ class Firm_Model extends ModelSQL{
 		//*** Field nds ***
 		$f_opts = array();
 		$f_opts['id']="nds";
-				
+						
 		$f_nds=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"nds",$f_opts);
 		$this->addField($f_nds);
 		//********************
@@ -69,7 +69,7 @@ class Firm_Model extends ModelSQL{
 		//*** Field cash ***
 		$f_opts = array();
 		$f_opts['id']="cash";
-				
+						
 		$f_cash=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"cash",$f_opts);
 		$this->addField($f_cash);
 		//********************
@@ -78,7 +78,7 @@ class Firm_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['defaultValue']='FALSE';
 		$f_opts['id']="deleted";
-				
+						
 		$f_deleted=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deleted",$f_opts);
 		$this->addField($f_deleted);
 		//********************

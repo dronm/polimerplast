@@ -53,6 +53,48 @@ class ClientDestination_Controller extends ControllerSQL{
 		$param = new FieldExtFloat('near_road_lat'
 				,array());
 		$pm->addParam($param);
+		$param = new FieldExtText('region'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtText('region_code'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtText('raion'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtText('raion_code'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtText('gorod'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtText('gorod_code'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtText('naspunkt'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtText('naspunkt_code'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtText('ulitza'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtText('ulitza_code'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtText('dom'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtText('korpus'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtText('kvartira'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtText('addr_index'
+				,array());
+		$pm->addParam($param);
 		$param = new FieldExtText('value'
 				,array());
 		$pm->addParam($param);
@@ -96,6 +138,62 @@ class ClientDestination_Controller extends ControllerSQL{
 			));
 			$pm->addParam($param);
 		$param = new FieldExtFloat('near_road_lat'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtText('region'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtText('region_code'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtText('raion'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtText('raion_code'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtText('gorod'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtText('gorod_code'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtText('naspunkt'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtText('naspunkt_code'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtText('ulitza'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtText('ulitza_code'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtText('dom'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtText('korpus'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtText('kvartira'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtText('addr_index'
 				,array(
 			));
 			$pm->addParam($param);
@@ -369,6 +467,8 @@ class ClientDestination_Controller extends ControllerSQL{
 		$zone_center = $pm->getParamValue('zone_center');
 		
 		$value = $pm->getParamValue('value');
+		
+		/*
 		if ($pm->getParamValue('region') && !$value){
 			$region = $pm->getParamValue('region');
 			$raion = $pm->getParamValue('raion');
@@ -390,8 +490,7 @@ class ClientDestination_Controller extends ControllerSQL{
 			
 			$pm->setParamValue("value",$value);
 		}
-				
-		/*
+		
 		$region = $pm->getParamValue('region');
 		$raion = $pm->getParamValue('raion');
 		$gorod = $pm->getParamValue('gorod');
@@ -407,9 +506,9 @@ class ClientDestination_Controller extends ControllerSQL{
 			//нет маркера зоны
 			
 			if ($addr_exists){
-				/* ИЗМЕНИЛСЯ АДРЕС
-				Обратное геокодирование
-				*/
+				/** ИЗМЕНИЛСЯ АДРЕС
+				 * Обратное геокодирование
+				 */
 				
 				/*
 				$old_id = intval($pm->getParamValue('old_id'));
@@ -460,9 +559,9 @@ class ClientDestination_Controller extends ControllerSQL{
 			}
 		}
 		else if(!$addr_exists){
-			/*есть маркет но нет адреса
-			проверим адрес. Маркер сдвинули руками - определим адрес
-			*/
+			/** есть маркет но нет адреса
+			 * проверим адрес. Маркер сдвинули руками - определим адрес
+			 */
 			$points = explode(' ',$zone_center);
 			if (count($points) >= 2){
 				$this->set_addr_from_gps($points[1],$points[0],$pm);

@@ -332,26 +332,64 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 		$params = new ParamsSQL($pm,$this->getDbLink());
 		$params->addAll();
 		
-		/* все кроме производства и разделения
-		 * там по-другому
-		 */
+		$product_id = (!is_null($pm->getParamValue('product_id')))?
+			$params->getDbVal('product_id'):'NULL';
+		$mes_length = (!is_null($pm->getParamValue('mes_length')))?
+			$params->getDbVal('mes_length'):'NULL';
+		$mes_width = (!is_null($pm->getParamValue('mes_width')))?
+			$params->getDbVal('mes_width'):'NULL';
+		$mes_height = (!is_null($pm->getParamValue('mes_height')))?
+			$params->getDbVal('mes_height'):'NULL';
+		$quant = (!is_null($pm->getParamValue('quant')))?
+			$params->getDbVal('quant'):'NULL';
+		$measure_unit_id = (!is_null($pm->getParamValue('measure_unit_id')))?
+			$params->getDbVal('measure_unit_id'):'NULL';
+	
+		$ar = $this->getDbLink()->query_first(
+			sprintf(
+				"SELECT
+					coalesce(%s,p.product_id) AS product_id,
+					coalesce(%s,p.mes_length) AS mes_length,
+					coalesce(%s,p.mes_width) AS mes_width,
+					coalesce(%s,p.mes_height) AS mes_height,
+					coalesce(%s,p.quant) AS quant,
+					coalesce(%s,p.measure_unit_id) AS measure_unit_id
+				FROM doc_orders_t_tmp_products p
+				WHERE p.view_id=%s AND p.line_number=%d",
+				$product_id,
+				$mes_length,
+				$mes_width,
+				$mes_height,
+				$quant,
+				$measure_unit_id,					
+				$params->getDbVal('old_view_id'),
+				$params->getDbVal('old_line_number')					
+			)
+		);
+		
+		/**
+		  * Если передали м2 (ID=6), то надо пересчитать количество из базовой,
+		  * возможно изменится количество!!!
+		  */		
+		if($ar['measure_unit_id']==6){
+			$quant = $this->recalc_m2(
+				$ar['product_id'],
+				$ar['mes_length'],
+				$ar['mes_width'],
+				$ar['mes_height'],
+				$ar['quant']				
+			);
+			 $pm->setParamValue('quant',$quant);
+		}
+				
+		/** все кроме производства и разделения
+		  * там по-другому
+		  */
 		if ($_SESSION['role_id']!='production'
 		&&isset($_REQUEST['warehouse_id'])
 		&&isset($_REQUEST['client_id'])
 		&&isset($_REQUEST['deliv_to_third_party'])
 		){
-			$product_id = (!is_null($pm->getParamValue('product_id')))?
-				$params->getDbVal('product_id'):'NULL';
-			$mes_length = (!is_null($pm->getParamValue('mes_length')))?
-				$params->getDbVal('mes_length'):'NULL';
-			$mes_width = (!is_null($pm->getParamValue('mes_width')))?
-				$params->getDbVal('mes_width'):'NULL';
-			$mes_height = (!is_null($pm->getParamValue('mes_height')))?
-				$params->getDbVal('mes_height'):'NULL';
-			$quant = (!is_null($pm->getParamValue('quant')))?
-				$params->getDbVal('quant'):'NULL';
-			$measure_unit_id = (!is_null($pm->getParamValue('measure_unit_id')))?
-				$params->getDbVal('measure_unit_id'):'NULL';
 			$pack_exists = (!is_null($pm->getParamValue('pack_exists')))?
 				$params->getDbVal('pack_exists'):'NULL';
 			$pack_in_price = (!is_null($pm->getParamValue('pack_in_price')))?
@@ -426,9 +464,9 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 			}					
 		}
 		else if (isset($_REQUEST['quant_base_measure_unit'])){
-			/* изменилось базовое кол-во
-			 * !!!ЦЕНА НЕ ДОЛЖНА МЕНЯТЬСЯ!!!
-			 */
+			/** изменилось базовое кол-во
+			  * !!!ЦЕНА НЕ ДОЛЖНА МЕНЯТЬСЯ!!!
+			  */
 			$ar = $this->getDbLink()->query_first(sprintf(
 				"SELECT
 					tp.price,
@@ -496,6 +534,21 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 		//***************
 		parent::update($pm);
 	}
+	
+	private function recalc_m2($productId,$l,$w,$h,$quant){
+		$ar = $this->getDbLink()->query_first(
+			sprintf(
+				"SELECT doc_order_recalc_quant_in_m2(%d,%d,%d,%d,%f) AS quant",
+				$productId,
+				$l,
+				$w,
+				$h,
+				$quant					
+			)
+		 );
+		 return $ar['quant'];	
+	}
+	
 	public function insert($pm){
 		if ($_SESSION['role_id']=='client'){
 			$pm->setParamValue('client_id',$_SESSION['global_client_id']);
@@ -503,7 +556,24 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 	
 		$params = new ParamsSQL($pm,$this->getDbLink());
 		$params->addAll();
-	
+
+
+		/**
+		  * Если передали м2 (ID=6), то надо пересчитать количество из базовой,
+		  * возможно изменится количество!!!
+		  */
+		$mu_id = $params->getParamById('measure_unit_id');
+		if($mu_id==6){
+			$new_q = $this->recalc_m2(
+				$params->getParamById('product_id'),
+				$params->getParamById('mes_length'),
+				$params->getParamById('mes_width'),
+				$params->getParamById('mes_height'),
+				$params->getParamById('quant')				
+			);
+			 $pm->setParamValue('quant',$new_q);
+		}
+		
 		$ar = $this->getDbLink()->query_first(
 		sprintf("SELECT * FROM doc_order_totals(
 			%d,%d,%d,%d,%d,%d,%f,%d,%s,%s,%s,%s,%f)

@@ -23,7 +23,7 @@ class Holiday_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="date";
-				
+						
 		$f_date=new FieldSQLDate($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date",$f_opts);
 		$this->addField($f_date);
 		//********************
@@ -32,7 +32,7 @@ class Holiday_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=50;
 		$f_opts['id']="name";
-				
+						
 		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
 		//********************

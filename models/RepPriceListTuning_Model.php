@@ -26,7 +26,7 @@ class RepPriceListTuning_Model extends ModelReportSQL{
 		
 		$f_opts['alias']='Код клиента';
 		$f_opts['id']="client_id";
-				
+						
 		$f_client_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_id",$f_opts);
 		$this->addField($f_client_id);
 		//********************
@@ -36,7 +36,7 @@ class RepPriceListTuning_Model extends ModelReportSQL{
 		
 		$f_opts['alias']='Наименование клиента';
 		$f_opts['id']="client_descr";
-				
+						
 		$f_client_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_descr",$f_opts);
 		$this->addField($f_client_descr);
 		//********************
@@ -46,7 +46,7 @@ class RepPriceListTuning_Model extends ModelReportSQL{
 		
 		$f_opts['alias']='Код города';
 		$f_opts['id']="production_city_id";
-				
+						
 		$f_production_city_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"production_city_id",$f_opts);
 		$this->addField($f_production_city_id);
 		//********************
@@ -56,7 +56,7 @@ class RepPriceListTuning_Model extends ModelReportSQL{
 		
 		$f_opts['alias']='Наименование города';
 		$f_opts['id']="production_city_descr";
-				
+						
 		$f_production_city_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"production_city_descr",$f_opts);
 		$this->addField($f_production_city_descr);
 		//********************
@@ -66,7 +66,7 @@ class RepPriceListTuning_Model extends ModelReportSQL{
 		
 		$f_opts['alias']='Для третьих лиц';
 		$f_opts['id']="to_third_party_only";
-				
+						
 		$f_to_third_party_only=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"to_third_party_only",$f_opts);
 		$this->addField($f_to_third_party_only);
 		//********************
@@ -76,7 +76,7 @@ class RepPriceListTuning_Model extends ModelReportSQL{
 		
 		$f_opts['alias']='Наименование прайса';
 		$f_opts['id']="price_list_descr";
-				
+						
 		$f_price_list_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"price_list_descr",$f_opts);
 		$this->addField($f_price_list_descr);
 		//********************
@@ -86,7 +86,7 @@ class RepPriceListTuning_Model extends ModelReportSQL{
 		
 		$f_opts['alias']='Наименование продукции';
 		$f_opts['id']="product_descr";
-				
+						
 		$f_product_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_descr",$f_opts);
 		$this->addField($f_product_descr);
 		//********************
@@ -97,7 +97,7 @@ class RepPriceListTuning_Model extends ModelReportSQL{
 		$f_opts['alias']='Цена';
 		$f_opts['length']=15;
 		$f_opts['id']="product_descr";
-				
+						
 		$f_product_descr=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_descr",$f_opts);
 		$this->addField($f_product_descr);
 		//********************

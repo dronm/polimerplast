@@ -23,7 +23,7 @@ class WarehouseList_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -31,7 +31,7 @@ class WarehouseList_Model extends ModelSQL{
 		//*** Field deleted ***
 		$f_opts = array();
 		$f_opts['id']="deleted";
-				
+						
 		$f_deleted=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deleted",$f_opts);
 		$this->addField($f_deleted);
 		//********************

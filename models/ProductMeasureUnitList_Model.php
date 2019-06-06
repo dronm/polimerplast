@@ -24,7 +24,7 @@ class ProductMeasureUnitList_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="product_id";
-				
+						
 		$f_product_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_id",$f_opts);
 		$this->addField($f_product_id);
 		//********************
@@ -32,7 +32,7 @@ class ProductMeasureUnitList_Model extends ModelSQL{
 		//*** Field product_descr ***
 		$f_opts = array();
 		$f_opts['id']="product_descr";
-				
+						
 		$f_product_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_descr",$f_opts);
 		$this->addField($f_product_descr);
 		//********************
@@ -41,7 +41,7 @@ class ProductMeasureUnitList_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="measure_unit_id";
-				
+						
 		$f_measure_unit_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"measure_unit_id",$f_opts);
 		$this->addField($f_measure_unit_id);
 		//********************
@@ -49,7 +49,7 @@ class ProductMeasureUnitList_Model extends ModelSQL{
 		//*** Field measure_unit_descr ***
 		$f_opts = array();
 		$f_opts['id']="measure_unit_descr";
-				
+						
 		$f_measure_unit_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"measure_unit_descr",$f_opts);
 		$this->addField($f_measure_unit_descr);
 		//********************
@@ -57,7 +57,7 @@ class ProductMeasureUnitList_Model extends ModelSQL{
 		//*** Field calc_formula ***
 		$f_opts = array();
 		$f_opts['id']="calc_formula";
-				
+						
 		$f_calc_formula=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"calc_formula",$f_opts);
 		$this->addField($f_calc_formula);
 		//********************

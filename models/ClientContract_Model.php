@@ -26,7 +26,7 @@ class ClientContract_Model extends ModelSQL{
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['autoInc']=TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -34,7 +34,7 @@ class ClientContract_Model extends ModelSQL{
 		//*** Field client_id ***
 		$f_opts = array();
 		$f_opts['id']="client_id";
-				
+						
 		$f_client_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_id",$f_opts);
 		$this->addField($f_client_id);
 		//********************
@@ -42,7 +42,7 @@ class ClientContract_Model extends ModelSQL{
 		//*** Field firm_id ***
 		$f_opts = array();
 		$f_opts['id']="firm_id";
-				
+						
 		$f_firm_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"firm_id",$f_opts);
 		$this->addField($f_firm_id);
 		//********************
@@ -52,7 +52,7 @@ class ClientContract_Model extends ModelSQL{
 		
 		$f_opts['alias']='Состояние';
 		$f_opts['id']="state";
-				
+						
 		$f_state=new FieldSQLEnum($this->getDbLink(),$this->getDbName(),$this->getTableName(),"state",$f_opts);
 		$this->addField($f_state);
 		//********************
@@ -62,7 +62,7 @@ class ClientContract_Model extends ModelSQL{
 		
 		$f_opts['alias']='Дата с';
 		$f_opts['id']="date_from";
-				
+						
 		$f_date_from=new FieldSQLDate($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_from",$f_opts);
 		$this->addField($f_date_from);
 		//********************
@@ -72,7 +72,7 @@ class ClientContract_Model extends ModelSQL{
 		
 		$f_opts['alias']='Дата по';
 		$f_opts['id']="date_to";
-				
+						
 		$f_date_to=new FieldSQLDate($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_to",$f_opts);
 		$this->addField($f_date_to);
 		//********************
@@ -83,7 +83,7 @@ class ClientContract_Model extends ModelSQL{
 		$f_opts['alias']='номер';
 		$f_opts['length']=50;
 		$f_opts['id']="number";
-				
+						
 		$f_number=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"number",$f_opts);
 		$this->addField($f_number);
 		//********************

@@ -24,7 +24,7 @@ class ClientPaySchedule_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="doc_id";
-				
+						
 		$f_doc_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"doc_id",$f_opts);
 		$this->addField($f_doc_id);
 		//********************
@@ -32,7 +32,7 @@ class ClientPaySchedule_Model extends ModelSQL{
 		//*** Field pay_date ***
 		$f_opts = array();
 		$f_opts['id']="pay_date";
-				
+						
 		$f_pay_date=new FieldSQLDate($this->getDbLink(),$this->getDbName(),$this->getTableName(),"pay_date",$f_opts);
 		$this->addField($f_pay_date);
 		//********************
@@ -40,7 +40,7 @@ class ClientPaySchedule_Model extends ModelSQL{
 		//*** Field firm_id ***
 		$f_opts = array();
 		$f_opts['id']="firm_id";
-				
+						
 		$f_firm_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"firm_id",$f_opts);
 		$this->addField($f_firm_id);
 		//********************
@@ -48,7 +48,7 @@ class ClientPaySchedule_Model extends ModelSQL{
 		//*** Field client_id ***
 		$f_opts = array();
 		$f_opts['id']="client_id";
-				
+						
 		$f_client_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_id",$f_opts);
 		$this->addField($f_client_id);
 		//********************
@@ -57,7 +57,7 @@ class ClientPaySchedule_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=19;
 		$f_opts['id']="total";
-				
+						
 		$f_total=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total",$f_opts);
 		$this->addField($f_total);
 		//********************

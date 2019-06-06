@@ -23,7 +23,7 @@ class DOCOrderDOCTFCustSurvey_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="doc_id";
-				
+						
 		$f_doc_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"doc_id",$f_opts);
 		$this->addField($f_doc_id);
 		//********************
@@ -32,7 +32,7 @@ class DOCOrderDOCTFCustSurvey_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="line_number";
-				
+						
 		$f_line_number=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"line_number",$f_opts);
 		$this->addField($f_line_number);
 		//********************
@@ -41,7 +41,7 @@ class DOCOrderDOCTFCustSurvey_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="customer_survey_question_id";
-				
+						
 		$f_customer_survey_question_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"customer_survey_question_id",$f_opts);
 		$this->addField($f_customer_survey_question_id);
 		//********************
@@ -49,7 +49,7 @@ class DOCOrderDOCTFCustSurvey_Model extends ModelSQL{
 		//*** Field points ***
 		$f_opts = array();
 		$f_opts['id']="points";
-				
+						
 		$f_points=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"points",$f_opts);
 		$this->addField($f_points);
 		//********************
@@ -57,7 +57,7 @@ class DOCOrderDOCTFCustSurvey_Model extends ModelSQL{
 		//*** Field answer_comment ***
 		$f_opts = array();
 		$f_opts['id']="answer_comment";
-				
+						
 		$f_answer_comment=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"answer_comment",$f_opts);
 		$this->addField($f_answer_comment);
 		//********************

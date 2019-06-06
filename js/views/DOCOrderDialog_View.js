@@ -594,6 +594,11 @@ function DOCOrderDialog_View(id,options){
 	}
 	else{
 		ctrl_class = EditMoneyEditable;
+		opts.onToggle = function(v){
+			if(!v){
+				self.calcDelivCost();
+			}
+		};
 		var ctrl_edit = new Control(id+"_deliv_total_edit","div",{
 			"name":"deliv_total_edit",
 			"tableLayout":false,
@@ -608,8 +613,8 @@ function DOCOrderDialog_View(id,options){
 	opts.events={
 		"keyup":function(){
 			/*Пересчет только если от этого зависит трансп затраты*/
-			//self.calcDelivCost();
-			self.recalcPricesRefreshTotals();
+			self.calcDelivCost();
+			//self.recalcPricesRefreshTotals();
 		}
 	};	
 	this.m_delivCost = new ctrl_class(id+"_deliv_total",
@@ -1205,7 +1210,6 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 				self.m_old_cost_opt_id = cost_opt_id;
 				self.m_old_dest_id = dest_id;
 				*/
-				
 				var m = resp.getModelById("calc_deliv_cost");
 				m.setActive(true);
 				if (m.getNextRow()){
@@ -1226,31 +1230,48 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 						}
 						if (do_calc_cost2){
 							var cost2 = 0;
+							var cost2_com = "";
 							if (do_calc_cost1){
 								cost2 = parseFloat(m.getFieldValue("total_cost2")).toFixed(2);
 							}
 							else{
 								//стоимость доставки отредактирована вручную
-								var country_cost2 = parseFloat(m.getFieldValue("country_cost2"));
-								var country_cost1 = parseFloat(m.getFieldValue("country_cost"));
-								var city_cost2 = parseFloat(m.getFieldValue("city_cost2"));
-								var city_cost1 = parseFloat(m.getFieldValue("city_cost"));
+								var to_float = function(n){
+									var r = parseFloat(n);
+									return isNaN(r)? 0:r;
+								}
+								var country_cost2 = to_float(m.getFieldValue("country_cost2"));
+								var country_cost1 = to_float(m.getFieldValue("country_cost"));
+								var city_cost2 = to_float(m.getFieldValue("city_cost2"));
+								var city_cost1 = to_float(m.getFieldValue("city_cost"));
 								
-								var dif = parseFloat(self.m_delivCost.getValue()) - city_cost1;
+								var dif = to_float(self.m_delivCost.getValue()) - city_cost1;
 								var distance_country = dif / (country_cost1? country_cost1:0);
 								cost2 = city_cost2 + (distance_country * country_cost2);
-								if (cost2 < city_cost2  ){
-									DOMHandler.addClass(self.m_delivExpCtrl.m_node,self.m_delivExpCtrl.INCORRECT_VAL_CLASS);
-									self.m_delivExpCtrl.setComment("Меньше ставки по городу");
+																
+								if (cost2>0 && cost2 < city_cost2  ){
+									self.m_delivExpCtrl.setComment();
+									cost2_com = "Меньше ставки по городу";
 								}
 								else{
-									DOMHandler.removeClass(self.m_delivExpCtrl.m_node,self.m_delivExpCtrl.INCORRECT_VAL_CLASS);
-									self.m_delivExpCtrl.setComment("");
+									if(cost2<=0){
+										cost2 = city_cost2;
+										cost2_com = "Ставка по городу";
+									}
 								}
+								
 							}
 							cost2 = cost2*v_cnt;
 							cost2 = isNaN(cost2)? 0:cost2;
 							self.m_delivExpCtrl.setValue(parseFloat(cost2).toFixed(2));
+							if(cost2_com.length){
+								DOMHandler.addClass(self.m_delivExpCtrl.m_node,self.m_delivExpCtrl.INCORRECT_VAL_CLASS);
+							}
+							else{
+								DOMHandler.removeClass(self.m_delivExpCtrl.m_node,self.m_delivExpCtrl.INCORRECT_VAL_CLASS);
+							}
+							self.m_delivExpCtrl.setComment(cost2_com);
+							
 						}
 						
 						if (do_calc_cost1){

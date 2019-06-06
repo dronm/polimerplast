@@ -3123,7 +3123,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 				$new_state = 'closed';
 			}
 			else{
-				$new_state = 'shipped';
+				$new_state = 'closed';//было shipped
 			}
 			$this->add_state($doc_id,$new_state);
 			

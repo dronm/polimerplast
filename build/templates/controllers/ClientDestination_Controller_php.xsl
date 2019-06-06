@@ -158,6 +158,8 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		$zone_center = $pm->getParamValue('zone_center');
 		
 		$value = $pm->getParamValue('value');
+		
+		/*
 		if ($pm->getParamValue('region') &amp;&amp; !$value){
 			$region = $pm->getParamValue('region');
 			$raion = $pm->getParamValue('raion');
@@ -179,8 +181,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 			
 			$pm->setParamValue("value",$value);
 		}
-				
-		/*
+		
 		$region = $pm->getParamValue('region');
 		$raion = $pm->getParamValue('raion');
 		$gorod = $pm->getParamValue('gorod');
@@ -196,9 +197,9 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 			//нет маркера зоны
 			
 			if ($addr_exists){
-				/* ИЗМЕНИЛСЯ АДРЕС
-				Обратное геокодирование
-				*/
+				/** ИЗМЕНИЛСЯ АДРЕС
+				 * Обратное геокодирование
+				 */
 				
 				/*
 				$old_id = intval($pm->getParamValue('old_id'));
@@ -249,9 +250,9 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 			}
 		}
 		else if(!$addr_exists){
-			/*есть маркет но нет адреса
-			проверим адрес. Маркер сдвинули руками - определим адрес
-			*/
+			/** есть маркет но нет адреса
+			 * проверим адрес. Маркер сдвинули руками - определим адрес
+			 */
 			$points = explode(' ',$zone_center);
 			if (count($points) &gt;= 2){
 				$this->set_addr_from_gps($points[1],$points[0],$pm);

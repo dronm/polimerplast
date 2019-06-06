@@ -23,7 +23,7 @@ class ClientDebtPeriodList_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="days_from";
-				
+						
 		$f_days_from=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"days_from",$f_opts);
 		$this->addField($f_days_from);
 		//********************
@@ -31,7 +31,7 @@ class ClientDebtPeriodList_Model extends ModelSQL{
 		//*** Field days_to ***
 		$f_opts = array();
 		$f_opts['id']="days_to";
-				
+						
 		$f_days_to=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"days_to",$f_opts);
 		$this->addField($f_days_to);
 		//********************
@@ -39,7 +39,7 @@ class ClientDebtPeriodList_Model extends ModelSQL{
 		//*** Field days_descr ***
 		$f_opts = array();
 		$f_opts['id']="days_descr";
-				
+						
 		$f_days_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"days_descr",$f_opts);
 		$this->addField($f_days_descr);
 		//********************

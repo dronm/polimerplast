@@ -24,7 +24,7 @@ class ConstantList_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -32,7 +32,7 @@ class ConstantList_Model extends ModelSQL{
 		//*** Field name ***
 		$f_opts = array();
 		$f_opts['id']="name";
-				
+						
 		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
 		//********************
@@ -40,7 +40,7 @@ class ConstantList_Model extends ModelSQL{
 		//*** Field descr ***
 		$f_opts = array();
 		$f_opts['id']="descr";
-				
+						
 		$f_descr=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"descr",$f_opts);
 		$this->addField($f_descr);
 		//********************
@@ -48,7 +48,7 @@ class ConstantList_Model extends ModelSQL{
 		//*** Field val_descr ***
 		$f_opts = array();
 		$f_opts['id']="val_descr";
-				
+						
 		$f_val_descr=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"val_descr",$f_opts);
 		$this->addField($f_val_descr);
 		//********************

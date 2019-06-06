@@ -23,7 +23,7 @@ class ClientPriceListProduct_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="price_list_id";
-				
+						
 		$f_price_list_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"price_list_id",$f_opts);
 		$this->addField($f_price_list_id);
 		//********************
@@ -32,7 +32,7 @@ class ClientPriceListProduct_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="product_id";
-				
+						
 		$f_product_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_id",$f_opts);
 		$this->addField($f_product_id);
 		//********************
@@ -41,7 +41,7 @@ class ClientPriceListProduct_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=15;
 		$f_opts['id']="price";
-				
+						
 		$f_price=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"price",$f_opts);
 		$this->addField($f_price);
 		//********************
@@ -50,7 +50,7 @@ class ClientPriceListProduct_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=19;
 		$f_opts['id']="discount_volume";
-				
+						
 		$f_discount_volume=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"discount_volume",$f_opts);
 		$this->addField($f_discount_volume);
 		//********************
@@ -59,7 +59,7 @@ class ClientPriceListProduct_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=19;
 		$f_opts['id']="discount_total";
-				
+						
 		$f_discount_total=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"discount_total",$f_opts);
 		$this->addField($f_discount_total);
 		//********************
@@ -68,7 +68,7 @@ class ClientPriceListProduct_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=15;
 		$f_opts['id']="pack_price";
-				
+						
 		$f_pack_price=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"pack_price",$f_opts);
 		$this->addField($f_pack_price);
 		//********************

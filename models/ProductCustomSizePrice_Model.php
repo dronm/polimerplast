@@ -23,7 +23,7 @@ class ProductCustomSizePrice_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="product_id";
-				
+						
 		$f_product_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_id",$f_opts);
 		$this->addField($f_product_id);
 		//********************
@@ -32,7 +32,7 @@ class ProductCustomSizePrice_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="category";
-				
+						
 		$f_category=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"category",$f_opts);
 		$this->addField($f_category);
 		//********************
@@ -41,7 +41,7 @@ class ProductCustomSizePrice_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=15;
 		$f_opts['id']="price";
-				
+						
 		$f_price=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"price",$f_opts);
 		$this->addField($f_price);
 		//********************
@@ -50,7 +50,7 @@ class ProductCustomSizePrice_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=19;
 		$f_opts['id']="quant";
-				
+						
 		$f_quant=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"quant",$f_opts);
 		$this->addField($f_quant);
 		//********************

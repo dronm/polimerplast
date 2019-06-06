@@ -25,7 +25,7 @@ class ProductGroup_Model extends ModelSQL{
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['autoInc']=TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -34,7 +34,7 @@ class ProductGroup_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=100;
 		$f_opts['id']="name";
-				
+						
 		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
 		//********************
@@ -43,7 +43,7 @@ class ProductGroup_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=36;
 		$f_opts['id']="ext_id";
-				
+						
 		$f_ext_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ext_id",$f_opts);
 		$this->addField($f_ext_id);
 		//********************

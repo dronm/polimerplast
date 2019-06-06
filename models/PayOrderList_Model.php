@@ -26,7 +26,7 @@ class PayOrderList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Код заявки';
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -36,7 +36,7 @@ class PayOrderList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Клиент код';
 		$f_opts['id']="client_id";
-				
+						
 		$f_client_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_id",$f_opts);
 		$this->addField($f_client_id);
 		//********************
@@ -46,7 +46,7 @@ class PayOrderList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Номер заявки';
 		$f_opts['id']="number";
-				
+						
 		$f_number=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"number",$f_opts);
 		$this->addField($f_number);
 		//********************
@@ -56,7 +56,7 @@ class PayOrderList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Дата заявки';
 		$f_opts['id']="date_time";
-				
+						
 		$f_date_time=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_time",$f_opts);
 		$this->addField($f_date_time);
 		//********************
@@ -66,7 +66,7 @@ class PayOrderList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Дата заявки';
 		$f_opts['id']="date_time_descr";
-				
+						
 		$f_date_time_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_time_descr",$f_opts);
 		$this->addField($f_date_time_descr);
 		//********************
@@ -77,7 +77,7 @@ class PayOrderList_Model extends ModelSQL{
 		$f_opts['alias']='Сумма';
 		$f_opts['length']=15;
 		$f_opts['id']="total";
-				
+						
 		$f_total=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total",$f_opts);
 		$this->addField($f_total);
 		//********************
@@ -87,7 +87,7 @@ class PayOrderList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Сумма';
 		$f_opts['id']="total_descr";
-				
+						
 		$f_total_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total_descr",$f_opts);
 		$this->addField($f_total_descr);
 		//********************
@@ -97,7 +97,7 @@ class PayOrderList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Организация код';
 		$f_opts['id']="firm_id";
-				
+						
 		$f_firm_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"firm_id",$f_opts);
 		$this->addField($f_firm_id);
 		//********************
@@ -107,7 +107,7 @@ class PayOrderList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Организация';
 		$f_opts['id']="firm_descr";
-				
+						
 		$f_firm_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"firm_descr",$f_opts);
 		$this->addField($f_firm_descr);
 		//********************
@@ -117,7 +117,7 @@ class PayOrderList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Статус код';
 		$f_opts['id']="state";
-				
+						
 		$f_state=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"state",$f_opts);
 		$this->addField($f_state);
 		//********************
@@ -127,7 +127,7 @@ class PayOrderList_Model extends ModelSQL{
 		
 		$f_opts['alias']='Статус';
 		$f_opts['id']="state_descr";
-				
+						
 		$f_state_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"state_descr",$f_opts);
 		$this->addField($f_state_descr);
 		//********************

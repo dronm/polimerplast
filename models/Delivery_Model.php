@@ -25,7 +25,7 @@ class Delivery_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="vehicle_id";
-				
+						
 		$f_vehicle_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"vehicle_id",$f_opts);
 		$this->addField($f_vehicle_id);
 		//********************
@@ -34,7 +34,7 @@ class Delivery_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="doc_order_id";
-				
+						
 		$f_doc_order_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"doc_order_id",$f_opts);
 		$this->addField($f_doc_order_id);
 		//********************
@@ -42,7 +42,7 @@ class Delivery_Model extends ModelSQL{
 		//*** Field delivery_hour_id ***
 		$f_opts = array();
 		$f_opts['id']="delivery_hour_id";
-				
+						
 		$f_delivery_hour_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"delivery_hour_id",$f_opts);
 		$this->addField($f_delivery_hour_id);
 		//********************
@@ -51,7 +51,7 @@ class Delivery_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['defaultValue']='false';
 		$f_opts['id']="closed";
-				
+						
 		$f_closed=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"closed",$f_opts);
 		$this->addField($f_closed);
 		//********************
@@ -59,7 +59,7 @@ class Delivery_Model extends ModelSQL{
 		//*** Field deliv_date ***
 		$f_opts = array();
 		$f_opts['id']="deliv_date";
-				
+						
 		$f_deliv_date=new FieldSQLDate($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_date",$f_opts);
 		$this->addField($f_deliv_date);
 		//********************
@@ -67,7 +67,7 @@ class Delivery_Model extends ModelSQL{
 		//*** Field added_date_time ***
 		$f_opts = array();
 		$f_opts['id']="added_date_time";
-				
+						
 		$f_added_date_time=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"added_date_time",$f_opts);
 		$this->addField($f_added_date_time);
 		//********************

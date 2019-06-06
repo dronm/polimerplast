@@ -25,7 +25,7 @@ class OrderChange_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="doc_order_id";
-				
+						
 		$f_doc_order_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"doc_order_id",$f_opts);
 		$this->addField($f_doc_order_id);
 		//********************
@@ -34,7 +34,7 @@ class OrderChange_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="date_time";
-				
+						
 		$f_date_time=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_time",$f_opts);
 		$this->addField($f_date_time);
 		//********************
@@ -44,7 +44,7 @@ class OrderChange_Model extends ModelSQL{
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['length']=50;
 		$f_opts['id']="field";
-				
+						
 		$f_field=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"field",$f_opts);
 		$this->addField($f_field);
 		//********************
@@ -52,7 +52,7 @@ class OrderChange_Model extends ModelSQL{
 		//*** Field old_value ***
 		$f_opts = array();
 		$f_opts['id']="old_value";
-				
+						
 		$f_old_value=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"old_value",$f_opts);
 		$this->addField($f_old_value);
 		//********************

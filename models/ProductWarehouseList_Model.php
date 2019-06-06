@@ -23,7 +23,7 @@ class ProductWarehouseList_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="product_id";
-				
+						
 		$f_product_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_id",$f_opts);
 		$this->addField($f_product_id);
 		//********************
@@ -32,7 +32,7 @@ class ProductWarehouseList_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="warehouse_id";
-				
+						
 		$f_warehouse_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"warehouse_id",$f_opts);
 		$this->addField($f_warehouse_id);
 		//********************
@@ -40,7 +40,7 @@ class ProductWarehouseList_Model extends ModelSQL{
 		//*** Field warehouse_descr ***
 		$f_opts = array();
 		$f_opts['id']="warehouse_descr";
-				
+						
 		$f_warehouse_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"warehouse_descr",$f_opts);
 		$this->addField($f_warehouse_descr);
 		//********************

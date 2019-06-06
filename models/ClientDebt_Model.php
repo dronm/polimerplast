@@ -25,7 +25,7 @@ class ClientDebt_Model extends ModelSQL{
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['autoInc']=TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -33,7 +33,7 @@ class ClientDebt_Model extends ModelSQL{
 		//*** Field firm_id ***
 		$f_opts = array();
 		$f_opts['id']="firm_id";
-				
+						
 		$f_firm_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"firm_id",$f_opts);
 		$this->addField($f_firm_id);
 		//********************
@@ -41,7 +41,7 @@ class ClientDebt_Model extends ModelSQL{
 		//*** Field client_id ***
 		$f_opts = array();
 		$f_opts['id']="client_id";
-				
+						
 		$f_client_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_id",$f_opts);
 		$this->addField($f_client_id);
 		//********************
@@ -49,7 +49,7 @@ class ClientDebt_Model extends ModelSQL{
 		//*** Field client_debt_period_days_from ***
 		$f_opts = array();
 		$f_opts['id']="client_debt_period_days_from";
-				
+						
 		$f_client_debt_period_days_from=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_debt_period_days_from",$f_opts);
 		$this->addField($f_client_debt_period_days_from);
 		//********************
@@ -58,7 +58,7 @@ class ClientDebt_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=15;
 		$f_opts['id']="def_debt";
-				
+						
 		$f_def_debt=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"def_debt",$f_opts);
 		$this->addField($f_def_debt);
 		//********************
@@ -67,7 +67,7 @@ class ClientDebt_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=15;
 		$f_opts['id']="debt_total";
-				
+						
 		$f_debt_total=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"debt_total",$f_opts);
 		$this->addField($f_debt_total);
 		//********************
@@ -75,7 +75,7 @@ class ClientDebt_Model extends ModelSQL{
 		//*** Field days ***
 		$f_opts = array();
 		$f_opts['id']="days";
-				
+						
 		$f_days=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"days",$f_opts);
 		$this->addField($f_days);
 		//********************
@@ -83,7 +83,7 @@ class ClientDebt_Model extends ModelSQL{
 		//*** Field update_date ***
 		$f_opts = array();
 		$f_opts['id']="update_date";
-				
+						
 		$f_update_date=new FieldSQLDate($this->getDbLink(),$this->getDbName(),$this->getTableName(),"update_date",$f_opts);
 		$this->addField($f_update_date);
 		//********************

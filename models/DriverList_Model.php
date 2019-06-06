@@ -23,7 +23,7 @@ class DriverList_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -31,7 +31,7 @@ class DriverList_Model extends ModelSQL{
 		//*** Field name ***
 		$f_opts = array();
 		$f_opts['id']="name";
-				
+						
 		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
 		//********************
@@ -39,7 +39,7 @@ class DriverList_Model extends ModelSQL{
 		//*** Field drive_perm ***
 		$f_opts = array();
 		$f_opts['id']="drive_perm";
-				
+						
 		$f_drive_perm=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"drive_perm",$f_opts);
 		$this->addField($f_drive_perm);
 		//********************
@@ -47,7 +47,7 @@ class DriverList_Model extends ModelSQL{
 		//*** Field cel_phone ***
 		$f_opts = array();
 		$f_opts['id']="cel_phone";
-				
+						
 		$f_cel_phone=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"cel_phone",$f_opts);
 		$this->addField($f_cel_phone);
 		//********************
@@ -55,7 +55,7 @@ class DriverList_Model extends ModelSQL{
 		//*** Field ext_id ***
 		$f_opts = array();
 		$f_opts['id']="ext_id";
-				
+						
 		$f_ext_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ext_id",$f_opts);
 		$this->addField($f_ext_id);
 		//********************
@@ -63,7 +63,7 @@ class DriverList_Model extends ModelSQL{
 		//*** Field match_1c ***
 		$f_opts = array();
 		$f_opts['id']="match_1c";
-				
+						
 		$f_match_1c=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"match_1c",$f_opts);
 		$this->addField($f_match_1c);
 		//********************

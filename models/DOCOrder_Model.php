@@ -27,7 +27,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['autoInc']=TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -37,7 +37,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		
 		$f_opts['alias']='Дата пдч.';
 		$f_opts['id']="date_time";
-				
+						
 		$f_date_time=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"date_time",$f_opts);
 		$this->addField($f_date_time);
 		//********************
@@ -48,7 +48,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$f_opts['alias']='Номер';
 		$f_opts['length']=10;
 		$f_opts['id']="number";
-				
+						
 		$f_number=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"number",$f_opts);
 		$this->addField($f_number);
 		//********************
@@ -58,7 +58,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		
 		$f_opts['alias']='Проведен';
 		$f_opts['id']="processed";
-				
+						
 		$f_processed=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"processed",$f_opts);
 		$this->addField($f_processed);
 		//********************
@@ -66,7 +66,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field client_id ***
 		$f_opts = array();
 		$f_opts['id']="client_id";
-				
+						
 		$f_client_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_id",$f_opts);
 		$this->addField($f_client_id);
 		//********************
@@ -74,7 +74,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field gruzopoluchatel_id ***
 		$f_opts = array();
 		$f_opts['id']="gruzopoluchatel_id";
-				
+						
 		$f_gruzopoluchatel_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"gruzopoluchatel_id",$f_opts);
 		$this->addField($f_gruzopoluchatel_id);
 		//********************
@@ -83,7 +83,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$f_opts = array();
 		$f_opts['length']=12;
 		$f_opts['id']="client_number";
-				
+						
 		$f_client_number=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_number",$f_opts);
 		$this->addField($f_client_number);
 		//********************
@@ -91,7 +91,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field delivery_plan_date ***
 		$f_opts = array();
 		$f_opts['id']="delivery_plan_date";
-				
+						
 		$f_delivery_plan_date=new FieldSQLDate($this->getDbLink(),$this->getDbName(),$this->getTableName(),"delivery_plan_date",$f_opts);
 		$this->addField($f_delivery_plan_date);
 		//********************
@@ -99,7 +99,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field delivery_fact_date ***
 		$f_opts = array();
 		$f_opts['id']="delivery_fact_date";
-				
+						
 		$f_delivery_fact_date=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"delivery_fact_date",$f_opts);
 		$this->addField($f_delivery_fact_date);
 		//********************
@@ -107,7 +107,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field product_plan_date ***
 		$f_opts = array();
 		$f_opts['id']="product_plan_date";
-				
+						
 		$f_product_plan_date=new FieldSQLDate($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_plan_date",$f_opts);
 		$this->addField($f_product_plan_date);
 		//********************
@@ -115,7 +115,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field client_user_id ***
 		$f_opts = array();
 		$f_opts['id']="client_user_id";
-				
+						
 		$f_client_user_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_user_id",$f_opts);
 		$this->addField($f_client_user_id);
 		//********************
@@ -123,7 +123,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field firm_id ***
 		$f_opts = array();
 		$f_opts['id']="firm_id";
-				
+						
 		$f_firm_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"firm_id",$f_opts);
 		$this->addField($f_firm_id);
 		//********************
@@ -131,7 +131,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field user_id ***
 		$f_opts = array();
 		$f_opts['id']="user_id";
-				
+						
 		$f_user_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"user_id",$f_opts);
 		$this->addField($f_user_id);
 		//********************
@@ -139,7 +139,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field sales_manager_comment ***
 		$f_opts = array();
 		$f_opts['id']="sales_manager_comment";
-				
+						
 		$f_sales_manager_comment=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"sales_manager_comment",$f_opts);
 		$this->addField($f_sales_manager_comment);
 		//********************
@@ -147,7 +147,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field client_comment ***
 		$f_opts = array();
 		$f_opts['id']="client_comment";
-				
+						
 		$f_client_comment=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_comment",$f_opts);
 		$this->addField($f_client_comment);
 		//********************
@@ -155,7 +155,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field marketing_comment ***
 		$f_opts = array();
 		$f_opts['id']="marketing_comment";
-				
+						
 		$f_marketing_comment=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"marketing_comment",$f_opts);
 		$this->addField($f_marketing_comment);
 		//********************
@@ -163,7 +163,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field warehouse_id ***
 		$f_opts = array();
 		$f_opts['id']="warehouse_id";
-				
+						
 		$f_warehouse_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"warehouse_id",$f_opts);
 		$this->addField($f_warehouse_id);
 		//********************
@@ -171,7 +171,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field deliv_destination_id ***
 		$f_opts = array();
 		$f_opts['id']="deliv_destination_id";
-				
+						
 		$f_deliv_destination_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_destination_id",$f_opts);
 		$this->addField($f_deliv_destination_id);
 		//********************
@@ -179,7 +179,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field deliv_type ***
 		$f_opts = array();
 		$f_opts['id']="deliv_type";
-				
+						
 		$f_deliv_type=new FieldSQLEnum($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_type",$f_opts);
 		$this->addField($f_deliv_type);
 		//********************
@@ -187,7 +187,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field deliv_to_third_party ***
 		$f_opts = array();
 		$f_opts['id']="deliv_to_third_party";
-				
+						
 		$f_deliv_to_third_party=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_to_third_party",$f_opts);
 		$this->addField($f_deliv_to_third_party);
 		//********************
@@ -195,7 +195,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field deliv_send_sms ***
 		$f_opts = array();
 		$f_opts['id']="deliv_send_sms";
-				
+						
 		$f_deliv_send_sms=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_send_sms",$f_opts);
 		$this->addField($f_deliv_send_sms);
 		//********************
@@ -203,7 +203,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field deliv_add_cost_to_product ***
 		$f_opts = array();
 		$f_opts['id']="deliv_add_cost_to_product";
-				
+						
 		$f_deliv_add_cost_to_product=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_add_cost_to_product",$f_opts);
 		$this->addField($f_deliv_add_cost_to_product);
 		//********************
@@ -211,7 +211,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field deliv_period_id ***
 		$f_opts = array();
 		$f_opts['id']="deliv_period_id";
-				
+						
 		$f_deliv_period_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_period_id",$f_opts);
 		$this->addField($f_deliv_period_id);
 		//********************
@@ -220,7 +220,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$f_opts = array();
 		$f_opts['length']=50;
 		$f_opts['id']="deliv_responsable";
-				
+						
 		$f_deliv_responsable=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_responsable",$f_opts);
 		$this->addField($f_deliv_responsable);
 		//********************
@@ -229,7 +229,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$f_opts = array();
 		$f_opts['length']=15;
 		$f_opts['id']="deliv_responsable_tel";
-				
+						
 		$f_deliv_responsable_tel=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_responsable_tel",$f_opts);
 		$this->addField($f_deliv_responsable_tel);
 		//********************
@@ -238,7 +238,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$f_opts = array();
 		$f_opts['length']=15;
 		$f_opts['id']="tel";
-				
+						
 		$f_tel=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"tel",$f_opts);
 		$this->addField($f_tel);
 		//********************
@@ -246,7 +246,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field deliv_vehicle_id ***
 		$f_opts = array();
 		$f_opts['id']="deliv_vehicle_id";
-				
+						
 		$f_deliv_vehicle_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_vehicle_id",$f_opts);
 		$this->addField($f_deliv_vehicle_id);
 		//********************
@@ -254,7 +254,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field deliv_cost_opt_id ***
 		$f_opts = array();
 		$f_opts['id']="deliv_cost_opt_id";
-				
+						
 		$f_deliv_cost_opt_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_cost_opt_id",$f_opts);
 		$this->addField($f_deliv_cost_opt_id);
 		//********************
@@ -262,7 +262,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field deliv_vehicle_count ***
 		$f_opts = array();
 		$f_opts['id']="deliv_vehicle_count";
-				
+						
 		$f_deliv_vehicle_count=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_vehicle_count",$f_opts);
 		$this->addField($f_deliv_vehicle_count);
 		//********************
@@ -271,7 +271,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$f_opts = array();
 		$f_opts['length']=15;
 		$f_opts['id']="deliv_total";
-				
+						
 		$f_deliv_total=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_total",$f_opts);
 		$this->addField($f_deliv_total);
 		//********************
@@ -279,7 +279,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field deliv_total_edit ***
 		$f_opts = array();
 		$f_opts['id']="deliv_total_edit";
-				
+						
 		$f_deliv_total_edit=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_total_edit",$f_opts);
 		$this->addField($f_deliv_total_edit);
 		//********************
@@ -288,7 +288,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$f_opts = array();
 		$f_opts['length']=15;
 		$f_opts['id']="total";
-				
+						
 		$f_total=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total",$f_opts);
 		$this->addField($f_total);
 		//********************
@@ -298,7 +298,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$f_opts['length']=15;
 		$f_opts['defaultValue']='0';
 		$f_opts['id']="total_pack";
-				
+						
 		$f_total_pack=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total_pack",$f_opts);
 		$this->addField($f_total_pack);
 		//********************
@@ -307,7 +307,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$f_opts = array();
 		$f_opts['length']=19;
 		$f_opts['id']="total_quant";
-				
+						
 		$f_total_quant=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total_quant",$f_opts);
 		$this->addField($f_total_quant);
 		//********************
@@ -316,7 +316,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$f_opts = array();
 		$f_opts['length']=19;
 		$f_opts['id']="total_volume";
-				
+						
 		$f_total_volume=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total_volume",$f_opts);
 		$this->addField($f_total_volume);
 		//********************
@@ -325,7 +325,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$f_opts = array();
 		$f_opts['length']=19;
 		$f_opts['id']="total_weight";
-				
+						
 		$f_total_weight=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total_weight",$f_opts);
 		$this->addField($f_total_weight);
 		//********************
@@ -333,7 +333,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field printed ***
 		$f_opts = array();
 		$f_opts['id']="printed";
-				
+						
 		$f_printed=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"printed",$f_opts);
 		$this->addField($f_printed);
 		//********************
@@ -342,7 +342,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$f_opts = array();
 		$f_opts['length']=11;
 		$f_opts['id']="ext_order_num";
-				
+						
 		$f_ext_order_num=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ext_order_num",$f_opts);
 		$this->addField($f_ext_order_num);
 		//********************
@@ -351,7 +351,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$f_opts = array();
 		$f_opts['length']=36;
 		$f_opts['id']="ext_order_id";
-				
+						
 		$f_ext_order_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ext_order_id",$f_opts);
 		$this->addField($f_ext_order_id);
 		//********************
@@ -360,7 +360,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$f_opts = array();
 		$f_opts['length']=11;
 		$f_opts['id']="ext_ship_num";
-				
+						
 		$f_ext_ship_num=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ext_ship_num",$f_opts);
 		$this->addField($f_ext_ship_num);
 		//********************
@@ -369,7 +369,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$f_opts = array();
 		$f_opts['length']=36;
 		$f_opts['id']="ext_ship_id";
-				
+						
 		$f_ext_ship_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ext_ship_id",$f_opts);
 		$this->addField($f_ext_ship_id);
 		//********************
@@ -378,7 +378,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$f_opts = array();
 		$f_opts['length']=11;
 		$f_opts['id']="ext_invoice_num";
-				
+						
 		$f_ext_invoice_num=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ext_invoice_num",$f_opts);
 		$this->addField($f_ext_invoice_num);
 		//********************
@@ -387,7 +387,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$f_opts = array();
 		$f_opts['length']=36;
 		$f_opts['id']="ext_invoice_id";
-				
+						
 		$f_ext_invoice_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ext_invoice_id",$f_opts);
 		$this->addField($f_ext_invoice_id);
 		//********************
@@ -395,7 +395,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field ext_invoice_date_time ***
 		$f_opts = array();
 		$f_opts['id']="ext_invoice_date_time";
-				
+						
 		$f_ext_invoice_date_time=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"ext_invoice_date_time",$f_opts);
 		$this->addField($f_ext_invoice_date_time);
 		//********************
@@ -403,7 +403,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field cust_surv_date_time ***
 		$f_opts = array();
 		$f_opts['id']="cust_surv_date_time";
-				
+						
 		$f_cust_surv_date_time=new FieldSQLDateTime($this->getDbLink(),$this->getDbName(),$this->getTableName(),"cust_surv_date_time",$f_opts);
 		$this->addField($f_cust_surv_date_time);
 		//********************
@@ -411,7 +411,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field cust_surv_comment ***
 		$f_opts = array();
 		$f_opts['id']="cust_surv_comment";
-				
+						
 		$f_cust_surv_comment=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"cust_surv_comment",$f_opts);
 		$this->addField($f_cust_surv_comment);
 		//********************
@@ -419,7 +419,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field product_str ***
 		$f_opts = array();
 		$f_opts['id']="product_str";
-				
+						
 		$f_product_str=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_str",$f_opts);
 		$this->addField($f_product_str);
 		//********************
@@ -427,7 +427,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field product_ids ***
 		$f_opts = array();
 		$f_opts['id']="product_ids";
-				
+						
 		$f_product_ids=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"product_ids",$f_opts);
 		$this->addField($f_product_ids);
 		//********************
@@ -435,7 +435,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field submit_user_id ***
 		$f_opts = array();
 		$f_opts['id']="submit_user_id";
-				
+						
 		$f_submit_user_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"submit_user_id",$f_opts);
 		$this->addField($f_submit_user_id);
 		//********************
@@ -444,7 +444,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$f_opts = array();
 		$f_opts['defaultValue']='FALSE';
 		$f_opts['id']="paid";
-				
+						
 		$f_paid=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"paid",$f_opts);
 		$this->addField($f_paid);
 		//********************
@@ -453,7 +453,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$f_opts = array();
 		$f_opts['defaultValue']='FALSE';
 		$f_opts['id']="paid_by_bank";
-				
+						
 		$f_paid_by_bank=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"paid_by_bank",$f_opts);
 		$this->addField($f_paid_by_bank);
 		//********************
@@ -462,7 +462,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$f_opts = array();
 		$f_opts['defaultValue']='FALSE';
 		$f_opts['id']="acc_pko";
-				
+						
 		$f_acc_pko=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"acc_pko",$f_opts);
 		$this->addField($f_acc_pko);
 		//********************
@@ -470,7 +470,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field city_route_distance ***
 		$f_opts = array();
 		$f_opts['id']="city_route_distance";
-				
+						
 		$f_city_route_distance=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"city_route_distance",$f_opts);
 		$this->addField($f_city_route_distance);
 		//********************
@@ -478,7 +478,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field country_route_distance ***
 		$f_opts = array();
 		$f_opts['id']="country_route_distance";
-				
+						
 		$f_country_route_distance=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"country_route_distance",$f_opts);
 		$this->addField($f_country_route_distance);
 		//********************
@@ -487,7 +487,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$f_opts = array();
 		$f_opts['defaultValue']='FALSE';
 		$f_opts['id']="destination_to_ttn";
-				
+						
 		$f_destination_to_ttn=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"destination_to_ttn",$f_opts);
 		$this->addField($f_destination_to_ttn);
 		//********************
@@ -496,7 +496,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$f_opts = array();
 		$f_opts['length']=15;
 		$f_opts['id']="deliv_expenses";
-				
+						
 		$f_deliv_expenses=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_expenses",$f_opts);
 		$this->addField($f_deliv_expenses);
 		//********************
@@ -504,7 +504,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field deliv_expenses_edit ***
 		$f_opts = array();
 		$f_opts['id']="deliv_expenses_edit";
-				
+						
 		$f_deliv_expenses_edit=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_expenses_edit",$f_opts);
 		$this->addField($f_deliv_expenses_edit);
 		//********************
@@ -512,7 +512,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field deliv_pay_bank ***
 		$f_opts = array();
 		$f_opts['id']="deliv_pay_bank";
-				
+						
 		$f_deliv_pay_bank=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_pay_bank",$f_opts);
 		$this->addField($f_deliv_pay_bank);
 		//********************
@@ -520,7 +520,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field driver_id ***
 		$f_opts = array();
 		$f_opts['id']="driver_id";
-				
+						
 		$f_driver_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"driver_id",$f_opts);
 		$this->addField($f_driver_id);
 		//********************
@@ -528,7 +528,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		//*** Field vehicle_id ***
 		$f_opts = array();
 		$f_opts['id']="vehicle_id";
-				
+						
 		$f_vehicle_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"vehicle_id",$f_opts);
 		$this->addField($f_vehicle_id);
 		//********************
@@ -537,7 +537,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$f_opts = array();
 		$f_opts['length']=36;
 		$f_opts['id']="client_contract_ext_id";
-				
+						
 		$f_client_contract_ext_id=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_contract_ext_id",$f_opts);
 		$this->addField($f_client_contract_ext_id);
 		//********************
@@ -546,7 +546,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$f_opts = array();
 		$f_opts['length']=150;
 		$f_opts['id']="client_contract_name";
-				
+						
 		$f_client_contract_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_contract_name",$f_opts);
 		$this->addField($f_client_contract_name);
 		//********************

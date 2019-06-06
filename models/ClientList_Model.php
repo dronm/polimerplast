@@ -26,7 +26,7 @@ class ClientList_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['primaryKey'] = TRUE;
 		$f_opts['id']="id";
-				
+						
 		$f_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"id",$f_opts);
 		$this->addField($f_id);
 		//********************
@@ -34,7 +34,7 @@ class ClientList_Model extends ModelSQL{
 		//*** Field name ***
 		$f_opts = array();
 		$f_opts['id']="name";
-				
+						
 		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
 		//********************
@@ -42,7 +42,7 @@ class ClientList_Model extends ModelSQL{
 		//*** Field occupation ***
 		$f_opts = array();
 		$f_opts['id']="occupation";
-				
+						
 		$f_occupation=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"occupation",$f_opts);
 		$this->addField($f_occupation);
 		//********************
@@ -50,7 +50,7 @@ class ClientList_Model extends ModelSQL{
 		//*** Field inn ***
 		$f_opts = array();
 		$f_opts['id']="inn";
-				
+						
 		$f_inn=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"inn",$f_opts);
 		$this->addField($f_inn);
 		//********************
@@ -58,7 +58,7 @@ class ClientList_Model extends ModelSQL{
 		//*** Field contract_descr ***
 		$f_opts = array();
 		$f_opts['id']="contract_descr";
-				
+						
 		$f_contract_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"contract_descr",$f_opts);
 		$this->addField($f_contract_descr);
 		//********************
@@ -66,7 +66,7 @@ class ClientList_Model extends ModelSQL{
 		//*** Field contract_period ***
 		$f_opts = array();
 		$f_opts['id']="contract_period";
-				
+						
 		$f_contract_period=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"contract_period",$f_opts);
 		$this->addField($f_contract_period);
 		//********************
@@ -74,7 +74,7 @@ class ClientList_Model extends ModelSQL{
 		//*** Field terms ***
 		$f_opts = array();
 		$f_opts['id']="terms";
-				
+						
 		$f_terms=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"terms",$f_opts);
 		$this->addField($f_terms);
 		//********************
@@ -82,7 +82,7 @@ class ClientList_Model extends ModelSQL{
 		//*** Field banned ***
 		$f_opts = array();
 		$f_opts['id']="banned";
-				
+						
 		$f_banned=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"banned",$f_opts);
 		$this->addField($f_banned);
 		//********************
@@ -90,7 +90,7 @@ class ClientList_Model extends ModelSQL{
 		//*** Field client_activity_descr ***
 		$f_opts = array();
 		$f_opts['id']="client_activity_descr";
-				
+						
 		$f_client_activity_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_activity_descr",$f_opts);
 		$this->addField($f_client_activity_descr);
 		//********************
@@ -98,7 +98,7 @@ class ClientList_Model extends ModelSQL{
 		//*** Field login_allowed ***
 		$f_opts = array();
 		$f_opts['id']="login_allowed";
-				
+						
 		$f_login_allowed=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"login_allowed",$f_opts);
 		$this->addField($f_login_allowed);
 		//********************
@@ -106,7 +106,7 @@ class ClientList_Model extends ModelSQL{
 		//*** Field def_firm_id ***
 		$f_opts = array();
 		$f_opts['id']="def_firm_id";
-				
+						
 		$f_def_firm_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"def_firm_id",$f_opts);
 		$this->addField($f_def_firm_id);
 		//********************
@@ -114,7 +114,7 @@ class ClientList_Model extends ModelSQL{
 		//*** Field def_warehouse_id ***
 		$f_opts = array();
 		$f_opts['id']="def_warehouse_id";
-				
+						
 		$f_def_warehouse_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"def_warehouse_id",$f_opts);
 		$this->addField($f_def_warehouse_id);
 		//********************
@@ -123,7 +123,7 @@ class ClientList_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=19;
 		$f_opts['id']="def_debt";
-				
+						
 		$f_def_debt=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"def_debt",$f_opts);
 		$this->addField($f_def_debt);
 		//********************
@@ -132,7 +132,7 @@ class ClientList_Model extends ModelSQL{
 		$f_opts = array();
 		$f_opts['length']=19;
 		$f_opts['id']="debt_total";
-				
+						
 		$f_debt_total=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"debt_total",$f_opts);
 		$this->addField($f_debt_total);
 		//********************
@@ -140,7 +140,7 @@ class ClientList_Model extends ModelSQL{
 		//*** Field deleted ***
 		$f_opts = array();
 		$f_opts['id']="deleted";
-				
+						
 		$f_deleted=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deleted",$f_opts);
 		$this->addField($f_deleted);
 		//********************
