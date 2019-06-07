@@ -946,6 +946,9 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 			vh_n.setAttribute("fkey_vehicle_id","");
 			vh_n.setAttribute("last_fkey_vehicle_id","");				
 		}
+		if (this.m_delivTypeCtrl.getValue()=="by_client"){
+			this.m_delivVehicleCntCtrl.setValue(0);
+		}
 	}
 	else{
 		var m = resp.getModelById("head_history");
