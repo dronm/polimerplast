@@ -123,6 +123,13 @@ class ClientSearch_Controller extends ControllerSQL{
 			new Field('val',DT_STRING,array('value'=>$json->suggestions[0]->value))
 		);
 		$model->insert($row);					
+		
+		$row = array(
+			new Field('param',DT_STRING,array('value'=>'НаименованиеКраткое')),
+			new Field('val',DT_STRING,array('value'=>$json->suggestions[0]->data->name->short))
+		);
+		$model->insert($row);					
+		
 		//
 		if ($json->suggestions[0]->data){
 			if ($json->suggestions[0]->data->management){

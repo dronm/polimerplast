@@ -2644,7 +2644,8 @@ WindowFormModalBS.prototype.setCaption=function(caption){}
 WindowFormModalBS.prototype.setFocus=function(){} 
 function ButtonOrgSearch(id,options){options=options||{};options.glyph="glyphicon-search";options.title="Найти контрагента по базе ЕГРЮЛ/ЕГРИП";this.m_viewContext=options.viewContext;this.m_onGetData=options.onGetData;this.m_checkIfExists=options.checkIfExists;var self=this;options.onClick=options.onClick||function(event){self.doSearch();};ButtonOrgSearch.superclass.constructor.call(this,id,options);}
 extend(ButtonOrgSearch,ButtonCtrl);ButtonOrgSearch.prototype.doSearch=function(){var node=nd("Client_inn");if(!node.value||!node.value.length){throw new Error("Не задан параметр поиска!");}
-var contr=new ClientSearch_Controller(new ServConnector(HOST_NAME));var self=this;contr.run("search",{"params":{"query":node.value,"checkIfExists":this.m_checkIfExists},"func":function(resp){var m=resp.getModelById("SearchResult_Model",true);while(m.getNextRow()){var v=m.getFieldValue("val");if(m.getFieldValue("param")=="Наименование"){nd("Client_name").value=v;nd("Client_name_full").value=v;}
+var contr=new ClientSearch_Controller(new ServConnector(HOST_NAME));var self=this;contr.run("search",{"params":{"query":node.value,"checkIfExists":this.m_checkIfExists},"func":function(resp){var m=resp.getModelById("SearchResult_Model",true);while(m.getNextRow()){var v=m.getFieldValue("val");if(m.getFieldValue("param")=="Наименование"){nd("Client_name_full").value=v;}
+else if(m.getFieldValue("param")=="НаименованиеКраткое"){nd("Client_name").value=v;}
 else if(m.getFieldValue("param")=="КПП"){nd("Client_kpp").value=v;}
 else if(m.getFieldValue("param")=="Адрес"){nd("Client_addr_reg").value=v;}
 else if(m.getFieldValue("param")=="ОГРН"){nd("Client_ogrn").value=v;}}}});} /*
