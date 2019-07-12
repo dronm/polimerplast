@@ -138,6 +138,9 @@ class Client_Controller extends ControllerSQL{
 		$param = new FieldExtString('email'
 				,array());
 		$pm->addParam($param);
+		$param = new FieldExtBool('deliv_add_cost_to_product'
+				,array());
+		$pm->addParam($param);
 		
 		$pm->addParam(new FieldExtInt('ret_id'));
 		
@@ -286,6 +289,10 @@ class Client_Controller extends ControllerSQL{
 			));
 			$pm->addParam($param);
 		$param = new FieldExtString('email'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtBool('deliv_add_cost_to_product'
 				,array(
 			));
 			$pm->addParam($param);

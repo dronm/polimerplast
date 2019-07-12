@@ -623,6 +623,15 @@ function RepSale_Model(options){
 	
 	filed_options.autoInc = false;	
 	
+	options.fields.doct_extra_price_category = new FieldInt("doct_extra_price_category",filed_options);
+	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	
+	filed_options.autoInc = false;	
+	
 	options.fields.sys_level_val = new FieldString("sys_level_val",filed_options);
 	
 				

@@ -30,6 +30,9 @@ extend(ClientSearch_Controller,ControllerDb);
 				
 		pm.addParam(new FieldInt("checkIfExists"));
 	
+				
+		pm.addParam(new FieldInt("client_id"));
+	
 			
 }
 

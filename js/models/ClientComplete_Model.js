@@ -40,6 +40,15 @@ function ClientComplete_Model(options){
 	
 	options.fields.name = new FieldString("name",filed_options);
 	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	
+	filed_options.autoInc = false;	
+	
+	options.fields.deliv_add_cost_to_product = new FieldString("deliv_add_cost_to_product",filed_options);
+	
 		ClientComplete_Model.superclass.constructor.call(this,id,options);
 }
 extend(ClientComplete_Model,Model);

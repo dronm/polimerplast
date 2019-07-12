@@ -205,7 +205,7 @@ class Warehouse_Controller extends ControllerSQL{
 			$pares = explode(',',$zone);
 			if (count($pares)){
 				$zone.=','.$pares[0];				
-				throw new Exception($zone);
+				//throw new Exception($zone);
 				$ar=$this->getDbLink()->query_first(sprintf(
 				"SELECT
 					replace(replace(st_astext(ST_Centroid(ST_GeomFromText('POLYGON((%s))'))),'POINT(',''),')','')

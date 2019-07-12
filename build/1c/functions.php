@@ -1110,11 +1110,10 @@
 						$obj = $client_ref->ПолучитьОбъект();
 					}
 					$obj->НаименованиеПолное=$name_full;
-					
+
 					$obj_part = $obj->Партнер->ПолучитьОбъект();
 					$obj_part->НаименованиеПолное=$name_full;
-					$obj_part->Записать();
-					
+					$obj_part->Записать();					
 				}
 			}
 			if($client_ref->КодПоОКПО<>$attrs['okpo']){

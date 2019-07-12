@@ -1,6 +1,6 @@
 -- View: clients_complete
 
-DROP VIEW clients_complete;
+--DROP VIEW clients_complete;
 
 
 CREATE OR REPLACE VIEW clients_complete AS 
@@ -20,7 +20,9 @@ CREATE OR REPLACE VIEW clients_complete AS
 			WHEN cl.def_firm_id IS NULL THEN 0
 			ELSE
 				(SELECT sum(t.def_debt) FROM client_debts AS t WHERE t.client_id=cl.id AND t.firm_id=cl.def_firm_id)
-		END AS def_debt
+		END AS def_debt,
+		
+		cl.deliv_add_cost_to_product
 		
 	FROM clients AS cl
 	

@@ -2,7 +2,7 @@
 <metadata debug="TRUE" owner="polimerplast" dataSchema="public">
 	<versions>
 		<version dateOpen="2016-06-07 07:05" dateClose="2016-06-07 11:06:25">1.0021</version>
-		<lastBuild>2019-06-11 07:11:14</lastBuild>
+		<lastBuild>2019-07-12 05:49:06</lastBuild>
 		<version dateOpen="2016-06-07 11:06:56"/>
 		<version dateOpen="2016-06-07 11:06:57" dateClose="2016-06-07 14:06:30">1.0022</version>
 		<version dateOpen="2016-06-07 14:06:32" dateClose="2016-06-07 16:06:31">1.0023</version>
@@ -111,6 +111,7 @@
 		<version dateOpen="2019-05-26 06:05:49" dateClose="2019-06-06 06:06:53">1.0117</version>
 		<version dateOpen="2019-06-07 17:06:07" dateClose="2019-06-07 17:06:09">1.0118</version>
 		<version dateOpen="2019-06-11 07:06:10" dateClose="2019-06-11 07:06:11">1.0119</version>
+		<version dateOpen="2019-07-10 10:07:06" dateClose="2019-07-12 05:07:49">1.0120</version>
 	</versions>
 	<globalFilters>
 		<field id="client_id"/>
@@ -281,6 +282,7 @@
 			<field id="def_warehouse_id" dataType="Int" refTable="warehouses" refField="id"/>
 			<field id="deleted" dataType="Bool" defaultValue="FALSE"/>
 			<field id="email" dataType="String" length="50"/>
+			<field id="deliv_add_cost_to_product" dataType="Bool"/>
 			<index id="clients_name_index" unique="TRUE">
 				<expression>lower(name)</expression>
 			</index>
@@ -316,10 +318,12 @@
 			<field id="def_warehouse_id" dataType="Int"/>
 			<field id="deleted" dataType="Bool"/>
 			<field id="email" dataType="String"/>
+			<field id="deliv_add_cost_to_product" dataType="Bool"/>
 		</model>
 		<model id="ClientComplete" parent="ModelSQL" dataTable="clients_complete" virtual="TRUE">
 			<field id="id" dataType="Int" primaryKey="TRUE"/>
 			<field id="name" dataType="String"/>
+			<field id="deliv_add_cost_to_product" dataType="String"/>
 		</model>
 		<model id="ClientContract" parent="ModelSQL" dataTable="client_contracts" virtual="FALSE">
 			<field id="id" dataType="Int" primaryKey="TRUE" autoInc="TRUE" required="TRUE"/>
@@ -1422,6 +1426,7 @@
 			<field id="client_debt_total" dataType="String" length="19" precision="2" alias="Просроченная дебиторская задолженность (стоимость)"/>
 			<field id="doc_customer_survey_points" dataType="String" alias="Баллы опроса"/>
 			<field id="doc_deliv_expenses" dataType="String" alias="Затраты на доставку"/>
+			<field id="doct_extra_price_category" dataType="Int"/>
 			<field id="sys_level_val" dataType="String" sysCol="TRUE"/>
 			<field id="sys_level_count" dataType="String" sysCol="TRUE"/>
 			<field id="sys_level_col_count" dataType="String" sysCol="TRUE"/>
@@ -2773,6 +2778,7 @@
 			<publicMethod id="search">
 				<field id="query" dataType="String" length="250" required="TRUE"/>
 				<field id="checkIfExists" dataType="Int"/>
+				<field id="client_id" dataType="Int"/>
 			</publicMethod>
 		</controller>
 		<controller id="Bank" parentId="ControllerSQL" noState="FALSE">

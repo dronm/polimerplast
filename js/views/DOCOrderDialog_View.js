@@ -204,7 +204,7 @@ function DOCOrderDialog_View(id,options){
 			"onSelected":function(){
 				self.onClientSelected(true);
 			},
-			"extraFields":["def_firm_id","def_warehouse_id","def_debt","debt_total"],
+			"extraFields":["def_firm_id","def_warehouse_id","def_debt","debt_total","deliv_add_cost_to_product"],
 			"winObj":options.winObj
 			});
 		this.bindControl(this.m_clientCtrl,
@@ -286,11 +286,32 @@ function DOCOrderDialog_View(id,options){
 		"errorControl":this.getErrorControl(),
 		"warehouseCtrl":this.m_wareHCtrl,
 		"afterRefresh":function(){
-			self.refreshProdTotals();
+			if(self.m_productRecalc)return;
 			
 			if (self.m_productDetails.getModified()){
 				self.calcVehicleCount();
 			}
+			else{
+				self.refreshProdTotals();
+			}
+			/*
+			if(self.m_delivAddToCostCtrl.getValue()=="true"){
+				self.m_recalc = true;
+				self.recalcProductPrices(function(){
+					if (self.m_productDetails.getModified()){
+						self.calcVehicleCount();
+					}
+					self.m_recalc = false;
+				});
+			}
+			else{						
+				self.refreshProdTotals();
+			
+				if (self.m_productDetails.getModified()){
+					self.calcVehicleCount();
+				}
+			}
+			*/
 		}
 		});
 	this.m_details.addElement(this.m_productDetails);	
@@ -804,7 +825,7 @@ DOCOrderDialog_View.prototype.setClientId = function(clientId,setPopFirm){
 	//значения по умолчанию
 	if (this.m_clientCtrl){
 		this.setDebts(0, 0);
-			
+		
 		var def_firm = this.m_clientCtrl.getAttr("def_firm_id");
 		var def_warehouse = this.m_clientCtrl.getAttr("def_warehouse_id");
 		if (def_firm && def_firm!="null"){
@@ -822,6 +843,13 @@ DOCOrderDialog_View.prototype.setClientId = function(clientId,setPopFirm){
 		if (def_warehouse && def_warehouse!="null"){
 			this.m_wareHCtrl.setFieldId("warehouse_id",def_warehouse);
 			this.onWarehouseSelected();
+		}
+		
+		var add_cost_old_val = this.m_delivAddToCostCtrl.getValue();
+		var add_cost_val = this.m_clientCtrl.getAttr("deliv_add_cost_to_product");		
+		if(add_cost_old_val!=add_cost_val){
+			this.m_delivAddToCostCtrl.setValue(add_cost_val);
+			this.recalcProductPrices();
 		}
 	}
 		
@@ -1153,12 +1181,12 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 	
 	var do_calc_cost1 = (!this.m_readOnly
 		&& (SERV_VARS.ROLE_ID=="client"
-			|| (SERV_VARS.ROLE_ID!="client" && this.getViewControlValue(this.getId()+"_deliv_total_edit")!="true")
+			|| this.getViewControlValue(this.getId()+"_deliv_total_edit")!="true"
 	   	)
 	);			
 	var do_calc_cost2 = (!this.m_readOnly
 		&& (SERV_VARS.ROLE_ID=="client"
-			|| (SERV_VARS.ROLE_ID!="client" && this.getViewControlValue(this.getId()+"_deliv_expenses_edit")!="true")
+			|| this.getViewControlValue(this.getId()+"_deliv_expenses_edit")!="true"
 	   	)
 	);			
 	
@@ -1206,7 +1234,7 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 				self.m_clientDestCtrl.setEnabled(true);				
 			},
 			"func":function(resp){
-			
+				debugger
 				//old values
 				/*
 				self.m_old_wh_id = wh_id;
@@ -1276,15 +1304,16 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 							self.m_delivExpCtrl.setComment(cost2_com);
 							
 						}
-						
+						self.recalcPricesRefreshTotals();
+						/*
 						if (do_calc_cost1){
-							//self.recalcPricesRefreshTotals();
-							self.refreshProdTotals();
+							self.recalcPricesRefreshTotals();
 						}
+						*/
 					}	
 					else{
-						//self.recalcPricesRefreshTotals();
-						self.refreshProdTotals();
+						self.recalcPricesRefreshTotals();
+						//self.refreshProdTotals();
 					}
 					
 					if (former_state){
@@ -1298,8 +1327,8 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 		});
 	}
 	else{
-		//this.recalcPricesRefreshTotals();
-		this.refreshProdTotals();
+		this.recalcPricesRefreshTotals();
+		//this.refreshProdTotals();
 	}
 }
 
@@ -1350,6 +1379,7 @@ DOCOrderDialog_View.prototype.recalcProductPrices = function(){
 				}
 			},
 			"func":function(resp){
+				/*
 				if (self.m_productDetails.onRefresh){
 					self.m_productDetails.onRefresh();
 				}				
@@ -1359,6 +1389,18 @@ DOCOrderDialog_View.prototype.recalcProductPrices = function(){
 					self.m_clientCtrl.setEnabled(true);				
 				}
 				
+				if(callBack)callBack.call(self);
+				*/
+				
+				self.m_productRecalc = true;
+				self.m_productDetails.onRefresh(function(){
+					self.m_wareHCtrl.setEnabled(true);
+					if (self.m_clientCtrl){
+						self.m_clientCtrl.setEnabled(true);				
+					}
+					self.refreshProdTotals();
+					self.m_productRecalc = false;
+				});
 			}
 		});
 	}

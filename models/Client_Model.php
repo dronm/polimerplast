@@ -318,6 +318,14 @@ class Client_Model extends ModelSQL{
 		$f_email=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"email",$f_opts);
 		$this->addField($f_email);
 		//********************
+		
+		//*** Field deliv_add_cost_to_product ***
+		$f_opts = array();
+		$f_opts['id']="deliv_add_cost_to_product";
+						
+		$f_deliv_add_cost_to_product=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_add_cost_to_product",$f_opts);
+		$this->addField($f_deliv_add_cost_to_product);
+		//********************
 	
 		$order = new ModelOrderSQL();		
 		$this->setDefaultModelOrder($order);		

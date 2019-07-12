@@ -452,7 +452,7 @@ $field_resolver =
 			"fieldExpr"=>"(CASE WHEN doc_orders.driver_id IS NOT NULL THEN doc_orders.driver_id ELSE deliveries_virt.driver_id END)",
 			"table"=>["order_deliv_virt","deliveries_virt"]
 		),			
-			
+		
 		"doc_vehicle_descr" => array(
 			"fieldExprWhere"=>"(CASE WHEN doc_orders.driver_id IS NOT NULL THEN order_deliv_virt.vehicle_descr ELSE deliveries_virt.vehicle_descr END)",
 			"fieldExpr"=>"(CASE WHEN doc_orders.driver_id IS NOT NULL THEN order_deliv_virt.vehicle_descr ELSE deliveries_virt.vehicle_descr END)",
@@ -537,6 +537,52 @@ $field_resolver =
 			"fieldWhere"=>"pack_exists",
 			"fieldExpr"=>"bool_descr(pack_exists)",
 			"table"=>"doc_orders_t_products"
+		),
+
+		"doct_extra_price_category" => array(
+			"fieldExprWhere"=>"(CASE
+				WHEN
+					product_extra_pay_for_abnormal_size(products,doc_orders_t_products.mes_length,doc_orders_t_products.mes_width)
+				THEN				
+					COALESCE(
+						(SELECT csp.category
+						FROM product_custom_size_prices AS csp
+						WHERE csp.product_id=doc_orders_t_products.product_id
+							AND csp.quant<=
+							eval(eval_params(
+								products.extra_pay_calc_formula,
+								doc_orders_t_products.mes_length,
+								doc_orders_t_products.mes_width,
+								doc_orders_t_products.mes_height
+							))							
+						ORDER BY csp.quant DESC LIMIT 1
+						)
+					,0)
+				
+				ELSE 0
+				END)",
+			"fieldExpr"=>"(CASE
+				WHEN
+					product_extra_pay_for_abnormal_size(products,doc_orders_t_products.mes_length,doc_orders_t_products.mes_width)
+				THEN				
+					COALESCE(
+						(SELECT csp.category
+						FROM product_custom_size_prices AS csp
+						WHERE csp.product_id=doc_orders_t_products.product_id
+							AND csp.quant<=
+							eval(eval_params(
+								products.extra_pay_calc_formula,
+								doc_orders_t_products.mes_length,
+								doc_orders_t_products.mes_width,
+								doc_orders_t_products.mes_height
+							))							
+						ORDER BY csp.quant DESC LIMIT 1
+						)
+					,0)
+				
+				ELSE 0
+				END)",
+			"table"=>["doc_orders_t_products","products"]
 		),
 		
 		//facts

@@ -42,7 +42,8 @@ CREATE OR REPLACE VIEW public.client_dialog AS
     f.name AS def_firm_descr,
     w.name AS def_warehouse_descr,
     cl.deleted,
-    cl.email
+    cl.email,
+    cl.deliv_add_cost_to_product
    FROM clients cl
      LEFT JOIN client_activities clac ON clac.id = cl.client_activity_id
      LEFT JOIN firms f ON f.id = cl.def_firm_id

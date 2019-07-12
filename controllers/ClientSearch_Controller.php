@@ -40,6 +40,11 @@ class ClientSearch_Controller extends ControllerSQL{
 					
 		$pm->addParam(new FieldExtInt('checkIfExists',$opts));
 	
+				
+	$opts=array();
+					
+		$pm->addParam(new FieldExtInt('client_id',$opts));
+	
 			
 		$this->addPublicMethod($pm);
 
@@ -77,8 +82,9 @@ class ClientSearch_Controller extends ControllerSQL{
 		$params->addAll();
 		
 		if($params->getVal("checkIfExists")==1){
+			$client_id = $params->getVal("client_id");
 			$ar = $this->getDbLink()->query_first(sprintf("SELECT id,name FROM clients WHERE inn=%s",$params->getDbVal("query")));	
-			if (is_array($ar) && count($ar)){
+			if (is_array($ar) && count($ar) && ($client_id=='null' || $client_id!=$ar['id']) ){			
 				throw new Exception('Уже есть клиент с таким ИНН: '.$ar['name']);
 			}
 		}

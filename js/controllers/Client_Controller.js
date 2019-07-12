@@ -246,6 +246,12 @@ extend(Client_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
+	options = {};
+	
+	var param = new FieldBool("deliv_add_cost_to_product",options);
+	
+	pm.addParam(param);
+	
 	pm.addParam(new FieldInt("ret_id",{}));
 	
 	
@@ -461,6 +467,12 @@ extend(Client_Controller,ControllerDb);
 	options = {};
 	
 	var param = new FieldString("email",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldBool("deliv_add_cost_to_product",options);
 	
 	pm.addParam(param);
 	

@@ -600,6 +600,14 @@ class RepSale_Model extends ModelReportSQL{
 		$this->addField($f_doc_deliv_expenses);
 		//********************
 		
+		//*** Field doct_extra_price_category ***
+		$f_opts = array();
+		$f_opts['id']="doct_extra_price_category";
+						
+		$f_doct_extra_price_category=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"doct_extra_price_category",$f_opts);
+		$this->addField($f_doct_extra_price_category);
+		//********************
+		
 		//*** Field sys_level_val ***
 		$f_opts = array();
 		$f_opts['sysCol']=TRUE;

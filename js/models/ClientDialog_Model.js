@@ -112,6 +112,15 @@ function ClientDialog_Model(options){
 	
 	options.fields.email = new FieldString("email",filed_options);
 	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	
+	filed_options.autoInc = false;	
+	
+	options.fields.deliv_add_cost_to_product = new FieldBool("deliv_add_cost_to_product",filed_options);
+	
 		ClientDialog_Model.superclass.constructor.call(this,id,options);
 }
 extend(ClientDialog_Model,Model);

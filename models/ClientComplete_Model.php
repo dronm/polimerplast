@@ -35,6 +35,14 @@ class ClientComplete_Model extends ModelSQL{
 		$f_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"name",$f_opts);
 		$this->addField($f_name);
 		//********************
+		
+		//*** Field deliv_add_cost_to_product ***
+		$f_opts = array();
+		$f_opts['id']="deliv_add_cost_to_product";
+						
+		$f_deliv_add_cost_to_product=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_add_cost_to_product",$f_opts);
+		$this->addField($f_deliv_add_cost_to_product);
+		//********************
 	
 	}
 

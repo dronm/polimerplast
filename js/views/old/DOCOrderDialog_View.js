@@ -16,13 +16,13 @@ function DOCOrderDialog_View(id,options){
 	
 	var self = this;	
 	this.m_beforeOpen = function(contr,isInsert,isCopy){
-		if (self.m_beforeOpenCalled)return;
+		//if (self.m_beforeOpenCalled)return;
 		var doc_id = 0;		
 		
 		self.m_productDetails.getGridControl().setViewId(self.m_viewId);
 		
 		//self.getDataControl(self.getId()+"_view_id").control.setValue(view_id);
-		//console.log("viewId="+self.getDataControl(self.getId()+"_view_id").control.getValue());
+		//console.log("viewId="+self.m_viewId);
 		
 		//&&!isCopy
 		if (!isInsert){
@@ -60,8 +60,7 @@ function DOCOrderDialog_View(id,options){
 		options.cmdControls = [this.m_ctrlSetShipped];	
 	}
 		
-	DOCOrderDialog_View.superclass.constructor.call(this,
-		id,options);
+	DOCOrderDialog_View.superclass.constructor.call(this,id,options);
 	
 	var model_id = "DOCOrderDialog_Model";
 	
@@ -74,12 +73,6 @@ function DOCOrderDialog_View(id,options){
 	};
 	this.m_evFirmSelected = function(){
 		self.onFirmSelected();
-	};	
-	this.m_evDelivDestSelected= function(){
-		self.calcDelivCost();
-	};	
-	this.m_evDelivCostOptSelected= function(){
-		self.calcDelivCost();
 	};	
 	
 	this.m_viewId = hex_md5(uuid());
@@ -207,16 +200,46 @@ function DOCOrderDialog_View(id,options){
 		//Заказчик
 		this.m_clientCtrl = new ClientEditObject("client_id",id+"_client",false,{
 			"noOpen":true,
+			"required":true,
 			"onSelected":function(){
 				self.onClientSelected(true);
 			},
-			"extraFields":["def_firm_id","def_warehouse_id","def_debt","debt_total"],
+			"extraFields":["def_firm_id","def_warehouse_id","def_debt","debt_total","deliv_add_cost_to_product"],
 			"winObj":options.winObj
 			});
 		this.bindControl(this.m_clientCtrl,
 			{"modelId":model_id,"valueFieldId":"client_descr","keyFieldIds":["client_id"]},
 			{"valueFieldId":null,"keyFieldIds":["client_id"]});	
 		cont.addElement(this.m_clientCtrl);
+
+		//Договор
+		this.m_clientContractCtrl = new ClientExtContractEdit({
+			"fieldId":"client_contract_ext_id",
+			"controlId":(id+"client_contract_ext_id"),
+			"contr":(new Client_Controller(new ServConnector(HOST_NAME))),
+			"noOpen":true,
+			"winObj":options.winObj,
+			"mainView":this
+			});
+		this.bindControl(this.m_clientContractCtrl,
+			{"modelId":model_id,"valueFieldId":"client_contract_name","keyFieldIds":["client_contract_ext_id"]},
+			{"valueFieldId":null,"keyFieldIds":["client_contract_ext_id"]});	
+		cont.addElement(this.m_clientContractCtrl);
+
+		//Грузополучатель
+		this.m_gruzpolCtrl = new ClientEditObject("gruzopoluchatel_id",id+"_gruzopoluchatel",false,{
+			"required":false,
+			"labelCaption":"Грузополучатель:",
+			"noOpen":true,
+			"onSelected":function(){
+				self.onClientSelected(true);
+			},
+			"winObj":options.winObj
+			});
+		this.bindControl(this.m_gruzpolCtrl,
+			{"modelId":model_id,"valueFieldId":"gruzopoluchatel_descr","keyFieldIds":["gruzopoluchatel_id"]},
+			{"valueFieldId":null,"keyFieldIds":["gruzopoluchatel_id"]});	
+		cont.addElement(this.m_gruzpolCtrl);
 			
 		//ответственный
 		this.m_clientUserCtrl = new ClientUserEditObject("client_user_id",id+"_client_user",false);
@@ -263,7 +286,31 @@ function DOCOrderDialog_View(id,options){
 		"errorControl":this.getErrorControl(),
 		"warehouseCtrl":this.m_wareHCtrl,
 		"afterRefresh":function(){
+			if(self.m_productRecalc)return;
+			
 			self.refreshProdTotals();
+		
+			if (self.m_productDetails.getModified()){
+				self.calcVehicleCount();
+			}
+			/*
+			if(self.m_delivAddToCostCtrl.getValue()=="true"){
+				self.m_recalc = true;
+				self.recalcProductPrices(function(){
+					if (self.m_productDetails.getModified()){
+						self.calcVehicleCount();
+					}
+					self.m_recalc = false;
+				});
+			}
+			else{						
+				self.refreshProdTotals();
+			
+				if (self.m_productDetails.getModified()){
+					self.calcVehicleCount();
+				}
+			}
+			*/
 		}
 		});
 	this.m_details.addElement(this.m_productDetails);	
@@ -326,7 +373,36 @@ function DOCOrderDialog_View(id,options){
 		"mainView":this,
 		"options":{
 			"onSelected":function(){
-				self.calcDelivCost();
+				if (!parseInt(self.m_clientDestCtrl.getAttr("fkey_deliv_destination_id"))){
+					self.m_clientDestCtrl.setEnabled(false);
+					var contr = new ClientDestination_Controller(new ServConnector(HOST_NAME));
+					contr.run("insert",{
+						"params":{
+							"error_on_no_road":"1",
+							"client_id":self.m_clientCtrl.getAttr("fkey_client_id"),
+							"value":self.m_clientDestCtrl.getValue()
+						},
+						"func":function(resp){
+							if (resp.modelExists("InsertedId_Model")){
+								var m = resp.getModelById("InsertedId_Model",true);
+								if (m.getNextRow()){
+									self.m_clientDestCtrl.setAttr("fkey_deliv_destination_id",m.getFieldValue("id"));
+									DOMHandler.removeClass(self.m_clientDestCtrl.m_node,"error");
+									self.calcDelivCost();
+								}
+							}
+							self.m_clientDestCtrl.setEnabled(true);
+						},
+						"err":function(resp,errCode,errStr){
+							self.m_clientDestCtrl.setEnabled(true);
+
+							WindowMessage.show({"text":errStr});	
+						}
+					});				
+				}
+				else{
+					self.calcDelivCost();
+				}
 			}
 		}		
 	});
@@ -370,6 +446,7 @@ function DOCOrderDialog_View(id,options){
 		"defaultId":"by_client",
 		"options":{"events":{"change":function(){
 			self.changeDelivType();
+			self.refreshProdTotals();
 		}}},
 	});
 	this.bindControl(this.m_delivTypeCtrl,
@@ -386,7 +463,7 @@ function DOCOrderDialog_View(id,options){
 			self.setToThirdParty(
 				self.m_toThirdPartyCtrl.getValue()
 			);
-			self.recalcProductPrices();
+			self.recalcPricesRefreshTotals();
 		}},
 		"attrs":{}}
 	);		
@@ -452,13 +529,13 @@ function DOCOrderDialog_View(id,options){
 	this.m_delivCostOptCtrl = new DelivCostOptEdit({
 		"fieldId":"deliv_cost_opt_id",
 		"controlId":id+"_deliv_cost_opt",
-		"inLine":false,
-		"options":{"events":{
+		"inLine":false
+		,"options":{"events":{
 			"change":function(){
 				self.calcVehicleCount();
 			}
 		}}
-		});		
+	});		
 	this.bindControl(this.m_delivCostOptCtrl,
 		{"modelId":model_id,"valueFieldId":"deliv_cost_opt_descr","keyFieldIds":["deliv_cost_opt_id"]},
 		{"valueFieldId":null,"keyFieldIds":["deliv_cost_opt_id"]});	
@@ -494,6 +571,7 @@ function DOCOrderDialog_View(id,options){
 			"events":{
 				"keyup":function(){
 					self.checkForVehicleCapacity();
+					self.calcDelivCost();
 				}
 			}
 	});	
@@ -501,6 +579,26 @@ function DOCOrderDialog_View(id,options){
 		{"modelId":model_id,"valueFieldId":"deliv_vehicle_count","keyFieldIds":null},
 		{"valueFieldId":"deliv_vehicle_count","keyFieldIds":null});	
 	sub_cont.addElement(this.m_delivVehicleCntCtrl);	
+	
+	//Автомобиль
+	this.m_vehicleCtrl = new VehicleEditObject({
+		"fieldId":"vehicle_id",
+		"controlId":"vehicle",
+		"inLine":false,
+		"options":{
+			"attrs":{"fkey_vehicle_id":"vehicle_id"},
+			"alwaysUpdate":true
+		}
+	});
+	this.bindControl(this.m_vehicleCtrl,
+		{"modelId":model_id,
+		"valueFieldId":"vehicle_descr",
+		"keyFieldIds":["vehicle_id"]},
+		{"modelId":model_id,
+		"valueFieldId":null,"keyFieldIds":["vehicle_id"]}
+	);
+	sub_cont.addElement(this.m_vehicleCtrl);	
+	
 	
 	//Стоимость доставки
 	this.m_delivCostComment = new Control(id+"_deliv_comment","div",{});
@@ -516,6 +614,11 @@ function DOCOrderDialog_View(id,options){
 	}
 	else{
 		ctrl_class = EditMoneyEditable;
+		opts.onToggle = function(v){
+			if(!v){
+				self.calcDelivCost();
+			}
+		};
 		var ctrl_edit = new Control(id+"_deliv_total_edit","div",{
 			"name":"deliv_total_edit",
 			"tableLayout":false,
@@ -528,14 +631,10 @@ function DOCOrderDialog_View(id,options){
 		opts.editAllowedFieldCtrl = ctrl_edit;
 	}
 	opts.events={
-		"change":function(){
-			/*Пересчет только если от этого зависит тз*/
-			if (self.m_delivAddToCostCtrl.getValue()=="true"){
-				self.recalcProductPrices();
-			}
-			else{
-				self.refreshProdTotals();
-			}
+		"keyup":function(){
+			/*Пересчет только если от этого зависит трансп затраты*/
+			self.calcDelivCost();
+			//self.recalcPricesRefreshTotals();
 		}
 	};	
 	this.m_delivCost = new ctrl_class(id+"_deliv_total",
@@ -725,7 +824,7 @@ DOCOrderDialog_View.prototype.setClientId = function(clientId,setPopFirm){
 	//значения по умолчанию
 	if (this.m_clientCtrl){
 		this.setDebts(0, 0);
-			
+		
 		var def_firm = this.m_clientCtrl.getAttr("def_firm_id");
 		var def_warehouse = this.m_clientCtrl.getAttr("def_warehouse_id");
 		if (def_firm && def_firm!="null"){
@@ -743,6 +842,13 @@ DOCOrderDialog_View.prototype.setClientId = function(clientId,setPopFirm){
 		if (def_warehouse && def_warehouse!="null"){
 			this.m_wareHCtrl.setFieldId("warehouse_id",def_warehouse);
 			this.onWarehouseSelected();
+		}
+		
+		var add_cost_old_val = this.m_delivAddToCostCtrl.getValue();
+		var add_cost_val = this.m_clientCtrl.getAttr("deliv_add_cost_to_product");		
+		if(add_cost_old_val!=add_cost_val){
+			this.m_delivAddToCostCtrl.setValue(add_cost_val);
+			this.recalcProductPrices();
 		}
 	}
 		
@@ -804,6 +910,7 @@ DOCOrderDialog_View.prototype.onWarehouseSelected = function(){
 	this.calcDelivCost();
 }
 DOCOrderDialog_View.prototype.onFirmSelected = function(){
+
 	var wh = this.m_wareHCtrl.getFieldValue();
 	if (!wh){
 		var contr = new DOCOrder_Controller(new ServConnector(HOST_NAME));
@@ -855,8 +962,20 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 	this.changeDelivType();
 	
 	//голова
+	this.m_clientContractCtrl.setEnabled(true);
+	this.m_gruzpolCtrl.setEnabled(true);
+	
 	if (this.m_isCopy){
-		//копирование		
+		//копирование
+		var vh_n = this.m_vehicleCtrl.getNode();
+		if(vh_n){
+			vh_n.value = "";
+			vh_n.setAttribute("fkey_vehicle_id","");
+			vh_n.setAttribute("last_fkey_vehicle_id","");				
+		}
+		if (this.m_delivTypeCtrl.getValue()=="by_client"){
+			this.m_delivVehicleCntCtrl.setValue(0);
+		}
 	}
 	else{
 		var m = resp.getModelById("head_history");
@@ -866,6 +985,9 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 			var p = f_id.indexOf("_id");
 			if (p>=0){
 				f_id = f_id.substring(0,p)
+			}
+			if (!this.m_bindings[id+"_"+f_id]){
+				continue;
 			}
 			var ctrl = this.getDataControl(id+"_"+f_id);
 			if (ctrl && ctrl.control && ctrl.control.m_node){
@@ -909,6 +1031,21 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 				}
 				this.getViewControl(this.getId()+"_deliv_responsable_tel").setEnabled(true);
 				this.getViewControl(this.getId()+"_tel").setEnabled(true);
+				
+				//not completely closed
+				if (this.m_curState=="producing"
+					||this.m_curState=="produced"
+					||this.m_curState=="loading"
+					||this.m_curState=="waiting_for_us"
+					||this.m_curState=="waiting_for_client"
+				){
+					if (this.m_delivTypeCtrl.getValue()=="by_supplier"){
+						this.m_vehicleCtrl.setEnabled(true);
+					}
+					
+					this.m_clientContractCtrl.setEnabled(true);
+					this.m_gruzpolCtrl.setEnabled(true);
+				}
 				/*
 				if (this.m_delivTypeCtrl.getValue()=="by_supplier"){
 					this.m_clientDestCtrl.setEnabled(true);
@@ -919,9 +1056,9 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 				if (this.m_delivCost.setEditEnabled){
 					this.m_delivCost.setEditEnabled(false);
 				}
-				if (this.m_delivExpCtrl.setEditEnabled){
-					this.m_delivExpCtrl.setEditEnabled(false);
-				}				
+				//if (this.m_delivExpCtrl.setEditEnabled){
+				//	this.m_delivExpCtrl.setEditEnabled(false);
+				//}				
 				this.m_delivCostOptCtrl.setEnabled(false);
 			}
 			else{
@@ -1000,15 +1137,11 @@ DOCOrderDialog_View.prototype.toDOM = function(parent){
 		this.m_FirmCtrl.getNode(),
 		"change",this.m_evFirmSelected);		
 		
-	EventHandler.addEvent(
-		this.m_clientDestCtrl.getNode(),
-		"change",this.m_evDelivDestSelected);
-	EventHandler.addEvent(
-		this.m_delivCostOptCtrl.getNode(),
-		"change",this.m_evDelivCostOptSelected);
-
 	if (this.getIsNew()&&SERV_VARS.ROLE_ID=="client"){
 		this.setClientId(0,true);
+	}
+	else if (this.getIsNew()){
+		this.m_clientCtrl.getNode().focus();
 	}
 	
 	this.setWarehouseId(this.m_wareHCtrl.getFieldValue());
@@ -1018,7 +1151,7 @@ DOCOrderDialog_View.prototype.toDOM = function(parent){
 	/*
 	this.setDelivAddToCost(this.m_delivAddToCostCtrl.getValue());
 	this.setDelivTotal(this.m_delivCost.getValue());
-	*/
+	*/	
 }
 DOCOrderDialog_View.prototype.removeDOM = function(){
 	DOCOrderDialog_View.superclass.removeDOM.call(this);
@@ -1035,12 +1168,6 @@ DOCOrderDialog_View.prototype.removeDOM = function(){
 		this.m_FirmCtrl.getNode(),
 		"change",this.m_evFirmSelected);		
 		
-	EventHandler.removeEvent(
-		this.m_clientDestCtrl.getNode(),
-		"change",this.m_evDelivDestSelected);
-	EventHandler.removeEvent(
-		this.m_delivCostOptCtrl.getNode(),
-		"change",this.m_evDelivCostOptSelected);		
 }
 DOCOrderDialog_View.prototype.afterCopyData = function(){
 	if (SERV_VARS.ROLE_ID!="client"){
@@ -1048,19 +1175,27 @@ DOCOrderDialog_View.prototype.afterCopyData = function(){
 	}
 }
 DOCOrderDialog_View.prototype.calcDelivCost = function(){
-	this.m_delivCostComment.setValue("");
+//console.log("DOCOrderDialog_View.prototype.calcDelivCost")
+	this.m_delivCostComment.setValue("-");
 	
-	var do_calc = (!this.m_readOnly
+	var do_calc_cost1 = (!this.m_readOnly
 		&& (SERV_VARS.ROLE_ID=="client"
 			|| (SERV_VARS.ROLE_ID!="client" && this.getViewControlValue(this.getId()+"_deliv_total_edit")!="true")
 	   	)
 	);			
+	var do_calc_cost2 = (!this.m_readOnly
+		&& (SERV_VARS.ROLE_ID=="client"
+			|| (SERV_VARS.ROLE_ID!="client" && this.getViewControlValue(this.getId()+"_deliv_expenses_edit")!="true")
+	   	)
+	);			
 	
-	if (do_calc){
-		this.m_delivCost.setValue("");
+	if (do_calc_cost1){
+		this.m_delivCost.setValue("");		
+	}
+	if (do_calc_cost2){
 		this.m_delivExpCtrl.setValue("");
 	}
-	
+
 	var wh_id = this.m_wareHCtrl.getFieldValue();
 	var dest_id = this.m_clientDestCtrl.getFieldValue();
 	var cost_opt_id = this.m_delivCostOptCtrl.getFieldValue();
@@ -1088,6 +1223,9 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 			"err":function(resp,errCode,errStr){
 				self.getErrorControl().setValue(errStr);
 				
+				//self.recalcPricesRefreshTotals();
+				self.refreshProdTotals();
+				
 				if (former_state){
 					self.m_wareHCtrl.setEnabled(true);
 					self.m_delivCostOptCtrl.setEnabled(true);				
@@ -1095,6 +1233,13 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 				self.m_clientDestCtrl.setEnabled(true);				
 			},
 			"func":function(resp){
+			
+				//old values
+				/*
+				self.m_old_wh_id = wh_id;
+				self.m_old_cost_opt_id = cost_opt_id;
+				self.m_old_dest_id = dest_id;
+				*/
 				var m = resp.getModelById("calc_deliv_cost");
 				m.setActive(true);
 				if (m.getNextRow()){
@@ -1108,14 +1253,66 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 					self.updateDistanceInf();
 					
 					//Расчеты
-					if (do_calc){
+					if (do_calc_cost1 || do_calc_cost2){
 						var v_cnt = self.m_delivVehicleCntCtrl.getValue();					
-						self.m_delivCost.setValue(parseFloat(m.getFieldValue("total_cost")).toFixed(2)*v_cnt);
-						self.m_delivExpCtrl.setValue(parseFloat(m.getFieldValue("total_cost2")).toFixed(2)*v_cnt);
-					
-						self.recalcProductPrices();
+						if (do_calc_cost1){
+							self.m_delivCost.setValue(parseFloat(m.getFieldValue("total_cost")).toFixed(2)*v_cnt);
+						}
+						if (do_calc_cost2){
+							var cost2 = 0;
+							var cost2_com = "";
+							if (do_calc_cost1){
+								cost2 = parseFloat(m.getFieldValue("total_cost2")).toFixed(2);
+							}
+							else{
+								//стоимость доставки отредактирована вручную
+								var to_float = function(n){
+									var r = parseFloat(n);
+									return isNaN(r)? 0:r;
+								}
+								var country_cost2 = to_float(m.getFieldValue("country_cost2"));
+								var country_cost1 = to_float(m.getFieldValue("country_cost"));
+								var city_cost2 = to_float(m.getFieldValue("city_cost2"));
+								var city_cost1 = to_float(m.getFieldValue("city_cost"));
+								
+								var dif = to_float(self.m_delivCost.getValue()) - city_cost1;
+								var distance_country = dif / (country_cost1? country_cost1:0);
+								cost2 = city_cost2 + (distance_country * country_cost2);
+																
+								if (cost2>0 && cost2 < city_cost2  ){
+									self.m_delivExpCtrl.setComment();
+									cost2_com = "Меньше ставки по городу";
+								}
+								else{
+									if(cost2<=0){
+										cost2 = city_cost2;
+										cost2_com = "Ставка по городу";
+									}
+								}
+								
+							}
+							cost2 = cost2*v_cnt;
+							cost2 = isNaN(cost2)? 0:cost2;
+							self.m_delivExpCtrl.setValue(parseFloat(cost2).toFixed(2));
+							if(cost2_com.length){
+								DOMHandler.addClass(self.m_delivExpCtrl.m_node,self.m_delivExpCtrl.INCORRECT_VAL_CLASS);
+							}
+							else{
+								DOMHandler.removeClass(self.m_delivExpCtrl.m_node,self.m_delivExpCtrl.INCORRECT_VAL_CLASS);
+							}
+							self.m_delivExpCtrl.setComment(cost2_com);
+							
+						}
+						
+						if (do_calc_cost1){
+							//self.recalcPricesRefreshTotals();
+							self.refreshProdTotals();
+						}
 					}	
-
+					else{
+						//self.recalcPricesRefreshTotals();
+						self.refreshProdTotals();
+					}
 					
 					if (former_state){
 						self.m_wareHCtrl.setEnabled(true);
@@ -1127,8 +1324,23 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 			}
 		});
 	}
+	else{
+		//this.recalcPricesRefreshTotals();
+		this.refreshProdTotals();
+	}
 }
+
+DOCOrderDialog_View.prototype.recalcPricesRefreshTotals = function(){
+	if (this.m_delivAddToCostCtrl.getValue()=="true"){
+		this.recalcProductPrices();
+	}
+	else{
+		this.refreshProdTotals();
+	}
+}
+
 DOCOrderDialog_View.prototype.recalcProductPrices = function(){
+//console.log("DOCOrderDialog_View.prototype.recalcProductPrices")
 	if (this.m_readOnly){
 		return;
 	}
@@ -1165,16 +1377,33 @@ DOCOrderDialog_View.prototype.recalcProductPrices = function(){
 				}
 			},
 			"func":function(resp){
+				/*
 				if (self.m_productDetails.onRefresh){
 					self.m_productDetails.onRefresh();
-				}
+				}				
+				
 				self.m_wareHCtrl.setEnabled(true);
 				if (self.m_clientCtrl){
 					self.m_clientCtrl.setEnabled(true);				
 				}
-				self.refreshProdTotals();
+				
+				if(callBack)callBack.call(self);
+				*/
+				
+				self.m_productRecalc = true;
+				self.m_productDetails.onRefresh(function(){
+					self.m_wareHCtrl.setEnabled(true);
+					if (self.m_clientCtrl){
+						self.m_clientCtrl.setEnabled(true);				
+					}
+					self.refreshProdTotals();
+					self.m_productRecalc = false;
+				});
 			}
 		});
+	}
+	else{
+		this.refreshProdTotals();
 	}
 }
 DOCOrderDialog_View.prototype.getModified = function(){
@@ -1202,6 +1431,8 @@ DOCOrderDialog_View.prototype.writeData = function(){
 	var contr = this.getWriteController();
 	if (!contr)return;
 	contr.getPublicMethodById(this.getWriteMethodId()).setParamValue("view_id",this.m_viewId);
+
+	contr.getPublicMethodById(this.getWriteMethodId()).setParamValue("client_contract_name",this.m_clientContractCtrl.getValue());
 	
 	DOCOrderDialog_View.superclass.writeData.call(this);
 /*
@@ -1226,6 +1457,7 @@ DOCOrderDialog_View.prototype.onWriteOk = function(resp){
 }
 
 DOCOrderDialog_View.prototype.refreshProdTotals = function(){	
+//console.log("DOCOrderDialog_View.prototype.refreshProdTotals")
 	var gr = this.m_productDetails.getGridControl();
 	var rows = gr.getBody().getNode().getElementsByTagName("tr");
 	var cells;
@@ -1255,19 +1487,20 @@ DOCOrderDialog_View.prototype.refreshProdTotals = function(){
 	}
 	tot_sum+=tot_sum_pack;
 	this.m_totTotal.setValue(tot_sum.toFixed(2));	
-	
+	/*
 	if (!this.m_savedVehCount){
 		this.calcVehicleCount();
 	}
 	else{
 		this.checkForVehicleCapacity();
 	}
-		
+	*/	
 }
 DOCOrderDialog_View.prototype.getFormCaption = function(){
 	return "Заявка";
 }
 DOCOrderDialog_View.prototype.calcVehicleCount = function(){
+
 	var ind = this.m_delivCostOptCtrl.m_node.selectedIndex;
 	var sel_n = this.m_delivCostOptCtrl.m_node.options[ind];
 	var v_max_vol = parseFloat(DOMHandler.getAttr(sel_n,"volume_m"));
@@ -1287,7 +1520,11 @@ DOCOrderDialog_View.prototype.calcVehicleCount = function(){
 	}
 	this.m_savedVehCount = 0;
 	
-	this.checkForVehicleCapacity();
+	if (!this.m_oldVehicleCount || this.m_oldVehicleCount !=cnt){
+		this.m_oldVehicleCount = cnt;
+		this.checkForVehicleCapacity();		
+	}
+	this.calcDelivCost();
 }
 
 DOCOrderDialog_View.prototype.updateDistanceInf = function(){
@@ -1316,6 +1553,7 @@ DOCOrderDialog_View.prototype.changeDelivType = function(){
 	this.m_delivAddToCostCtrl.setEnabled(vis);
 	this.m_DelivPeriodCtrl.setEnabled(vis);
 	this.m_clientDestCtrl.setEnabled(vis);
+	this.m_vehicleCtrl.setEnabled(vis);
 	if (vis){
 		DOMHandler.addAttr(this.m_delivCostOptCtrl.getNode(),"required","required");
 		DOMHandler.addAttr(this.m_clientDestCtrl.getNode(),"required","required");
@@ -1325,6 +1563,9 @@ DOCOrderDialog_View.prototype.changeDelivType = function(){
 		DOMHandler.removeAttr(this.m_clientDestCtrl.getNode(),"required");				
 		this.m_clientDestCtrl.resetValue();
 		this.m_delivCostOptCtrl.resetValue();
+		this.m_delivExpCtrl.resetValue();
+		this.m_delivCost.resetValue();
+		this.m_vehicleCtrl.resetValue();
 	}
 	
 }
@@ -1456,6 +1697,13 @@ DOCOrderDialog_View.prototype.checkForVehicleCapacity = function(){
 	else{
 		this.m_delivVehicleCntCtrl.setValid();
 		this.m_delivVehicleCntCtrl.setComment("");
+	}
+}
+
+DOCOrderDialog_View.prototype.onCancel = function(){
+//|| !nd("DOCOrderDOCTProductList_gridEditView")
+	if(!nd("undefined_ClientDestinationDialog") ){
+		DOCOrderDialog_View.superclass.onCancel.call(this);
 	}
 }
 

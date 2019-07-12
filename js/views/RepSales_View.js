@@ -576,6 +576,13 @@ function RepSales_View(id,options){
 			"filterControl":new EditCheckBox(uuid())
 			},
 			
+			{"id":"doct_extra_price_category",
+			"name":"Категория наценки",
+			"agg":false,
+			"filtered":false,
+			"filterControl":new EditNum(uuid(),{})
+			},				
+			
 			//facts
 			{"id":"doc_city_route_distance",
 			"name":"Километраж доставки город",

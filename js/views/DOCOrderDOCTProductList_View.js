@@ -103,6 +103,6 @@ DOCOrderDOCTProductList_View.prototype.getLineCount=function(){
 		return b_n.getElementsByTagName("tr").length;
 	}
 }
-DOCOrderDOCTProductList_View.prototype.onRefresh=function(){
-	this.getGridControl().onRefresh();
+DOCOrderDOCTProductList_View.prototype.onRefresh=function(callBack){
+	this.getGridControl().onRefresh(callBack);
 }

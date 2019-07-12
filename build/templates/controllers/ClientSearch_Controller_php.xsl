@@ -61,8 +61,9 @@ class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@par
 		$params->addAll();
 		
 		if($params->getVal("checkIfExists")==1){
+			$client_id = $params->getVal("client_id");
 			$ar = $this->getDbLink()->query_first(sprintf("SELECT id,name FROM clients WHERE inn=%s",$params->getDbVal("query")));	
-			if (is_array($ar) &amp;&amp; count($ar)){
+			if (is_array($ar) &amp;&amp; count($ar) &amp;&amp; ($client_id=='null' || $client_id!=$ar['id']) ){			
 				throw new Exception('Уже есть клиент с таким ИНН: '.$ar['name']);
 			}
 		}
