@@ -70,12 +70,13 @@ function DOCOrderDOCTProductList_View(id,options){
 		"onSelect":options.onSelect,
 		"editViewParams":{"warehouseCtrl":options.warehouseCtrl},
 		"editWinClass":WIN_CLASS,
-		"afterRefresh":options.afterRefresh
+		"afterRefresh":options.afterRefresh,
+		"onModified":options.onModified
 		}
 	);
 	grid.onGetData = function(resp){
 		GridDbDOCT.superclass.onGetData.call(this,resp);
-		options.afterRefresh();
+		if(options.afterRefresh)options.afterRefresh();
 	}
 	
 	this.setGridControl(grid);	

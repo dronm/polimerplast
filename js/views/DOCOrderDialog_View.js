@@ -286,32 +286,13 @@ function DOCOrderDialog_View(id,options){
 		"errorControl":this.getErrorControl(),
 		"warehouseCtrl":this.m_wareHCtrl,
 		"afterRefresh":function(){
-			if(self.m_productRecalc)return;
+			//console.log("afterRefresh")
+			self.refreshProdTotals();
+		},
+		"onModified":function(){
+			//console.log("onModified")
 			
-			if (self.m_productDetails.getModified()){
-				self.calcVehicleCount();
-			}
-			else{
-				self.refreshProdTotals();
-			}
-			/*
-			if(self.m_delivAddToCostCtrl.getValue()=="true"){
-				self.m_recalc = true;
-				self.recalcProductPrices(function(){
-					if (self.m_productDetails.getModified()){
-						self.calcVehicleCount();
-					}
-					self.m_recalc = false;
-				});
-			}
-			else{						
-				self.refreshProdTotals();
-			
-				if (self.m_productDetails.getModified()){
-					self.calcVehicleCount();
-				}
-			}
-			*/
+			self.calcVehicleCount();
 		}
 		});
 	this.m_details.addElement(this.m_productDetails);	
@@ -1120,7 +1101,7 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 			this.m_ctrlSetShipped.m_keys = {"id":m.getFieldValue("id")};
 			this.m_ctrlSetShipped.m_grid = this.m_currentGrid;
 		}
-	}
+	}	
 }
 
 DOCOrderDialog_View.prototype.toDOM = function(parent){
@@ -1234,7 +1215,6 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 				self.m_clientDestCtrl.setEnabled(true);				
 			},
 			"func":function(resp){
-				debugger
 				//old values
 				/*
 				self.m_old_wh_id = wh_id;
@@ -1344,6 +1324,7 @@ DOCOrderDialog_View.prototype.recalcPricesRefreshTotals = function(){
 DOCOrderDialog_View.prototype.recalcProductPrices = function(){
 //console.log("DOCOrderDialog_View.prototype.recalcProductPrices")
 	if (this.m_readOnly){
+		this.refreshProdTotals();
 		return;
 	}
 
@@ -1352,7 +1333,7 @@ DOCOrderDialog_View.prototype.recalcProductPrices = function(){
 	if (this.m_clientCtrl){
 		cl_id = this.m_clientCtrl.getFieldValue();
 	}
-	if (wh_id && (!this.m_clientCtrl || (this.m_clientCtrl&&cl_id) )
+	if (wh_id && (!this.m_clientCtrl || cl_id )
 	){
 		this.m_wareHCtrl.setEnabled(false);
 		if (this.m_clientCtrl){
@@ -1391,16 +1372,28 @@ DOCOrderDialog_View.prototype.recalcProductPrices = function(){
 				
 				if(callBack)callBack.call(self);
 				*/
-				
-				self.m_productRecalc = true;
+				//console.log("DOCOrderDialog_View.prototype.recalcProductPrices setting self.m_productRecalc = true")
+				/*
 				self.m_productDetails.onRefresh(function(){
 					self.m_wareHCtrl.setEnabled(true);
 					if (self.m_clientCtrl){
 						self.m_clientCtrl.setEnabled(true);				
 					}
-					self.refreshProdTotals();
+					console.log("DOCOrderDialog_View.prototype.recalcProductPrices setting self.m_productRecalc = false")
 					self.m_productRecalc = false;
+					self.refreshProdTotals();					
 				});
+				*/
+				self.m_productDetails.onRefresh(function(){
+					//console.log("DOCOrderDialog_View.prototype.recalcProductPrices setting self.m_productRecalc = false")
+					//self.m_productRecalc = false;
+					self.refreshProdTotals();
+				});
+				self.m_wareHCtrl.setEnabled(true);
+				if (self.m_clientCtrl){
+					self.m_clientCtrl.setEnabled(true);				
+				}
+				self.refreshProdTotals();
 			}
 		});
 	}
@@ -1459,7 +1452,7 @@ DOCOrderDialog_View.prototype.onWriteOk = function(resp){
 }
 
 DOCOrderDialog_View.prototype.refreshProdTotals = function(){	
-//console.log("DOCOrderDialog_View.prototype.refreshProdTotals")
+console.log("DOCOrderDialog_View.prototype.refreshProdTotals")
 	var gr = this.m_productDetails.getGridControl();
 	var rows = gr.getBody().getNode().getElementsByTagName("tr");
 	var cells;
