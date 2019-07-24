@@ -428,7 +428,8 @@ function DOCOrderDialog_View(id,options){
 		"defaultId":"by_client",
 		"options":{"events":{"change":function(){
 			self.changeDelivType();
-			self.refreshProdTotals();
+			self.recalcPricesRefreshTotals();
+			//self.refreshProdTotals();
 		}}},
 	});
 	this.bindControl(this.m_delivTypeCtrl,
@@ -1360,40 +1361,15 @@ DOCOrderDialog_View.prototype.recalcProductPrices = function(){
 				}
 			},
 			"func":function(resp){
-				/*
-				if (self.m_productDetails.onRefresh){
-					self.m_productDetails.onRefresh();
-				}				
-				
-				self.m_wareHCtrl.setEnabled(true);
-				if (self.m_clientCtrl){
-					self.m_clientCtrl.setEnabled(true);				
-				}
-				
-				if(callBack)callBack.call(self);
-				*/
-				//console.log("DOCOrderDialog_View.prototype.recalcProductPrices setting self.m_productRecalc = true")
-				/*
 				self.m_productDetails.onRefresh(function(){
-					self.m_wareHCtrl.setEnabled(true);
-					if (self.m_clientCtrl){
-						self.m_clientCtrl.setEnabled(true);				
-					}
-					console.log("DOCOrderDialog_View.prototype.recalcProductPrices setting self.m_productRecalc = false")
-					self.m_productRecalc = false;
-					self.refreshProdTotals();					
-				});
-				*/
-				self.m_productDetails.onRefresh(function(){
-					//console.log("DOCOrderDialog_View.prototype.recalcProductPrices setting self.m_productRecalc = false")
-					//self.m_productRecalc = false;
+					//console.log("DOCOrderDialog_View.prototype.recalcProductPrices after onRefresh")
 					self.refreshProdTotals();
 				});
 				self.m_wareHCtrl.setEnabled(true);
 				if (self.m_clientCtrl){
 					self.m_clientCtrl.setEnabled(true);				
 				}
-				self.refreshProdTotals();
+				//self.refreshProdTotals();
 			}
 		});
 	}
@@ -1452,7 +1428,7 @@ DOCOrderDialog_View.prototype.onWriteOk = function(resp){
 }
 
 DOCOrderDialog_View.prototype.refreshProdTotals = function(){	
-console.log("DOCOrderDialog_View.prototype.refreshProdTotals")
+//console.log("DOCOrderDialog_View.prototype.refreshProdTotals")
 	var gr = this.m_productDetails.getGridControl();
 	var rows = gr.getBody().getNode().getElementsByTagName("tr");
 	var cells;

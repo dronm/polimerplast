@@ -1,0 +1,120 @@
+WITH detail AS (
+SELECT clients.name::text AS client_descr,
+client_activities.name::text AS client_activity_descr,
+date8_descr(client_contracts_end.client_contract_end)::text AS client_contract_end,
+doc_orders.number::text AS doc_number,
+date5_time5_descr(doc_orders.date_time)::text AS doc_date_time_descr,
+date5_time5_descr(doc_orders.delivery_fact_date)::text AS doc_delivery_fact_date_descr,
+firms.name::text AS firm_descr,
+production_cities.name::text AS production_city_descr,
+date8_descr(delivery_plan_date)::text AS doc_delivery_plan_date,
+(CASE WHEN doc_orders.delivery_plan_date >= doc_orders.delivery_fact_date::date THEN 'Своевременное' ELSE 'Опаздание' END)::text AS doc_in_time,
+users.name::text AS doc_user_descr,
+enum_list_delivery_types.descr::text AS doc_delivery_type_descr,
+client_destinations_list.address::text AS doc_deliv_destination_descr,
+warehouses.name::text AS doc_warehouse_descr,
+(CASE WHEN doc_orders.driver_id IS NOT NULL THEN order_deliv_virt.driver_descr ELSE deliveries_virt.driver_descr END)::text AS doc_driver_descr,
+(CASE WHEN doc_orders.driver_id IS NOT NULL THEN order_deliv_virt.vehicle_descr ELSE deliveries_virt.vehicle_descr END)::text AS doc_vehicle_descr,
+doc_orders.ext_ship_num::text AS doc_ext_ship_num,
+doc_orders_states.doc_state_date_time_descr::text AS doc_state_date_time,
+doc_orders_states.doc_state::text AS doc_state,doc_orders.sales_manager_comment::text AS doc_sales_manager_comment,
+doc_orders.client_comment::text AS doc_client_comment,products.name::text AS doct_product_descr,
+doc_orders_t_products.mes_length::text AS doct_product_mes_length,
+doc_orders_t_products.mes_width::text AS doct_product_mes_width,
+doc_orders_t_products.mes_height::text AS doct_product_mes_height,products_base_mu.name::text AS doct_base_measure_descr,
+bool_descr(pack_exists)::text AS doct_pack_exists,
+(CASE WHEN product_extra_pay_for_abnormal_size(products,doc_orders_t_products.mes_length,doc_orders_t_products.mes_width) THEN
+	COALESCE( (SELECT csp.category FROM product_custom_size_prices AS csp
+		WHERE csp.product_id=doc_orders_t_products.product_id
+			AND csp.quant<= eval(eval_params( products.extra_pay_calc_formula, doc_orders_t_products.mes_length, doc_orders_t_products.mes_width, doc_orders_t_products.mes_height )) ORDER BY csp.quant DESC LIMIT 1 )
+	,0) ELSE 0 END)::text AS doct_extra_price_category,
+round(coalesce(doc_orders.city_route_distance,0)/1000,3) AS doc_city_route_distance,
+round(coalesce(doc_orders.country_route_distance,0)/1000,3) AS doc_country_route_distance,
+doc_coord_counts.coord_count AS doc_coord_count,sum(doc_orders_t_products.quant) AS doct_quant,
+sum(doc_orders_t_products.weight) AS doct_weight,sum(doc_orders_t_products.volume) AS doct_volume
+FROM doc_orders_t_products LEFT JOIN doc_orders ON doc_orders.id=doc_orders_t_products.doc_id
+LEFT JOIN ( SELECT st.doc_orders_id, count(*) AS coord_count
+	FROM doc_orders_states AS st
+	WHERE st.state='waiting_for_client'::order_states
+	GROUP BY st.doc_orders_id
+) AS doc_coord_counts ON doc_coord_counts.doc_orders_id=doc_orders.id
+LEFT JOIN clients ON clients.id=doc_orders.client_id
+LEFT JOIN client_activities ON client_activities.id=clients.client_activity_id
+LEFT JOIN (SELECT t.client_id, MAX(t.date_to) client_contract_end
+	FROM client_contracts t
+	GROUP BY t.client_id ) AS client_contracts_end
+	ON client_contracts_end.client_id=clients.id
+LEFT JOIN firms ON firms.id=doc_orders.firm_id
+LEFT JOIN warehouses ON warehouses.id=doc_orders.warehouse_id
+LEFT JOIN production_cities ON production_cities.id=warehouses.production_city_id
+LEFT JOIN users ON users.id=doc_orders.user_id
+LEFT JOIN enum_list_delivery_types ON enum_list_delivery_types.id=doc_orders.deliv_type
+LEFT JOIN client_destinations_list ON client_destinations_list.id=doc_orders.deliv_destination_id
+LEFT JOIN (SELECT drv.id AS driver_id, drv.name AS driver_descr, vh.plate AS vehicle_descr, vh.id AS vehicle_id
+	FROM drivers drv
+	LEFT JOIN vehicles AS vh ON vh.driver_id=drv.id
+) AS order_deliv_virt ON order_deliv_virt.driver_id=doc_orders.driver_id
+LEFT JOIN (SELECT dr.id AS driver_id, dr.name AS driver_descr, vh.plate AS vehicle_descr, vh.id AS vehicle_id, dlv.doc_order_id
+	FROM deliveries dlv
+	LEFT JOIN vehicles AS vh ON vh.id=dlv.vehicle_id
+	LEFT JOIN drivers AS dr ON dr.id=vh.driver_id ) AS deliveries_virt ON deliveries_virt.doc_order_id=doc_orders.id
+		AND doc_orders.driver_id IS NULL
+LEFT JOIN ( SELECT st.doc_orders_id, st_descr.descr AS doc_state, date8_time5_descr(st.date_time) AS doc_state_date_time_descr,
+	st.date_time::date AS doc_state_date, u.name AS doc_state_user, u.id AS doc_state_user_id, st.state AS doc_state_id
+	FROM doc_orders_states AS st
+	LEFT JOIN users u ON u.id=st.user_id
+	LEFT JOIN enum_list_order_states st_descr ON st_descr.id=st.state ) AS doc_orders_states ON doc_orders_states.doc_orders_id=doc_orders.id
+LEFT JOIN products ON doc_orders_t_products.product_id=products.id
+LEFT JOIN measure_units AS products_base_mu ON products_base_mu.id=products.base_measure_unit_id
+WHERE (doc_orders.delivery_fact_date >= '2019-06-01 00:00:00')
+AND (doc_orders.delivery_fact_date <= '2019-06-30 23:59:59')
+AND doc_orders.delivery_fact_date IS NOT NULL
+GROUP BY doc_city_route_distance,doc_country_route_distance,doc_coord_count,client_descr,client_activity_descr,
+client_contract_end,doc_number,doc_date_time_descr,doc_delivery_fact_date_descr,firm_descr,production_city_descr,doc_delivery_plan_date,
+doc_in_time,doc_user_descr,doc_delivery_type_descr,doc_deliv_destination_descr,doc_warehouse_descr,
+doc_driver_descr,doc_vehicle_descr,doc_ext_ship_num,doc_state_date_time,doc_state,doc_sales_manager_comment,
+doc_client_comment,doct_product_descr,doct_product_mes_length,doct_product_mes_width,doct_product_mes_height,
+doct_base_measure_descr,doct_pack_exists,doct_extra_price_category ),
+sub AS (
+	(SELECT detail.client_descr,detail.client_activity_descr,detail.client_contract_end,detail.doc_number,
+		detail.doc_date_time_descr,detail.doc_delivery_fact_date_descr,
+		detail.firm_descr,detail.production_city_descr,detail.doc_delivery_plan_date,
+		detail.doc_in_time,detail.doc_user_descr,detail.doc_delivery_type_descr,
+		detail.doc_deliv_destination_descr,detail.doc_warehouse_descr,detail.doc_driver_descr,
+		detail.doc_vehicle_descr,detail.doc_ext_ship_num,detail.doc_state_date_time,
+		detail.doc_state,detail.doc_sales_manager_comment,
+		detail.doc_client_comment,detail.doct_product_descr,
+		detail.doct_product_mes_length,detail.doct_product_mes_width,
+		detail.doct_product_mes_height,detail.doct_base_measure_descr,
+		detail.doct_pack_exists,detail.doct_extra_price_category,
+		sum(detail.doc_city_route_distance) AS doc_city_route_distance,
+		sum(detail.doc_country_route_distance) AS doc_country_route_distance,
+		sum(detail.doc_coord_count) AS doc_coord_count,sum(detail.doct_quant) AS doct_quant,
+		sum(detail.doct_weight) AS doct_weight,sum(detail.doct_volume) AS doct_volume,
+		0 AS sys_level_val, 1 AS sys_level_count,
+		ARRAY[28] AS sys_level_col_count
+	FROM detail
+	GROUP BY detail.client_descr,detail.client_activity_descr,detail.client_contract_end,
+	detail.doc_number,detail.doc_date_time_descr,detail.doc_delivery_fact_date_descr,
+	detail.firm_descr,detail.production_city_descr,detail.doc_delivery_plan_date,
+	detail.doc_in_time,detail.doc_user_descr,detail.doc_delivery_type_descr,detail.doc_deliv_destination_descr,
+	detail.doc_warehouse_descr,detail.doc_driver_descr,detail.doc_vehicle_descr,
+	detail.doc_ext_ship_num,detail.doc_state_date_time,detail.doc_state,
+	detail.doc_sales_manager_comment,detail.doc_client_comment,
+	detail.doct_product_descr,detail.doct_product_mes_length,detail.doct_product_mes_width,
+	detail.doct_product_mes_height,detail.doct_base_measure_descr,detail.doct_pack_exists,
+	detail.doct_extra_price_category))
+(SELECT * FROM sub
+ORDER BY sub.client_descr,sub.client_activity_descr,sub.client_contract_end,sub.doc_number,
+sub.doc_date_time_descr,sub.doc_delivery_fact_date_descr,sub.firm_descr,sub.production_city_descr,
+sub.doc_delivery_plan_date,sub.doc_in_time,sub.doc_user_descr,sub.doc_delivery_type_descr,
+sub.doc_deliv_destination_descr,sub.doc_warehouse_descr,sub.doc_driver_descr,
+sub.doc_vehicle_descr,sub.doc_ext_ship_num,sub.doc_state_date_time,sub.doc_state,
+sub.doc_sales_manager_comment,sub.doc_client_comment,sub.doct_product_descr,
+sub.doct_product_mes_length,sub.doct_product_mes_width,sub.doct_product_mes_height,
+sub.doct_base_measure_descr,sub.doct_pack_exists,sub.doct_extra_price_category
+)
+UNION ALL SELECT 'Итого',''::text,''::text,''::text,''::text,''::text,''::text,''::text,''::text,''::text,''::text,''::text,''::text,''::text,
+''::text,''::text,''::text,''::text,''::text,''::text,''::text,''::text,''::text,''::text,''::text,''::text,''::text,''::text,
+sum(sub.doc_city_route_distance) AS doc_city_route_distance,sum(sub.doc_country_route_distance) AS doc_country_route_distance,
+sum(sub.doc_coord_count) AS doc_coord_count,sum(sub.doct_quant) AS doct_quant,sum(sub.doct_weight) AS doct_weight,sum(sub.doct_volume) AS doct_volume, 0 AS sys_level_val, 1 AS sys_level_count, ARRAY[28] AS sys_level_col_count FROM sub
