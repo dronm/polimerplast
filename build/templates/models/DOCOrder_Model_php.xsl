@@ -87,7 +87,7 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 		}	
 	}
 	
-	public function insert($needId){
+	public function insert($needId,$row=NULL){
 		$view_id_for_db = "'".$_REQUEST['view_id']."'";
 	
 		$link = $this->getDbLink();

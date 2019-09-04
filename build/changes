@@ -108,6 +108,16 @@ doc_order_totals при единице ид=6 пересчет по-другом
 	Номера договора - берем номер документа,
 	Даты договора - берем дату документа
 
+1.0122
+1) Косяки при смене объема: не считает авто
+
+
+1.0123
+1) doc_order_totals() добавлен параметр total, если не 0 и edit_price=TRUE, то значение сумму не менеяется ни при каких пересчетах!
+doc_order_totals_all()
+DOCOrderDOCTProduct_Controller insert/update откорректированы на новый вызов doc_order_totals
+DOCOrder_Controller recalc_product_prices()
+
 
 
 

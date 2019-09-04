@@ -1,6 +1,13 @@
--- Function: public.doc_order_totals(integer, integer, integer, integer, integer, integer, numeric, integer, boolean, boolean, boolean, boolean, numeric)
+-- Function: public.doc_order_totals(integer, integer, integer, integer, integer, integer, numeric, integer, boolean, boolean, boolean, boolean, numeric, numeric)
 
--- DROP FUNCTION public.doc_order_totals(integer, integer, integer, integer, integer, integer, numeric, integer, boolean, boolean, boolean, boolean, numeric);
+-- DROP FUNCTION public.doc_order_totals(integer, integer, integer, integer, integer, integer, numeric, integer, boolean, boolean, boolean, boolean, numeric, numeric);
+
+/**
+ * New function 27/08/19
+ * Добавлен параметр total numeric, если price_edit=TRUE AND total>0 !!!СУММА Остается неизменной!!!
+ * если же price_edit=TRUE AND total=0 Сумма пересчитывается от цены
+ * Вызывается из DOCOrderDOCTProduct_Controller, если пользователь с ролью клиента, то цена всегда от прайса, доже если цена типа вручную
+ */
 
 CREATE OR REPLACE FUNCTION public.doc_order_totals(
     warehouse_id integer,
@@ -15,7 +22,8 @@ CREATE OR REPLACE FUNCTION public.doc_order_totals(
     pack_in_price boolean,
     to_third_party_only boolean,
     price_edit boolean,
-    price numeric)
+    price numeric,
+    total numeric)
   RETURNS record AS
 $BODY$
 	WITH
@@ -170,11 +178,10 @@ $BODY$
 		--СУММА
 		round(
 			CASE
-			WHEN $12 THEN $13
-			ELSE (SELECT price.val FROM price)
+			WHEN $12 AND $4<>0 THEN $14
+			WHEN $12 AND $4=0 THEN $13 * (SELECT t.base_quant FROM product_params t)			
+			ELSE (SELECT price.val FROM price) * (SELECT t.base_quant FROM product_params t)
 			END
-			--Количество
-			* (SELECT t.base_quant FROM product_params t) --* $7
 			--Скидка за объем
 			- (SELECT coalesce(t.discount_total,0) FROM price_list t)
 		,2)
@@ -192,6 +199,6 @@ $BODY$
 $BODY$
   LANGUAGE sql VOLATILE
   COST 100;
-ALTER FUNCTION public.doc_order_totals(integer, integer, integer, integer, integer, integer, numeric, integer, boolean, boolean, boolean, boolean, numeric)
+ALTER FUNCTION public.doc_order_totals(integer, integer, integer, integer, integer, integer, numeric, integer, boolean, boolean, boolean, boolean, numeric, numeric)
   OWNER TO polimerplast;
 

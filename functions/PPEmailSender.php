@@ -1,9 +1,11 @@
 <?php
+//require_once(dirname(__FILE__)."/../Config.php");
+//require_once(FRAME_WORK_PATH.'db/db_pgsql.php');
 require_once(dirname(__FILE__)."/../Config.php");
-require_once(FRAME_WORK_PATH.'db/db_pgsql.php');
-require_once("EmailSender.php");
+require_once(dirname(__FILE__)."/EmailSender.php");
 
 class PPEmailSender extends EmailSender{
+
 	public static function addEMail(
 			$link,
 			$funcText,
@@ -22,7 +24,7 @@ class PPEmailSender extends EmailSender{
 		
 		$mail_id = NULL;
 		if (is_array($ar) && count($ar) && $ar['email']){
-			$mail_id = parent::addEMail(
+			$mail_id = self::regEMail(
 				$link,
 				EMAIL_FROM_ADDR,EMAIL_FROM_NAME,
 				$ar['email'],$ar['client'],
@@ -40,15 +42,13 @@ class PPEmailSender extends EmailSender{
 		}
 		return $mail_id;
 	}
-	public static function sendAllMail($delFiles=TRUE){
-		$dbLink = new DB_Sql();
-		$dbLink->persistent=true;
-		$dbLink->database	= DB_NAME;			
-		$dbLink->connect(DB_SERVER_MASTER,DB_USER,DB_PASSWORD);
+	public static function sendAllMail(&$dbLink,$smtpHost=NULL,$smtpPort=NULL,$smtpUser=NULL,$smtpPwd=NULL,$delFiles=TRUE){
+		$smtpHost = is_null($smtpHost)? SMTP_HOST:$smtpHost;
+		$smtpPort = is_null($smtpPort)? SMTP_PORT:$smtpPort;
+		$smtpUser = is_null($smtpUser)? SMTP_USER:$smtpUser;
+		$smtpPwd = is_null($smtpPwd)? SMTP_PWD:$smtpPwd;
 		
-		parent::sendAllMail($dbLink,
-				SMTP_HOST,SMTP_PORT,SMTP_USER,SMTP_PWD,
-				$delFiles);
+		parent::sendAllMail($dbLink,$smtpHost,$smtpPort,$smtpUser,$smtpPwd,$delFiles);
 	}
 	
 }

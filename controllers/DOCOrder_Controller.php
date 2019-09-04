@@ -33,7 +33,7 @@ require_once('models/DOCOrderDivisDialog_Model.php');
 require_once('functions/PPEmailSender.php');
 require_once('functions/ExtProg.php');
 
-require_once('common/OSRM.php');
+require_once('common/OSRMV5.php');
 require_once('common/decodePolylineToArray.php');
 require_once('common/downloader.php');
 require_once('common/PDFReport.php');
@@ -50,6 +50,8 @@ require_once('common/money2str.php');
 
 class DOCOrder_Controller extends ControllerSQLDOCPl{
 	const ER_WRONG_STATE = 'Заявка в неверном статусе!'; 
+	
+	const ER_OSRM_ROUTE_QUERY = 'Ошибка получения данных с сервера OSRM!';
 	
 	public function __construct($dbLinkMaster=NULL){
 		parent::__construct($dbLinkMaster);
@@ -2523,10 +2525,10 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 		$const['production_city_id']
 		));
 		
-		/* выходные данные
-		берем либо из кэша либо заново
-		прокладываем маршрут
-		*/
+		/** выходные данные
+		 * берем либо из кэша либо заново
+		 * прокладываем маршрут
+		 */
 		$out_city_route='NULL';
 		$out_city_route_distance=0;
 		$out_city_cost=0;
@@ -2557,29 +2559,34 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 				throw new Exception('Не определена зона клиента!');
 			}
 			
-			$osrm = new OSRM(OSRM_PROTOCOLE,OSRM_HOST,OSRM_PORT);
+			$osrm = new OSRMV5(OSRM_PROTOCOLE,OSRM_HOST,OSRM_PORT);
 				
 			//Маршрут от склада до клиента
-			$route = json_decode($osrm->getRoute(array(
-				$ar['wh_near_road_lat'].','.$ar['wh_near_road_lon'],
-				$ar['dest_near_road_lat'].','.$ar['dest_near_road_lon']
-				),'json'));
+			$route = $osrm->getRoute(
+				array(
+					$ar['wh_near_road_lon'].','.$ar['wh_near_road_lat'],
+					$ar['dest_near_road_lon'].','.$ar['dest_near_road_lat']
+				),
+				'json',
+				NULL,
+				array("geometries=polyline6")									
+			);
 			
-			if ($route->status!=0){
-				throw new Exception($route->status_message);
+			if (!$route->routes || !count($route->routes) || !$route->routes[0]->geometry){
+				throw new Exception(self::ER_OSRM_ROUTE_QUERY);
 			}
 			
-			/* Собираем точки маршрута в линию*/
+			/* Собираем точки маршрута в линию */
 			$q_points = '';
-			$points = decodePolylineToArray($route->route_geometry);
+			$points = decodePolylineToArray($route->routes[0]->geometry);
 			foreach($points as $p){
 				$q_points.=($q_points=='')? '':',';
 				$q_points.=sprintf("ST_PointFromText('POINT(%s %s)',4326)",$p[1],$p[0]);
 			}
 			
-			/* Рсакладываем маршрут на город/не город
-			и берем тарифы
-			*/
+			/** Рсакладываем маршрут на город/не город
+			 * и берем тарифы
+			 */
 			$ar = $link->query_first(sprintf(
 			"WITH
 				line AS (
@@ -2637,9 +2644,9 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 			$params->getParamById('warehouse_id')
 			));
 			
-			/*Берем маршрут от начала до конца города
-			для расчета расстояния
-			*/
+			/** Берем маршрут от начала до конца города
+			 * для расчета расстояния
+			 */
 			if ($ar['city_route']!='GEOMETRYCOLLECTION EMPTY'){
 				$ar['city_route'] = str_replace('MULTI(','',$ar['city_route']);
 				$ar['city_route'] = str_replace('(','',$ar['city_route']);
@@ -2647,39 +2654,50 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 				$city_route_ar = explode(',',$ar['city_route']);
 				$city_route_lonlat_from = explode(' ',$city_route_ar[0]);
 				$city_route_lonlat_to = explode(' ',$city_route_ar[count($city_route_ar)-1]);
-				$route = json_decode($osrm->getRoute(array(
-					$city_route_lonlat_from[1].','.$city_route_lonlat_from[0],
-					$city_route_lonlat_to[1].','.$city_route_lonlat_to[0]
-					),'json'));			
-				if ($route->status!=0){
-					throw new Exception($route->status_message);
+				$route = $osrm->getRoute(
+					array(
+						$city_route_lonlat_from[0].','.$city_route_lonlat_from[1],
+						$city_route_lonlat_to[0].','.$city_route_lonlat_to[1]
+					),
+					'json',
+					NULL,
+					array("geometries=polyline6")					
+				);
+				if (!$route->routes || !count($route->routes) || !$route->routes[0]->distance){
+					throw new Exception(self::ER_OSRM_ROUTE_QUERY);
 				}
 				$out_city_route	= $ar['city_route'];
-				$out_city_route_distance = $route->route_summary->total_distance;			
+				$out_city_route_distance = $route->routes[0]->distance;
 			}
-			/*Берем маршрут от конца города до зоны клиента
-			для расчета расстояния
-			*/
+			/** Берем маршрут от конца города до зоны клиента
+			 * для расчета расстояния
+			 */
 			if ($ar['country_route']!='GEOMETRYCOLLECTION EMPTY'){
 				$ar['country_route'] = str_replace('MULTI(','',$ar['country_route']);
 				$ar['country_route'] = str_replace('(','',$ar['country_route']);
 				$country_route_ar = explode(',',$ar['country_route']);
 				$country_route_lonlat_from = explode(' ',$country_route_ar[0]);
 				$country_route_lonlat_to = explode(' ',$country_route_ar[count($country_route_ar)-1]);
-				$route = json_decode($osrm->getRoute(array(
-					$country_route_lonlat_from[1].','.$country_route_lonlat_from[0],
-					$country_route_lonlat_to[1].','.$country_route_lonlat_to[0]
-					),'json'));			
-				if ($route->status!=0){
-					throw new Exception($route->status_message);
-				}		
+				$route = $osrm->getRoute(
+					array(
+						$country_route_lonlat_from[0].','.$country_route_lonlat_from[1],
+						$country_route_lonlat_to[0].','.$country_route_lonlat_to[1]
+					),
+					'json',
+					NULL,
+					array("geometries=polyline6")					
+				);
+				if (!$route->routes || !count($route->routes) || !$route->routes[0]->distance){
+					throw new Exception(self::ER_OSRM_ROUTE_QUERY);
+				}
 				$out_country_route = $ar['country_route'];
-				$out_country_route_distance = $route->route_summary->total_distance;							
+				$out_country_route_distance = $route->routes[0]->distance;
 			}
-			/*Cache
-			Возможна коллизия: кто-то уже вставил
-			такие-же данные в кэш!!!
-			!!!РАБОТАЕТ ПРАВИЛО!!!
+			
+			/** Cache
+			 * Возможна коллизия: кто-то уже вставил
+			 * такие-же данные в кэш!!!
+			 * !!!РАБОТАЕТ ПРАВИЛО!!!
 			*/
 			$this->getDbLinkMaster()->query(sprintf(
 			"INSERT INTO deliv_distance_cache
@@ -2799,15 +2817,14 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 			total = data.total,
 			total_pack = data.total_pack
 		FROM 
-			(SELECT *
-			FROM doc_order_totals_all(%d,%d,%s,%s)
-			) AS data		
+			(SELECT * FROM doc_order_totals_all(%d,%d,%s,%s,%s) ) AS data		
 		WHERE tmp.view_id=%s AND tmp.line_number = data.line_number",
 		$params->getDbVal('warehouse_id'),
 		$params->getDbVal('client_id'),
 		$params->getDbVal('view_id'),
 		$params->getDbVal('deliv_to_third_party'),
-		$params->getDbVal('view_id')
+		($_SESSION['role_id']=='client')? 'TRUE':'FALSE',
+		$params->getDbVal('view_id')		
 		));
 		
 		if ($pm->getParamValue('deliv_add_cost_to_product')=='true'){

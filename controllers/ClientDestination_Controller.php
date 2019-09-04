@@ -20,7 +20,7 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPolygon.php');
 
 
 
-require_once('common/OSRM.php');
+require_once('common/OSRMV5.php');
 require_once('common/geo/yandex.php');
 require_once('common/geo/YndxReverseCode.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ParamsSQL.php');
@@ -371,7 +371,7 @@ class ClientDestination_Controller extends ControllerSQL{
 		if ($zone_center){			
 			$points = explode(' ',$zone_center);
 			if (count($points)>=2){
-				$osrm = new OSRM(OSRM_PROTOCOLE,OSRM_HOST,OSRM_PORT);
+				$osrm = new OSRMV5(OSRM_PROTOCOLE,OSRM_HOST,OSRM_PORT,'v1');
 				$road_lat=NULL;$road_lon=NULL;
 				
 				//$pm->setParamValue('near_road_lon','65.697777');
@@ -706,7 +706,7 @@ class ClientDestination_Controller extends ControllerSQL{
 		if (($OLD_CNT - $srch1) > 0){
 			$cond = '';
 			
-			$address_w = split(' ',$p->getVal('address'));
+			$address_w = explode(' ',$p->getVal('address'));
 			foreach($address_w as $w){
 				if (strlen($w) > 3){
 					$cond.= ($cond=='')? '':' AND ';	

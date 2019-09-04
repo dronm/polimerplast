@@ -624,7 +624,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		}	
 	}
 	
-	public function insert($needId){
+	public function insert($needId,$row=NULL){
 		$view_id_for_db = "'".$_REQUEST['view_id']."'";
 	
 		$link = $this->getDbLink();

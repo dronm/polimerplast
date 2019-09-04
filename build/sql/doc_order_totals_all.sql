@@ -3,19 +3,25 @@ DROP function doc_order_totals_all(
 		warehouse_id integer,
 		client_id integer,
 		view_id varchar(32),
-		to_third_party_only boolean
+		to_third_party_only boolean,
+		do_not_recalc_total boolean
 );
 */
-/*
-Пересчитывает базовую ед.,массу,цену
-для временной таблицы с товарами
-в соответствии с параметрами
+
+/**
+ * Пересчитывает базовую ед.,массу,цену
+ * для временной таблицы с товарами
+ * в соответствии с параметрами
+ 
+ * 27/08/19 при расчете total вызывается новая функция!!!
+ * do_not_recalc_total
 */
 CREATE or REPLACE function doc_order_totals_all(
 		warehouse_id integer,
 		client_id integer,
 		view_id varchar(32),
-		to_third_party_only boolean
+		to_third_party_only boolean,
+		do_not_recalc_total boolean
 )
 	RETURNS TABLE
 		(
@@ -98,7 +104,7 @@ SELECT
 		t.mes_length,t.mes_width,t.mes_height,
 		t.quant,t.measure_unit_id,
 		t.pack_exists,t.pack_in_price,$4,
-		t.price_edit,t.price
+		t.price_edit,t.price,CASE WHEN do_not_recalc_total THEN 0 ELSE t.total END
 	) AS (
 		base_quant numeric,volume_m numeric,
 		weight_t numeric,price numeric,total numeric,total_pack numeric
@@ -129,5 +135,6 @@ ALTER function doc_order_totals_all(
 		warehouse_id integer,
 		client_id integer,
 		view_id varchar(32),
-		to_third_party_only boolean
+		to_third_party_only boolean,
+		do_not_recalc_total boolean
 ) OWNER TO polimerplast;

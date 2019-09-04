@@ -34,7 +34,12 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 	
 		if ($_SESSION['role_id']=='client'){
 			$pm->setParamValue('client_id',$_SESSION['global_client_id']);
-		}		
+			$total_param = 0;
+		}
+		else{
+			$total_param = (!is_null($pm->getParamValue('total')))? floatval($pm->getParamValue('total')):0;
+		}
+		
 		$params = new ParamsSQL($pm,$this->getDbLink());
 		$params->addAll();
 		
@@ -118,7 +123,8 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 					coalesce(%s,p.pack_exists) AS pack_exists,
 					coalesce(%s,p.pack_in_price) AS pack_in_price,
 					coalesce(%s,p.price_edit) AS price_edit,
-					coalesce(%s,p.price) AS price
+					coalesce(%s,p.price) AS price,
+					coalesce(%s,p.total) AS total
 				FROM doc_orders_t_tmp_products p
 				WHERE p.view_id=%s AND p.line_number=%d
 			)
@@ -134,7 +140,8 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 				(SELECT t.pack_in_price FROM prod t),
 				%s,
 				(SELECT t.price_edit FROM prod t),
-				(SELECT t.price FROM prod t)
+				(SELECT t.price FROM prod t),
+				(SELECT t.total FROM prod t)
 				)
 			AS (
 				base_quant numeric,
@@ -153,11 +160,12 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 			$pack_in_price,
 			$price_edit,
 			$price,
+			$total_param,
 			$params->getDbVal('old_view_id'),
 			$params->getDbVal('old_line_number'),
 			$params->getDbVal('warehouse_id'),
 			$params->getDbVal('client_id'),
-			$params->getDbVal('deliv_to_third_party')
+			$params->getDbVal('deliv_to_third_party')			
 			));
 		
 			if (is_array($ar)&amp;&amp;count($ar)){
@@ -258,7 +266,11 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 	public function insert($pm){
 		if ($_SESSION['role_id']=='client'){
 			$pm->setParamValue('client_id',$_SESSION['global_client_id']);
-		}		
+			$total_param = 0;
+		}
+		else{
+			$total_param =floatval($pm->getParamValue('total'));
+		}
 	
 		$params = new ParamsSQL($pm,$this->getDbLink());
 		$params->addAll();
@@ -281,8 +293,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		}
 		
 		$ar = $this->getDbLink()->query_first(
-		sprintf("SELECT * FROM doc_order_totals(
-			%d,%d,%d,%d,%d,%d,%f,%d,%s,%s,%s,%s,%f)
+		sprintf("SELECT * FROM doc_order_totals(%d,%d,%d,%d,%d,%d,%f,%d,%s,%s,%s,%s,%f,%f)
 		AS (
 			base_quant numeric,
 			volume_m numeric,
@@ -302,7 +313,8 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		$params->getParamById('pack_in_price'),
 		$params->getParamById('deliv_to_third_party'),
 		$params->getParamById('price_edit'),
-		$params->getParamById('price')		
+		$params->getParamById('price'),
+		$total_param
 		));
 	
 		if (is_array($ar)&amp;&amp;count($ar)){

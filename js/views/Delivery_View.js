@@ -57,6 +57,7 @@ function Delivery_View(id,options){
 		this.m_assOrderList.m_grid.m_unassGrid = this.m_unassOrderList.m_grid;		
 		this.addMap();
 		this.m_assOrderList.m_grid.m_map = this.m_map;
+		this.m_unassOrderList.m_grid.m_map = this.m_map;
 		
 		//custom refresh		
 		this.m_filter.setClickContext(this);

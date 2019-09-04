@@ -286,13 +286,18 @@ function DOCOrderDialog_View(id,options){
 		"errorControl":this.getErrorControl(),
 		"warehouseCtrl":this.m_wareHCtrl,
 		"afterRefresh":function(){
-			//console.log("afterRefresh")
+			//console.log("afterRefresh, calling refreshProdTotals")
 			self.refreshProdTotals();
+			if(self.m_doCalcVehCount){
+				self.calcVehicleCount();
+				self.m_doCalcVehCount = false;
+			}
 		},
 		"onModified":function(){
-			//console.log("onModified")
-			
-			self.calcVehicleCount();
+			//console.log("productDetails onModified calling refreshProdTotals then calcVehicleCount")
+			//self.refreshProdTotals();
+			//self.calcVehicleCount();
+			self.m_doCalcVehCount = true;
 		}
 		});
 	this.m_details.addElement(this.m_productDetails);	
@@ -828,8 +833,8 @@ DOCOrderDialog_View.prototype.setClientId = function(clientId,setPopFirm){
 		}
 		
 		var add_cost_old_val = this.m_delivAddToCostCtrl.getValue();
-		var add_cost_val = this.m_clientCtrl.getAttr("deliv_add_cost_to_product");		
-		if(add_cost_old_val!=add_cost_val){
+		var add_cost_val = this.m_clientCtrl.getAttr("deliv_add_cost_to_product");				
+		if(add_cost_val && add_cost_old_val!=add_cost_val){
 			this.m_delivAddToCostCtrl.setValue(add_cost_val);
 			this.recalcProductPrices();
 		}
@@ -1256,9 +1261,9 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 								var country_cost1 = to_float(m.getFieldValue("country_cost"));
 								var city_cost2 = to_float(m.getFieldValue("city_cost2"));
 								var city_cost1 = to_float(m.getFieldValue("city_cost"));
-								
+								debugger
 								var dif = to_float(self.m_delivCost.getValue()) - city_cost1;
-								var distance_country = dif / (country_cost1? country_cost1:0);
+								var distance_country = !country_cost1? 0 :( dif / (country_cost1? country_cost1:0) );
 								cost2 = city_cost2 + (distance_country * country_cost2);
 																
 								if (cost2>0 && cost2 < city_cost2  ){
@@ -1471,7 +1476,7 @@ DOCOrderDialog_View.prototype.getFormCaption = function(){
 	return "Заявка";
 }
 DOCOrderDialog_View.prototype.calcVehicleCount = function(){
-
+//console.log("DOCOrderDialog_View.prototype.calcVehicleCount")
 	var ind = this.m_delivCostOptCtrl.m_node.selectedIndex;
 	var sel_n = this.m_delivCostOptCtrl.m_node.options[ind];
 	var v_max_vol = parseFloat(DOMHandler.getAttr(sel_n,"volume_m"));

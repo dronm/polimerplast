@@ -48,8 +48,7 @@ class EmailSender {
 			);	
 		}
 	}
-	public static function sendAllMail($dbLink,
-				$smtpHost,$smtpPort,$smtpUser,$smtpPwd,$delFiles){
+	public static function sendAllMail(&$dbLink,$smtpHost,$smtpPort,$smtpUser,$smtpPwd,$delFiles){
 		// Perform Query
 		$result = $dbLink->query(
 			"SELECT
@@ -113,8 +112,7 @@ class EmailSender {
 		}
 		
 	}
-	public static function send_mail($dbLink,
-		$emailId,$emailMessage,$mailFiles,$delFiles){			
+	public static function send_mail($dbLink,$emailId,$emailMessage,$mailFiles,$delFiles){			
 		//sending
 		if ($emailMessage){
 			$send_res = TRUE;
