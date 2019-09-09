@@ -610,6 +610,7 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 		$params->getParamById('price'),
 		$total_param
 		));
+	
 		if (is_array($ar)&&count($ar)){
 			$pm->setParamValue('quant_base_measure_unit',$ar['base_quant']);
 			$pm->setParamValue('volume',$ar['volume_m']);

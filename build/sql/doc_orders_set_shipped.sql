@@ -172,9 +172,9 @@ BEGIN
 					v_new_doc_user_id);
 			END IF;
 			
-			/*Неподтвержденное количество
-			в новую строку нового документа
-			*/
+			/** Неподтвержденное количество
+			 * в новую строку нового документа
+			 */
 			
 			--базовое количество
 			v_base_quant = 	r.quant_base_measure_unit-
@@ -218,9 +218,9 @@ BEGIN
 				r.line_number,
 				r.product_id,
 				
-				/*количе-во в единице
-				основного документа
-				*/
+				/** количество в единице
+				 * основного документа
+				 */
 				v_quant,				
 				--цена из основного документа
 				r.price,				
@@ -240,7 +240,7 @@ BEGIN
 				v_volume,
 				v_weight,
 				
-				r.price_edit,
+				TRUE, -- Чтобы цена НЕ пересчиталась ни при каких условиях!!! r.price_edit,
 				round(r.total_pack*v_new_prod_k,2)
 			);
 			
@@ -248,8 +248,7 @@ BEGIN
 		
 
 		--количество в единице документа
-		IF (r.quant_confirmed_base_measure_unit=
-			r.quant_base_measure_unit) THEN
+		IF (r.quant_confirmed_base_measure_unit = r.quant_base_measure_unit) THEN
 			--все как в основном документе
 			v_quant		= r.quant;
 			v_volume 	= r.volume;
@@ -275,8 +274,9 @@ BEGIN
 			v_total_pack = round(r.total_pack/r.quant_base_measure_unit*r.quant_confirmed_base_measure_unit,2);
 		END IF;
 		
-		/* То что подтверждено в реальную
-		таблицу */
+		/** То что подтверждено -
+		 * в реальную таблицу
+		 */
 		INSERT INTO doc_orders_t_products
 			(doc_id,
 			line_number,
