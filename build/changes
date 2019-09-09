@@ -119,5 +119,7 @@ DOCOrderDOCTProduct_Controller insert/update откорректированы н
 DOCOrder_Controller recalc_product_prices()
 
 
+При отгрузке меньшего количества чем в заявке, во вновь созданной заявке цена фиксируется (отмечена как будто вручную)
+doc_orders_set_shipped.sql INSERT INTO doc_orders_t_products всегда TRUE
 
 

@@ -12,7 +12,7 @@
 
 function DelivUnassignedOrderGridRow(id,options){
 	options = options || {};	
-	
+console.log("DelivUnassignedOrderGridRow")	
 	var self = this;
 	options.events = {
 		"dblclick":function(e){
