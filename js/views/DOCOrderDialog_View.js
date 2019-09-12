@@ -1261,7 +1261,7 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 								var country_cost1 = to_float(m.getFieldValue("country_cost"));
 								var city_cost2 = to_float(m.getFieldValue("city_cost2"));
 								var city_cost1 = to_float(m.getFieldValue("city_cost"));
-								debugger
+								
 								var dif = to_float(self.m_delivCost.getValue()) - city_cost1;
 								var distance_country = !country_cost1? 0 :( dif / (country_cost1? country_cost1:0) );
 								cost2 = city_cost2 + (distance_country * country_cost2);

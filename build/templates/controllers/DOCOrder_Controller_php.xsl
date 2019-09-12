@@ -1133,16 +1133,19 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 		$params = new ParamsSQL($pm,$this->getDbLink());
 		$params->addAll();
 		
+		$deliv_add_cost_to_product = ($pm->getParamValue('deliv_add_cost_to_product')=='true');
+		
 		$lmast = $this->getDbLinkMaster();
 		$lmast->query(sprintf(
 		"UPDATE doc_orders_t_tmp_products tmp
 		SET
 			quant_base_measure_unit = data.base_quant,
 			volume = data.volume_m,
-			weight = data.weight_t,
-			price = data.price,
-			total = data.total,
-			total_pack = data.total_pack
+			weight = data.weight_t,			
+			total = CASE WHEN tmp.price_edit THEN coalesce(tmp.total,0)-coalesce(tmp.total_deliv,0) ELSE data.total END,
+			price = CASE WHEN tmp.price_edit THEN round((coalesce(tmp.total,0)-coalesce(tmp.total_deliv,0))/data.base_quant,2) ELSE data.price END,
+			total_pack = data.total_pack,
+			total_deliv = 0
 		FROM 
 			(SELECT * FROM doc_order_totals_all(%d,%d,%s,%s,%s) ) AS data		
 		WHERE tmp.view_id=%s AND tmp.line_number = data.line_number",
@@ -1154,7 +1157,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 		$params->getDbVal('view_id')		
 		));
 		
-		if ($pm->getParamValue('deliv_add_cost_to_product')=='true'){
+		if ($deliv_add_cost_to_product){
 			//Распределить пропорционально
 			$deliv_cost = floatval($pm->getParamValue('deliv_cost'));
 			if ($deliv_cost &gt; 0){
@@ -1164,15 +1167,19 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 					line_number,
 					quant_base_measure_unit AS quant,
 					price,
-					total,
+					coalesce(total,0)-coalesce(total_deliv,0) AS total,
+					
 					(SELECT
 						MAX(line_number)
 					FROM doc_orders_t_tmp_products
-					WHERE view_id=%s) AS last_line,
+					WHERE view_id=%s
+					) AS last_line,
+					
 					(SELECT
-						SUM(total)
+						SUM(coalesce(total,0)-coalesce(total_deliv,0))
 					FROM doc_orders_t_tmp_products
-					WHERE view_id=%s) AS total_total
+					WHERE view_id=%s
+					) AS total_total
 					
 				FROM doc_orders_t_tmp_products
 				WHERE view_id=%s",
@@ -1184,21 +1191,29 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 				try{
 					$deliv_cost_tot = 0;
 					while ($ar = $l->fetch_array($id)){
-						$line_cost = round($ar['total']/$ar['total_total'] * $deliv_cost,2);
-						$deliv_cost_tot+=$line_cost;
-						$total = $ar['total']+$line_cost;
+						$deliv_line_cost = round($ar['total']/$ar['total_total'] * $deliv_cost,2);
+						$deliv_cost_tot+= $deliv_line_cost;
+						//throw new Exception(' line_cost='.$deliv_line_cost.' total='.$ar['total']);
+						$total = $ar['total'] + $deliv_line_cost;
+						
 						if ($ar['line_number']==$ar['last_line']
 						&amp;&amp; $deliv_cost_tot!=$deliv_cost){
 							//последняя строка
+							//throw new Exception('Correcting last line! total='.$total.' line_cost='.$deliv_line_cost.' deliv_cost_tot='.$deliv_cost_tot);
 							$total = $total - $deliv_cost_tot + $deliv_cost;
 						}						
 						$price = round($total/$ar['quant'],2);
+						//throw new Exception('price='.$price.' total='.$total.' line_cost='.$deliv_line_cost.' tot_no_deliv='.$ar['total']);
 						$lmast->query(sprintf(
+						//throw new Exception(sprintf(
 						"UPDATE doc_orders_t_tmp_products
-						SET price=%f,total=%f
+						SET
+							price=%f,
+							total=%f,
+							total_deliv=%f
 						WHERE view_id=%s AND line_number=%d
 						",
-						$price,$total,
+						$price,$total,$deliv_line_cost,
 						$params->getDbVal('view_id'),$ar['line_number']
 						));
 					}

@@ -205,6 +205,15 @@ class DOCOrderDOCTFProduct_Model extends ModelSQL{
 		$f_pack_in_price=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"pack_in_price",$f_opts);
 		$this->addField($f_pack_in_price);
 		//********************
+		
+		//*** Field total_deliv ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="total_deliv";
+						
+		$f_total_deliv=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total_deliv",$f_opts);
+		$this->addField($f_total_deliv);
+		//********************
 	
 	}
 

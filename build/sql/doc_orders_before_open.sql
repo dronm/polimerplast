@@ -11,9 +11,11 @@ BEGIN
 	
 	IF (in_doc_id IS NOT NULL AND in_doc_id>0) THEN
 		INSERT INTO doc_orders_t_tmp_products
-		(login_id,view_id,line_number,product_id,quant,quant_confirmed,quant_base_measure_unit,quant_confirmed_base_measure_unit,volume,weight,price,price_edit,total,total_pack,mes_length,mes_width,mes_height,measure_unit_id,pack_exists,pack_in_price)
+		(login_id,view_id,line_number,product_id,quant,quant_confirmed,quant_base_measure_unit,quant_confirmed_base_measure_unit,volume,weight,price,price_edit,total,total_pack,
+		mes_length,mes_width,mes_height,measure_unit_id,pack_exists,pack_in_price,total_deliv)
 		(SELECT in_login_id, in_view_id
-		,line_number,product_id,quant,quant_confirmed,quant_base_measure_unit,quant_confirmed_base_measure_unit,volume,weight,price,price_edit,total,total_pack,mes_length,mes_width,mes_height,measure_unit_id,pack_exists,pack_in_price
+		,line_number,product_id,quant,quant_confirmed,quant_base_measure_unit,quant_confirmed_base_measure_unit,volume,weight,price,price_edit,
+		total,total_pack,mes_length,mes_width,mes_height,measure_unit_id,pack_exists,pack_in_price,total_deliv
 		FROM doc_orders_t_products
 		WHERE doc_id=in_doc_id);
 	END IF;

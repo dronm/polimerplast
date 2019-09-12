@@ -160,6 +160,8 @@ $permissions = array();
 		
 			$permissions['Kladr_Controller_get_from_naspunkt']=TRUE;
 		
+			$permissions['Kladr_Controller_get_prior_region_list']=TRUE;
+		
 			$permissions['Report_Controller_client_balance']=TRUE;
 		
 			$permissions['Report_Controller_naspunkt_cost']=TRUE;

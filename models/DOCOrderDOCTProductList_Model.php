@@ -9,6 +9,7 @@
 require_once(FRAME_WORK_PATH.'basic_classes/ModelSQLDOCT20.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLInt.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLString.php');
+require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLFloat.php');
  
 class DOCOrderDOCTProductList_Model extends ModelSQLDOCT20{
 	
@@ -36,6 +37,24 @@ class DOCOrderDOCTProductList_Model extends ModelSQLDOCT20{
 						
 		$f_line_number=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"line_number",$f_opts);
 		$this->addField($f_line_number);
+		//********************
+		
+		//*** Field total_no_deliv ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="total_no_deliv";
+						
+		$f_total_no_deliv=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total_no_deliv",$f_opts);
+		$this->addField($f_total_no_deliv);
+		//********************
+		
+		//*** Field price_no_deliv ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="price_no_deliv";
+						
+		$f_price_no_deliv=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"price_no_deliv",$f_opts);
+		$this->addField($f_price_no_deliv);
 		//********************
 	
 	}

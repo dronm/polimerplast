@@ -204,6 +204,15 @@ function DOCOrderDOCTProduct_Model(options){
 	
 	options.fields.pack_in_price = new FieldBool("pack_in_price",filed_options);
 	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	
+	filed_options.autoInc = false;	
+	
+	options.fields.total_deliv = new FieldFloat("total_deliv",filed_options);
+	
 		DOCOrderDOCTProduct_Model.superclass.constructor.call(this,id,options);
 }
 extend(DOCOrderDOCTProduct_Model,Model);

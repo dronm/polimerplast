@@ -160,7 +160,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 			$pack_in_price,
 			$price_edit,
 			$price,
-			$total_param,
+			(!is_null($pm->getParamValue('total')))? floatval($pm->getParamValue('total')):'NULL',
 			$params->getDbVal('old_view_id'),
 			$params->getDbVal('old_line_number'),
 			$params->getDbVal('warehouse_id'),
@@ -168,14 +168,18 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 			$params->getDbVal('deliv_to_third_party')			
 			));
 		
-			if (is_array($ar)&amp;&amp;count($ar)){
+			if (is_array($ar)&amp;&amp;count($ar)){			
 				$pm->setParamValue('quant_base_measure_unit',$ar['base_quant']);
 				$pm->setParamValue('volume',$ar['volume_m']);
 				$pm->setParamValue('weight',$ar['weight_t']);
 				$pm->setParamValue('price',$ar['price']);
 				$pm->setParamValue('total',$ar['total']);
 				$pm->setParamValue('total_pack',$ar['total_pack']);
-			}					
+			}
+			
+			//Обнулим сумму по доставке по строке т.к. после этого будет пересчет
+			$pm->setParamValue('total_deliv',0);
+								
 		}
 		else if (isset($_REQUEST['quant_base_measure_unit'])){
 			/** изменилось базовое кол-во

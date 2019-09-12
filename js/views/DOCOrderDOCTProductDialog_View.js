@@ -353,18 +353,26 @@ DOCOrderDOCTProductDialog_View.prototype.onGetProductAttrs = function(model){
 	sub_cont.addElement(cont_w);
 	
 	//разрешение на редактирование цены, суммы
+	var def_money_en = false;
 	if (SERV_VARS.ROLE_ID!="client"){
+		def_money_en = true;
 		this.m_priceEditCtrl = new EditCheckBox(id+"_price_edit",{
 				"name":"pack_in_price",
-				"labelCaption":"Разрешить изменять цену, сумму:",
+				"labelCaption":"Произвольная цена:",
 				"tableLayout":false,
 				"enabled":true,
+				"checked":def_money_en,
 				"labelAlign":"right",
 				"events":{
 					"change":function(){
 						var v = (self.m_priceEditCtrl.getValue()=="true");
 						self.m_totPriceCtrl.setEnabled(v);
 						self.m_totSumCtrl.setEnabled(v);
+						//если по прайсу - пересчитать!
+						if(!v){
+							self.m_priceEditted = false;
+							self.calcTotals();
+						}
 					}
 				}
 			}
@@ -380,17 +388,18 @@ DOCOrderDOCTProductDialog_View.prototype.onGetProductAttrs = function(model){
 		{"labelCaption":"Цена, руб.:",
 		"name":"price",
 		"tableLayout":false,
-		"enabled":false,
+		"enabled":def_money_en,
 		"events":{
 				"input":function(){
 					//пересчет суммы
 					var tot = toFloat(self.m_totPriceCtrl.getValue())*toFloat(self.m_totQuantCtrl.getValue());
 					self.m_totSumCtrl.setValue(tot.toFixed(2));
+					self.m_priceEditted = true;
 				}
 			}			
 	});
 	this.bindControl(this.m_totPriceCtrl,{"modelId":model_id,
-		"valueFieldId":"price",
+		"valueFieldId":"price_no_deliv",
 		"keyFieldIds":null},
 		{"valueFieldId":"price","keyFieldIds":null}
 	);				
@@ -399,7 +408,7 @@ DOCOrderDOCTProductDialog_View.prototype.onGetProductAttrs = function(model){
 	//Сумма
 	this.m_totSumCtrl = new EditMoney(id+"_total",
 		{"labelCaption":"Сумма, руб.:",
-		"enabled":false,
+		"enabled":def_money_en,
 		"name":"total",
 		"tableLayout":false,
 		"events": {
@@ -408,11 +417,12 @@ DOCOrderDOCTProductDialog_View.prototype.onGetProductAttrs = function(model){
 				var pr = toFloat(self.m_totSumCtrl.getValue()) / toFloat(self.m_totQuantCtrl.getValue());
 				pr = Math.round(pr * 100) / 100;
 				self.m_totPriceCtrl.setValue(pr.toFixed(2));
+				self.m_priceEditted = true;
 			}
 		}
 	});
 	this.bindControl(this.m_totSumCtrl,{"modelId":model_id,
-		"valueFieldId":"total",
+		"valueFieldId":"total_no_deliv",
 		"keyFieldIds":null},
 		{"valueFieldId":"total","keyFieldIds":null}
 	);				
@@ -558,7 +568,7 @@ DOCOrderDOCTProductDialog_View.prototype.calcTotals = function(){
 					"pack":par_pack,
 					"pack_in_price":(this.m_packNotFree)? this.getDataControlValue(id+"_pack_in_price"):"",
 					"deliv_to_third_party":this.m_params.toThirdParty,
-					"price_edit":(SERV_VARS.ROLE_ID=="client")? false:this.getDataControlValue(id+"_price_edit"),
+					"price_edit":(SERV_VARS.ROLE_ID=="client"||(this.m_isNew&&!this.m_priceEditted))? false:this.getDataControlValue(id+"_price_edit"),
 					"price":this.m_totPriceCtrl.getValue()
 			},
 			"func":function(resp){

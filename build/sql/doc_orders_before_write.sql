@@ -6,15 +6,16 @@ CREATE OR REPLACE FUNCTION doc_orders_before_write(in_view_id varchar(32), in_do
   RETURNS void AS
 $BODY$
 BEGIN				
-	
 	--clear fact table
 	DELETE FROM doc_orders_t_products WHERE doc_id=in_doc_id;
 	
 	--copy data from temp to fact table
 	INSERT INTO doc_orders_t_products
-	(doc_id,line_number,product_id,quant,quant_confirmed,quant_base_measure_unit,quant_confirmed_base_measure_unit,volume,weight,price,price_edit,total,total_pack,mes_length,mes_width,mes_height,measure_unit_id,pack_exists,pack_in_price)
+	(doc_id,line_number,product_id,quant,quant_confirmed,quant_base_measure_unit,quant_confirmed_base_measure_unit,volume,weight,price,price_edit,total,total_pack,
+	mes_length,mes_width,mes_height,measure_unit_id,pack_exists,pack_in_price,total_deliv)
 	(SELECT in_doc_id
-	,line_number,product_id,quant,quant_confirmed,quant_base_measure_unit,quant_confirmed_base_measure_unit,volume,weight,price,price_edit,total,total_pack,mes_length,mes_width,mes_height,measure_unit_id,pack_exists,pack_in_price
+	,line_number,product_id,quant,quant_confirmed,quant_base_measure_unit,quant_confirmed_base_measure_unit,volume,weight,price,price_edit,total,total_pack,
+	mes_length,mes_width,mes_height,measure_unit_id,pack_exists,pack_in_price,total_deliv
 	FROM doc_orders_t_tmp_products
 	WHERE view_id=in_view_id);				
 	

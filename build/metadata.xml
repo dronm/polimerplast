@@ -2,7 +2,7 @@
 <metadata debug="TRUE" owner="polimerplast" dataSchema="public">
 	<versions>
 		<version dateOpen="2016-06-07 07:05" dateClose="2016-06-07 11:06:25">1.0021</version>
-		<lastBuild>2019-09-09 13:42:11</lastBuild>
+		<lastBuild>2019-09-10 13:52:24</lastBuild>
 		<version dateOpen="2016-06-07 11:06:56"/>
 		<version dateOpen="2016-06-07 11:06:57" dateClose="2016-06-07 14:06:30">1.0022</version>
 		<version dateOpen="2016-06-07 14:06:32" dateClose="2016-06-07 16:06:31">1.0023</version>
@@ -117,6 +117,7 @@
 		<version dateOpen="2019-08-05 09:08:11" dateClose="2019-09-04 06:09:45">1.0123</version>
 		<version dateOpen="2019-09-09 13:09:32" dateClose="2019-09-09 13:09:32">1.0124</version>
 		<version dateOpen="2019-09-09 13:09:41" dateClose="2019-09-09 13:09:42">1.0125</version>
+		<version dateOpen="2019-09-09 16:09:11" dateClose="2019-09-12 09:09:36">1.0126</version>
 	</versions>
 	<globalFilters>
 		<field id="client_id"/>
@@ -1155,10 +1156,13 @@
 			<field id="total_pack" dataType="Float" length="15" precision="2" alias="Сумма"/>
 			<field id="pack_exists" dataType="Bool"/>
 			<field id="pack_in_price" dataType="Bool"/>
+			<field id="total_deliv" dataType="Float" length="15" precision="2"/>
 		</model>
 		<model id="DOCOrderDOCTProductList" parent="ModelSQLDOCT20" dataTable="doc_orders_t_tmp_products_list" virtual="TRUE" modelType="DOCT" masterModel="DOCOrder">
 			<field id="view_id" dataType="String" length="32" primaryKey="TRUE"/>
 			<field id="line_number" dataType="Int" primaryKey="TRUE"/>
+			<field id="total_no_deliv" dataType="Float" length="15" precision="2"/>
+			<field id="price_no_deliv" dataType="Float" length="15" precision="2"/>
 		</model>
 		<model id="DOCOrderDOCTProductDialog" parent="ModelSQLDOCT20" dataTable="doc_orders_t_tmp_products_dialog" virtual="TRUE" modelType="DOCT" masterModel="DOCOrder">
 			<field id="view_id" dataType="String" length="32" primaryKey="TRUE"/>
@@ -1185,6 +1189,7 @@
 			<field id="total_pack" dataType="Float" length="15" precision="2" alias="Упаковка"/>
 			<field id="pack_exists" dataType="Bool"/>
 			<field id="pack_in_price" dataType="Bool"/>
+			<field id="total_deliv" dataType="Float" length="15" precision="2"/>
 			<index id="doc_orders_t_products_product_id_index" unique="FALSE">
 				<field id="product_id"/>
 			</index>
@@ -2875,6 +2880,7 @@
 		<permission type="allow" controllerId="Kladr" methodId="get_gorod_list" roleId="client"/>
 		<permission type="allow" controllerId="Kladr" methodId="get_ulitsa_list" roleId="client"/>
 		<permission type="allow" controllerId="Kladr" methodId="get_from_naspunkt" roleId="client"/>
+		<permission type="allow" controllerId="Kladr" methodId="get_prior_region_list" roleId="client"/>
 		<permission type="allow" controllerId="Report" methodId="client_balance" roleId="client"/>
 		<permission type="allow" controllerId="Report" methodId="naspunkt_cost" roleId="client"/>
 		<permission type="allow" controllerId="ProductionCity" methodId="get_list" roleId="client"/>

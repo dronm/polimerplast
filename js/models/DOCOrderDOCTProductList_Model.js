@@ -40,6 +40,24 @@ function DOCOrderDOCTProductList_Model(options){
 	
 	options.fields.line_number = new FieldInt("line_number",filed_options);
 	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	
+	filed_options.autoInc = false;	
+	
+	options.fields.total_no_deliv = new FieldFloat("total_no_deliv",filed_options);
+	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	
+	filed_options.autoInc = false;	
+	
+	options.fields.price_no_deliv = new FieldFloat("price_no_deliv",filed_options);
+	
 		DOCOrderDOCTProductList_Model.superclass.constructor.call(this,id,options);
 }
 extend(DOCOrderDOCTProductList_Model,Model);
