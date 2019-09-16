@@ -281,7 +281,8 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		$model->addField(new Field("acc",DT_STRING));
 		$model->addField(new Field("bank_name",DT_STRING));
 		$model->addField(new Field("bank_code",DT_STRING));
-		$model->addField(new Field("bank_acc",DT_STRING));		
+		$model->addField(new Field("bank_acc",DT_STRING));
+		$model->addField(new Field("email",DT_BOOL));				
 		$model->insert();
 		
 		$res=Array();
@@ -334,6 +335,10 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 					else{
 						$new_val = $pm->getParamValue($field_id);
 						//$val = (strlen($new_val))? $new_val:$db_val;
+						if($field_id=='is_supplier'){
+							$new_val = ($new_val=='1')? 't':'f';
+						}
+						
 						if(strlen($new_val) &amp;&amp;  $new_val!=$db_val){
 							$struc_1c[$field_id] = $new_val;
 						}
@@ -398,6 +403,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		}		
 		
 		if(count($struc_1c)){
+			file_put_contents(OUTPUT_PATH.'struc1c.txt',var_export($struc_1c,TRUE));
 			$ext_id = ExtProg::addClient($struc_1c);						
 			$pm->setParamValue('ext_id',$ext_id);			
 		}

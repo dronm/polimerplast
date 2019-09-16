@@ -109,6 +109,14 @@ class ClientDialog_Model extends ModelSQL{
 		$f_deliv_add_cost_to_product=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_add_cost_to_product",$f_opts);
 		$this->addField($f_deliv_add_cost_to_product);
 		//********************
+		
+		//*** Field is_supplier ***
+		$f_opts = array();
+		$f_opts['id']="is_supplier";
+						
+		$f_is_supplier=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"is_supplier",$f_opts);
+		$this->addField($f_is_supplier);
+		//********************
 	
 	}
 

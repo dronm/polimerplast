@@ -30,6 +30,10 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 </xsl:template>
 
 <xsl:template name="extra_methods">
+	/**
+	 * Соответствие было в старой 1с!!!
+	 * сейчас все ищется по строке!!!
+	 */
 	private function check_client_activity($pm){
 		$ext_ref = ExtProg::getClientActivityRefOnName($pm->getParamValue('name'));
 		if (!$ext_ref){
@@ -38,11 +42,11 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		$pm->setParamValue('ext_id',$ext_ref);
 	}
 	public function insert($pm){
-		$this->check_client_activity($pm);
+		//$this->check_client_activity($pm);
 		parent::insert($pm);
 	}
 	public function update($pm){
-		$this->check_client_activity($pm);
+		//$this->check_client_activity($pm);
 		parent::update($pm);
 	}	
 </xsl:template>
