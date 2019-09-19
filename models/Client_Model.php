@@ -334,6 +334,15 @@ class Client_Model extends ModelSQL{
 		$f_is_supplier=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"is_supplier",$f_opts);
 		$this->addField($f_is_supplier);
 		//********************
+		
+		//*** Field is_carrier ***
+		$f_opts = array();
+		$f_opts['defaultValue']='FALSE';
+		$f_opts['id']="is_carrier";
+						
+		$f_is_carrier=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"is_carrier",$f_opts);
+		$this->addField($f_is_carrier);
+		//********************
 	
 		$order = new ModelOrderSQL();		
 		$this->setDefaultModelOrder($order);		

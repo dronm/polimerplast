@@ -777,11 +777,11 @@ DOCOrderDialog_View.prototype.onClickSave = function(){
 DOCOrderDialog_View.prototype.setDebts = function(debtTotal,defDebt){	
 	if (this.m_defDebtInfCtrl && !isNaN(debtTotal) && debtTotal!=0){		
 		this.m_debtInfCtrl.setValue(( (debtTotal>0)? "Долг контрагента ":"Наш долг ") + numberFormat( (debtTotal<0)? -debtTotal:debtTotal ,2,",", "'")+" руб.");
-		DOMHandler.setAttr(this.m_debtInfCtrl.getNode(),"class", (debtTotal>0)? "text-danger":"text-info");
+		DOMHandler.setAttr(this.m_debtInfCtrl.getNode(),"class", (debtTotal>0)? "text-danger clientDebts":"text-info clientDebts");
 		
 		if (!isNaN(defDebt) && defDebt){
 			this.m_defDebtInfCtrl.setValue("Просроченный долг "+numberFormat( defDebt,2,",", "'")+" руб.");
-			DOMHandler.setAttr(this.m_defDebtInfCtrl.getNode(),"class","text-danger");
+			DOMHandler.setAttr(this.m_defDebtInfCtrl.getNode(),"class","text-danger clientDebts");
 		}
 		else{
 			DOMHandler.setAttr(this.m_defDebtInfCtrl.getNode(),"class","hidden");

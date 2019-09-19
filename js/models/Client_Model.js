@@ -365,6 +365,16 @@ function Client_Model(options){
 	
 	options.fields.is_supplier = new FieldBool("is_supplier",filed_options);
 	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	filed_options.defValue = true;
+	
+	filed_options.autoInc = false;	
+	
+	options.fields.is_carrier = new FieldBool("is_carrier",filed_options);
+	
 			
 			
 		Client_Model.superclass.constructor.call(this,id,options);

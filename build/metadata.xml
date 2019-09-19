@@ -2,7 +2,7 @@
 <metadata debug="TRUE" owner="polimerplast" dataSchema="public">
 	<versions>
 		<version dateOpen="2016-06-07 07:05" dateClose="2016-06-07 11:06:25">1.0021</version>
-		<lastBuild>2019-09-13 15:43:47</lastBuild>
+		<lastBuild>2019-09-19 09:14:26</lastBuild>
 		<version dateOpen="2016-06-07 11:06:56"/>
 		<version dateOpen="2016-06-07 11:06:57" dateClose="2016-06-07 14:06:30">1.0022</version>
 		<version dateOpen="2016-06-07 14:06:32" dateClose="2016-06-07 16:06:31">1.0023</version>
@@ -119,6 +119,7 @@
 		<version dateOpen="2019-09-09 13:09:41" dateClose="2019-09-09 13:09:42">1.0125</version>
 		<version dateOpen="2019-09-09 16:09:11" dateClose="2019-09-12 09:09:36">1.0126</version>
 		<version dateOpen="2019-09-13 14:09:35" dateClose="2019-09-16 07:09:31">1.0127</version>
+		<version dateOpen="2019-09-19 08:09:59" dateClose="2019-09-19 09:09:50">1.0128</version>
 	</versions>
 	<globalFilters>
 		<field id="client_id"/>
@@ -291,6 +292,7 @@
 			<field id="email" dataType="String" length="50"/>
 			<field id="deliv_add_cost_to_product" dataType="Bool"/>
 			<field id="is_supplier" dataType="Bool"/>
+			<field id="is_carrier" dataType="Bool" defaultValue="FALSE"/>
 			<index id="clients_name_index" unique="TRUE">
 				<expression>lower(name)</expression>
 			</index>
@@ -328,6 +330,7 @@
 			<field id="email" dataType="String"/>
 			<field id="deliv_add_cost_to_product" dataType="Bool"/>
 			<field id="is_supplier" dataType="Bool"/>
+			<field id="is_carrier" dataType="Bool"/>
 		</model>
 		<model id="ClientComplete" parent="ModelSQL" dataTable="clients_complete" virtual="TRUE">
 			<field id="id" dataType="Int" primaryKey="TRUE"/>
