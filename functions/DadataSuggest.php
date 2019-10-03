@@ -1,9 +1,11 @@
 <?php
 /*
  * $dadata = new DadataSuggest(DADATA_KEY);
-   return $dadata->suggest('party', Array("query"=>$queryStr));
+ * return $dadata->suggest('party', Array("query"=>$queryStr));
  */
+ 
 namespace Dadata;
+use Exception;
 class DadataSuggest {
     private $url,
             $token;
@@ -17,15 +19,19 @@ class DadataSuggest {
         $options = array(
             'http' => array(
                 'method'  => 'POST',
+                'timeout' => 3,
                 'header'  => array(
                     'Content-type: application/json',
                     'Authorization: Token ' . $this->token,
                     ),
                 'content' => json_encode($data),
-            ),
+            )
         );
         $context = stream_context_create($options);
         $result = file_get_contents($this->url . $resource, false, $context);
+	if($result===FALSE){
+		throw new Exception('Ошибка чтения ресурса!');
+	}
         return $result;
     }
     

@@ -452,10 +452,12 @@ DOCOrderDOCTProductDialog_View.prototype.toDOM = function(parent){
 	//События	
 	EventHandler.addEvent(
 		this.getDataControl(this.getId()+"_product").control.getNode(),
-		"change", this.m_evOnProdChange);
+		"change", this.m_evOnProdChange
+	);
 	EventHandler.addEvent(
 		this.m_WarehouseCtrl.getNode(),
-		"change", this.m_evOnWHChange);
+		"change", this.m_evOnWHChange
+	);
 }
 DOCOrderDOCTProductDialog_View.prototype.removeDOM = function(){
 	DOCOrderDOCTProductDialog_View.superclass.removeDOM.call(this);
@@ -553,6 +555,8 @@ DOCOrderDOCTProductDialog_View.prototype.calcTotals = function(){
 	}
 	else{
 		var self = this;
+		var pr_ed = (SERV_VARS.ROLE_ID=="client"||(this.m_isNew &&!this.m_priceEditted))? false:this.getDataControlValue(id+"_price_edit");
+		//console.log("calcTotals this.m_isNew="+this.m_isNew+" this.m_isCopy="+this.m_isCopy+" this.m_priceEditted="+this.m_priceEditted+" pr_ed="+pr_ed)
 		contr.run("calc_totals",{
 			"async":true,
 			"errControl":this.getErrorControl(),
@@ -568,7 +572,7 @@ DOCOrderDOCTProductDialog_View.prototype.calcTotals = function(){
 					"pack":par_pack,
 					"pack_in_price":(this.m_packNotFree)? this.getDataControlValue(id+"_pack_in_price"):"",
 					"deliv_to_third_party":this.m_params.toThirdParty,
-					"price_edit":(SERV_VARS.ROLE_ID=="client"||(this.m_isNew&&!this.m_priceEditted))? false:this.getDataControlValue(id+"_price_edit"),
+					"price_edit":(SERV_VARS.ROLE_ID=="client"||(this.m_isNew&&!this.m_isCopy&&!this.m_priceEditted))? false:this.getDataControlValue(id+"_price_edit"),
 					"price":this.m_totPriceCtrl.getValue()
 			},
 			"func":function(resp){
