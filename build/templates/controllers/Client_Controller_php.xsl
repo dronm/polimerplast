@@ -282,12 +282,14 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		$model->addField(new Field("bank_name",DT_STRING));
 		$model->addField(new Field("bank_code",DT_STRING));
 		$model->addField(new Field("bank_acc",DT_STRING));
-		$model->addField(new Field("email",DT_BOOL));				
+		$model->addField(new Field("email",DT_BOOL));
+		$model->addField(new Field("is_supplier",DT_BOOL));
+		$model->addField(new Field("is_carrier",DT_BOOL));
 		$model->insert();
 		
 		$res=Array();
-		ExtProg::getClientAttrsOnName(
-			$pm->getParamValue('name'),$res);
+		ExtProg::getClientAttrsOnName($pm->getParamValue('name'),$res);
+		
 		foreach($res as $key=>$val){			
 			$model->getFieldById($key)->setValue($val);
 		}			
