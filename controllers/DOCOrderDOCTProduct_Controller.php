@@ -104,6 +104,12 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 		$param = new FieldExtFloat('total_deliv'
 				,array());
 		$pm->addParam($param);
+		$param = new FieldExtFloat('total_no_deliv'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtFloat('price_no_deliv'
+				,array());
+		$pm->addParam($param);
 		
 			$f_params = array();
 			$param = new FieldExtInt('warehouse_id'
@@ -226,6 +232,14 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 			));
 			$pm->addParam($param);
 		$param = new FieldExtFloat('total_deliv'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtFloat('total_no_deliv'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtFloat('price_no_deliv'
 				,array(
 			));
 			$pm->addParam($param);

@@ -246,7 +246,7 @@ DOCOrderDOCTProductDialog_View.prototype.onGetProductAttrs = function(model){
 
 	//Панель количество правая
 	var cont =new ControlContainer("quant_cont","div",{"className":get_bs_col()+"4"});
-	cont.addElement(new Control(uuid(),panel_n_tag,{"value":"Количество"}));
+	cont.addElement(new Control(uuid(),panel_n_tag,{"value":"Количество:"}));
 	
 	var sub_cont =new ControlContainer("quant_cont","div",{"className":"row"});
 	this.m_quantCtrl = new DOCOrderQuantEdit(id+"_quant",
@@ -352,62 +352,82 @@ DOCOrderDOCTProductDialog_View.prototype.onGetProductAttrs = function(model){
 	cont_w.addElement(this.m_totWeightCtrl);
 	sub_cont.addElement(cont_w);
 	
-	//цена
-	var opts={"labelCaption":"Цена, руб.:",
-		"name":"price",
-		"tableLayout":false};	
-	
-	if (SERV_VARS.ROLE_ID=="client"){
-		var ctrl_class = EditMoney;
-		opts.enabled=false;
+	//разрешение на редактирование цены, суммы
+	var def_money_en = false;
+	if (SERV_VARS.ROLE_ID!="client"){
+		def_money_en = true;
+		this.m_priceEditCtrl = new EditCheckBox(id+"_price_edit",{
+				"name":"pack_in_price",
+				"labelCaption":"Произвольная цена:",
+				"tableLayout":false,
+				"enabled":true,
+				"checked":def_money_en,
+				"labelAlign":"right",
+				"events":{
+					"change":function(){
+						var v = (self.m_priceEditCtrl.getValue()=="true");
+						self.m_totPriceCtrl.setEnabled(v);
+						self.m_totSumCtrl.setEnabled(v);
+						//если по прайсу - пересчитать!
+						if(!v){
+							self.m_priceEditted = false;
+							self.calcTotals();
+						}
+					}
+				}
+			}
+		);
+		this.bindControl(this.m_priceEditCtrl,{"modelId":model_id,"valueFieldId":"price_edit",
+			"keyFieldIds":null},{"valueFieldId":"price_edit","keyFieldIds":null}
+		);
+		sub_cont.addElement(this.m_priceEditCtrl);
 	}
-	else{
-		var ctrl_class = EditMoneyEditable;
-		var ctrl_edit = new Control(id+"_price_edit","div",{
-			"name":"price_edit",
-			"tableLayout":false,
-			"visible":false,
-			"value":"false"});
-		this.bindControl(ctrl_edit,
-			{"modelId":model_id,"valueFieldId":"price_edit","keyFieldIds":null},
-			{"valueFieldId":"price_edit","keyFieldIds":null});	
-		sub_cont.addElement(ctrl_edit);		
-		opts.editAllowedFieldCtrl = ctrl_edit;
-	}	
-	opts.events={
-		"input":function(){
-			//пересчет суммы
-			console.log("пересчет суммы change")
-			var tot = toFloat(self.m_totPriceCtrl.getValue())*toFloat(self.m_totQuantCtrl.getValue());
-			self.m_totSumCtrl.setValue(tot.toFixed(2));
-		}
-	};	
-	
-	this.m_totPriceCtrl = new ctrl_class(id+"_price",opts);
+		
+	//цена
+	this.m_totPriceCtrl = new EditMoney(id+"_price",
+		{"labelCaption":"Цена, руб.:",
+		"name":"price",
+		"tableLayout":false,
+		"enabled":def_money_en,
+		"events":{
+				"input":function(){
+					//пересчет суммы
+					var tot = toFloat(self.m_totPriceCtrl.getValue())*toFloat(self.m_totQuantCtrl.getValue());
+					self.m_totSumCtrl.setValue(tot.toFixed(2));
+					self.m_priceEditted = true;
+				}
+			}			
+	});
 	this.bindControl(this.m_totPriceCtrl,{"modelId":model_id,
-		"valueFieldId":"price",
+		"valueFieldId":"price_no_deliv",
 		"keyFieldIds":null},
 		{"valueFieldId":"price","keyFieldIds":null}
 	);				
 	sub_cont.addElement(this.m_totPriceCtrl);
 	
 	//Сумма
-	var cont_sum =new ControlContainer("total_sum_cont","div",{className:"form-group"});
-	cont_sum.addElement(new Control(uuid(),"Label",{
-		"className":cl_lbl,
-		"value":"Сумма, руб.:"
-		}))
-	
-	this.m_totSumCtrl = new Control(id+"_total",
-		"span",{"className":cl_fl});
+	this.m_totSumCtrl = new EditMoney(id+"_total",
+		{"labelCaption":"Сумма, руб.:",
+		"enabled":def_money_en,
+		"name":"total",
+		"tableLayout":false,
+		"events": {
+			"input":function(){
+				//пересчет Цены
+				var pr = toFloat(self.m_totSumCtrl.getValue()) / toFloat(self.m_totQuantCtrl.getValue());
+				pr = Math.round(pr * 100) / 100;
+				self.m_totPriceCtrl.setValue(pr.toFixed(2));
+				self.m_priceEditted = true;
+			}
+		}
+	});
 	this.bindControl(this.m_totSumCtrl,{"modelId":model_id,
-		"valueFieldId":"total",
+		"valueFieldId":"total_no_deliv",
 		"keyFieldIds":null},
-		{"valueFieldId":null,"keyFieldIds":null}
-	);
-	cont_sum.addElement(this.m_totSumCtrl);
-	sub_cont.addElement(cont_sum);
-	
+		{"valueFieldId":"total","keyFieldIds":null}
+	);				
+	sub_cont.addElement(this.m_totSumCtrl);
+		
 	cont.addElement(sub_cont);	
 	this.m_prodAttrCont.addElement(cont);	
 	
@@ -432,10 +452,12 @@ DOCOrderDOCTProductDialog_View.prototype.toDOM = function(parent){
 	//События	
 	EventHandler.addEvent(
 		this.getDataControl(this.getId()+"_product").control.getNode(),
-		"change", this.m_evOnProdChange);
+		"change", this.m_evOnProdChange
+	);
 	EventHandler.addEvent(
 		this.m_WarehouseCtrl.getNode(),
-		"change", this.m_evOnWHChange);
+		"change", this.m_evOnWHChange
+	);
 }
 DOCOrderDOCTProductDialog_View.prototype.removeDOM = function(){
 	DOCOrderDOCTProductDialog_View.superclass.removeDOM.call(this);
@@ -461,8 +483,12 @@ DOCOrderDOCTProductDialog_View.prototype.onGetData = function(resp,isNew){
 	if (model.getNextRow()){
 		var product_id = model.getFieldValue("product_id");
 		this.onProductSelected(product_id);
-		
-		this.m_totPriceCtrl.setEnabled((model.getFieldValue("price_edit")=="true"));
+				
+		if (SERV_VARS.ROLE_ID!="client"){
+			var pr_en = (model.getFieldValue("price_edit")=="true");
+			this.m_totPriceCtrl.setEnabled(pr_en);
+			this.m_totSumCtrl.setEnabled(pr_en);
+		}
 		
 		this.m_oldMeasureUnitId = model.getFieldValue("measure_unit_id");
 	}		
@@ -529,6 +555,8 @@ DOCOrderDOCTProductDialog_View.prototype.calcTotals = function(){
 	}
 	else{
 		var self = this;
+		var pr_ed = (SERV_VARS.ROLE_ID=="client"||(this.m_isNew &&!this.m_priceEditted))? false:this.getDataControlValue(id+"_price_edit");
+		//console.log("calcTotals this.m_isNew="+this.m_isNew+" this.m_isCopy="+this.m_isCopy+" this.m_priceEditted="+this.m_priceEditted+" pr_ed="+pr_ed)
 		contr.run("calc_totals",{
 			"async":true,
 			"errControl":this.getErrorControl(),
@@ -544,7 +572,7 @@ DOCOrderDOCTProductDialog_View.prototype.calcTotals = function(){
 					"pack":par_pack,
 					"pack_in_price":(this.m_packNotFree)? this.getDataControlValue(id+"_pack_in_price"):"",
 					"deliv_to_third_party":this.m_params.toThirdParty,
-					"price_edit":(SERV_VARS.ROLE_ID=="client")? false:this.getDataControlValue(id+"_price_edit"),
+					"price_edit":(SERV_VARS.ROLE_ID=="client"||(this.m_isNew&&!this.m_isCopy&&!this.m_priceEditted))? false:this.getDataControlValue(id+"_price_edit"),
 					"price":this.m_totPriceCtrl.getValue()
 			},
 			"func":function(resp){
@@ -660,10 +688,10 @@ DOCOrderDOCTProductDialog_View.prototype.measureUnitsCheck = function(resp){
 }
 
 DOCOrderDOCTProductDialog_View.prototype.getFormWidth = function(){
-	return "900";
+	return "950";
 }
 DOCOrderDOCTProductDialog_View.prototype.getFormHeight = function(){
-	return "600";
+	return "650";
 }
 DOCOrderDOCTProductDialog_View.prototype.setWHouseWarn = function(){
 	if (this.m_headWarehouseCtrl.getValue()!=this.m_WarehouseCtrl.getValue()){

@@ -213,6 +213,16 @@ function DOCOrderDOCTFProduct_Model(options){
 	
 	options.fields.total_deliv = new FieldFloat("total_deliv",filed_options);
 	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	filed_options.defValue = true;
+	
+	filed_options.autoInc = false;	
+	
+	options.fields.total_no_deliv = new FieldFloat("total_no_deliv",filed_options);
+	
 			
 		DOCOrderDOCTFProduct_Model.superclass.constructor.call(this,id,options);
 }

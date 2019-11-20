@@ -2815,8 +2815,8 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 			quant_base_measure_unit = data.base_quant,
 			volume = data.volume_m,
 			weight = data.weight_t,			
-			total = CASE WHEN tmp.price_edit THEN coalesce(tmp.total,0)-coalesce(tmp.total_deliv,0) ELSE data.total END,
-			price = CASE WHEN tmp.price_edit THEN round((coalesce(tmp.total,0)-coalesce(tmp.total_deliv,0))/data.base_quant,2) ELSE data.price END,
+			total = tmp.total_no_deliv,
+			price = tmp.price_no_deliv,
 			total_pack = data.total_pack,
 			total_deliv = 0
 		FROM 

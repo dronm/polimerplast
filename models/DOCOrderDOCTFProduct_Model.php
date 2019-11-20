@@ -214,6 +214,16 @@ class DOCOrderDOCTFProduct_Model extends ModelSQL{
 		$f_total_deliv=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total_deliv",$f_opts);
 		$this->addField($f_total_deliv);
 		//********************
+		
+		//*** Field total_no_deliv ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['defaultValue']='0';
+		$f_opts['id']="total_no_deliv";
+						
+		$f_total_no_deliv=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"total_no_deliv",$f_opts);
+		$this->addField($f_total_no_deliv);
+		//********************
 	
 	}
 

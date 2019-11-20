@@ -159,6 +159,18 @@ extend(DOCOrderDOCTProduct_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
+	options = {};
+	
+	var param = new FieldFloat("total_no_deliv",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldFloat("price_no_deliv",options);
+	
+	pm.addParam(param);
+	
 		var options = {};
 						
 		pm.addParam(new FieldInt("warehouse_id",options));
@@ -308,6 +320,18 @@ extend(DOCOrderDOCTProduct_Controller,ControllerDb);
 	options = {};
 	
 	var param = new FieldFloat("total_deliv",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldFloat("total_no_deliv",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldFloat("price_no_deliv",options);
 	
 	pm.addParam(param);
 	

@@ -2,7 +2,7 @@
 <metadata debug="TRUE" owner="polimerplast" dataSchema="public">
 	<versions>
 		<version dateOpen="2016-06-07 07:05" dateClose="2016-06-07 11:06:25">1.0021</version>
-		<lastBuild>2019-10-14 15:30:20</lastBuild>
+		<lastBuild>2019-11-20 15:04:22</lastBuild>
 		<version dateOpen="2016-06-07 11:06:56"/>
 		<version dateOpen="2016-06-07 11:06:57" dateClose="2016-06-07 14:06:30">1.0022</version>
 		<version dateOpen="2016-06-07 14:06:32" dateClose="2016-06-07 16:06:31">1.0023</version>
@@ -122,6 +122,7 @@
 		<version dateOpen="2019-09-19 08:09:59" dateClose="2019-09-19 09:09:50">1.0128</version>
 		<version dateOpen="2019-10-03 09:10:02" dateClose="2019-10-03 10:10:55">1.0129</version>
 		<version dateOpen="2019-10-14 09:10:38" dateClose="2019-10-14 15:10:42">1.0130</version>
+		<version dateOpen="2019-11-20 14:11:15" dateClose="2019-11-20 15:11:26">1.0131</version>
 	</versions>
 	<globalFilters>
 		<field id="client_id"/>
@@ -1165,6 +1166,8 @@
 			<field id="pack_exists" dataType="Bool"/>
 			<field id="pack_in_price" dataType="Bool"/>
 			<field id="total_deliv" dataType="Float" length="15" precision="2"/>
+			<field id="total_no_deliv" dataType="Float" length="15" precision="2" defaultValue="0"/>
+			<field id="price_no_deliv" dataType="Float" length="15" precision="2" defaultValue="0"/>
 		</model>
 		<model id="DOCOrderDOCTProductList" parent="ModelSQLDOCT20" dataTable="doc_orders_t_tmp_products_list" virtual="TRUE" modelType="DOCT" masterModel="DOCOrder">
 			<field id="view_id" dataType="String" length="32" primaryKey="TRUE"/>
@@ -1198,6 +1201,7 @@
 			<field id="pack_exists" dataType="Bool"/>
 			<field id="pack_in_price" dataType="Bool"/>
 			<field id="total_deliv" dataType="Float" length="15" precision="2"/>
+			<field id="total_no_deliv" dataType="Float" length="15" precision="2" defaultValue="0"/>
 			<index id="doc_orders_t_products_product_id_index" unique="FALSE">
 				<field id="product_id"/>
 			</index>

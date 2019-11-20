@@ -401,7 +401,7 @@ DOCOrderDOCTProductDialog_View.prototype.onGetProductAttrs = function(model){
 	this.bindControl(this.m_totPriceCtrl,{"modelId":model_id,
 		"valueFieldId":"price_no_deliv",
 		"keyFieldIds":null},
-		{"valueFieldId":"price","keyFieldIds":null}
+		{"valueFieldId":"price_no_deliv","keyFieldIds":null}
 	);				
 	sub_cont.addElement(this.m_totPriceCtrl);
 	
@@ -424,7 +424,7 @@ DOCOrderDOCTProductDialog_View.prototype.onGetProductAttrs = function(model){
 	this.bindControl(this.m_totSumCtrl,{"modelId":model_id,
 		"valueFieldId":"total_no_deliv",
 		"keyFieldIds":null},
-		{"valueFieldId":"total","keyFieldIds":null}
+		{"valueFieldId":"total_no_deliv","keyFieldIds":null}
 	);				
 	sub_cont.addElement(this.m_totSumCtrl);
 		

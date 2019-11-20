@@ -1,8 +1,10 @@
--- Function: doc_orders_before_write(varchar(32), integer)
+-- Function: public.doc_orders_before_write(character varying, integer)
 
--- DROP FUNCTION doc_orders_before_write(varchar(32), integer);
+-- DROP FUNCTION public.doc_orders_before_write(character varying, integer);
 
-CREATE OR REPLACE FUNCTION doc_orders_before_write(in_view_id varchar(32), in_doc_id integer)
+CREATE OR REPLACE FUNCTION public.doc_orders_before_write(
+    in_view_id character varying,
+    in_doc_id integer)
   RETURNS void AS
 $BODY$
 BEGIN				
@@ -12,10 +14,12 @@ BEGIN
 	--copy data from temp to fact table
 	INSERT INTO doc_orders_t_products
 	(doc_id,line_number,product_id,quant,quant_confirmed,quant_base_measure_unit,quant_confirmed_base_measure_unit,volume,weight,price,price_edit,total,total_pack,
-	mes_length,mes_width,mes_height,measure_unit_id,pack_exists,pack_in_price,total_deliv)
+	mes_length,mes_width,mes_height,measure_unit_id,pack_exists,pack_in_price,total_deliv,
+	price_no_deliv,total_no_deliv)
 	(SELECT in_doc_id
 	,line_number,product_id,quant,quant_confirmed,quant_base_measure_unit,quant_confirmed_base_measure_unit,volume,weight,price,price_edit,total,total_pack,
-	mes_length,mes_width,mes_height,measure_unit_id,pack_exists,pack_in_price,total_deliv
+	mes_length,mes_width,mes_height,measure_unit_id,pack_exists,pack_in_price,total_deliv,
+	price_no_deliv,total_no_deliv
 	FROM doc_orders_t_tmp_products
 	WHERE view_id=in_view_id);				
 	
@@ -67,5 +71,8 @@ BEGIN
 	*/
 END;
 $BODY$
-  LANGUAGE plpgsql VOLATILE COST 100;
-ALTER FUNCTION doc_orders_before_write(varchar(32), integer) OWNER TO polimerplast;
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+ALTER FUNCTION public.doc_orders_before_write(character varying, integer)
+  OWNER TO polimerplast;
+
