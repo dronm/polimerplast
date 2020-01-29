@@ -47,6 +47,38 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		}
 		parent::update($pm);
 	}	
+	
+	public function get_firm_ext_bank_account_list($pm){
+		$params = new ParamsSQL($pm,$this->getDbLink());
+		$params->addAll();
+
+		$firm_id = $params->getParamById('firm_id');
+		if(!isset($firm_id)||$firm_id=="null"){
+			throw new Exception('Не задана фирма!');
+		}
+		
+		$ar = $this->getDbLink()->query_first(sprintf(
+		"SELECT ext_id AS firm_ext_id FROM firms WHERE firms.id=%d",
+		$firm_id
+		));
+	
+		if(!is_array($ar) || !count($ar) || !isset($ar['firm_ext_id']) ){
+			throw new Exception('Неверные парамтеры!');
+		}
+	
+		$xml = NULL;
+		ExtProg::getFirmBankAccountList($ar['firm_ext_id'],$xml);
+		
+		$model = new Model(array("id"=>"FirmExtBankAccountList_Model"));
+                foreach($xml->bank_accounts->bank_account as $acc){
+                        $fields = array();
+                        array_push($fields,new Field('ext_id',DT_STRING,array('value'=>(string) $acc->ref)));
+                        array_push($fields,new Field('name',DT_STRING,array('value'=>(string) $acc->name)));
+                        $model->insert($fields);
+		}		
+		$this->addModel($model);
+	}
+	
 </xsl:template>
 
 </xsl:stylesheet>

@@ -531,6 +531,7 @@ extend(Client_Controller,ControllerDb);
 	pm.addParam(new FieldFloat("def_debt",options));
 	pm.addParam(new FieldFloat("debt_total",options));
 	pm.addParam(new FieldBool("deleted",options));
+	pm.addParam(new FieldString("deliv_add_cost_to_product",options));
 }
 
 			Client_Controller.prototype.addGetObject = function(){

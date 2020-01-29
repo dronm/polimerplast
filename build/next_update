@@ -1,124 +1,253 @@
-1) Добавление авто, создание нового водителя через кнопку (пп18)
+DELETE FROM public.doc_orders_t_tmp_products;
 
-2) Архив под производством теперь не тормозит
-
-3) Сортировка по клику на колонке в заявках
-
-4) Акт сверки в ексель вернул. Печать убрать проблемно - там логику надо менять, в задании такого не было, я на это не рассчитывал
-
-5) Самовывоз по-умолчанию восстановил
-
-6) Кнопка "В производство" осталось недоступной. Нашел косяк: видимо нажали, а на вопрос о подтверждении сказали - нет.
-в этом случае действительно оставалась не доступна - исправил
-
-7)Отчет Объем заявок, я так и не понял что там не работает. Без выбора склада показывает пустой или что?
-Сделал чтобы без выбора склада все бралось. Добавил кнопку печати
-
-8)Под производством.
-Якобы пропали всплыв. подсказки в таблице заявок после нескольких отгрузок. Может это устарело? не должно быть такого,
-хотя проверить (отгрузить несколько) не смогу
-
-9) Печать счета при новой заявке. Кнопка счет доступна, она запишет и вернет счет
-
-10) Кнопка "Отгрузить" из заявки, по крайней мере окно отгрузок теперь открывается, дальше не пробовал
-
-11) Отображение долга исправил, с 1с не совпадает, т.к. берет по всем договорам
-
-12) Создание заявок без продукции
-
-13) Отчет по долгам, пока без отбора, показывает все. У админа в справочниках, рядом с долгами, у продаж в отдельном меню
+ALTER TABLE public.doc_orders_t_tmp_products ADD COLUMN total_no_deliv numeric(15,2) DEFAULT 0;
+ALTER TABLE public.doc_orders_t_products ADD COLUMN total_no_deliv numeric(15,2) DEFAULT 0;
 
 
-1) Роль представитель
-2) Множественный фильтр работает. Пока кроме отчета
-3) Кнопка вид оплаты и ПКО по карте. выписку пко я не проверял совсем
+-- Function: public.doc_orders_before_write(character varying, integer)
 
+-- DROP FUNCTION public.doc_orders_before_write(character varying, integer);
 
-1) Новые авто записываются
-2) ЛК платежи Исправил
-
-3) Нумерация в заявке при разделении
-
-4) Отгрузка из таблицы. пробуйте, должно быть нормально, из доставок не смотрел - нужно поймать момент когда там что то есть
-
-5) пко, думаю не будет больше повтороного включения. мне кажется это с отменой оплаты связано
-
-6)Отчет по долгам, еще раз
-Отгружено = 
-	готова
-	отгружена
-	на погрузке
-	доставка клиенту
-	разгрузка у клиента
-	выполнена
-
-
-Не отгружена = в производстве
-
-7) Кнопку счет из заявок пока убрал - проверю еще
-
-
-1) Акт сверки в ЛК
-2) Новые машины заносятся
-3)Деление самовывоза, категория ТС не доступна. Проводить не пробовал
-4)Кнопка счет в заявке
-5)Видимость колонок при добавлении сразу появляется
-
-
-1) Оплата в одной колонке
-2) Отчет, множественный фильтр
-3) Новые машины должны заноситься. Просто в прошлый раз до 11 знаков номер увеличил, не подумал про регионы тиа 174, теперь сделал до 20- точно все войдет
-4) Кнопка счет в заявке, с продукцией пролблем больше нет.
-5) Смена статусов по кнопке "архив" +500руб к общему счету. Удалить у админа я все же оставил - непосредственное удаление.
-
-По видимостит колонок в прошлый раз имел ввиду добавление в обратном порядке, там проблема была
-
-
-
-
-*************************
--- Function: public.sess_write(character varying, text, character varying)
-
--- DROP FUNCTION public.sess_write(character varying, text, character varying);
-
-CREATE OR REPLACE FUNCTION public.sess_write(
-    in_id character varying,
-    in_data text,
-    in_remote_ip character varying)
+CREATE OR REPLACE FUNCTION public.doc_orders_before_write(
+    in_view_id character varying,
+    in_doc_id integer)
   RETURNS void AS
 $BODY$
-BEGIN
-	UPDATE sessions
-	SET
-		set_time = now(),
-		data = in_data
-	WHERE id = in_id;
+BEGIN				
+	--clear fact table
+	DELETE FROM doc_orders_t_products WHERE doc_id=in_doc_id;
 	
-	IF FOUND THEN
-		RETURN;
-	END IF;
+	--copy data from temp to fact table
+	INSERT INTO doc_orders_t_products
+	(doc_id,line_number,product_id,quant,quant_confirmed,quant_base_measure_unit,quant_confirmed_base_measure_unit,volume,weight,price,price_edit,total,total_pack,
+	mes_length,mes_width,mes_height,measure_unit_id,pack_exists,pack_in_price,total_deliv,
+	price_no_deliv,total_no_deliv)
+	(SELECT in_doc_id
+	,line_number,product_id,quant,quant_confirmed,quant_base_measure_unit,quant_confirmed_base_measure_unit,volume,weight,price,price_edit,total,total_pack,
+	mes_length,mes_width,mes_height,measure_unit_id,pack_exists,pack_in_price,total_deliv,
+	price_no_deliv,total_no_deliv
+	FROM doc_orders_t_tmp_products
+	WHERE view_id=in_view_id);				
 	
-	BEGIN
-		INSERT INTO sessions (id, data, set_time)
-		VALUES(in_id, in_data, now());
-		
-		INSERT INTO logins(date_time_in,ip,session_id)
-		VALUES(now(),in_remote_ip,in_id);
-		
-	EXCEPTION WHEN OTHERS THEN
-		UPDATE sessions
-		SET
-			set_time = now(),
-			data = in_data
-		WHERE id = in_id;
-	END;
-	
-	RETURN;
+	--clear temp table
+	DELETE FROM doc_orders_t_tmp_products WHERE view_id=in_view_id;
 
-END;	
+	--*******************
+	--clear fact table
+	DELETE FROM doc_orders_t_cust_surveys WHERE doc_id=in_doc_id;
+	
+	--copy data from temp to fact table
+	INSERT INTO doc_orders_t_cust_surveys
+	(doc_id,line_number,
+		customer_survey_question_id,points,answer_comment)
+	(SELECT in_doc_id,line_number,
+		customer_survey_question_id,points,answer_comment
+	FROM doc_orders_t_tmp_cust_surveys
+	WHERE view_id=in_view_id);				
+	
+	--clear temp table
+	DELETE FROM doc_orders_t_tmp_cust_surveys WHERE view_id=in_view_id;
+	
+	--*******************
+	
+	--totals
+	PERFORM doc_orders_update_totals(in_doc_id);
+	/*
+	UPDATE doc_orders
+	SET
+		product_str = prod.products,
+		total_quant = prod.quant_sum,
+		total_volume = prod.volume_sum,
+		total_weight = prod.weight_sum,
+		total = prod.total_sum,
+		total_pack = prod.total_pack_sum
+	FROM (
+		SELECT
+			string_agg(p.name,',') AS products,
+			SUM(t.quant) AS quant_sum,
+			SUM(t.volume) AS volume_sum,
+			SUM(t.weight) AS weight_sum,
+			coalesce(SUM(t.total),0) AS total_sum,
+			coalesce(SUM(t.total_pack),0) AS total_pack_sum
+		FROM doc_orders_t_products AS t
+		LEFT JOIN products AS p ON p.id=t.product_id
+		WHERE t.doc_id=in_doc_id
+	) AS prod
+	WHERE id=in_doc_id;
+	*/
+END;
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
-ALTER FUNCTION public.sess_write(character varying, text, character varying)
+ALTER FUNCTION public.doc_orders_before_write(character varying, integer)
   OWNER TO polimerplast;
+
+
+-- Function: public.doc_orders_before_open(character varying, integer, integer)
+
+-- DROP FUNCTION public.doc_orders_before_open(character varying, integer, integer);
+
+CREATE OR REPLACE FUNCTION public.doc_orders_before_open(
+    in_view_id character varying,
+    in_login_id integer,
+    in_doc_id integer)
+  RETURNS void AS
+$BODY$
+BEGIN
+	--DELETE FROM doc_orders_t_tmp_products WHERE login_id=in_login_id;
+	DELETE FROM doc_orders_t_tmp_products WHERE view_id=in_view_id;
+	
+	IF (in_doc_id IS NOT NULL AND in_doc_id>0) THEN
+		INSERT INTO doc_orders_t_tmp_products
+		(login_id,view_id,line_number,product_id,quant,quant_confirmed,quant_base_measure_unit,quant_confirmed_base_measure_unit,
+		volume,weight,price,price_edit,total,total_pack,
+		mes_length,mes_width,mes_height,measure_unit_id,pack_exists,pack_in_price,total_deliv,
+		price_no_deliv,total_no_deliv)
+		(SELECT in_login_id, in_view_id
+		,line_number,product_id,quant,quant_confirmed,quant_base_measure_unit,quant_confirmed_base_measure_unit,
+		volume,weight,price,price_edit,
+		total,total_pack,mes_length,mes_width,mes_height,measure_unit_id,pack_exists,pack_in_price,total_deliv,
+		price_no_deliv,total_no_deliv
+		FROM doc_orders_t_products
+		WHERE doc_id=in_doc_id);
+	END IF;
+
+	--DELETE FROM doc_orders_t_tmp_cust_surveys WHERE login_id=in_login_id;
+	DELETE FROM doc_orders_t_tmp_cust_surveys WHERE view_id=in_view_id;
+	
+	IF (in_doc_id IS NOT NULL AND in_doc_id>0) THEN
+	
+		INSERT INTO doc_orders_t_tmp_cust_surveys
+		(login_id,view_id,line_number,customer_survey_question_id,points,answer_comment)
+		(SELECT in_login_id, in_view_id
+		,line_number,customer_survey_question_id,points,answer_comment
+		FROM doc_orders_t_cust_surveys
+		WHERE doc_id=in_doc_id);
+	END IF;
+	
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+ALTER FUNCTION public.doc_orders_before_open(character varying, integer, integer)
+  OWNER TO polimerplast;
+
+
+-- View: public.doc_orders_t_tmp_products_list
+
+-- DROP VIEW public.doc_orders_t_tmp_products_list;
+
+CREATE OR REPLACE VIEW public.doc_orders_t_tmp_products_list AS 
+	SELECT t.login_id,
+		t.view_id,
+		t.line_number,
+		t.product_id,
+		products_descr(p.*, t.mes_length, t.mes_width, t.mes_height) AS product_descr,
+		t.mes_length,
+		t.mes_width,
+		t.mes_height,
+		t.volume,
+		t.weight,
+		t.quant_base_measure_unit AS quant,
+		round(t.quant_base_measure_unit, 0) AS quant_descr,
+		t.quant_confirmed_base_measure_unit,
+		t.price,
+		format_money(t.price) AS price_descr,
+		t.total,
+		format_money(t.total) AS total_descr,
+		t.total_pack,
+		t.pack_exists,
+		p.base_measure_unit_id AS measure_unit_id,
+		mu.name AS measure_unit_descr,
+		t.quant AS doc_quant,
+		t.measure_unit_id AS doc_measure_unit_id,
+		mu_doc.name AS doc_measure_unit_descr,
+		CASE
+			WHEN t.quant_confirmed_base_measure_unit > 0::numeric THEN
+				(SELECT
+					doc_order_calc_quant(t.product_id,
+							t.measure_unit_id,
+							t.mes_length,
+							t.mes_width,
+							t.mes_height,
+							t.quant_confirmed_base_measure_unit
+					) AS doc_order_calc_quant
+				)
+		ELSE 0::numeric
+		END AS quant_confirmed_measure_unit,
+		COALESCE(t.total_deliv, 0::numeric) AS total_deliv,
+		
+		COALESCE(t.total_no_deliv, 0::numeric) AS total_no_deliv,
+		COALESCE(t.price_no_deliv, 0::numeric) AS price_no_deliv
+		
+		/*
+		COALESCE(t.total, 0::numeric) - COALESCE(t.total_deliv, 0::numeric) AS total_no_deliv,
+		CASE
+			WHEN t.quant_base_measure_unit = 0::numeric THEN 0::numeric
+		ELSE round((COALESCE(t.total, 0::numeric) - COALESCE(t.total_deliv, 0::numeric)) / t.quant_base_measure_unit, 2)
+		END AS price_no_deliv
+		*/
+		
+	FROM doc_orders_t_tmp_products t
+	LEFT JOIN products p ON p.id = t.product_id
+	LEFT JOIN measure_units mu ON mu.id = p.base_measure_unit_id
+	LEFT JOIN measure_units mu_doc ON mu_doc.id = t.measure_unit_id
+	ORDER BY t.line_number;
+
+ALTER TABLE public.doc_orders_t_tmp_products_list
+  OWNER TO polimerplast;
+
+
+-- View: public.doc_orders_t_tmp_products_dialog
+
+ DROP VIEW public.doc_orders_t_tmp_products_dialog;
+
+CREATE OR REPLACE VIEW public.doc_orders_t_tmp_products_dialog AS 
+ SELECT t.login_id,
+    t.view_id,
+    t.line_number,
+    t.product_id,
+    p.name AS product_descr,
+    t.quant,
+    round(t.quant, 0) AS quant_descr,
+    t.quant_base_measure_unit,
+    t.quant_confirmed_base_measure_unit,
+    t.volume,
+    t.weight,
+    t.price,
+    format_money(t.price) AS price_descr,
+    t.total,
+    format_money(t.total) AS total_descr,
+    t.mes_length,
+    t.mes_width,
+    t.mes_height,
+    t.measure_unit_id,
+    mu.name AS measure_unit_descr,
+    mu.is_int AS measure_unit_is_int,
+    t.pack_exists,
+    t.pack_in_price,
+    t.price_edit,
+    p.base_measure_unit_id,
+    base_mu.name AS base_measure_unit_descr,
+    base_mu.is_int AS base_measure_unit_is_int,
+        CASE
+            WHEN t.quant_confirmed_base_measure_unit > 0::numeric THEN ( SELECT doc_order_calc_quant(t.product_id, t.measure_unit_id, t.mes_length, t.mes_width, t.mes_height, t.quant_confirmed_base_measure_unit) AS doc_order_calc_quant)
+            ELSE 0::numeric
+        END AS quant_confirmed_measure_unit,
+    COALESCE(t.total_deliv, 0::numeric) AS total_deliv,
+    t.total_no_deliv,
+    t.price_no_deliv
+   FROM doc_orders_t_tmp_products t
+     LEFT JOIN products p ON p.id = t.product_id
+     LEFT JOIN measure_units mu ON mu.id = t.measure_unit_id
+     LEFT JOIN measure_units base_mu ON base_mu.id = p.base_measure_unit_id
+  ORDER BY t.line_number;
+
+ALTER TABLE public.doc_orders_t_tmp_products_dialog
+  OWNER TO polimerplast;
+
+
+
+
+--************************************
 

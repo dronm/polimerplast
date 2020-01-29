@@ -18,4 +18,4 @@ CREATE OR REPLACE VIEW client_firm_bank_accounts_list AS
 	ORDER BY t.client_id,f.name
 	;
 	
-ALTER VIEW client_firm_bank_accounts_list OWNER TO polimerplast
+ALTER VIEW client_firm_bank_accounts_list OWNER TO ;

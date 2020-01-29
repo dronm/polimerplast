@@ -23,6 +23,7 @@ function Firm_Controller(servConnector){
 	this.addDelete();
 	this.addGetList();
 	this.addGetObject();
+	this.add_get_firm_ext_bank_account_list();
 	
 }
 extend(Firm_Controller,ControllerDb);
@@ -153,6 +154,42 @@ extend(Firm_Controller,ControllerDb);
 	
 	var pm = this.getGetObject();
 	pm.addParam(new FieldInt("id",options));
+}
+
+			Firm_Controller.prototype.add_get_firm_ext_bank_account_list = function(){
+	var pm = this.addMethodById('get_firm_ext_bank_account_list');
+	
+				
+		pm.addParam(new FieldInt("firm_id"));
+	
+				
+		pm.addParam(new FieldString("cond_fields"));
+	
+				
+		pm.addParam(new FieldString("cond_vals"));
+	
+				
+		pm.addParam(new FieldString("cond_sgns"));
+	
+				
+		pm.addParam(new FieldString("cond_ic"));
+	
+				
+		pm.addParam(new FieldInt("from"));
+	
+				
+		pm.addParam(new FieldInt("count"));
+	
+				
+		pm.addParam(new FieldString("ord_fields"));
+	
+				
+		pm.addParam(new FieldString("ord_directs"));
+	
+				
+		pm.addParam(new FieldString("field_sep"));
+	
+			
 }
 
 		

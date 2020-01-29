@@ -1047,3 +1047,66 @@ ClientExtContractEdit.prototype.setEnabled = function(enabled){
 	//ClientExtContractEdit.superclass.setEnabled.call(this,enabled);
 }
 
+function FirmExtBankAccountEdit(opts){
+	options = 
+		{
+		"methodId":"complete",
+		"tableLayout":false,
+		"modelId":"FirmExtBankAccountList_Model",
+		"lookupValueFieldId":"name",
+		"lookupKeyFieldIds":["ext_id"],
+		"keyFieldIds":[opts.fieldId],
+		"winObj":this.m_winObj,
+		"listView":FirmExtBankAccountList_View,
+		"attrs":{"fkey_ext_bank_account_id":opts.controlId||""},
+		"buttonSelect":new ButtonSelectObject(opts.controlId+'_btn_select',
+			{"controller":new Firm_Controller(new ServConnector(HOST_NAME)),
+			"modelId":"FirmExtBankAccountList_Model",
+			"listView":FirmExtBankAccountList_View,
+			"keyFieldIds":[opts.fieldId],
+			"lookupKeyFieldIds":["ext_id"],
+			"multySelect":false,
+			"extraFields":null,
+			"controlId":opts.controlId,
+			"methParams":{"firm_id":null},
+			"onBeforeViewCreate":function(){
+					var firm_ctrl = opts.mainView.m_dataControls[opts.mainView.getId()+"_firm_descr"];
+					var pm = this.m_controller.getPublicMethodById("get_firm_ext_bank_account_list");
+					pm.setParamValue("firm_id",firm_ctrl.getValue());
+			},
+			"onSelected":function(keys,descrs,extraFields){
+				var m_id = (opts.mainView.getIsNew())? opts.mainView.m_insertMethId:opts.mainView.m_updateMethId;
+				opts.mainView.setWriteMethodId();
+				var contr = opts.mainView.getWriteController();
+				contr.getPublicMethodById(m_id).setParamValue("ext_bank_account_descr",descrs["name"]);
+			}
+			}
+		),
+		"noAutoComplete":false		
+	};
+	
+	opts.options=opts.options||{};
+	for(var opt in opts.options){
+		options[opt] = opts.options[opt];
+	}	
+	
+	if (opts.inLine==undefined || (opts.inLine!=undefined && !opts.inLine)){
+		options["labelCaption"] = "Счет:";
+	}	
+	FirmExtBankAccountEdit.superclass.constructor.call(this,opts.controlId,options);	
+	
+	//this.setAttr("disabled","disabled");
+}
+extend(FirmExtBankAccountEdit,EditObject);
+
+FirmExtBankAccountEdit.prototype.setEnabled = function(enabled){
+	if (this.m_label){
+		this.m_label.setEnabled(enabled);
+	}
+	if (this.m_buttons){
+		this.m_buttons.setEnabled(enabled);
+	}
+	//FirmExtBankAccountEdit.superclass.setEnabled.call(this,enabled);
+}
+
+

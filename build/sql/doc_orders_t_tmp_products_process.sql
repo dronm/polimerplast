@@ -18,10 +18,20 @@ BEGIN
 		--(NEW.view_id IS NOT NULL AND t.view_id=NEW.view_id)
 		-- OR (NEW.view_id IS NULL AND t.login_id=NEW.login_id);
 		
+		NEW.total = NEW.total_no_deliv;
+		NEW.price = NEW.price_no_deliv;
+		NEW.total_deliv = 0;
+		
 		RETURN NEW;
 	ELSIF (TG_WHEN='AFTER' AND TG_OP='INSERT') THEN
 		RETURN NEW;
 	ELSIF (TG_WHEN='BEFORE' AND TG_OP='UPDATE') THEN
+	
+		IF NEW.total_deliv = 0 THEN
+			NEW.total = NEW.total_no_deliv;
+			NEW.price = NEW.price_no_deliv;
+		END IF;	
+	
 		RETURN NEW;					
 	ELSIF (TG_WHEN='AFTER' AND TG_OP='UPDATE') THEN
 		RETURN NEW;									

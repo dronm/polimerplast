@@ -20,7 +20,7 @@ class ExtProg{
 	
 	/* $fileOpts = array('name',disposition,contentType,toFile boolean)*/
 	private static function send_query($cmd,$params,&$xml,$fileOpts=NULL){
-		$CON_TIMEOUT = 300;		
+		$CON_TIMEOUT = 120;//seconds
 		/*
 		$par_str = '';
 		foreach($params as $name=>$val){
@@ -59,7 +59,8 @@ class ExtProg{
 				'header'  => array(
 					'Content-type: application/x-www-form-urlencoded; charset="utf-8"'
 					),
-				'content' => http_build_query($params)
+				'content' => http_build_query($params),
+				'timeout' => $CON_TIMEOUT
 			)
 		);
 		$context = stream_context_create($options);
@@ -219,6 +220,15 @@ class ExtProg{
 			array(
 				'firm_ext_id'=>$firmExtId,
 				'client_ext_id'=>$clientExtId
+			),
+			$xml
+		);
+	}
+	public static function getFirmBankAccountList($firmExtId,&$xml){
+		ExtProg::send_query(
+			'get_firm_bank_account_list',
+			array(
+				'firm_ext_id'=>$firmExtId
 			),
 			$xml
 		);

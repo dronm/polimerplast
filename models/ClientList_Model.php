@@ -144,6 +144,14 @@ class ClientList_Model extends ModelSQL{
 		$f_deleted=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deleted",$f_opts);
 		$this->addField($f_deleted);
 		//********************
+		
+		//*** Field deliv_add_cost_to_product ***
+		$f_opts = array();
+		$f_opts['id']="deliv_add_cost_to_product";
+						
+		$f_deliv_add_cost_to_product=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deliv_add_cost_to_product",$f_opts);
+		$this->addField($f_deliv_add_cost_to_product);
+		//********************
 	
 	}
 

@@ -2,7 +2,7 @@
 <metadata debug="TRUE" owner="polimerplast" dataSchema="public">
 	<versions>
 		<version dateOpen="2016-06-07 07:05" dateClose="2016-06-07 11:06:25">1.0021</version>
-		<lastBuild>2019-11-20 15:04:22</lastBuild>
+		<lastBuild>2020-01-28 13:21:14</lastBuild>
 		<version dateOpen="2016-06-07 11:06:56"/>
 		<version dateOpen="2016-06-07 11:06:57" dateClose="2016-06-07 14:06:30">1.0022</version>
 		<version dateOpen="2016-06-07 14:06:32" dateClose="2016-06-07 16:06:31">1.0023</version>
@@ -123,6 +123,7 @@
 		<version dateOpen="2019-10-03 09:10:02" dateClose="2019-10-03 10:10:55">1.0129</version>
 		<version dateOpen="2019-10-14 09:10:38" dateClose="2019-10-14 15:10:42">1.0130</version>
 		<version dateOpen="2019-11-20 14:11:15" dateClose="2019-11-20 15:11:26">1.0131</version>
+		<version dateOpen="2019-11-29 10:11:00" dateClose="2020-01-29 08:01:52">1.0132</version>
 	</versions>
 	<globalFilters>
 		<field id="client_id"/>
@@ -319,6 +320,7 @@
 			<field id="def_debt" dataType="Float" length="19" precision="2"/>
 			<field id="debt_total" dataType="Float" length="19" precision="2"/>
 			<field id="deleted" dataType="Bool"/>
+			<field id="deliv_add_cost_to_product" dataType="String"/>
 		</model>
 		<model id="ClientDialog" parent="ModelSQL" dataTable="client_dialog" virtual="TRUE">
 			<field id="id" dataType="Int" primaryKey="TRUE"/>
@@ -1827,6 +1829,30 @@
 				<field id="codegr"/>
 			</index>
 		</model>
+		<model id="ClientFirmBankAccount" parent="ModelSQL" dataTable="client_firm_bank_accounts" virtual="FALSE">
+			<field id="id" dataType="Int" primaryKey="TRUE" autoInc="TRUE"/>
+			<field id="client_id" dataType="Int" refTable="clients" refField="id" alias="Клиент код"/>
+			<field id="firm_id" dataType="Int" refTable="firms" refField="id" alias="Фирма код"/>
+			<field id="ext_bank_account_id" dataType="String" length="36" alias="Ссылка 1с на р/счет контрагента"/>
+			<field id="ext_bank_account_descr" dataType="Text" alias="Расчетный счет"/>
+			<index id="client_firm_bank_accounts_client_firm_idx" unique="TRUE">
+				<field id="client_id"/>
+				<field id="firm_id"/>
+			</index>
+		</model>
+		<model id="ClientFirmBankAccountList" parent="ModelSQL" dataTable="client_firm_bank_accounts_list" virtual="TRUE">
+			<defaultOrder>
+				<field id="client_id"/>
+				<field id="firm_descr"/>
+			</defaultOrder>
+			<field id="id" dataType="Int" primaryKey="TRUE" autoInc="TRUE"/>
+			<field id="client_id" dataType="Int" alias="Клиент код"/>
+			<field id="client_descr" dataType="String" alias="Клиент"/>
+			<field id="firm_id" dataType="Int" alias="Фирма код"/>
+			<field id="firm_descr" dataType="String" alias="Фирма"/>
+			<field id="ext_bank_account_id" dataType="String" alias="Ссылка 1с на р/счет контрагента"/>
+			<field id="ext_bank_account_descr" dataType="Text" alias="Расчетный счет"/>
+		</model>
 	</models>
 	<constants>
 		<constant id="client_geo_zone_radius_m" name="Радиус (метры) геозон клиентов" descr="Геозона клиента представляет из себя окружность, которая строится на основании точки на карте, поставленной клиентом, и радиуса в метрах, заданного данной величиной" dataType="Int" defaultValue="50"/>
@@ -1886,6 +1912,18 @@
 			<publicMethod id="delete" modelId="Firm"/>
 			<publicMethod id="get_list" modelId="FirmList"/>
 			<publicMethod id="get_object" modelId="FirmList"/>
+			<publicMethod id="get_firm_ext_bank_account_list">
+				<field id="firm_id" dataType="Int" required="TRUE"/>
+				<field id="cond_fields" dataType="String"/>
+				<field id="cond_vals" dataType="String"/>
+				<field id="cond_sgns" dataType="String"/>
+				<field id="cond_ic" dataType="String"/>
+				<field id="from" dataType="Int"/>
+				<field id="count" dataType="Int"/>
+				<field id="ord_fields" dataType="String"/>
+				<field id="ord_directs" dataType="String"/>
+				<field id="field_sep" dataType="String"/>
+			</publicMethod>
 		</controller>
 		<controller id="Warehouse" parentId="ControllerSQL" state="TRUE" noState="TRUE">
 			<publicMethod id="insert" modelId="Warehouse"/>
@@ -2808,6 +2846,13 @@
 			<publicMethod id="get_object" modelId="BankList"/>
 			<publicMethod id="complete" modelId="BankList" patternFieldId="bik"/>
 		</controller>
+		<controller id="ClientFirmBankAccount" parentId="ControllerSQL" state="TRUE">
+			<publicMethod id="insert" modelId="ClientFirmBankAccount"/>
+			<publicMethod id="update" modelId="ClientFirmBankAccount"/>
+			<publicMethod id="delete" modelId="ClientFirmBankAccount"/>
+			<publicMethod id="get_list" modelId="ClientFirmBankAccountList"/>
+			<publicMethod id="get_object" modelId="ClientFirmBankAccountList"/>
+		</controller>
 	</controllers>
 	<permissions>
 		<permission type="allow" controllerId="all" methodId="all" roleId="admin"/>
@@ -3241,10 +3286,13 @@
 		<jsScript file="views/ClientDialog_View.js"/>
 		<jsScript file="views/ClientUserList_View.js"/>
 		<jsScript file="views/ClientUserInline_View.js"/>
+		<jsScript file="views/ClientFirmBankAccountList_View.js"/>
+		<jsScript file="views/ClientFirmBankAccountInline_View.js"/>
 		<jsScript file="views/ClientContractList_View.js"/>
 		<jsScript file="views/ClientContractInline_View.js"/>
 		<jsScript file="views/UserWarehouseList_View.js"/>
 		<jsScript file="views/ClientExtContractList_View.js"/>
+		<jsScript file="views/FirmExtBankAccountList_View.js"/>
 		<jsScript file="views/UserWarehouseInline_View.js"/>
 		<jsScript file="views/FirmList_View.js"/>
 		<jsScript file="views/FirmInline_View.js"/>
@@ -3560,6 +3608,9 @@
 		<jsScript file="controllers/ClientSearch_Controller.js"/>
 		<jsScript file="controllers/Bank_Controller.js"/>
 		<jsScript file="models/BankList_Model.js"/>
+		<jsScript file="models/ClientFirmBankAccount_Model.js"/>
+		<jsScript file="models/ClientFirmBankAccountList_Model.js"/>
+		<jsScript file="controllers/ClientFirmBankAccount_Controller.js"/>
 	</jsScripts>
 	<cssScripts>
 		<cssScript file="bootstrap.min.css" compressed="TRUE" standalone="TRUE"/>

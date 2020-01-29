@@ -131,7 +131,9 @@ CREATE OR REPLACE VIEW doc_orders_data_for_ext AS
 		
 		cl2.ext_id AS gruzopoluchatel_ref,
 		
-		h.client_contract_ext_id
+		h.client_contract_ext_id,
+		
+		cl_f_acc.ext_bank_account_id AS firm_bank_acc_ext_id
 		
 	--FROM doc_orders_t_products t
 	--LEFT JOIN doc_orders h ON h.id=t.doc_id
@@ -142,6 +144,7 @@ CREATE OR REPLACE VIEW doc_orders_data_for_ext AS
 	LEFT JOIN firms f ON f.id=h.firm_id
 	LEFT JOIN warehouses w ON w.id=h.warehouse_id
 	LEFT JOIN clients cl ON cl.id=h.client_id
+	LEFT JOIN client_firm_bank_accounts cl_f_acc ON cl_f_acc.client_id=h.client_id AND cl_f_acc.firm_id=h.firm_id
 	LEFT JOIN clients cl2 ON cl2.id=h.gruzopoluchatel_id
 	LEFT JOIN client_destinations_list dest ON dest.id=h.deliv_destination_id
 	LEFT JOIN measure_units mu ON mu.id=t.measure_unit_id

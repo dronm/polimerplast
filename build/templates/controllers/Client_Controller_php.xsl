@@ -337,8 +337,11 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 					else{
 						$new_val = $pm->getParamValue($field_id);
 						//$val = (strlen($new_val))? $new_val:$db_val;
-						if($field_id=='is_supplier' || $field_id=='is_carrier'){
-							$new_val = ($new_val=='1')? 't':'f';
+						if(
+						($new_val===TRUE||$new_val===FALSE)
+						&amp;&amp;  ($field_id=='is_supplier' || $field_id=='is_carrier')
+						){
+							$new_val = $new_val? 't':'f';
 						}
 						
 						if(strlen($new_val) &amp;&amp;  $new_val!=$db_val){
@@ -692,6 +695,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		}		
 		$this->addModel($model);
 	}
+
 	
 </xsl:template>
 

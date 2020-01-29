@@ -50,6 +50,8 @@ $permissions = array();
 				
 					$permissions['Firm_Controller_get_object']=TRUE;
 				
+					$permissions['Firm_Controller_get_firm_ext_bank_account_list']=TRUE;
+				
 					$permissions['Warehouse_Controller_insert']=TRUE;
 				
 					$permissions['Warehouse_Controller_update']=TRUE;
@@ -731,6 +733,16 @@ $permissions = array();
 					$permissions['Bank_Controller_get_object']=TRUE;
 				
 					$permissions['Bank_Controller_complete']=TRUE;
+				
+					$permissions['ClientFirmBankAccount_Controller_insert']=TRUE;
+				
+					$permissions['ClientFirmBankAccount_Controller_update']=TRUE;
+				
+					$permissions['ClientFirmBankAccount_Controller_delete']=TRUE;
+				
+					$permissions['ClientFirmBankAccount_Controller_get_list']=TRUE;
+				
+					$permissions['ClientFirmBankAccount_Controller_get_object']=TRUE;
 				
 			$permissions['DOCOrder_Controller_set_not_paid']=FALSE;
 		

@@ -46,6 +46,9 @@
 	
 	
 //******************************************************************************	
+	function param_bool($val){
+		return ($val=='t'||$val=='true'||$val=='1');
+	}
 	function cyr_str_decode($str){
 		return iconv('UTF-8','Windows-1251',$str);
 	}
@@ -165,18 +168,25 @@
 			Клиент.КПП КАК kpp,
 			Клиент.КодПоОКПО КАК okpo,
 			ЕстьNULL(КИТелефон.Представление,"""") КАК telephones,
+			ЕстьNULL(КИЭлПочта.Представление,"""") КАК email,
 			ЕстьNULL(КИАдресРег.Представление,"""") КАК addr_reg,
 			ЕстьNULL(КИАдресПочт.Представление,"""") КАК addr_mail,
 			РС.НомерСчета КАК acc,
 			Банк.Наименование КАК bank_name,
 			Банк.Код КАК bank_code,
-			Банк.КоррСчет КАК bank_acc
+			Банк.КоррСчет КАК bank_acc,
+			Клиент.Партнер.Поставщик КАК  is_supplier,
+			Клиент.Партнер.Перевозчик КАК  is_carrier
 		
 		ИЗ Справочник.Контрагенты КАК Клиент
 		
 		ЛЕВОЕ СОЕДИНЕНИЕ Справочник.Контрагенты.КонтактнаяИнформация КАК КИТелефон
 		ПО КИТелефон.Ссылка=Клиент.Ссылка И КИТелефон.Тип=ЗНАЧЕНИЕ(Перечисление.ТипыКонтактнойИнформации.Телефон)
 		И КИТелефон.Вид=ЗНАЧЕНИЕ(Справочник.ВидыКонтактнойИнформации.ТелефонКонтрагента)
+
+		ЛЕВОЕ СОЕДИНЕНИЕ Справочник.Контрагенты.КонтактнаяИнформация КАК КИЭлПочта
+		ПО КИЭлПочта.Ссылка=Клиент.Ссылка И КИЭлПочта.Тип=ЗНАЧЕНИЕ(Перечисление.ТипыКонтактнойИнформации.АдресЭлектроннойПочты)
+		И КИЭлПочта.Вид=ЗНАЧЕНИЕ(Справочник.ВидыКонтактнойИнформации.EmailКонтрагента)
 		
 		ЛЕВОЕ СОЕДИНЕНИЕ Справочник.Контрагенты.КонтактнаяИнформация КАК КИАдресРег
 		ПО КИАдресРег.Ссылка=Клиент.Ссылка И КИАдресРег.Тип=ЗНАЧЕНИЕ(Перечисление.ТипыКонтактнойИнформации.Адрес)
@@ -191,7 +201,7 @@
 		
 		ЛЕВОЕ СОЕДИНЕНИЕ Справочник.КлассификаторБанков КАК Банки
 		ПО Банки.Ссылка=РС.Банк
-		
+
 		ГДЕ Клиент.Наименование="'.$name.'"		
 		';
 		
@@ -208,6 +218,8 @@
 			$xml_body.= sprintf('<okpo>%s</okpo>',$sel->okpo);
 			$xml_body.= sprintf('<telephones>%s</telephones>',
 				cyr_str_encode($sel->telephones));
+			$xml_body.= sprintf('<email>%s</email>',
+				cyr_str_encode($sel->email));				
 			$xml_body.= sprintf('<addr_reg>%s</addr_reg>',
 				cyr_str_encode($sel->addr_reg));
 			$xml_body.= sprintf('<addr_mail>%s</addr_mail>',
@@ -217,6 +229,8 @@
 				cyr_str_encode($sel->bank_name));
 			$xml_body.= sprintf('<bank_code>%s</bank_code>',$sel->bank_code);
 			$xml_body.= sprintf('<bank_acc>%s</bank_acc>',$sel->bank_acc);
+			$xml_body.= sprintf('<is_supplier>%s</is_supplier>',$sel->is_supplier);
+			$xml_body.= sprintf('<is_carrier>%s</is_carrier>',$sel->is_carrier);			
 			$xml_body.= '</attrs>';
 			
 			return $xml_body;
@@ -517,7 +531,9 @@
 				throw new Exception('Не найдена группа аналит.учета номенклатуры "'.$analit_group.'"!');
 			}						
 		}
-		
+		if(strlen($name)>100){
+			throw new Exception('Номенклатура: '.$name.', длина превышает 100 символов!');
+		}
 		$item_ref = $v8->Справочники->Номенклатура->НайтиПоНаименованию($name,TRUE);		
 		if ($item_ref->Пустая()){
 			//throw new Exception(sprintf('NewItem="%s"',$name));
@@ -709,10 +725,10 @@
 				//$dog->ДопустимоеЧислоДнейЗадолженности		= intval($attrs['pay_delay_days']);			
 			}
 			if ($attrs['pay_ban_on_debt_sum']){
-				$dog->ЗапрещаетсяПросроченнаяЗадолженность		= ($attrs['pay_ban_on_debt_sum']=='t');
+				$dog->ЗапрещаетсяПросроченнаяЗадолженность		= param_bool($attrs['pay_ban_on_debt_sum']);
 			}
 			if ($attrs['pay_ban_on_debt_days']){
-				//$dog->КонтролироватьЧислоДнейЗадолженности	= ($attrs['pay_ban_on_debt_days']=='t');
+				//$dog->КонтролироватьЧислоДнейЗадолженности	= param_bool($attrs['pay_ban_on_debt_days']);
 			}
 			if (isset($attrs['contract_date_from'])){
 				$dog->Дата									= $attrs['contract_date_from'];
@@ -854,11 +870,13 @@
 		return $acc_ref;
 	}
 
-	function get_partner($v8,$attrs,$name,$nameFull,$managerRef=NULL){
+	function get_partner($v8,$attrs,$name,$nameFull,$managerRef=NULL,$isSupplier=FALSE,$isCarrier=FALSE){
 		$partner_ref = $v8->Справочники->Партнеры->НайтиПоНаименованию($name,TRUE);
 		if ($partner_ref->Пустая()){
 			$obj = $v8->Справочники->Партнеры->СоздатьЭлемент();
 			$obj->Клиент				= TRUE;
+			$obj->Поставщик				= $isSupplier;			
+			$obj->Перевозчик			= $isCarrier;			
 			$obj->Комментарий			= 'Web';
 			$obj->НаименованиеПолное	= $nameFull;
 			$obj->Наименование			= $name;
@@ -1005,7 +1023,7 @@
 			$obj->КодПоОКПО						= $attrs['okpo'];
 			$obj->КПП							= $attrs['kpp'];
 			$obj->СтранаРегистрации				= $v8->Справочники->СтраныМира->Россия;
-			$obj->Партнер						= get_partner($v8,$attrs,$obj->Наименование,$obj->НаименованиеПолное,$manager_ref);
+			$obj->Партнер						= get_partner($v8,$attrs,$obj->Наименование,$obj->НаименованиеПолное,$manager_ref,(isset($attrs['is_supplier'])&&param_bool($attrs['is_supplier'])),(isset($attrs['is_carrier'])&&param_bool($attrs['is_carrier'])));
 			
 			if(isset($attrs['addr_reg'])){
 				$addr = $obj->КонтактнаяИнформация->Добавить();
@@ -1349,6 +1367,22 @@
 				$p_attr->Свойство = $sv_cl_ogrn;
 				$p_attr->Значение = $attrs['ogrn'];				
 			}
+			//throw new Exception('is_supplier='.$attrs['is_supplier'].' is_carrier='.$attrs['is_carrier']);
+			//is_supplier
+			if(isset($attrs['is_supplier'])){
+				if(is_null($obj_p)){
+					$obj_p = $client_ref->Партнер->ПолучитьОбъект();
+				}
+				$obj_p->Поставщик = param_bool($attrs['is_supplier']);
+			}
+
+			//is_carrier
+			if(isset($attrs['is_carrier'])){
+				if(is_null($obj_p)){
+					$obj_p = $client_ref->Партнер->ПолучитьОбъект();
+				}
+				$obj_p->Перевозчик = param_bool($attrs['is_carrier']);
+			}
 			
 			if(!is_null($obj_p)){
 					$obj_p->Записать();
@@ -1423,7 +1457,7 @@
 			$doc = $v8->Документы->ЗаказКлиента->СоздатьДокумент();	
 		}
 		
-		$calcNDS = ($head['firm_nds']=='t' || $head['firm_nds']=='true');
+		$calcNDS = param_bool($head['firm_nds']);
 		
 		$attrs = array();
 		$attrs['pay_debt_sum'] = 0;
@@ -1448,11 +1482,11 @@
 		$doc->Статус							= $v8->Перечисления->СтатусыЗаказовКлиентов->НеСогласован; //$v8->Перечисления->СтатусыЗаказовКлиентов->КОтгрузке :
 		$doc->Согласован						= TRUE;
 		$doc->ДатаСогласования					= $doc->Дата;
-		$doc->ФормаОплаты						= ($head['pay_cash']=='t')?
+		$doc->ФормаОплаты						= (param_bool($head['pay_cash']))?
 														$v8->Перечисления->ФормыОплаты->Наличная : 
 														$v8->Перечисления->ФормыОплаты->Безналичная;
 		//$doc->БанковскийСчетКонтрагента
-		if ($head['pay_cash']=='t'){
+		if (param_bool($head['pay_cash'])){
 			$doc->Касса = get_kassa($v8,$firm_ref);
 		}
 		//$doc->ДатаОтгрузки						= $doc->ЖелаемаяДатаОтгрузки;
@@ -1593,7 +1627,7 @@
 		}
 
 		$doc->СуммаДокумента		= $total;
-		
+
 		$doc->Записать($v8->РежимЗаписиДокумента->Проведение);		
 		
 		return sprintf(
@@ -1798,7 +1832,7 @@
 		
 		$doc->Дата						= $head['date'];
 		
-		$calcNDS = ($head['firm_nds']=='t' || $head['firm_nds']=='true');
+		$calcNDS = param_bool($head['firm_nds']);
 		
 		$doc->АдресДоставки				= cyr_str_decode($head['deliv_address']);
 		$doc->Валюта					= get_currency($v8);
@@ -1815,11 +1849,11 @@
 		$doc->Склад						= $warehouse_ref;
 		$doc->Комментарий				= get_doc_comment($head,$order_num);
 											
-		$doc->ФормаОплаты				= ($head['pay_cash']=='t')? $v8->Перечисления->ФормыОплаты->Наличная:$v8->Перечисления->ФормыОплаты->Безналичная;
+		$doc->ФормаОплаты				= (param_bool($head['pay_cash']))? $v8->Перечисления->ФормыОплаты->Наличная:$v8->Перечисления->ФормыОплаты->Безналичная;
 		$doc->ХозяйственнаяОперация		= $v8->Перечисления->ХозяйственныеОперации->РеализацияКлиенту;
 		$doc->ЦенаВключаетНДС			= $calcNDS;
 		$doc->СкидкиРассчитаны			= FALSE;
-		if ($head['pay_cash']=='t'){
+		if (param_bool($head['pay_cash'])){
 			$doc->Касса = get_kassa($v8,$firm_ref);
 		}
 		
@@ -2010,6 +2044,24 @@
 		$doc->СуммаДокумента = $total;
 		$doc->СуммаВзаиморасчетов = $total;
 		$doc->Записать($v8->РежимЗаписиДокумента->Проведение);//Проведение
+		
+		$doc_changed = FALSE;
+		if(is_null($doc->Договор->Номер)||!strlen($doc->Договор->Номер)){
+				//throw new Exception('Setting num to '.$doc->Номер);
+				$doc->ОснованиеНомер = $doc->Номер;
+				$doc_changed = TRUE;
+		}
+		//throw new Exception('Date='.$v8->String($doc->Договор->Дата));
+		if(is_null($doc->Договор->Дата) || $v8->String($doc->Договор->Дата)=='01.01.0001 0:00:00'){
+				//throw new Exception('Setting date to '.$doc->Дата);
+				$doc->ОснованиеДата = $doc->Дата;
+				$doc_changed = TRUE;
+		}
+		//throw new Exception('doc_changed='.$doc_changed);
+		if ($doc_changed){
+			$doc->Записать($v8->РежимЗаписиДокумента->Запись);//Запись
+		}
+		
 		/*
 		if ($head['number']){
 			$rec_set = $v8->РегистрыСведений->ДополнительныеСведения->СоздатьНаборЗаписей();

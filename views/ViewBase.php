@@ -317,10 +317,13 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientDialog_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientUserList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientUserInline_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientFirmBankAccountList_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientFirmBankAccountInline_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientContractList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientContractInline_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/UserWarehouseList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/ClientExtContractList_View.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/FirmExtBankAccountList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/UserWarehouseInline_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/FirmList_View.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'views/FirmInline_View.js'));
@@ -632,6 +635,9 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ClientSearch_Controller.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/Bank_Controller.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/BankList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ClientFirmBankAccount_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ClientFirmBankAccountList_Model.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ClientFirmBankAccount_Controller.js'));
 				
 			if (isset($_SESSION['scriptId'])){
 				$script_id = $_SESSION['scriptId'];

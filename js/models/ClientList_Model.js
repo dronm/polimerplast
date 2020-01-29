@@ -157,6 +157,15 @@ function ClientList_Model(options){
 	
 	options.fields.deleted = new FieldBool("deleted",filed_options);
 	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	
+	filed_options.autoInc = false;	
+	
+	options.fields.deliv_add_cost_to_product = new FieldString("deliv_add_cost_to_product",filed_options);
+	
 		ClientList_Model.superclass.constructor.call(this,id,options);
 }
 extend(ClientList_Model,Model);

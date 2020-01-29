@@ -21,6 +21,7 @@
 <li><a href="#ClientContract_Controller">ClientContract_Controller</a></li>
 <li><a href="#ClientDebtPeriod_Controller">ClientDebtPeriod_Controller</a></li>
 <li><a href="#ClientDestination_Controller">ClientDestination_Controller</a></li>
+<li><a href="#ClientFirmBankAccount_Controller">ClientFirmBankAccount_Controller</a></li>
 <li><a href="#ClientPriceList_Controller">ClientPriceList_Controller</a></li>
 <li><a href="#ClientPriceListClient_Controller">ClientPriceListClient_Controller</a></li>
 <li><a href="#ClientPriceListProduct_Controller">ClientPriceListProduct_Controller</a></li>
@@ -212,6 +213,8 @@
 <li><a href="#CarrierOrder_Model">CarrierOrder_Model</a></li>
 <li><a href="#CarrierOrderList_Model">CarrierOrderList_Model</a></li>
 <li><a href="#BankList_Model">BankList_Model</a></li>
+<li><a href="#ClientFirmBankAccount_Model">ClientFirmBankAccount_Model</a></li>
+<li><a href="#ClientFirmBankAccountList_Model">ClientFirmBankAccountList_Model</a></li>
 </ul>
 <div class="section-title">Enumerations</div>
 <ul>
@@ -790,6 +793,19 @@
 								Нет</p>
 </div>
 </div>
+</div>
+</div>
+<div id="ClientFirmBankAccount_Controller" class="content_box">
+<h1>ClientFirmBankAccount_Controller</h1>
+<div class="content_item">
+<p class="big"></p>
+<p>Методы:</p>
+<h2>insert</h2>
+<a href="#ClientFirmBankAccount_Model">Model: ClientFirmBankAccount_Model</a><h2>update</h2>
+<a href="#ClientFirmBankAccount_Model">Model: ClientFirmBankAccount_Model</a><h2>delete</h2>
+<a href="#ClientFirmBankAccount_Model">Model: ClientFirmBankAccount_Model</a><h2>get_list</h2>
+<a href="#ClientFirmBankAccountList_Model">Model: ClientFirmBankAccountList_Model</a><h2>get_object</h2>
+<a href="#ClientFirmBankAccountList_Model">Model: ClientFirmBankAccountList_Model</a>
 </div>
 </div>
 <div id="ClientPriceList_Controller" class="content_box">
@@ -2247,7 +2263,80 @@
 <a href="#Firm_Model">Model: Firm_Model</a><h2>delete</h2>
 <a href="#Firm_Model">Model: Firm_Model</a><h2>get_list</h2>
 <a href="#FirmList_Model">Model: FirmList_Model</a><h2>get_object</h2>
-<a href="#FirmList_Model">Model: FirmList_Model</a>
+<a href="#FirmList_Model">Model: FirmList_Model</a><h2>get_firm_ext_bank_account_list</h2>
+<p>Arguments:</p>
+<div class="content_item content_item2">
+<h3>firm_id</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Type:Int</p>
+<p>Required:
+								Да</p>
+</div>
+<h3>cond_fields</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Type:String</p>
+<p>Required:
+								Нет</p>
+</div>
+<h3>cond_vals</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Type:String</p>
+<p>Required:
+								Нет</p>
+</div>
+<h3>cond_sgns</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Type:String</p>
+<p>Required:
+								Нет</p>
+</div>
+<h3>cond_ic</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Type:String</p>
+<p>Required:
+								Нет</p>
+</div>
+<h3>from</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Type:Int</p>
+<p>Required:
+								Нет</p>
+</div>
+<h3>count</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Type:Int</p>
+<p>Required:
+								Нет</p>
+</div>
+<h3>ord_fields</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Type:String</p>
+<p>Required:
+								Нет</p>
+</div>
+<h3>ord_directs</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Type:String</p>
+<p>Required:
+								Нет</p>
+</div>
+<h3>field_sep</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Type:String</p>
+<p>Required:
+								Нет</p>
+</div>
+</div>
 </div>
 </div>
 <div id="Holiday_Controller" class="content_box">
@@ -4255,6 +4344,90 @@
 <div>Precision:</div>
 </div>
 </div>
+<div id="ClientFirmBankAccount_Model" class="content_box">
+<h1>ClientFirmBankAccount_Model</h1>
+<div class="content_item">
+<p>Поля:</p>
+<h2>id</h2>
+<div>Type:Int</div>
+<div>Primary key:TRUE</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>client_id</h2>
+<div>Type:Int</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>firm_id</h2>
+<div>Type:Int</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>ext_bank_account_id</h2>
+<div>Type:String</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:36</div>
+<div>Precision:</div>
+<h2>ext_bank_account_descr</h2>
+<div>Type:Text</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+</div>
+</div>
+<div id="ClientFirmBankAccountList_Model" class="content_box">
+<h1>ClientFirmBankAccountList_Model</h1>
+<div class="content_item">
+<p>Поля:</p>
+<h2>id</h2>
+<div>Type:Int</div>
+<div>Primary key:TRUE</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>client_id</h2>
+<div>Type:Int</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>client_descr</h2>
+<div>Type:String</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>firm_id</h2>
+<div>Type:Int</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>firm_descr</h2>
+<div>Type:String</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>ext_bank_account_id</h2>
+<div>Type:String</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>ext_bank_account_descr</h2>
+<div>Type:Text</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+</div>
+</div>
 <div id="ClientList_Model" class="content_box">
 <h1>ClientList_Model</h1>
 <div class="content_item">
@@ -4345,6 +4518,12 @@
 <div>Precision:2</div>
 <h2>deleted</h2>
 <div>Type:Bool</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>deliv_add_cost_to_product</h2>
+<div>Type:String</div>
 <div>Primary key:</div>
 <div>Required:</div>
 <div>Length:</div>

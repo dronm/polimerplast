@@ -145,6 +145,7 @@ doc_orders_set_shipped.sql INSERT INTO doc_orders_t_products всегда TRUE
 
 1.0130
 1) Подтянуть галочки Поставщик, перевозчие при создании нового контрагента
+
 - Кнопка "Уведомить кладовщика"
 - Пересчитать все накладные где не заполнена сумма т/р
 - Пересчитать где null в сумме
@@ -152,7 +153,12 @@ doc_orders_set_shipped.sql INSERT INTO doc_orders_t_products всегда TRUE
 
 
 
+1.0132 29/01/20
+1) Справочник банковских счетов наших фирм для клиентов
+2) Не открывался список контрагентов из заявки
+
 DocOrderDOCTProductDialog_View
+doc_orders_t_tmp_products_process()
 price_no_deliv
 total_no_deliv
 
