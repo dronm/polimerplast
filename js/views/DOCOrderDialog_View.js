@@ -298,7 +298,12 @@ function DOCOrderDialog_View(id,options){
 			//self.refreshProdTotals();
 			//self.calcVehicleCount();
 			self.m_doCalcVehCount = true;
+		},
+		"onDelete":function(){
+			//console.log("onDelete call recalcPricesRefreshTotals")
+			self.recalcPricesRefreshTotals();
 		}
+		
 		});
 	this.m_details.addElement(this.m_productDetails);	
 	this.addElement(this.m_details);

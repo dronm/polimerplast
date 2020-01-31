@@ -71,7 +71,8 @@ function DOCOrderDOCTProductList_View(id,options){
 		"editViewParams":{"warehouseCtrl":options.warehouseCtrl},
 		"editWinClass":WIN_CLASS,
 		"afterRefresh":options.afterRefresh,
-		"onModified":options.onModified
+		"onModified":options.onModified,
+		"onDelete":options.onDelete
 		}
 	);
 	grid.onGetData = function(resp){

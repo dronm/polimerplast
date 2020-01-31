@@ -1182,7 +1182,8 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 					) AS total_total
 					
 				FROM doc_orders_t_tmp_products
-				WHERE view_id=%s",
+				WHERE view_id=%s
+				ORDER BY line_number",
 				$params->getDbVal('view_id'),
 				$params->getDbVal('view_id'),
 				$params->getDbVal('view_id')
