@@ -2,7 +2,7 @@
 <metadata debug="TRUE" owner="polimerplast" dataSchema="public">
 	<versions>
 		<version dateOpen="2016-06-07 07:05" dateClose="2016-06-07 11:06:25">1.0021</version>
-		<lastBuild>2020-01-31 12:31:04</lastBuild>
+		<lastBuild>2020-03-02 07:14:47</lastBuild>
 		<version dateOpen="2016-06-07 11:06:56"/>
 		<version dateOpen="2016-06-07 11:06:57" dateClose="2016-06-07 14:06:30">1.0022</version>
 		<version dateOpen="2016-06-07 14:06:32" dateClose="2016-06-07 16:06:31">1.0023</version>
@@ -125,6 +125,7 @@
 		<version dateOpen="2019-11-20 14:11:15" dateClose="2019-11-20 15:11:26">1.0131</version>
 		<version dateOpen="2019-11-29 10:11:00" dateClose="2020-01-29 08:01:52">1.0132</version>
 		<version dateOpen="2020-01-31 12:01:28" dateClose="2020-01-31 12:01:31">1.0133</version>
+		<version dateOpen="2020-03-02 07:03:12" dateClose="2020-03-02 07:03:14">1.0134</version>
 	</versions>
 	<globalFilters>
 		<field id="client_id"/>

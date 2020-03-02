@@ -293,6 +293,9 @@ class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@par
 		<xsl:if test="@condFields='TRUE'">
 		<xsl:call-template name="add_cond_fields"/>
 		</xsl:if>
+		<xsl:if test="@paginationFields='TRUE'">
+		<xsl:call-template name="add_pagination_fields"/>
+		</xsl:if>
 		<xsl:apply-templates/>
 		$this->addPublicMethod($pm);
 </xsl:template>
@@ -345,6 +348,11 @@ class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@par
 		$pm->addParam(new FieldExtString('ord_fields'));
 		$pm->addParam(new FieldExtString('ord_directs'));
 		$pm->addParam(new FieldExtString('field_sep'));
+</xsl:template>
+
+<xsl:template name="add_pagination_fields">
+		$pm->addParam(new FieldExtInt('count'));
+		$pm->addParam(new FieldExtInt('from'));
 </xsl:template>
 
 <xsl:template name="add_requirements">
