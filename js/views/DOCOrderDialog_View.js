@@ -425,7 +425,7 @@ function DOCOrderDialog_View(id,options){
 	
 	//Адрес в ТТН
 	const_v = (SERV_VARS.ORDER_DESTINATION_TO_TTN=="t"? "true":"false");
-	alert("const_v="+const_v)
+	//alert("const_v="+const_v)
 	this.m_destination_to_ttn = new EditCheckBox(id+"_destination_to_ttn",
 		{"labelCaption":"Переносить адрес доставки в ТТН","name":"destination_to_ttn",
 		"buttonClear":false,"labelAlign":"left",

@@ -204,4 +204,4 @@ ViewBase.php
 User_Controller.php
 5) Справочник фирм поле order_deliv_add_cost_to_product, doc_orders_data_for_ext зафисит от firms.order_deliv_add_cost_to_product
 
-
+1.0136

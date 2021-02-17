@@ -99,7 +99,9 @@ BEGIN
 				deliv_expenses_edit,
 				deliv_expenses,				
 				deliv_vehicle_count,
-				submit_user_id
+				submit_user_id,
+				client_contract_ext_id,
+				client_contract_name
 				)
 				(
 				SELECT
@@ -153,7 +155,9 @@ BEGIN
 							THEN h.deliv_vehicle_count-in_deliv_vehicle_count
 						ELSE 0
 					END,
-					h.submit_user_id
+					h.submit_user_id,
+					h.client_contract_ext_id,
+					h.client_contract_name
 
 				FROM doc_orders AS h
 				WHERE h.id=in_doc_id
