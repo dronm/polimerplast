@@ -1,21 +1,38 @@
--- VIEW: client_firm_bank_accounts_list
+﻿-- Function: doc_orders_states_set_percent(in_doc_order_id int, in_percent int)
 
---DROP VIEW client_firm_bank_accounts_list;
+-- DROP FUNCTION doc_orders_states_set_percent(in_doc_order_id int, in_percent int);
 
-CREATE OR REPLACE VIEW client_firm_bank_accounts_list AS
+CREATE OR REPLACE FUNCTION doc_orders_states_set_percent(in_doc_order_id int, in_percent int)
+  RETURNS void AS
+$BODY$
+DECLARE
+	v_state order_states;
+	v_id int;
+BEGIN
 	SELECT
-		t.id,
-		t.client_id,
-		cl.name AS client_descr,
-		t.firm_id,
-		f.name AS firm_descr,
-		t.ext_bank_account_id,
-		t.ext_bank_account_descr
-		
-	FROM client_firm_bank_accounts AS t
-	LEFT JOIN clients AS cl ON cl.id=t.client_id
-	LEFT JOIN firms AS f ON f.id=t.firm_id
-	ORDER BY t.client_id,f.name
-	;
+		state,
+		id
+	INTO
+		v_state,
+		v_id	
+	FROM doc_orders_states
+	WHERE doc_orders_id=in_doc_order_id
+	ORDER BY date_time DESC
+	LIMIT 1;
 	
-ALTER VIEW client_firm_bank_accounts_list OWNER TO polimerplast
+	IF in_percent=100 AND v_state='producing' THEN
+		--перевод в выполнена
+		INSERT INTO doc_orders_states
+		(doc_orders_id,date_time,state,user_id)
+		VALUES
+		(in_doc_order_id,now(),'produced',NULL);
+		
+	ELSIF in_percent<100 AND v_state='produced' THEN
+		--remove last state
+		DELETE FROM doc_orders_states WHERE id=v_id;	
+	END IF;
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+ALTER FUNCTION doc_orders_states_set_percent(in_doc_order_id int, in_percent int) OWNER TO polimerplast

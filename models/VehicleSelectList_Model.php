@@ -15,7 +15,8 @@ class VehicleSelectList_Model extends ModelSQL{
 	public function __construct($dbLink){
 		parent::__construct($dbLink);
 		
-		$this->setDbName("public");
+		
+		$this->setDbName('public');
 		
 		$this->setTableName("vehicles_select_list");
 			

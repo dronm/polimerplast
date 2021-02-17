@@ -223,6 +223,13 @@
 	 * 		client_ext_id
   	 */		
 	define('CMD_GET_CLIENT_CONTRACT_LIST', 'get_client_contract_list');
+
+	/**
+	 * Возвращает список расчетных счетов по нашей фирме
+	 * Параметры:
+	 * 		firm_ext_id
+  	 */		
+	define('CMD_GET_FIRM_BANK_ACCOUNT_LIST', 'get_firm_bank_account_list');
 	
 	//********* команды *************
 
@@ -580,6 +587,11 @@
 			$v8 = new COM(COM_OBJ_NAME);
 			$str = get_client_contract_list($v8,$_REQUEST['firm_ext_id'],$_REQUEST['client_ext_id']);
 			$xml_body.='<contracts>'.$str.'</contracts>';			
+		}
+		else if ($com==CMD_GET_FIRM_BANK_ACCOUNT_LIST){
+			$v8 = new COM(COM_OBJ_NAME);
+			$str = get_firm_bank_account_list($v8,$_REQUEST['firm_ext_id']);
+			$xml_body.='<bank_accounts>'.$str.'</bank_accounts>';			
 		}
 		
 	}	

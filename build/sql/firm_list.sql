@@ -9,7 +9,8 @@ CREATE OR REPLACE VIEW firm_list AS
 		(ext_id IS NOT NULL AND ext_id<>'') match_1c,
 		nds,
 		cash,
-		deleted
+		deleted,
+		order_no_carrier_print
 	FROM firms
 	ORDER BY name;
 ALTER TABLE firm_list OWNER TO polimerplast;

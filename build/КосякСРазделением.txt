@@ -1,0 +1,3 @@
+--delete from doc_orders where number='23038'
+--select * from doc_orders_states where doc_orders_id=39538
+delete from doc_orders_states where id=179920

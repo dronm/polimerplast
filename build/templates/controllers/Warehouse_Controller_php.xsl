@@ -17,7 +17,8 @@
 
 <xsl:template match="controller"><![CDATA[<?php]]>
 <xsl:call-template name="add_requirements"/>
-require_once('common/OSRM.php');
+require_once('common/OSRMV5.php');
+
 require_once(FRAME_WORK_PATH.'basic_classes/ParamsSQL.php');
 require_once('functions/ExtProg.php');
 class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
@@ -54,7 +55,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 				",
 				$zone));
 				$p = explode(' ',$ar['zone_center']);
-				$osrm = new OSRM(OSRM_PROTOCOLE,OSRM_HOST,OSRM_PORT);
+				$osrm = new OSRMV5(OSRM_PROTOCOLE,OSRM_HOST,OSRM_PORT,'v1');
 				$road_lat=NULL;$road_lon=NULL;
 				$osrm->getNearestRoadCoord(
 					$p[1],$p[0],

@@ -140,7 +140,7 @@ try{
 	}
 	//checking if method is allowed
 	if (!is_null($meth)){
-		if (!isset($_SESSION['LOGGED'])){
+		if (!isset($_SESSION['LOGGED']) || !isset($_SESSION['role_id'])){
 			$role_id = 'guest';
 		}
 		else{

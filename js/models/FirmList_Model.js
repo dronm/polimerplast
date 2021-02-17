@@ -76,6 +76,15 @@ function FirmList_Model(options){
 	
 	options.fields.deleted = new FieldBool("deleted",filed_options);
 	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	
+	filed_options.autoInc = false;	
+	
+	options.fields.order_no_carrier_print = new FieldBool("order_no_carrier_print",filed_options);
+	
 		FirmList_Model.superclass.constructor.call(this,id,options);
 }
 extend(FirmList_Model,Model);

@@ -16,7 +16,8 @@ class FirmList_Model extends ModelSQL{
 	public function __construct($dbLink){
 		parent::__construct($dbLink);
 		
-		$this->setDbName("public");
+		
+		$this->setDbName('public');
 		
 		$this->setTableName("firm_list");
 			
@@ -67,6 +68,14 @@ class FirmList_Model extends ModelSQL{
 						
 		$f_deleted=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"deleted",$f_opts);
 		$this->addField($f_deleted);
+		//********************
+		
+		//*** Field order_no_carrier_print ***
+		$f_opts = array();
+		$f_opts['id']="order_no_carrier_print";
+						
+		$f_order_no_carrier_print=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"order_no_carrier_print",$f_opts);
+		$this->addField($f_order_no_carrier_print);
 		//********************
 	
 	}

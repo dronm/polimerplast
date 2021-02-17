@@ -2,7 +2,7 @@
 <metadata debug="TRUE" owner="polimerplast" dataSchema="public">
 	<versions>
 		<version dateOpen="2016-06-07 07:05" dateClose="2016-06-07 11:06:25">1.0021</version>
-		<lastBuild>2020-03-02 07:14:47</lastBuild>
+		<lastBuild>2021-02-17 08:23:48</lastBuild>
 		<version dateOpen="2016-06-07 11:06:56"/>
 		<version dateOpen="2016-06-07 11:06:57" dateClose="2016-06-07 14:06:30">1.0022</version>
 		<version dateOpen="2016-06-07 14:06:32" dateClose="2016-06-07 16:06:31">1.0023</version>
@@ -126,6 +126,7 @@
 		<version dateOpen="2019-11-29 10:11:00" dateClose="2020-01-29 08:01:52">1.0132</version>
 		<version dateOpen="2020-01-31 12:01:28" dateClose="2020-01-31 12:01:31">1.0133</version>
 		<version dateOpen="2020-03-02 07:03:12" dateClose="2020-03-02 07:03:14">1.0134</version>
+		<version dateOpen="2020-04-28 17:04:47" dateClose="2021-02-17 08:02:23">1.0135</version>
 	</versions>
 	<globalFilters>
 		<field id="client_id"/>
@@ -235,6 +236,7 @@
 			<field id="nds" dataType="Bool"/>
 			<field id="cash" dataType="Bool"/>
 			<field id="deleted" dataType="Bool" defaultValue="FALSE"/>
+			<field id="order_no_carrier_print" dataType="Bool" defaultValue="FALSE"/>			
 		</model>
 		<model id="FirmList" parent="ModelSQL" dataTable="firm_list" virtual="FALSE">
 			<field id="id" dataType="Int" primaryKey="TRUE"/>
@@ -243,6 +245,7 @@
 			<field id="nds" dataType="Bool"/>
 			<field id="cash" dataType="Bool"/>
 			<field id="deleted" dataType="Bool"/>
+			<field id="order_no_carrier_print" dataType="Bool"/>
 		</model>
 		<model id="ClientActivity" parent="ModelSQL" dataTable="client_activities" virtual="FALSE">
 			<field id="id" primaryKey="TRUE" dataType="Int" autoInc="TRUE"/>
@@ -1868,6 +1871,9 @@
 		<constant id="main_measure_unit_id" name="Основная единица измерения" descr="Для подстановки по умолчанию в заявку" dataType="Int" refTable="measure_units" refField="id"/>
 		<constant id="product_measure_unit_check_deviat" name="Погрешность при проверке целых единиц измерения" descr="" dataType="Float" length="19" precision="5"/>
 		<constant id="new_order_prefix" name="Префикс новых заявок" descr="" dataType="String" length="3" defaultValue="Н"/>
+		<constant id="order_deliv_add_cost_to_product" name="Значение по умолчанию для счета: включать стоимость доставки пропорционально в стоимость продукции" descr="" dataType="Bool" defaultValue="FALSE"/>
+		<constant id="order_destination_to_ttn" name="Значение по умолчанию для счета: Переносить адрес доставки в ТТН" descr="" dataType="Bool" defaultValue="FALSE"/>
+		<constant id="order_no_carrier_print" name="Если перевозчик не задан, обрабатывать как НАШИ АВТО" descr="" dataType="Bool" defaultValue="FALSE"/>
 	</constants>
 	<controllers>
 		<controller id="User" parentId="ControllerSQL" state="TRUE" noState="TRUE">
@@ -3066,6 +3072,7 @@
 		<jsScript file="core/ValidatorCellPhone.js"/>
 		<jsScript file="core/ListFilter.js"/>
 		<jsScript file="core/ListGroupper.js"/>
+		<jsScript file="core/ConstantManager.js"/>
 		<!-- basic window-->
 		<jsScript file="controlsBS/WindowForm.js"/>
 		<!-- draggable window-->

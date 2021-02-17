@@ -102,6 +102,7 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'core/ValidatorCellPhone.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'core/ListFilter.js'));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'core/ListGroupper.js'));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'core/ConstantManager.js'));
 		
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controlsBS/WindowForm.js'));
 		
@@ -654,6 +655,7 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->getVarModel()->addField(new Field('tel_ext',DT_STRING));
 		$this->getVarModel()->addField(new Field('client_payment_type',DT_STRING));
 		$this->getVarModel()->addField(new Field('client_ship_not_allowed',DT_BOOL));
+		$this->getVarModel()->addField(new Field('order_destination_to_ttn',DT_BOOL));
 		
 		
 		$this->getVarModel()->insert();
@@ -666,6 +668,7 @@ class ViewBase extends ViewHTMLXSLT {
 			$this->setVarValue('user_name',$_SESSION['user_name']);
 			$this->setVarValue('warehouse_descr',$_SESSION['warehouse_descr']);
 			$this->setVarValue('tel_ext',$_SESSION['tel_ext']);
+			$this->setVarValue('order_destination_to_ttn',$_SESSION['order_destination_to_ttn']);
 		}
 		if (isset($_SESSION['client_payment_type'])){
 			$this->setVarValue('client_payment_type',$_SESSION['client_payment_type']);
@@ -676,7 +679,7 @@ class ViewBase extends ViewHTMLXSLT {
 		
 		
 	}
-	public function write(ArrayObject &$models){
+	public function write(ArrayObject &$models,$errorCode=NULL){
 		if (isset($_SESSION['role_id'])){
 			$menu_class = 'MainMenu_Model_'.$_SESSION['role_id'];
 			$models['mainMenu'] = new $menu_class();

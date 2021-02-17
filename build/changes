@@ -172,3 +172,36 @@ total_no_deliv
 
 1.0134 02/03/20
 все изменения поставил в Рабочую базу
+
+Косяки в ценах
+update doc_orders_t_products
+set
+total_no_deliv=coalesce(total,0)-coalesce(total_deliv,0)
+,price_no_deliv= (  coalesce(total,0)-coalesce(total_deliv,0) ) / quant_base_measure_unit
+where 
+coalesce(total_no_deliv,0)=0 and coalesce(price_no_deliv,0)=0 and coalesce(total,0)>0
+
+
+1.0135 28/04/20
+1) Косяк при удалении строки из заявки - счет не меняется! не записывается изменение в историю из-за неправильного запроса определения
+изменений в DOCOrderModel->update()
+Добавлен юнион запрос
+
+
+1.0135 17/02/21
++1) Переносить стоимость доставки в новое поле в 1с
++2) Константы для значерий по-умолчанию: 
+Включать стоимость доставки пропорционально в стоимость продукции order_deliv_add_cost_to_product
+Переносить адрес доставки в ТТН destination_to_ttn
++Печатать пустого перевозчика
+также deliv_add_cost_to_product есть в моделях клиента, там изменены значения по умолчанию на константу
+	ClientComplete
+
+3) Вытащить настройку перевозчиков справочника Перевозчики
+4) писок констант для редактирования
+SESSION['order_destination_to_ttn']
+ViewBase.php
+User_Controller.php
+5) Справочник фирм поле order_deliv_add_cost_to_product, doc_orders_data_for_ext зафисит от firms.order_deliv_add_cost_to_product
+
+

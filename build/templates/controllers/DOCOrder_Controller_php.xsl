@@ -1284,7 +1284,9 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 					'total_weight'=>$ar['total_weight'],
 					'deliv_expenses'=>$ar['deliv_expenses'],
 					'client_contract_ext_id'=>$ar['client_contract_ext_id'],
-					'firm_bank_acc_ext_id'=>$ar['firm_bank_acc_ext_id']
+					'firm_bank_acc_ext_id'=>$ar['firm_bank_acc_ext_id'],
+					'deliv_add_cost_to_product'=>$ar['deliv_add_cost_to_product'],
+					'deliv_add_cost_to_product_total'=>$ar['deliv_add_cost_to_product_total']
 					);
 			}
 			if ($ar['product_name']){

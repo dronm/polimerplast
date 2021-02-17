@@ -47,9 +47,22 @@ BEGIN
 	ELSIF (TG_WHEN='BEFORE' AND TG_OP='DELETE') THEN
 		RETURN OLD;
 	ELSIF (TG_WHEN='AFTER' AND TG_OP='DELETE') THEN
+		/*
 		UPDATE doc_orders_t_tmp_products
 		SET line_number = line_number - 1
 		WHERE view_id=OLD.view_id AND line_number>OLD.line_number;
+		*/
+		
+		UPDATE  doc_orders_t_tmp_products t
+		SET line_number = p.line_number - 1
+		FROM    (
+			SELECT  line_number,view_id			
+			FROM    doc_orders_t_tmp_products AS tmp
+			WHERE   tmp.view_id=OLD.view_id AND tmp.line_number>OLD.line_number
+			ORDER BY tmp.line_number ASC
+		) p 
+		WHERE t.view_id = p.view_id AND t.line_number = p.line_number;
+		
 		RETURN OLD;
 	END IF;
 END;

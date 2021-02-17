@@ -137,7 +137,8 @@ BEGIN
 		volume,
 		weight,
 		total,
-		total_pack	
+		total_pack,
+		total_no_deliv	
 	)
 	(
 	SELECT
@@ -159,7 +160,8 @@ BEGIN
 		sum(sub.volume) AS volume,
 		sum(sub.weight) AS weight,
 		sum(sub.total) AS total,
-		sum(sub.total_pack) AS total_pack
+		sum(sub.total_pack) AS total_pack,
+		sum(sub.total_no_deliv) AS total_no_deliv
 		
 	FROM (
 		(SELECT
@@ -179,7 +181,8 @@ BEGIN
 			p_orig.volume,
 			p_orig.weight,
 			p_orig.total,
-			p_orig.total_pack
+			p_orig.total_pack,
+			p_orig.total_no_deliv
 		FROM doc_orders_t_products AS p_orig
 		WHERE p_orig.doc_id=in_orig_doc_id)
 
@@ -201,7 +204,8 @@ BEGIN
 			-p_new.volume,
 			-p_new.weight,
 			-p_new.total,
-			-p_new.total_pack
+			-p_new.total_pack,
+			-p_new.total_no_deliv
 		FROM doc_orders_t_products AS p_new
 		WHERE p_new.doc_id=new_doc_id)
 	) AS sub	

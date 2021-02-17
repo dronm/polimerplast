@@ -102,7 +102,18 @@ class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@par
 		</xsl:choose>,$f_params);
 		$pm->addParam($param);		
 		</xsl:for-each>
-		
+				
+		<xsl:if test="not(events)">
+		//default event
+		$ev_opts = [
+			'dbTrigger'=>FALSE
+			,'eventParams' =>[<xsl:for-each select="/metadata/models/model[@id=$model_id]/field[@primaryKey='TRUE']">
+				<xsl:if test="position() &gt; 1">,</xsl:if>'<xsl:value-of select="@id"/>'
+			</xsl:for-each>]
+		];
+		$pm->addEvent('<xsl:value-of select="../@id"/>.insert',$ev_opts);
+		</xsl:if>		
+		<xsl:apply-templates/>
 		$this->addPublicMethod($pm);
 		$this->setInsertModelId('<xsl:value-of select="concat($model_id,'_Model')"/>');
 </xsl:template>
@@ -166,7 +177,18 @@ class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@par
 		</xsl:choose>,$f_params);
 		$pm->addParam($param);		
 		</xsl:for-each>
-		
+					
+			<xsl:if test="not(events)">
+			//default event
+			$ev_opts = [
+				'dbTrigger'=>FALSE
+				,'eventParams' =>[<xsl:for-each select="/metadata/models/model[@id=$model_id]/field[@primaryKey='TRUE']">
+					<xsl:if test="position() &gt; 1">,</xsl:if>'<xsl:value-of select="@id"/>'
+				</xsl:for-each>]
+			];
+			$pm->addEvent('<xsl:value-of select="../@id"/>.update',$ev_opts);
+			</xsl:if>		
+			<xsl:apply-templates/>
 			$this->addPublicMethod($pm);
 			$this->setUpdateModelId('<xsl:value-of select="concat($model_id,'_Model')"/>');
 </xsl:template>
@@ -271,6 +293,18 @@ class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@par
 		</xsl:for-each>
 		$pm->addParam(new FieldExtInt('count'));
 		$pm->addParam(new FieldExtInt('from'));				
+				
+		<xsl:if test="not(events)">
+		//default event
+		$ev_opts = [
+			'dbTrigger'=>FALSE
+			,'eventParams' =>[<xsl:for-each select="/metadata/models/model[@id=$model_id]/field[@primaryKey='TRUE']">
+				<xsl:if test="position() &gt; 1">,</xsl:if>'<xsl:value-of select="@id"/>'
+			</xsl:for-each>]
+		];
+		$pm->addEvent('<xsl:value-of select="../@id"/>.delete',$ev_opts);
+		</xsl:if>		
+		<xsl:apply-templates/>
 		$this->addPublicMethod($pm);					
 		$this->setDeleteModelId('<xsl:value-of select="concat($model_id,'_Model')"/>');
 </xsl:template>
@@ -332,6 +366,17 @@ class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@par
 		$pm->addParam(new FieldExt<xsl:value-of select="@dataType"/>('<xsl:value-of select="@id"/>',$opts));
 	</xsl:otherwise>
 	</xsl:choose>
+</xsl:template>
+
+<xsl:template match="publicMethod/events/event[not(@dbTrigger) or @dbTrigger='FALSE']">
+	<xsl:variable name="model_id" select="../../@modelId"/>
+		$ev_opts = [
+			'dbTrigger'=>FALSE
+			,'eventParams' =>[<xsl:for-each select="/metadata/models/model[@id=$model_id]/field[@primaryKey='TRUE']">
+				<xsl:if test="position() &gt; 1">,</xsl:if>'<xsl:value-of select="@id"/>'
+			</xsl:for-each>]
+		];
+		$pm->addEvent('<xsl:value-of select="../../@id"/>.delete',$ev_opts);
 </xsl:template>
 
 <xsl:template match="controller/detail">

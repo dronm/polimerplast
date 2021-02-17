@@ -285,7 +285,7 @@ class User_Controller extends ControllerSQL{
 	}
 	
 	private function check_user($pm){
-		if ($pm->getParamValue('name')){
+		if ($pm->getParamValue('ext_login')){
 			//если есть имя
 			$ext_ref = ExtProg::getUserRefOnName($pm->getParamValue('ext_login'));
 			if ($ext_ref){
@@ -391,7 +391,9 @@ class User_Controller extends ControllerSQL{
 				FROM user_warehouses uw
 				LEFT JOIN warehouses w ON w.id= uw.warehouse_id
 				WHERE uw.user_id=u.id
-				) AS warehouse_descr_list
+				) AS warehouse_descr_list,
+				
+				const_order_destination_to_ttn_val() AS order_destination_to_ttn
 				
 			FROM users AS u
 			LEFT JOIN clients AS cl ON cl.id=u.client_id
@@ -419,6 +421,8 @@ class User_Controller extends ControllerSQL{
 			$_SESSION['client_id']			= $ar['client_id'];
 			$_SESSION['tel_ext']			= $ar['tel_ext'];
 			$_SESSION['client_payment_type']= $ar['payment_type'];
+			
+			$_SESSION['order_destination_to_ttn']= $ar['order_destination_to_ttn'];
 			
 			$client_ship_not_allowed = FALSE;
 			

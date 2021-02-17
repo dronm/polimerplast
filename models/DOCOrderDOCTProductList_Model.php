@@ -16,7 +16,8 @@ class DOCOrderDOCTProductList_Model extends ModelSQLDOCT20{
 	public function __construct($dbLink){
 		parent::__construct($dbLink);
 		
-		$this->setDbName("public");
+		
+		$this->setDbName('public');
 		
 		$this->setTableName("doc_orders_t_tmp_products_list");
 			

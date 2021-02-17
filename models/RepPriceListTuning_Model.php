@@ -17,7 +17,8 @@ class RepPriceListTuning_Model extends ModelReportSQL{
 	public function __construct($dbLink){
 		parent::__construct($dbLink);
 		
-		$this->setDbName("public");
+		
+		$this->setDbName('public');
 		
 		$this->setTableName("price_list_tuning");
 			

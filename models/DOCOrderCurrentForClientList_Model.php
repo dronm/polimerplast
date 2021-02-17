@@ -18,7 +18,8 @@ class DOCOrderCurrentForClientList_Model extends ModelSQL{
 	public function __construct($dbLink){
 		parent::__construct($dbLink);
 		
-		$this->setDbName("public");
+		
+		$this->setDbName('public');
 		
 		$this->setTableName("doc_orders_all_for_client_list");
 			

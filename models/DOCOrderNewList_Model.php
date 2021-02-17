@@ -17,7 +17,8 @@ class DOCOrderNewList_Model extends ModelSQL{
 	public function __construct($dbLink){
 		parent::__construct($dbLink);
 		
-		$this->setDbName("public");
+		
+		$this->setDbName('public');
 		
 		$this->setTableName("doc_orders_new_list");
 			

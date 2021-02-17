@@ -377,7 +377,7 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 						$cond.=sprintf("not_equal(t.%s,t_tmp.%s)",$f,$f);						
 					}
 					$sel = sprintf(
-					"SELECT
+					"(SELECT
 						%d,
 						COALESCE(t_tmp.product_id,t.product_id),
 						CASE
@@ -400,12 +400,30 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 							AND t.mes_height=t_tmp.mes_height
 							AND t.mes_length=t_tmp.mes_length
 							AND t.mes_width=t_tmp.mes_width
-					WHERE t_tmp.view_id=%s AND (%s)
+					WHERE t_tmp.view_id=%s AND (%s))
+					UNION ALL
+					(SELECT 
+						%d,
+						t.product_id,
+						'delete' AS oper,
+						'product_id' AS fields,
+						pr.name AS old_vals
+						FROM doc_orders_t_products t
+						LEFT JOIN products pr ON pr.id=t.product_id
+						WHERE t.doc_id=%d AND t.product_id NOT IN (
+							SELECT t_tmp.product_id
+							FROM doc_orders_t_tmp_products t_tmp
+							WHERE t_tmp.view_id=%s
+						)					
+					)
 					",
 					$res['id'],
 					$fld,
 					$old_vals,
-					$doc_id, $view_id_for_db, $cond
+					$doc_id, $view_id_for_db, $cond,
+					
+					$res['id'],
+					$doc_id,$view_id_for_db
 					);
 					
 					$q = sprintf("INSERT INTO doc_orders_products_history
@@ -414,7 +432,7 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 					(%s)",$sel);
 					$qres = $link->query($q);
 					$modif = $modif||($link->affected_rows($qres)&gt;0);
-					//throw new Exception($q);				
+					//throw new Exception('modif='.$modif);				
 					
 					if (!$modif&amp;&amp;isset($new_state)&amp;&amp;$fields_us_modif){
 						/** если изменились только наши атрибуты

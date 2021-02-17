@@ -20,7 +20,7 @@
 			var BS_COL;
 			var CONSTANTS;			
 			var CONSTANT_VALS;
-			var SERV_VARS={
+			var SERV_VARS = {
 				"VERSION":'<xsl:value-of select="/document/model[@id='ModelVars']/row/scriptId"/>',
 				"ROLE_ID":'<xsl:value-of select="/document/model[@id='ModelVars']/row/role_id"/>',
 				"ROLE_DESCR":'<xsl:value-of select="/document/model[@id='ModelVars']/row/role_descr"/>',
@@ -29,7 +29,8 @@
 				"WAREHOUSE_DESCR":'<xsl:value-of select="/document/model[@id='ModelVars']/row/warehouse_descr"/>',
 				"TEl_EXT":'<xsl:value-of select="/document/model[@id='ModelVars']/row/tel_ext"/>',
 				"CLIENT_PAYMENT_TYPE":'<xsl:value-of select="/document/model[@id='ModelVars']/row/client_payment_type"/>',
-				"CLIENT_SHIP_NOT_ALLOWED":'<xsl:value-of select="/document/model[@id='ModelVars']/row/client_ship_not_allowed"/>'
+				"CLIENT_SHIP_NOT_ALLOWED":'<xsl:value-of select="/document/model[@id='ModelVars']/row/client_ship_not_allowed"/>',
+				"ORDER_DESTINATION_TO_TTN":'<xsl:value-of select="/document/model[@id='ModelVars']/row/order_destination_to_ttn"/>'
 				};
 			var NEW_CLIENT_CHECK;
 			var CONST_CONTROLS ={};
@@ -59,9 +60,10 @@
 					   extra += !error ? "" : "\nerror: " + error;
 					   console.log("Error: " + msg + "\nurl: " + url + "\nline: " + line + extra);
 					   console.trace();
+					   //+extra
 					   WindowMessage.show({
 						"type":WindowMessage.TP_ER,
-						"text":msg+extra
+						"text":msg
 						});
 					   return false;
 				};
@@ -140,6 +142,10 @@
 				//dv.parentNode.removeChild(dv);
 				DOMHandler.addClass(dv,"invisible");
 			}
+			<xsl:if test="not(/document/model[@id='ModelServResponse']/row/result='0')">
+				alert('ОШИБКА:<xsl:value-of select="/document/model[@id='ModelServResponse']/row/descr"/>');
+			</xsl:if>	
+			
 		</script>
 	
 	</body>

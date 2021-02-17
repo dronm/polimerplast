@@ -53,6 +53,13 @@ class ExtProg{
 		*/
 		
 		$params['cmd'] = $cmd;
+		
+		/*$par_str = '';
+		foreach($params as $name=>$val){
+			$par_str.= '&'.$name.'='.$val;
+		}
+		throw new Exception($par_str);
+		*/
 		$options = array(
 			'http' => array(
 				'method'  => 'POST',

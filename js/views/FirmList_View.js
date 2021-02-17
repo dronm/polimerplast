@@ -45,6 +45,9 @@ function FirmList_View(id,options){
 	row.addElement(new GridDbHeadCellBool(id+"_col_match_1c",{"value":"Соответствует 1с",
 		"readBind":{"valueFieldId":"match_1c"}
 		}));
+	row.addElement(new GridDbHeadCellBool(id+"_col_order_no_carrier_print",{"value":"Если перевозчик не задан, обрабатывать как НАШИ АВТО",
+		"readBind":{"valueFieldId":"order_no_carrier_print"}
+		}));
 
 		
 	head.addElement(row);

@@ -22,7 +22,11 @@ CREATE OR REPLACE VIEW clients_complete AS
 				(SELECT sum(t.def_debt) FROM client_debts AS t WHERE t.client_id=cl.id AND t.firm_id=cl.def_firm_id)
 		END AS def_debt,
 		
-		cl.deliv_add_cost_to_product
+		--Если ДА - из клиента, иначе - константа!
+		CASE
+			WHEN coalesce(cl.deliv_add_cost_to_product,FALSE) THEN cl.deliv_add_cost_to_product
+			ELSE const_order_deliv_add_cost_to_product_val()
+		END AS deliv_add_cost_to_product
 		
 	FROM clients AS cl
 	

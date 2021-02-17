@@ -62,6 +62,20 @@ function DOCOrderDialog_View(id,options){
 		
 	DOCOrderDialog_View.superclass.constructor.call(this,id,options);
 	
+	/*
+	m_destination_to_ttn из глобальных настроек!
+	//get constsnts
+	var const_man = new ConstantManager();
+	const_man.get({"order_destination_to_ttn":null},function(constants){
+		//Работает через выбор контрагента! из подбора и формы списка!
+
+		//self.m_delivAddToCostCtrl.setValue("true")
+		
+		//this.m_destination_to_ttn
+		//console.log(constants)
+	})
+	*/
+	
 	var model_id = "DOCOrderDialog_Model";
 	
 	//events
@@ -410,16 +424,20 @@ function DOCOrderDialog_View(id,options){
 	cont.addElement(this.m_clientDestCtrl);		
 	
 	//Адрес в ТТН
-	var ctrl = new EditCheckBox(id+"_destination_to_ttn",
+	const_v = (SERV_VARS.ORDER_DESTINATION_TO_TTN=="t"? "true":"false");
+	alert("const_v="+const_v)
+	this.m_destination_to_ttn = new EditCheckBox(id+"_destination_to_ttn",
 		{"labelCaption":"Переносить адрес доставки в ТТН","name":"destination_to_ttn",
 		"buttonClear":false,"labelAlign":"left",
-		"tableLayout":false,
-		"attrs":{}}
+		"tableLayout":false,		
+		"checked":(SERV_VARS.ORDER_DESTINATION_TO_TTN=="t"? "true":"false"),
+		"attrs":{}
+		}
 	);		
-	this.bindControl(ctrl,
+	this.bindControl(this.m_destination_to_ttn,
 		{"modelId":model_id,"valueFieldId":"destination_to_ttn","keyFieldIds":null},
 		{"valueFieldId":"destination_to_ttn","keyFieldIds":null});	
-	cont.addElement(ctrl);	
+	cont.addElement(this.m_destination_to_ttn);	
 	
 	
 	this.addControl(cont);

@@ -133,7 +133,16 @@ CREATE OR REPLACE VIEW doc_orders_data_for_ext AS
 		
 		h.client_contract_ext_id,
 		
-		cl_f_acc.ext_bank_account_id AS firm_bank_acc_ext_id
+		cl_f_acc.ext_bank_account_id AS firm_bank_acc_ext_id,
+		
+		h.deliv_add_cost_to_product,
+		CASE
+		WHEN h.deliv_type='by_supplier'::delivery_types
+			AND coalesce(h.deliv_add_cost_to_product,FALSE)=TRUE THEN
+				h.deliv_total
+		ELSE 0
+		END AS deliv_add_cost_to_product_total
+		
 		
 	--FROM doc_orders_t_products t
 	--LEFT JOIN doc_orders h ON h.id=t.doc_id
@@ -156,7 +165,16 @@ CREATE OR REPLACE VIEW doc_orders_data_for_ext AS
 	LEFT JOIN vehicles AS order_vh ON order_vh.id=h.vehicle_id
 	LEFT JOIN drivers AS order_dr ON order_dr.id=order_vh.driver_id	
 	LEFT JOIN carriers AS order_carr ON order_carr.id=order_vh.carrier_id
-	LEFT JOIN clients AS order_carr_cl ON order_carr_cl.id=order_carr.client_id
+	LEFT JOIN clients AS order_carr_cl ON
+	--order_carr_cl.id=order_carr.client_id
+		--Печатать или нет пустого как НАШИ АВТО зависит от зачения параметра в Фирме
+		(	h.vehicle_id IS NULL
+			--const_order_no_carrier_print_val
+			AND f.order_no_carrier_print=TRUE
+			AND order_carr_cl.id=(SELECT carrier_client_on_firm(client_ids_on_firm,49) FROM carriers WHERE id=1)			
+		)
+		OR (order_carr.client_ids_on_firm IS NULL AND order_carr_cl.id=order_carr.client_id)
+		OR (order_carr.client_ids_on_firm IS NOT NULL AND order_carr_cl.id=carrier_client_on_firm(order_carr.client_ids_on_firm,h.firm_id))
 	;
 ALTER TABLE doc_orders_data_for_ext OWNER TO polimerplast;
 

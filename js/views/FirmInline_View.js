@@ -67,6 +67,25 @@ function FirmInline_View(id,options){
 		"keyFieldIds":null},
 		{"valueFieldId":"cash","keyFieldIds":null}
 	);
+	this.addDataControl(
+		new EditCheckBox(id+"_cash",
+		{"enabled":false
+		}),
+		{"modelId":"FirmList_Model",
+		"valueFieldId":"match_1c",
+		"keyFieldIds":null},
+		{"valueFieldId":"match_1c","keyFieldIds":null}
+	);
+	
+	this.addDataControl(
+		new EditCheckBox(id+"_cash",
+		{
+		}),
+		{"modelId":"FirmList_Model",
+		"valueFieldId":"order_no_carrier_print",
+		"keyFieldIds":null},
+		{"valueFieldId":"order_no_carrier_print","keyFieldIds":null}
+	);
 
 }
 extend(FirmInline_View,ViewInlineGridEdit);

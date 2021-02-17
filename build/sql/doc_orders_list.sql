@@ -108,7 +108,7 @@ CREATE OR REPLACE VIEW doc_orders_list AS
 	LEFT JOIN (
 		SELECT
 			t.doc_id,
-			SUM(t.quant_base_measure_unit) AS quant		
+			SUM(t.quant_base_measure_unit) AS quant
 		FROM doc_orders_t_products t
 		GROUP BY t.doc_id) AS t_prod
 	ON t_prod.doc_id=d.id
