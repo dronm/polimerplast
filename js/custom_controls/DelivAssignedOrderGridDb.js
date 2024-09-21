@@ -360,11 +360,7 @@ GridDropCell.prototype.toDOM = function(parent){
 		var plan_d = dragObject.getFieldValue("delivery_plan_date_descr");
 		if (plan_d){
 			if (DateHandler.strToDate(plan_d).getTime()!=dt.getTime()){
-				//console.log("plan_d="+DateHandler.strToDate(plan_d)+" dt="+dt);
-				WindowMessage.show({
-					type:WindowMessage.TP_NOTE,
-					text:"Планируемая дата отличается!"
-				})
+				window.showTempError("Планируемая дата отличается!", null, ERR_MSG_WAIT_MS);											
 			}
 		}
 		
@@ -384,10 +380,8 @@ GridDropCell.prototype.toDOM = function(parent){
 		}		
 
 		if (er_text){
-			WindowMessage.show({
-					"type":WindowMessage.TP_ER,
-					"text":er_text});
-				return false;
+			window.showTempError(er_text, null, ERR_MSG_WAIT_MS);											
+			return false;
 		}
 		
 		var contr=new Delivery_Controller(new ServConnector(HOST_NAME));
@@ -410,9 +404,7 @@ GridDropCell.prototype.toDOM = function(parent){
 				self.m_assignRes=true;
 			},
 			"err":function(resp,errCode,errStr){
-				WindowMessage.show({
-					"type":WindowMessage.TP_ER,
-					"text":errStr});				
+				window.showTempError(errStr, null, ERR_MSG_WAIT_MS);											
 				self.m_assignRes=false;
 			}
 		});	

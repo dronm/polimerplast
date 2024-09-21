@@ -1110,3 +1110,39 @@ FirmExtBankAccountEdit.prototype.setEnabled = function(enabled){
 }
 
 
+function SaleStoreAddressEditObject(fieldId,controlId,inLine,defaultId,opts){
+	var contr = new SaleStoreAddress_Controller(new ServConnector(HOST_NAME))
+	var pm = contr.getPublicMethodById(contr.METH_GET_LIST);
+  //pm.setParamValue(contr.PARAM_COND_FIELDS,"deleted");
+	//pm.setParamValue(contr.PARAM_COND_VALS,"false");
+	//pm.setParamValue(contr.PARAM_COND_SGNS,"e");
+	
+	options =
+		{"tableLayout":false,
+		"methodId":"get_list",
+		"modelId":"SaleStoreAddress_Model",
+		"lookupValueFieldId":"name",
+		"lookupKeyFieldIds":["id"],
+		"keyFieldIds":[fieldId],
+		"controller":contr,
+		"objectView":null,
+		"noSelect":false,
+		"noOpen":true,
+		"winObj":this.m_winObj,
+		"listView":SaleStoreAddressList_View,
+		"contClassName":"aaa",
+		"defaultId":(defaultId==undefined)? "undefined":defaultId
+	};
+	for(var opt in opts){
+		options[opt] = opts[opt];
+	}
+	options.attrs=options.attrs||{};
+	//options.attrs.required="required";
+	
+	if (inLine==undefined || (inLine!=undefined && !inLine)){
+		options["labelCaption"] = "Адрес магазина:";
+	}	
+	SaleStoreAddressEditObject.superclass.constructor.call(this,
+		controlId,options);	
+}
+extend(SaleStoreAddressEditObject,EditSelectObject);

@@ -1,5 +1,6 @@
 -- View: doc_orders_t_products_dialog
 
+--drop view doc_orders_print_products;
 --DROP VIEW doc_orders_t_products_dialog;
 
 CREATE OR REPLACE VIEW doc_orders_t_products_dialog AS 
@@ -16,6 +17,7 @@ CREATE OR REPLACE VIEW doc_orders_t_products_dialog AS
 		t.price,
 		t.price_no_deliv,
 		t.price_edit,
+		t.price_round,
 		format_money(t.price) AS price_descr,
 		t.total,
 		format_money(t.total) AS total_descr,

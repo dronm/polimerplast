@@ -21,19 +21,16 @@ function BtnUpdatePaid(id,options){
 				"xml":true,
 				"params":{"doc_id":keys["id"]},
 				"func":function(resp){					
-					self.setEnabled(true);	
-					WindowMessage.show({
-						"text":options.resultText,
-						"type":WindowMessage.TP_NOTE,
-						"callBack":function(){
+					window.showTempNote(options.resultText, function(){
+							self.setEnabled(true);	
 							options.grid.onRefresh();
-						}
-						});					
+						}, ERR_MSG_WAIT_MS);											
 				},
 				"cont":this,
 				"err":function(resp,errCode,errStr){				
-					self.setEnabled(true);	
-					WindowMessage.show({"text":errStr});
+					window.showTempError(errStr, function(){
+							self.setEnabled(true);
+						}, ERR_MSG_WAIT_MS);											
 				}
 			});
 		}

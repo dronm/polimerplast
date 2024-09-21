@@ -205,3 +205,145 @@ User_Controller.php
 5) Справочник фирм поле order_deliv_add_cost_to_product, doc_orders_data_for_ext зафисит от firms.order_deliv_add_cost_to_product
 
 1.0136
+
+1.0137
+1) Product1cName_Controller + справочник, форма и т.д.
+2) Файлы вложений для DOCOrder
+
+1.0139
+1) doc_orders_dialog_no_att.sql - форма диалога без вложений, doc_orders_print_h.sql вызвает doc_orders_dialog_no_att
+views/DOCOrder.html.xsl + Самовывоз
+2) DOCOrderDialog_View.js печать вложений, DOCOrder_Controller.php  новый метод
+
+
+
+//**************
+1)
+Замены для php8
+ModelSQLDOCT20,
+public function insert($needId=FALSE,$row=NULL){
+ModelSQLDOCPl
+public function insert($needId=FALSE,$row=NULL){
+	public function select($insertMode=FALSE,
+					$modelWhere=NULL,
+					$modelOrder=NULL,
+					$modelLimit=NULL,
+					$fieldArray=NULL,
+					$grpFieldArray=NULL,
+					$aggFieldArray=NULL,
+					$calcTotalCount=NULL,
+					$toXML=NULL,
+					$copyMode=FALSE){
+models/DOCOrder_Model::insert(
+public function insert($needId = FALSE, $row = NULL){
+
+common/OSRMV5
+error_log(self::ER_BAD_RESPONSE.' URL='.$url);
+
+
+1.0140 27/03/23
+Исправил косяк controls/actb.js коммент от 03/03/23
+
+
+
+1.0141 20/07/23
+1) doc_orders_set_shipped.sql изменен комментарий новой заявки
+2) Возможность включения в отчет неотгруженных заявок: RepSales_View.js, Report_Controller_php.xsl
+
+
+
+27/02/24
+Локальная база polimerplast = копия рабочей на 27/02/24
+Задача: при разделении заявки на остаток формируется новая заявка,
+также формируется новый счет (не понятно в какой момент, говорят, что при передаче в производство)
+Необходимо убрать формирование счета.
+models/DOCOrder_Model->update() added variable $derived_from_split_order
+
+controllers/DOCOrder->docDataForExt()
+
+
+07/03/24
++SaleStoreAddress - справочник
+DOCOrder_Controller добавлено два поля: sale_store_id, order_num, 
+DOCOrderDialog_View.js
+EditObjects.js
+SaleStoreAddressList_View.js
+SaleStoreAddressInline_View.js
+doc_orders_data_for_ext.sql added fields 
+		order_num,sale_store_address_code
+DOCOrder_Controller->docDataForExt() 2 new fields added. 
+!!! Проверить на тестовой базе с локалки, в паре с 1с с тестового сервера.!!!
+
+
+
+27/03/24
++ new_field batch_num
+DOCOrderShipmentDialog_View.js
+DOCOrder_Controller
+	set_shipped()
+	docDataForExt()
+doc_orders_data_for_ext.sql +new field
+doc_orders_set_shipped.sql +new field
+doc_orders_shipment_dialog.sql
+
+08/04/24
+DOCOrderShipmentDialog_View.js batch_num is a Text, not number!
+
+
+1.0146
+1) New table, controller: DocOrderProdBatch_Controller 
+	Вызов метода на стороне 1с DocOrderBatchController->get_1c_list()
+	Выбор в ГУИ партии при отгрузке
+	Передача партий в накладную при отгрузке
+	doc_orders_before_open.sql, doc_orders_before_write.sql
+	DOCOrderDOCTProdBatch_Controller_php.xsl
+	doc_orders_data_for_ext.sql added field to hold prod_batches
+	doc_orders_process.sql delete new detail table data.
+	DOCOrder_Controller->docDataForExt() new field
+
+2) Views/DocOrderCheck.html.xsl Значение графы "Отпустил" для одной конторы.
+3) GridDbDOCT some functions are copied and corrected from parent class to handle inline edit insert case.
+
+
+
+1.0147
+1) DOCOrderDOCTProduct, DOCOrderDOCTFProduct new column price_round bool
+	doc_orders_t_tmp_products, doc_orders_t_products
+	DOCOrder_Controller->calc_totals() new parameter price_round
+	doc_order_totals2() added parameter price_round
+	DOCOrder_Controller->calc_totals() changed call to sql function doc_order_totals()
+	DOCOrderDOCTProduct->update() call to function doc_order_totals()
+	DocOrderDOCTProductDialog_View  added this.m_priceRoundCtrl
+		this call to calc_totals() server method.
+
+doc_orders_t_tmp_prod_batches_list
+	V doc_orders_t_tmp_products_dialog.sql
+	V doc_orders_t_products_dialog.sql
+	V doc_orders_t_tmp_prod_batches_list
+	V doc_orders_t_tmp_prod_batches.sql
+	V doc_orders_t_tmp_prod_batches_process
+	V doc_orders_before_write.sql
+	V doc_orders_before_open.sql
+	V doc_orders_set_shipped.sql
+
+
+
+//То, что мешает жить:
+- Если чсета нет, а нажали "Счет" выходит ошибка в новом окно - счет не выписан
+- Создание файлов GUID.zip при создании счета. Это не удаляется. Тупой механизм при создании счета, потом скачивание,
+	временное хранение.
++ Обработка ошибок в модальном окне.	
+- Запрос
+	select * from doc_orders_list  order by date_time desc limit 50
+		выполняется 6с, если без сортировки, то менее 1с
+		Если не через VIEW, на прямую зарос - также быстро
+
+
+
+
+
+
+
+!!!
+ПРИ СОЗДАНИИ КОНТРОЛЛЕРА!!!
+исправить в шаблоне <xsl:import href="Controller_js.xsl"/>

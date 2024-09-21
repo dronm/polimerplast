@@ -207,8 +207,25 @@ ORDER BY "Фирма","Клиент"
 				FROM doc_orders_states AS st
 				LEFT JOIN users u ON u.id=st.user_id
 				LEFT JOIN enum_list_order_states st_descr ON st_descr.id=st.state
+				ORDER BY st.date_time DESC
 				) AS doc_orders_states ON doc_orders_states.doc_orders_id=doc_orders.id"				
 		),												
+		
+		//added 26/07/23
+		"doc_orders_last_states"=>array(
+			"sub_joins"=>array("doc_orders"),
+			"clause"=>"(
+				SELECT
+					st.doc_orders_id,
+					max(st.date_time) AS date_time
+				FROM doc_orders_states AS st
+				GROUP BY st.doc_orders_id
+				) AS doc_st ON doc_st.doc_orders_id = doc_orders.id
+				LEFT JOIN doc_orders_states AS doc_orders_last_states ON doc_orders_last_states.doc_orders_id = doc_st.doc_orders_id
+					AND doc_orders_last_states.date_time = doc_st.date_time
+				LEFT JOIN enum_list_order_states AS last_state_descr ON last_state_descr.id = doc_orders_last_states.state"
+		),												
+		
 		"doc_customer_survey_results"=>array(
 			"sub_joins"=>array("doc_orders"),
 			"clause"=>"(
@@ -487,8 +504,18 @@ $field_resolver =
 			"fieldWhere"=>"doc_state_user_id",
 			"field"=>"doc_state_user",
 			"table"=>"doc_orders_states"
+		),		
+				
+		//added 26/07/32
+		"doc_last_state_id" => array(
+			"fieldExpr"=>"doc_orders_last_states.state",
+			"table"=>"doc_orders_last_states"
 		),				
-
+		"doc_last_state" => array(
+			"fieldExpr"=>"last_state_descr.descr",
+			"table"=>"doc_orders_last_states"
+		),				
+		
 		"doc_sales_manager_comment" => array(
 			"field"=>"sales_manager_comment",
 			"table"=>"doc_orders"

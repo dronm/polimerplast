@@ -21,11 +21,12 @@ function DOCOrderShipmentDialog_View(id,options){
 	this.m_beforeOpen = function(contr,isInsert){
 		//if (self.m_beforeOpenCalled)return;
 		var doc_id = 0;
-		
 		self.m_items.getGridControl().setViewId(self.m_viewId);
+		self.m_batches.getGridControl().setViewId(self.m_viewId);
 		
 		if (!isInsert){
 			doc_id = self.getDataControl(self.getId()+"_id").control.getValue();
+			// self.m_batches.getGridControl().m_editViewParams = {"doc_id": doc_id};
 		}
 		contr.run("before_open",{async:false,params:{
 			"doc_id":doc_id,
@@ -155,7 +156,8 @@ function DOCOrderShipmentDialog_View(id,options){
 						"err":function(resp,errCode,errStr){
 							self.m_clientDestCtrl.setEnabled(true);
 
-							WindowMessage.show({"text":errStr});	
+							window.showTempError(errStr, null, ERR_MSG_WAIT_MS);
+							
 						}
 					});				
 				}
@@ -185,10 +187,28 @@ function DOCOrderShipmentDialog_View(id,options){
 		{"valueFieldId":"destination_to_ttn","keyFieldIds":null});	
 	cont.addElement(this.m_destinationToTTN);	
 	
+	//Номер парти, from 2024-06-28 changed to list
+	// var ctrl = new EditString(id+"_batch_num",{
+	// 		"enabled":true,
+	// 		"editContClassName":"input-group "+get_bs_col()+"2",
+	// 		"name":"batch_num",
+	// 		"labelCaption":"№ партии:",
+	// 		"tableLayout":false}
+	//
+	// );	
+	// this.bindControl(ctrl,
+	// 	{"modelId":model_id,
+	// 	"valueFieldId":"batch_num",
+	//
+	// 	"keyFieldIds":null},
+	// 	{}
+	// );
+	// cont.addElement(ctrl);	
+	
 	this.addElement(cont);	
 	
-	//Табличная часть
-	this.m_details = new ControlContainer(uuid(),"div",{"className":"row"});
+	//Табличные части
+	this.m_details = new ControlContainer(uuid(), "div", {"className":"row"});
 	
 	this.m_items = new DOCOrderDOCTShipmentList_View("DOCOrderDOCTShipmentList_View",
 		{"connect":new ServConnector(HOST_NAME),
@@ -196,8 +216,32 @@ function DOCOrderShipmentDialog_View(id,options){
 		"winObj":options.winObj
 		});	
 	this.m_details.addElement(this.m_items);	
-	this.addElement(this.m_details);	
 	
+	//batch list
+	var com_p_id = uuid();
+	var cont_batch = new ControlContainer(com_p_id,"div",{"className":"collapse"});//container for batches
+
+	this.m_batches = new DOCOrderDOCTProdBatchList_View("DOCOrderDOCTProdBatchList_View",
+		{"connect":new ServConnector(HOST_NAME),
+		"errorControl":this.getErrorControl(),
+		"winObj":options.winObj,
+		"getOrderId":function(){
+			return self.getOrderId();
+		}
+		});	
+	cont_batch.addElement(this.m_batches);	
+
+	this.m_details.addElement(new ButtonToggle(uuid(),{
+		"caption":"Партии продукции",
+		"dataTarget":com_p_id,
+		"expanded":true,
+		"attrs":{								
+			"title":"показать/скрыть партии"				
+			}
+		}));
+	this.m_details.addElement(cont_batch);	
+
+	this.addElement(this.m_details);	
 }
 extend(DOCOrderShipmentDialog_View,ViewDialog);
 
@@ -297,3 +341,6 @@ DOCOrderShipmentDialog_View.prototype.getFormWidth = function(){
 	return "1000";
 }
 
+DOCOrderShipmentDialog_View.prototype.getOrderId = function(){
+	return this.getDataControl(this.getId()+"_id").control.getValue();
+}

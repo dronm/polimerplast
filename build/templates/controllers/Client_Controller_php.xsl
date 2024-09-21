@@ -423,7 +423,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 	
 	
 	public function update($pm){
-		
+		$link = $this->getDbLink();
 		$params = new ParamsSQL($pm,$link);
 		$params->setValidated("old_id",DT_INT);
 		$old_id = $params->getParamById('old_id');

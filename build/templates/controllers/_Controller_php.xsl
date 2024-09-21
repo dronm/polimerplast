@@ -12,8 +12,8 @@
 <xsl:template match="controller"><![CDATA[<?php]]>
 <xsl:call-template name="add_requirements"/>
 class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@parentId"/>{
-	public function __construct($dbLinkMaster=NULL,$dbLink=NULL){
-		parent::__construct($dbLinkMaster,$dbLink);<xsl:apply-templates/>
+	public function __construct($dbLinkMaster=NULL, $dbLink=NULL){
+		parent::__construct($dbLinkMaster, $dbLink);<xsl:apply-templates/>
 	}
 }
 <![CDATA[?>]]>
@@ -60,6 +60,16 @@ class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@par
 		$pm->addParam(new FieldExtString('view_id',array('required'=>TRUE,'length'=>32)));
 		</xsl:if>
 		<xsl:for-each select="/metadata/models/model[@id=$model_id]/field[not(@primaryKey='TRUE' and @autoInc='TRUE')]">
+			$f_params = array();
+			<xsl:if test="@alias">
+				$f_params['alias']='<xsl:value-of select="@alias"/>';
+			</xsl:if>
+			<xsl:if test="@required">
+				$f_params['required']=<xsl:value-of select="@required"/>;
+			</xsl:if>				
+			<xsl:if test="@unsigned='FALSE'">
+				$f_params['unsigned']=FALSE;
+			</xsl:if>				
 			<xsl:choose>
 				<xsl:when test="@fieldType='FT_LOOK_UP'">
 				<xsl:variable name="look_up_model" select="@lookUpModel"/>
@@ -72,11 +82,7 @@ class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@par
 				</xsl:when>
 				<xsl:otherwise>$param = new FieldExt<xsl:value-of select="@dataType"/>('<xsl:value-of select="@id"/>'
 				</xsl:otherwise>
-			</xsl:choose>,array(<xsl:if test="@required">'required'=><xsl:value-of select="@required"/></xsl:if>
-			<xsl:if test="@alias">
-				<xsl:if test="@required">,</xsl:if>
-				'alias'=>'<xsl:value-of select="@alias"/>'
-			</xsl:if>));
+			</xsl:choose>,$f_params);
 		$pm->addParam($param);
 		</xsl:for-each>
 		<!-- if there is a SERIAL field might need return new id -->
@@ -91,6 +97,9 @@ class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@par
 			</xsl:if>
 			<xsl:if test="@required">
 				$f_params['required']=<xsl:value-of select="@required"/>;
+			</xsl:if>				
+			<xsl:if test="@unsigned='FALSE'">
+				$f_params['unsigned']=FALSE;
 			</xsl:if>				
 			<xsl:choose>
 			<xsl:when test="@dataType='Enum'">
@@ -131,6 +140,13 @@ class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@par
 		</xsl:for-each>
 		$pm->addParam(new FieldExtInt('obj_mode'));
 		<xsl:for-each select="/metadata/models/model[@id=$model_id]/field">
+			$f_params=array();
+			<xsl:if test="@alias">
+				$f_params['alias']='<xsl:value-of select="@alias"/>';
+			</xsl:if>
+			<xsl:if test="@unsigned='FALSE'">
+				$f_params['unsigned']=FALSE;
+			</xsl:if>							
 			<xsl:choose>
 				<xsl:when test="@fieldType='FT_LOOK_UP'">
 				<xsl:variable name="look_up_model" select="@lookUpModel"/>
@@ -143,10 +159,7 @@ class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@par
 				</xsl:when>
 				<xsl:otherwise>$param = new FieldExt<xsl:value-of select="@dataType"/>('<xsl:value-of select="@id"/>'
 				</xsl:otherwise>
-			</xsl:choose>,array(
-			<xsl:if test="@alias">
-				'alias'=>'<xsl:value-of select="@alias"/>'
-			</xsl:if>));
+			</xsl:choose>,$f_params);
 			$pm->addParam($param);
 		</xsl:for-each>
 		<xsl:for-each select="/metadata/models/model[@id=$model_id]/field[@primaryKey='TRUE']">
@@ -262,7 +275,7 @@ class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@par
 		</xsl:choose>,$f_params);		
 		$pm->addParam($param);		
 		</xsl:for-each>
-		
+		$pm->addParam(new FieldExtString('lsn'));
 		$this->addPublicMethod($pm);
 		$this->setObjectModelId('<xsl:value-of select="concat($cur_model_id,'_Model')"/>');		
 </xsl:template>
@@ -393,6 +406,7 @@ class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@par
 		$pm->addParam(new FieldExtString('ord_fields'));
 		$pm->addParam(new FieldExtString('ord_directs'));
 		$pm->addParam(new FieldExtString('field_sep'));
+		$pm->addParam(new FieldExtString('lsn'));
 </xsl:template>
 
 <xsl:template name="add_pagination_fields">

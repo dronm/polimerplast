@@ -169,6 +169,14 @@ class DOCOrderDOCTFProduct_Model extends ModelSQL{
 		$this->addField($f_price_edit);
 		//********************
 		
+		//*** Field price_round ***
+		$f_opts = array();
+		$f_opts['id']="price_round";
+						
+		$f_price_round=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"price_round",$f_opts);
+		$this->addField($f_price_round);
+		//********************
+		
 		//*** Field total ***
 		$f_opts = array();
 		

@@ -338,6 +338,16 @@ $permissions = array();
 				
 					$permissions['DOCOrder_Controller_append']=TRUE;
 				
+					$permissions['DOCOrder_Controller_add_file']=TRUE;
+				
+					$permissions['DOCOrder_Controller_delete_file']=TRUE;
+				
+					$permissions['DOCOrder_Controller_get_file']=TRUE;
+				
+					$permissions['DOCOrder_Controller_get_files_list']=TRUE;
+				
+					$permissions['DOCOrder_Controller_get_nonegraphic_files_list']=TRUE;
+				
 					$permissions['DOCOrderDOCTProduct_Controller_insert']=TRUE;
 				
 					$permissions['DOCOrderDOCTProduct_Controller_update']=TRUE;
@@ -664,30 +674,6 @@ $permissions = array();
 				
 					$permissions['ProductGroup_Controller_get_object']=TRUE;
 				
-					$permissions['ProjectManager_Controller_open_version']=TRUE;
-				
-					$permissions['ProjectManager_Controller_close_version']=TRUE;
-				
-					$permissions['ProjectManager_Controller_minify_js']=TRUE;
-				
-					$permissions['ProjectManager_Controller_build_all']=TRUE;
-				
-					$permissions['ProjectManager_Controller_create_symlinks']=TRUE;
-				
-					$permissions['ProjectManager_Controller_pull']=TRUE;
-				
-					$permissions['ProjectManager_Controller_push']=TRUE;
-				
-					$permissions['ProjectManager_Controller_zip_project']=TRUE;
-				
-					$permissions['ProjectManager_Controller_zip_db']=TRUE;
-				
-					$permissions['ProjectManager_Controller_get_version']=TRUE;
-				
-					$permissions['ProjectManager_Controller_apply_patch']=TRUE;
-				
-					$permissions['ProjectManager_Controller_apply_sql']=TRUE;
-				
 					$permissions['Naspunkt_Controller_insert']=TRUE;
 				
 					$permissions['Naspunkt_Controller_update']=TRUE;
@@ -743,6 +729,40 @@ $permissions = array();
 					$permissions['ClientFirmBankAccount_Controller_get_list']=TRUE;
 				
 					$permissions['ClientFirmBankAccount_Controller_get_object']=TRUE;
+				
+					$permissions['Product1cName_Controller_insert']=TRUE;
+				
+					$permissions['Product1cName_Controller_update']=TRUE;
+				
+					$permissions['Product1cName_Controller_delete']=TRUE;
+				
+					$permissions['Product1cName_Controller_get_list']=TRUE;
+				
+					$permissions['Product1cName_Controller_get_object']=TRUE;
+				
+					$permissions['SaleStoreAddress_Controller_insert']=TRUE;
+				
+					$permissions['SaleStoreAddress_Controller_update']=TRUE;
+				
+					$permissions['SaleStoreAddress_Controller_delete']=TRUE;
+				
+					$permissions['SaleStoreAddress_Controller_get_list']=TRUE;
+				
+					$permissions['SaleStoreAddress_Controller_get_object']=TRUE;
+				
+					$permissions['ProdBatch_Controller_get_list']=TRUE;
+				
+					$permissions['ProdBatch_Controller_complete_from_1c']=TRUE;
+				
+					$permissions['DOCOrderDOCTProdBatch_Controller_insert']=TRUE;
+				
+					$permissions['DOCOrderDOCTProdBatch_Controller_update']=TRUE;
+				
+					$permissions['DOCOrderDOCTProdBatch_Controller_delete']=TRUE;
+				
+					$permissions['DOCOrderDOCTProdBatch_Controller_get_list']=TRUE;
+				
+					$permissions['DOCOrderDOCTProdBatch_Controller_get_object']=TRUE;
 				
 			$permissions['DOCOrder_Controller_set_not_paid']=FALSE;
 		

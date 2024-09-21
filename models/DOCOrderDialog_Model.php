@@ -10,6 +10,7 @@ require_once(FRAME_WORK_PATH.'basic_classes/ModelSQL.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLInt.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLString.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLFloat.php');
+require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLJSONB.php');
  
 class DOCOrderDialog_Model extends ModelSQL{
 	
@@ -62,6 +63,15 @@ class DOCOrderDialog_Model extends ModelSQL{
 						
 		$f_vehicle_descr=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"vehicle_descr",$f_opts);
 		$this->addField($f_vehicle_descr);
+		//********************
+		
+		//*** Field attachments ***
+		$f_opts = array();
+		$f_opts['id']="attachments";
+		$f_opts['noValueOnCopy'] = TRUE;
+						
+		$f_attachments=new FieldSQLJSONB($this->getDbLink(),$this->getDbName(),$this->getTableName(),"attachments",$f_opts);
+		$this->addField($f_attachments);
 		//********************
 	
 	}

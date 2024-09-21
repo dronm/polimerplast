@@ -1,6 +1,6 @@
 -- View: doc_orders_print_products
 
---DROP VIEW doc_orders_print_products;
+DROP VIEW doc_orders_print_products;
 
 CREATE OR REPLACE VIEW doc_orders_print_products AS 
 	SELECT

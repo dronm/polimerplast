@@ -357,7 +357,7 @@ DOCOrderDOCTProductDialog_View.prototype.onGetProductAttrs = function(model){
 	if (SERV_VARS.ROLE_ID!="client"){
 		def_money_en = true;
 		this.m_priceEditCtrl = new EditCheckBox(id+"_price_edit",{
-				"name":"pack_in_price",
+				"name":"price_edit",
 				"labelCaption":"Произвольная цена:",
 				"tableLayout":false,
 				"enabled":true,
@@ -381,6 +381,26 @@ DOCOrderDOCTProductDialog_View.prototype.onGetProductAttrs = function(model){
 			"keyFieldIds":null},{"valueFieldId":"price_edit","keyFieldIds":null}
 		);
 		sub_cont.addElement(this.m_priceEditCtrl);
+
+		//price_round added on 06/08/24
+		this.m_priceRoundCtrl = new EditCheckBox(id+"_price_round",{
+				"name":"price_round",
+				"labelCaption":"Округлять сумму",
+				"tableLayout":false,
+				"enabled":true,
+				"checked":def_money_en,
+				"labelAlign":"right",
+				"events":{
+					"change":function(){
+						self.calcTotals();
+					}
+				}
+			}
+		);
+		this.bindControl(this.m_priceRoundCtrl,{"modelId":model_id,"valueFieldId":"price_round",
+			"keyFieldIds":null},{"valueFieldId":"price_round","keyFieldIds":null}
+		);
+		sub_cont.addElement(this.m_priceRoundCtrl);
 	}
 		
 	//цена
@@ -393,6 +413,10 @@ DOCOrderDOCTProductDialog_View.prototype.onGetProductAttrs = function(model){
 				"input":function(){
 					//пересчет суммы
 					var tot = toFloat(self.m_totPriceCtrl.getValue())*toFloat(self.m_totQuantCtrl.getValue());
+					//can be round request
+					if(self.m_priceRoundCtrl.getValue()=="true"){
+						tot = Math.ceil(tot);
+					}
 					self.m_totSumCtrl.setValue(tot.toFixed(2));
 					self.m_priceEditted = true;
 				}
@@ -555,7 +579,7 @@ DOCOrderDOCTProductDialog_View.prototype.calcTotals = function(){
 	}
 	else{
 		var self = this;
-		var pr_ed = (SERV_VARS.ROLE_ID=="client"||(this.m_isNew &&!this.m_priceEditted))? false:this.getDataControlValue(id+"_price_edit");
+		// var pr_ed = (SERV_VARS.ROLE_ID=="client"||(this.m_isNew &&!this.m_priceEditted))? false:this.getDataControlValue(id+"_price_edit");
 		//console.log("calcTotals this.m_isNew="+this.m_isNew+" this.m_isCopy="+this.m_isCopy+" this.m_priceEditted="+this.m_priceEditted+" pr_ed="+pr_ed)
 		contr.run("calc_totals",{
 			"async":true,
@@ -573,6 +597,7 @@ DOCOrderDOCTProductDialog_View.prototype.calcTotals = function(){
 					"pack_in_price":(this.m_packNotFree)? this.getDataControlValue(id+"_pack_in_price"):"",
 					"deliv_to_third_party":this.m_params.toThirdParty,
 					"price_edit":(SERV_VARS.ROLE_ID=="client"||(this.m_isNew&&!this.m_isCopy&&!this.m_priceEditted))? false:this.getDataControlValue(id+"_price_edit"),
+					"price_round":this.getDataControlValue(id+"_price_round"),
 					"price":this.m_totPriceCtrl.getValue()
 			},
 			"func":function(resp){

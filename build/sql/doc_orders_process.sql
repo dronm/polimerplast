@@ -86,6 +86,7 @@ BEGIN
 		--detail tables		
 		DELETE FROM doc_orders_t_products WHERE doc_id=OLD.id;
 		DELETE FROM doc_orders_t_cust_surveys WHERE doc_id=OLD.id;
+		DELETE FROM doc_orders_t_prod_batches WHERE doc_id=OLD.id;
 		
 		--register actions					
 											

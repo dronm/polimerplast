@@ -18,24 +18,30 @@ function BtnPrintDoc(id,options){
 		if (keys){
 			self.setEnabled(false);
 			
-			var contr = new DOCOrder_Controller(new ServConnector(HOST_NAME));
+			let contr = new DOCOrder_Controller(new ServConnector(HOST_NAME));
+
+			// let pm = contr.getPublicMethodById(options.methodId);
+			// pm.getParamById("doc_id").setValue(keys["id"]);
+			// contr.download(options.methodId, "ViewXML", 0, function(errN, errT){
+			// 	self.setEnabled(true);
+			// 	if(errN != 0){
+			// 		throw new Error(errT);
+			// 	}
+			// });
+
 			contr.run(options.checkMethodId,{
 				"params":{"doc_id":keys["id"]},
 				"func":function(){
-					
-					var q_params = contr.getQueryString(contr.getPublicMethodById(options.methodId))+
-								"&doc_id="+keys["id"];
+					let q_params = contr.getQueryString(
+						contr.getPublicMethodById(options.methodId)
+					) + "&doc_id="+keys["id"];
 					window.open(HOST_NAME+"index.php?"+q_params,"_blank","location=0,menubar=0,status=0,titlebar=0"); 
 					self.setEnabled(true);
 				},
 				"err":function(resp,errCode,str){
-					WindowMessage.show({
-						"type":WindowMessage.TP_ER,
-						"text":str,
-						"callBack":function(){
+					window.showTempError(str, function(){
 							self.setEnabled(true);
-						}
-					})
+						}, ERR_MSG_WAIT_MS);						
 				}
 			});
 		}

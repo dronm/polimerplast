@@ -21,13 +21,9 @@ function BtnRefreshClientDebts(options){
 				"async":true,
 				"xml":true,
 				"func":function(resp){					
-					WindowMessage.show({
-						"text":"Данные по долгам обновлены.",
-						"type":WindowMessage.TP_NOTE,
-						"callBack":function(){
+					window.showTempNote("Данные по долгам обновлены.", function(){
 							options.grid.onRefresh();
-						}
-						});					
+						}, ERR_MSG_WAIT_MS);											
 				},
 				"cont":this,
 				"errControl":options.grid.getErrorControl()

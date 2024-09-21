@@ -26,7 +26,7 @@ class ViewBase extends ViewHTMLXSLT {
 		}
 		
 		if (!DEBUG){
-			$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'lib.js'));
+			$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'lib.js?'. date("Y-m-dTH:i:s", filemtime(USER_JS_PATH.'lib.js')) ));
 			$script_id = VERSION;
 		}
 		else{		
@@ -47,6 +47,7 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->getVarModel()->addField(new Field('client_payment_type',DT_STRING));
 		$this->getVarModel()->addField(new Field('client_ship_not_allowed',DT_BOOL));
 		$this->getVarModel()->addField(new Field('order_destination_to_ttn',DT_BOOL));
+		$this->getVarModel()->addField(new Field('debug',DT_INT));
 		
 		<!-- custom vars-->
 		$this->getVarModel()->insert();
@@ -60,6 +61,7 @@ class ViewBase extends ViewHTMLXSLT {
 			$this->setVarValue('warehouse_descr',$_SESSION['warehouse_descr']);
 			$this->setVarValue('tel_ext',$_SESSION['tel_ext']);
 			$this->setVarValue('order_destination_to_ttn',$_SESSION['order_destination_to_ttn']);
+			$this->setVarValue('debug', DEBUG? "1":"0");
 		}
 		if (isset($_SESSION['client_payment_type'])){
 			$this->setVarValue('client_payment_type',$_SESSION['client_payment_type']);
@@ -118,8 +120,8 @@ class ViewBase extends ViewHTMLXSLT {
 			
 <xsl:template match="enum/value">require_once('models/MainMenu_Model_<xsl:value-of select="@id"/>.php');</xsl:template>
 
-<xsl:template match="jsScripts/jsScript">$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'<xsl:value-of select="@file"/>'));</xsl:template>
+<xsl:template match="jsScripts/jsScript">$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'<xsl:value-of select="@file"/>?'.date("Y-m-dTH:i:s", filemtime(USER_JS_PATH.'<xsl:value-of select="@file"/>')) ));</xsl:template>
 
-<xsl:template match="cssScripts/cssScript">$this->addCssModel(new ModelStyleSheet(USER_CSS_PATH.'<xsl:value-of select="@file"/>'));</xsl:template>
+<xsl:template match="cssScripts/cssScript">$this->addCssModel(new ModelStyleSheet(USER_CSS_PATH.'<xsl:value-of select="@file"/>?'.date("Y-m-dTH:i:s", filemtime(USER_CSS_PATH.'<xsl:value-of select="@file"/>')) ));</xsl:template>
 
 </xsl:stylesheet>

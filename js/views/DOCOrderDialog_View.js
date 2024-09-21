@@ -20,6 +20,7 @@ function DOCOrderDialog_View(id,options){
 		var doc_id = 0;		
 		
 		self.m_productDetails.getGridControl().setViewId(self.m_viewId);
+		// self.m_batches.getGridControl().setViewId(self.m_viewId);
 		
 		//self.getDataControl(self.getId()+"_view_id").control.setValue(view_id);
 		//console.log("viewId="+self.m_viewId);
@@ -45,6 +46,7 @@ function DOCOrderDialog_View(id,options){
 				//"enabled":false,
 				"onClick":function(){
 					self.onDownloadOrder();
+					// throw new Error("test error");
 				},
 				"attrs":{
 					"title":"сохранить печатную форму счета в файл"}
@@ -314,14 +316,22 @@ function DOCOrderDialog_View(id,options){
 			self.m_doCalcVehCount = true;
 		},
 		"onDelete":function(){
-			//console.log("onDelete call recalcPricesRefreshTotals")
 			self.recalcPricesRefreshTotals();
 		}
 		
 		});
 	this.m_details.addElement(this.m_productDetails);	
-	this.addElement(this.m_details);
 	
+	//temp detail table: a test of a new detail table
+	// this.m_batches = new DOCOrderDOCTProdBatchList_View("DOCOrderDOCTProdBatchList_View",
+	// 	{"connect":new ServConnector(HOST_NAME),
+	// 	"errorControl":this.getErrorControl(),
+	// 	"winObj":options.winObj
+	// 	});	
+	// this.m_details.addElement(this.m_batches);	
+
+	this.addElement(this.m_details);
+
 	//Итоговая строка
 	var cont = new ControlContainer(uuid(),"div",{"className":"row DOCOrderTot"});
 	
@@ -401,8 +411,7 @@ function DOCOrderDialog_View(id,options){
 						},
 						"err":function(resp,errCode,errStr){
 							self.m_clientDestCtrl.setEnabled(true);
-
-							WindowMessage.show({"text":errStr});	
+							window.showTempError(errStr, null, ERR_MSG_WAIT_MS);
 						}
 					});				
 				}
@@ -422,7 +431,30 @@ function DOCOrderDialog_View(id,options){
 		{"modelId":model_id,"valueFieldId":"deliv_destination_descr","keyFieldIds":["deliv_destination_id"]},
 		{"valueFieldId":null,"keyFieldIds":["deliv_destination_id"]});	
 	cont.addElement(this.m_clientDestCtrl);		
-	
+
+  //Added 07/03/24
+	this.m_saleStoreAddressCtrl = new SaleStoreAddressEditObject("sale_store_address_id",id+"_sale_store_address",false,
+		null,{visible:true,required:false
+		});
+	this.bindControl(this.m_saleStoreAddressCtrl,
+		{"modelId":model_id,"valueFieldId":"sale_store_address_descr","keyFieldIds":["sale_store_address_id"]},
+		{"valueFieldId":null,"keyFieldIds":["sale_store_address_id"]});	
+	cont.addElement(this.m_saleStoreAddressCtrl);
+  //Номер заказа
+	this.m_orderNum = new EditString(id+"_order_num",
+			{"labelCaption":"№ заказа:",
+			"name":"order_num",
+			"tableLayout":false,
+			"buttonClear":false,
+			"attrs":{"maxlength":100,"size":20},
+      "contClassName":"aaa"
+      }
+		);
+		this.bindControl(this.m_orderNum,
+			{"modelId":model_id,"valueFieldId":"order_num","keyFieldIds":null},
+			{"valueFieldId":"order_num","keyFieldIds":null});	
+	cont.addElement(this.m_orderNum);
+
 	//Адрес в ТТН
 	const_v = (SERV_VARS.ORDER_DESTINATION_TO_TTN=="t"? "true":"false");
 	//alert("const_v="+const_v)
@@ -752,6 +784,45 @@ function DOCOrderDialog_View(id,options){
 	
 	this.addControl(cont);
 	
+	//Attachments
+	var const_man = new ConstantManager();
+	var constants = {"allowed_extesions":null};
+	const_man.get(constants);
+	
+	var com_p_id = uuid();
+	this.m_fileListCont = new ControlContainer(com_p_id,"div",{"className":"collapse in"});
+	
+	this.addElement(new ButtonToggle(uuid(),{
+		"caption":"вложенные файлы",
+		"dataTarget":com_p_id,
+		"expanded":true,
+		"attrs":{								
+			"title":"показать/скрыть файлы"				
+			}
+		}));
+
+	this.m_fileList = new EditFile(id+"_file_list",{
+			"multipleFiles":true
+			,"showHref":false
+			,"showPic":true
+			,"onDeleteFile":function(fileId,callBack){
+				self.deleteAttachment(fileId,callBack);
+			}
+			,"onFileAdded":function(fileId){
+				self.addAttachment(fileId);
+			}
+			,"onDownload":function(fileId){
+				self.downloadAttachment(fileId);
+			}
+			,"allowedFileExtList":constants.allowed_extesions.getValue().split(",")
+	});
+	this.bindControl(this.m_fileList,
+		{"modelId":model_id,"valueFieldId":"attachments","keyFieldIds":null},
+		{"valueFieldId":null,"keyFieldIds":null});	
+			
+	this.m_fileListCont.addElement(this.m_fileList);
+	this.addControl(this.m_fileListCont);		
+	
 	this.m_readOnly = false;
 }
 extend(DOCOrderDialog_View,ViewDialog);
@@ -1063,6 +1134,8 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 				}
 				*/
 				this.m_clientDestCtrl.setEnabled(false);
+				this.m_saleStoreAddressCtrl.setEnabled(false);
+				this.m_orderNum.setEnabled(false);
 				this.m_delivAddToCostCtrl.setEnabled(false);
 				if (this.m_delivCost.setEditEnabled){
 					this.m_delivCost.setEditEnabled(false);
@@ -1119,6 +1192,12 @@ DOCOrderDialog_View.prototype.onGetData = function(resp){
 			
 			if (this.m_clientCtrl){
 				this.setDebts(parseFloat(m.getFieldValue("debt_total")), parseFloat(m.getFieldValue("def_debt")));
+			}
+			
+			var attachments = m.getFieldValue("attachments");
+			if(attachments&&attachments.length){
+				this.m_fileList.setInitValue(CommonHelper.unserialize(attachments));
+				this.m_fileList.toDOM(this.m_fileListCont.getNode());
 			}
 		}
 		
@@ -1221,6 +1300,8 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 		}
 		
 		this.m_clientDestCtrl.setEnabled(false);
+		this.m_saleStoreAddressCtrl.setEnabled(false);
+		this.m_orderNum.setEnabled(false);
 		
 		this.getErrorControl().setValue("");
 		
@@ -1242,6 +1323,8 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 					self.m_delivCostOptCtrl.setEnabled(true);				
 				}
 				self.m_clientDestCtrl.setEnabled(true);				
+				self.m_saleStoreAddressCtrl.setEnabled(true);				
+				self.m_orderNum.setEnabled(true);				
 			},
 			"func":function(resp){
 				//old values
@@ -1331,6 +1414,8 @@ DOCOrderDialog_View.prototype.calcDelivCost = function(){
 					}
 					
 					self.m_clientDestCtrl.setEnabled(true);
+					self.m_saleStoreAddressCtrl.setEnabled(true);
+					self.m_orderNum.setEnabled(true);
 				}
 			}
 		});
@@ -1552,6 +1637,8 @@ DOCOrderDialog_View.prototype.changeDelivType = function(){
 	this.m_delivAddToCostCtrl.setEnabled(vis);
 	this.m_DelivPeriodCtrl.setEnabled(vis);
 	this.m_clientDestCtrl.setEnabled(vis);
+	this.m_saleStoreAddressCtrl.setEnabled(vis);
+	this.m_orderNum.setEnabled(vis);
 	this.m_vehicleCtrl.setEnabled(vis);
 	if (vis){
 		DOMHandler.addAttr(this.m_delivCostOptCtrl.getNode(),"required","required");
@@ -1561,6 +1648,8 @@ DOCOrderDialog_View.prototype.changeDelivType = function(){
 		DOMHandler.removeAttr(this.m_delivCostOptCtrl.getNode(),"required");
 		DOMHandler.removeAttr(this.m_clientDestCtrl.getNode(),"required");				
 		this.m_clientDestCtrl.resetValue();
+		this.m_saleStoreAddressCtrl.resetValue();
+		this.m_orderNum.resetValue();
 		this.m_delivCostOptCtrl.resetValue();
 		this.m_delivExpCtrl.resetValue();
 		this.m_delivCost.resetValue();
@@ -1704,5 +1793,153 @@ DOCOrderDialog_View.prototype.onCancel = function(){
 	if(!nd("undefined_ClientDestinationDialog") ){
 		DOCOrderDialog_View.superclass.onCancel.call(this);
 	}
+}
+
+//*************
+DOCOrderDialog_View.prototype.deleteAttachmentCont = function(fileId,callBack){
+	var id = this.getDataControl(this.getId()+"_id").control.getValue();
+	if(!id)return;
+
+
+	(new DOCOrder_Controller(new ServConnector(HOST_NAME))).run("delete_file",{
+		"params":{
+			"doc_order_id": id,
+			"file_id": fileId
+		},
+		"func":function(resp){
+			if(callBack){
+				callBack();
+			}
+		}
+	});					
+}
+
+DOCOrderDialog_View.prototype.deleteAttachment = function(fileId,callBack){
+	var self = this;
+	WindowQuestion.show({
+		"text":"Удалить файл?",
+		"cancel":false,
+		"callBack":function(res){			
+			if (res==WindowQuestion.RES_YES){
+				self.deleteAttachmentCont(fileId,callBack);
+			}
+		}
+	});
+}
+
+DOCOrderDialog_View.prototype.setAttachmentUploaded = function(fl,previewData){
+	var n = document.getElementById(fl.file_id+"-pic");
+	if(n){
+		n.className = "glyphicon glyphicon-ok";
+		n.title = "Файл прикреплен к заказу";
+	}
+	var n = document.getElementById(fl.file_id+"-href");
+	if(n){
+		n.setAttribute("file_uploaded","true");
+	}	
+	var n = document.getElementById(fl.file_id+"-del");
+	if(n){
+		n.setAttribute("file_uploaded","true");
+	}	
+	
+	fl.uploaded = true;
+	
+	var n = document.getElementById(fl.file_id+"-preview");
+	if(n&&previewData){
+		n.setAttribute("src","data:image/png;base64, "+previewData);
+		var self = this;
+		EventHandler.addEvent(n, "click", function(){
+			self.downloadAttachment(fl.file_id);
+		},false);
+	}
+}
+
+DOCOrderDialog_View.prototype.setAttachmentUploadError = function(fl){
+	var n = document.getElementById(fl.file_id+"-pic");
+	if(n){
+		n.className = "glyphicon glyphicon-remove";
+		n.title = "Ошибка загрузки файла";
+	}
+}
+
+DOCOrderDialog_View.prototype.addAttachmentCont = function(fl){
+	//console.log("DOCOrderDialog_View.prototype.addAttachmentCont")
+	//console.log(fl)
+	var id = this.getDataControl(this.getId()+"_id").control.getValue();
+	if(!id)return;
+	
+	var self = this;
+	
+	(new DOCOrder_Controller(new ServConnector(HOST_NAME))).run("add_file",{
+		"get": false,
+		"enctype": ServConnector.prototype.ENCTYPES.MULTIPART,
+		"params":{
+			"doc_order_id": id,
+			"file_id": fl.file_id,
+			"file_data": [fl]
+		},
+		"func":function(resp){
+			if (resp.modelExists("Preview_Model")){
+				var preview_data;
+				var m = resp.getModelById("Preview_Model",true);
+				if (m.getNextRow()){
+					preview_data = m.getFieldValue("value");
+				}
+				self.setAttachmentUploaded(fl,preview_data);
+			}
+			self.m_clientDestCtrl.setEnabled(true);
+			self.m_saleStoreAddressCtrl.setEnabled(true);
+			self.m_orderNum.setEnabled(true);
+		},
+		"err":function(resp,errCode,errStr){
+			self.setAttachmentUploadError(fl);
+			throw new Error("Ошибка загрузки файла: "+errStr);
+		}
+	});					
+}
+
+DOCOrderDialog_View.prototype.addAttachment = function(fileId){
+	var list = this.m_fileList.getFiles();
+	if(!list || !list.length)return;
+	var fl = list[list.length-1];
+
+	var self = this;		
+	var is_new = this.getIsNew();
+	if (!is_new){
+		self.addAttachmentCont(fl);
+	}
+	else{
+		this.m_saved = true;					
+		this.onClickSave();
+		if (!this.getIsNew()){				
+			setTimeout(function(){
+				self.addAttachmentCont(fl);
+
+			}, 3000);
+			
+		}			
+	}			
+}	
+
+DOCOrderDialog_View.prototype.downloadAttachment = function(fileId){
+	var id = this.getDataControl(this.getId()+"_id").control.getValue();
+	if(!id)return;
+	var contr = new DOCOrder_Controller(new ServConnector(HOST_NAME));	
+	/*	
+	var pm = contr.getPublicMethodById("get_file");
+	pm.setParamValue("doc_order_id", id);
+	pm.setParamValue("file_id", fileId);
+	pm.setParamValue("inline",0);
+	contr.download("get_file","ViewXML");	
+	*/
+	contr.getServConnector().openHref({
+			"c":"DOCOrder_Controller",
+			"f": "get_file",
+			"inline":"1",
+			"doc_order_id": id,
+			"file_id": fileId
+		}
+	);
+	
 }
 

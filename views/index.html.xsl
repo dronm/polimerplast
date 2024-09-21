@@ -37,11 +37,13 @@
 </xsl:template>
 
 <xsl:template match="model[@id='ModelStyleSheet']/row">
-	<link rel="stylesheet" href="{concat($BASE_PATH,href,'?',$VERSION)}" type="text/css"/>
+	<!-- concat($BASE_PATH,href,'?',$VERSION) -->
+	<link rel="stylesheet" href="{href}" type="text/css"/>
 </xsl:template>
 
 <xsl:template match="model[@id='ModelJavaScript']/row">
-	<script src="{concat($BASE_PATH,href,'?',$VERSION)}"></script>
+	<!-- concat($BASE_PATH,href,'?',$VERSION) -->
+	<script src="{href}"></script>
 </xsl:template>
 
 <xsl:template match="model[@id='ModelServResponse']/row">

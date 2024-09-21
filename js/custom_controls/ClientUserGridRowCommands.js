@@ -27,10 +27,7 @@ function ClientUserGridRowCommands(id,options){
 					contr.run("reset_pwd",{
 						"params":{"user_id":options.keys["id"]},
 						"func":function(){
-							WindowMessage.show({
-								"text":"Пользователю отправлен новый пароль.",
-								"type":WindowMessage.TP_NOTE
-								});
+							window.showTempNote("Пользователю отправлен новый пароль.", null, ERR_MSG_WAIT_MS);
 						}
 					});
 				}

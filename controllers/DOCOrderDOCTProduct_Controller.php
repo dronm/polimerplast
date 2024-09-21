@@ -12,6 +12,8 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldExtPassword.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtBool.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPoint.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPolygon.php');
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtDateTimeTZ.php');
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtJSONB.php');
 
 /**
  * THIS FILE IS GENERATED FROM TEMPLATE build/templates/controllers/Controller_php.xsl
@@ -83,6 +85,9 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 			));
 		$pm->addParam($param);
 		$param = new FieldExtBool('price_edit'
+				,array());
+		$pm->addParam($param);
+		$param = new FieldExtBool('price_round'
 				,array());
 		$pm->addParam($param);
 		$param = new FieldExtFloat('total'
@@ -208,6 +213,10 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 			));
 			$pm->addParam($param);
 		$param = new FieldExtBool('price_edit'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtBool('price_round'
 				,array(
 			));
 			$pm->addParam($param);
@@ -422,6 +431,8 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 				$params->getDbVal('pack_in_price'):'NULL';
 			$price_edit = (!is_null($pm->getParamValue('price_edit')))?
 				$params->getDbVal('price_edit'):'NULL';
+			$price_round = (!is_null($pm->getParamValue('price_round')))?
+				$params->getDbVal('price_round'):'NULL';
 			$price = (!is_null($pm->getParamValue('price')))?
 				$params->getDbVal('price'):'NULL';
 		
@@ -438,6 +449,7 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 					coalesce(%s,p.pack_exists) AS pack_exists,
 					coalesce(%s,p.pack_in_price) AS pack_in_price,
 					coalesce(%s,p.price_edit) AS price_edit,
+					coalesce(%s,p.price_round) AS price_round,
 					coalesce(%s,p.price) AS price,
 					coalesce(%s,p.total) AS total
 				FROM doc_orders_t_tmp_products p
@@ -455,6 +467,7 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 				(SELECT t.pack_in_price FROM prod t),
 				%s,
 				(SELECT t.price_edit FROM prod t),
+				(SELECT t.price_round FROM prod t),
 				(SELECT t.price FROM prod t),
 				(SELECT t.total FROM prod t)
 				)
@@ -474,6 +487,7 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 			$pack_exists,
 			$pack_in_price,
 			$price_edit,
+			$price_round,
 			$price,
 			(!is_null($pm->getParamValue('total')))? floatval($pm->getParamValue('total')):'NULL',
 			$params->getDbVal('old_view_id'),
@@ -632,6 +646,7 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 		$params->getParamById('pack_in_price'),
 		$params->getParamById('deliv_to_third_party'),
 		$params->getParamById('price_edit'),
+		$params->getParamById('price_round'),
 		$params->getParamById('price'),
 		$total_param
 		));
@@ -647,6 +662,7 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 		//**************
 		parent::insert($pm);
 	}
+
 	public function get_list($pm){
 		$params = new ParamsSQL($pm,$this->getDbLink());
 		$params->addAll();
@@ -675,6 +691,7 @@ class DOCOrderDOCTProduct_Controller extends ControllerSQL{
 		),
 		'DOCOrderDOCTProductList_Model');
 	}	
+
 	public function get_object_for_divis($pm){
 		$params = new ParamsSQL($pm,$this->getDbLink());
 		$params->addAll();

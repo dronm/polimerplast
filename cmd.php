@@ -17,9 +17,11 @@ try{
 	$dbLinkMaster->technicalemail = TECH_EMAIL;
 	$dbLinkMaster->reportError = DEBUG;
 	$dbLinkMaster->database	= DB_NAME;			
+	$dbLinkMaster->detailedError = DEBUG;
 	$port = (defined('DB_PORT_MASTER'))? DB_PORT:NULL;
 	$dbLinkMaster->connect(DB_SERVER_MASTER,DB_USER,DB_PASSWORD,$port);
 	//$dbLinkMaster->set_error_verbosity((DEBUG)? PGSQL_ERRORS_VERBOSE:PGSQL_ERRORS_TERSE);
+	
 	if (DB_SERVER_MASTER==DB_SERVER){
 		$dbLink = $dbLinkMaster;
 	}
@@ -197,7 +199,9 @@ try{
 	$contrObj->write($view_class,$view);
 }
 catch (Exception $e){
-	if (defined('PARAM_TEMPLATE'))unset($_REQUEST[PARAM_TEMPLATE]);
+	if (defined('PARAM_TEMPLATE')){
+		unset($_REQUEST[PARAM_TEMPLATE]);
+	}
 	$contrObj = new Controller();	
 	$resp = new ModelServResponse();				
 	$contrObj->addModel($resp);	

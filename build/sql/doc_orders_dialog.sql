@@ -92,8 +92,19 @@ CREATE OR REPLACE VIEW doc_orders_dialog AS
 		o_v.plate||coalesce(' '||o_dr.name,'') AS vehicle_descr,
 		
 		d.client_contract_name,
-		d.client_contract_ext_id
+		d.client_contract_ext_id,
 		
+		(SELECT
+			jsonb_agg(
+				att.file_inf || jsonb_build_object('dataBase64',encode(att.preview_data, 'base64'))
+			)
+		FROM doc_order_attachments att
+		WHERE att.doc_order_id = d.id
+		) AS attachments,
+		
+		d.sale_store_address_id,
+		ss.name AS sale_store_address_descr,
+		d.order_num
 		
 	FROM doc_orders AS d
 	LEFT JOIN clients AS cl ON cl.id=d.client_id
@@ -120,6 +131,7 @@ CREATE OR REPLACE VIEW doc_orders_dialog AS
 	LEFT JOIN deliv_cost_opts_list AS cost_opts ON cost_opts.id=d.deliv_cost_opt_id
 	LEFT JOIN vehicles AS o_v ON o_v.id=d.vehicle_id
 	LEFT JOIN drivers AS o_dr ON o_dr.id=o_v.driver_id
+	LEFT JOIN sale_store_addresses AS ss ON ss.id = d.sale_store_address_id
 	;
 
 ALTER TABLE doc_orders_dialog OWNER TO polimerplast;

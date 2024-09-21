@@ -36,7 +36,7 @@ function Report_View(id,options){
 		"readBind":{"valueFieldId":"name"},"descrCol":true
 		}));
 	row.addElement(new GridDbHeadCell("UserList_col_role_descr",{"value":"Роль",
-	"readBind":{"valueFieldId":"role_descr"}}));
+		"readBind":{"valueFieldId":"role_descr"}}));
 	row.addElement(new GridDbHeadSysCell("UserList_col_sys",{"value":"..."}));
 	head.addElement(row);
 	

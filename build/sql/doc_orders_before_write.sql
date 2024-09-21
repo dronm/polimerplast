@@ -13,11 +13,11 @@ BEGIN
 	
 	--copy data from temp to fact table
 	INSERT INTO doc_orders_t_products
-	(doc_id,line_number,product_id,quant,quant_confirmed,quant_base_measure_unit,quant_confirmed_base_measure_unit,volume,weight,price,price_edit,total,total_pack,
+	(doc_id,line_number,product_id,quant,quant_confirmed,quant_base_measure_unit,quant_confirmed_base_measure_unit,volume,weight,price,price_edit,price_round,total,total_pack,
 	mes_length,mes_width,mes_height,measure_unit_id,pack_exists,pack_in_price,total_deliv,
 	price_no_deliv,total_no_deliv)
 	(SELECT in_doc_id
-	,line_number,product_id,quant,quant_confirmed,quant_base_measure_unit,quant_confirmed_base_measure_unit,volume,weight,price,price_edit,total,total_pack,
+	,line_number,product_id,quant,quant_confirmed,quant_base_measure_unit,quant_confirmed_base_measure_unit,volume,weight,price,price_edit,price_round,total,total_pack,
 	mes_length,mes_width,mes_height,measure_unit_id,pack_exists,pack_in_price,total_deliv,
 	price_no_deliv,total_no_deliv
 	FROM doc_orders_t_tmp_products
@@ -41,6 +41,26 @@ BEGIN
 	
 	--clear temp table
 	DELETE FROM doc_orders_t_tmp_cust_surveys WHERE view_id=in_view_id;
+	
+	--*******************
+
+	--clear fact table
+	/*
+	** DOCOrder_Controller->set_shipped() **
+	
+	DELETE FROM doc_orders_t_prod_batches WHERE doc_id=in_doc_id;
+	--copy data from temp to fact table
+	INSERT INTO doc_orders_t_prod_batches
+	(doc_id,line_number,
+		ext_id, batch_descr)
+	(SELECT in_doc_id,line_number,
+		ext_id, batch_descr
+	FROM doc_orders_t_tmp_prod_batches
+	WHERE view_id=in_view_id);				
+	*/
+	
+	--clear temp table
+	DELETE FROM doc_orders_t_tmp_prod_batches WHERE view_id=in_view_id;
 	
 	--*******************
 	

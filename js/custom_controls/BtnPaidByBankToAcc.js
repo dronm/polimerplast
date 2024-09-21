@@ -28,19 +28,15 @@ function BtnPaidByBankToAcc(options){
 			"func":function(resp){					
 				var m = resp.getModelById("paid_to_acc",true);
 				if (m.getNextRow()){
-					WindowMessage.show({
-						"text":m.getFieldValue("mes"),
-						"type":WindowMessage.TP_NOTE,
-						"callBack":function(){
+					window.showTempNote(m.getFieldValue("mes"), function(){
 							self.setEnabled(true);
-						}
-					});					
+						}, ERR_MSG_WAIT_MS);
 				}
 			},
 			"cont":this,
 			"err":function(resp,errCode,errStr){				
 				self.setEnabled(true);	
-				WindowMessage.show({"text":errStr});
+				window.showTempError(errStr, null, ERR_MSG_WAIT_MS);
 			}
 		});
 	};		

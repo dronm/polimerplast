@@ -66,7 +66,7 @@ function UserWarehouseList_View(id,options){
 extend(UserWarehouseList_View,ViewList);
 
 UserWarehouseList_View.prototype.setUserId = function(id){
-	console.log("setting user id="+id);
+	//console.log("setting user id="+id);
 	this.m_grid.m_filter.m_params["user_id"].key=id;
 	this.m_grid.m_methParams["user_id"] = id;
 	this.m_grid.m_autoRefresh = true;	

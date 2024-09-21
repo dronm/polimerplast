@@ -87,7 +87,7 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 		}	
 	}
 	
-	public function insert($needId,$row=NULL){
+	public function insert($needId = FALSE, $row = NULL){
 		$view_id_for_db = "'".$_REQUEST['view_id']."'";
 	
 		$link = $this->getDbLink();
@@ -496,6 +496,9 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 						);
 				}				
 				
+				//Added 27/02/24: if order is derived from a split order - do not create 1c Order!
+				$derived_from_split_order = ($ar['state'] == 'waiting_for_us');				
+				
 				if (
 				!$create_alter_order
 				&amp;&amp; !is_null($deliv_expenses)
@@ -503,9 +506,8 @@ class <xsl:value-of select="@id"/>_Model extends <xsl:value-of select="@parent"/
 				&amp;&amp; $ar['ext_ship_id']
 				){
 					$this->set_ship_deliv_expenses($ar['ext_ship_id'],$deliv_expenses);
-				}				
-				//Выписка - изменение счета
-				else if ($create_alter_order){
+
+				}else if ($create_alter_order &amp;&amp; !$derived_from_split_order){
 					$this->create_alter_order($doc_id);
 				}
 				

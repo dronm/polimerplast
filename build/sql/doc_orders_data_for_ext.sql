@@ -85,6 +85,7 @@ CREATE OR REPLACE VIEW doc_orders_data_for_ext AS
 		products_descr(p,
 			t.mes_length,t.mes_width,t.mes_height,
 			TRUE
+			,h.firm_id
 			) AS product_name,
 		
 		t.mes_length AS mes_length,
@@ -141,12 +142,22 @@ CREATE OR REPLACE VIEW doc_orders_data_for_ext AS
 			AND coalesce(h.deliv_add_cost_to_product,FALSE)=TRUE THEN
 				h.deliv_total
 		ELSE 0
-		END AS deliv_add_cost_to_product_total
+		END AS deliv_add_cost_to_product_total,
 		
+		h.order_num,
+		ss.code AS sale_store_address_code,
+		
+		h.batch_num,
+		
+		(SELECT
+			string_agg(b.ext_id,',')
+		FROM doc_orders_t_prod_batches AS b
+		WHERE b.doc_id = h.id
+		) as prod_batches
 		
 	--FROM doc_orders_t_products t
 	--LEFT JOIN doc_orders h ON h.id=t.doc_id
-	FROM doc_orders h
+	FROM doc_orders AS h
 	LEFT JOIN doc_orders_t_products t ON t.doc_id=h.id
 	
 	LEFT JOIN products p ON p.id=t.product_id
@@ -175,6 +186,8 @@ CREATE OR REPLACE VIEW doc_orders_data_for_ext AS
 		)
 		OR (order_carr.client_ids_on_firm IS NULL AND order_carr_cl.id=order_carr.client_id)
 		OR (order_carr.client_ids_on_firm IS NOT NULL AND order_carr_cl.id=carrier_client_on_firm(order_carr.client_ids_on_firm,h.firm_id))
+		
+	LEFT JOIN sale_store_addresses AS ss ON ss.id = h.sale_store_address_id
 	;
 ALTER TABLE doc_orders_data_for_ext OWNER TO polimerplast;
 

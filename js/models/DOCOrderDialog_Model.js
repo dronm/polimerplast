@@ -67,6 +67,15 @@ function DOCOrderDialog_Model(options){
 	
 	options.fields.vehicle_descr = new FieldString("vehicle_descr",filed_options);
 	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	
+	filed_options.autoInc = false;	
+	
+	options.fields.attachments = new FieldJSONB("attachments",filed_options);
+	
 		DOCOrderDialog_Model.superclass.constructor.call(this,id,options);
 }
 extend(DOCOrderDialog_Model,Model);

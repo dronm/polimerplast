@@ -74,6 +74,9 @@ class <xsl:value-of select="@id"/>_Controller extends <xsl:value-of select="@par
 		}
 		else{
 			$resp = ClientSearch::search($params->getVal("query"));
+			if($resp==''){
+				throw new Exception('Клиент не найден!');
+			}
 			//
 			$this->getDbLinkMaster()->query(sprintf(
 			"INSERT INTO client_search_data (inn,user_id,data) VALUES (%s,%d,'%s')",

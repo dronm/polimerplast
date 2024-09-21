@@ -188,6 +188,16 @@ class RepSale_Model extends ModelReportSQL{
 		$this->addField($f_firm_descr);
 		//********************
 		
+		//*** Field doc_last_state ***
+		$f_opts = array();
+		
+		$f_opts['alias']='Последний статус';
+		$f_opts['id']="doc_last_state";
+						
+		$f_doc_last_state=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"doc_last_state",$f_opts);
+		$this->addField($f_doc_last_state);
+		//********************
+		
 		//*** Field production_city_descr ***
 		$f_opts = array();
 		

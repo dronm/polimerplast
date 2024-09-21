@@ -144,6 +144,15 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 			$base_where_q.=($base_where_q=='')? 'WHERE ':' '.$field['cond'].' ';
 			
 			$f_id = $field['field']->getId();
+			
+			//correct state field!
+			if($f_id == "doc_state"){
+				$f_id = "doc_state_id";			
+			}
+			if($f_id == "doc_last_state"){
+				$f_id = "doc_last_state_id";			
+			}
+			
 			if (!array_key_exists($f_id,$field_resolver)){
 				throw new Exception('Field '.$f_id.' is not resolved!');
 			}
@@ -185,7 +194,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 		}
 		
 		// !!!*******  УСЛОВИЕ ТОЛЬКО ОТГРУЖЕННЫЕ ЗАЯВКИ *************!!!
-		$base_where_q.=' AND doc_orders.delivery_fact_date IS NOT NULL';
+		//$base_where_q.=' AND doc_orders.delivery_fact_date IS NOT NULL';
 		
 		//******** Сборка полей ************
 		

@@ -12,6 +12,8 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldExtPassword.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtBool.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPoint.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPolygon.php');
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtDateTimeTZ.php');
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtJSONB.php');
 
 /**
  * THIS FILE IS GENERATED FROM TEMPLATE build/templates/controllers/Controller_php.xsl
@@ -95,6 +97,9 @@ class ClientSearch_Controller extends ControllerSQL{
 		}
 		else{
 			$resp = ClientSearch::search($params->getVal("query"));
+			if($resp==''){
+				throw new Exception('Клиент не найден!');
+			}
 			//
 			$this->getDbLinkMaster()->query(sprintf(
 			"INSERT INTO client_search_data (inn,user_id,data) VALUES (%s,%d,'%s')",

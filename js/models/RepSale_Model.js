@@ -197,6 +197,15 @@ function RepSale_Model(options){
 	
 	var filed_options = {};
 	filed_options.primaryKey = false;	
+	filed_options.alias = 'Последний статус';
+	filed_options.autoInc = false;	
+	
+	options.fields.doc_last_state = new FieldString("doc_last_state",filed_options);
+				
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
 	filed_options.alias = 'Город отгрузки';
 	filed_options.autoInc = false;	
 	
@@ -651,7 +660,7 @@ function RepSale_Model(options){
 	filed_options.autoInc = false;	
 	
 	options.fields.sys_level_col_count = new FieldString("sys_level_col_count",filed_options);
-	
+				
 		RepSale_Model.superclass.constructor.call(this,id,options);
 }
 extend(RepSale_Model,Model);

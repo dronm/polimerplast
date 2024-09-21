@@ -75,6 +75,11 @@ function DOCOrder_Controller(servConnector){
 	this.add_get_cancel_cause();
 	this.add_get_append_list();
 	this.add_append();
+	this.add_add_file();
+	this.add_delete_file();
+	this.add_get_file();
+	this.add_get_files_list();
+	this.add_get_nonegraphic_files_list();
 	
 }
 extend(DOCOrder_Controller,ControllerDb);
@@ -448,6 +453,24 @@ extend(DOCOrder_Controller,ControllerDb);
 	options = {};
 	
 	var param = new FieldString("client_contract_name",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	options["alias"]="Адрес магазина";
+	var param = new FieldInt("sale_store_address_id",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	options["alias"]="Номер заказа";
+	var param = new FieldText("order_num",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	options["alias"]="Номер партии";
+	var param = new FieldText("batch_num",options);
 	
 	pm.addParam(param);
 	
@@ -840,6 +863,24 @@ extend(DOCOrder_Controller,ControllerDb);
 	options = {};
 	
 	var param = new FieldString("client_contract_name",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	options["alias"]="Адрес магазина";
+	var param = new FieldInt("sale_store_address_id",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	options["alias"]="Номер заказа";
+	var param = new FieldText("order_num",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	options["alias"]="Номер партии";
+	var param = new FieldText("batch_num",options);
 	
 	pm.addParam(param);
 	
@@ -1284,6 +1325,9 @@ extend(DOCOrder_Controller,ControllerDb);
 				
 		pm.addParam(new FieldBool("destination_to_ttn"));
 	
+				
+		pm.addParam(new FieldText("batch_num"));
+	
 			
 }
 
@@ -1526,6 +1570,9 @@ extend(DOCOrder_Controller,ControllerDb);
 		pm.addParam(new FieldBool("price_edit"));
 	
 				
+		pm.addParam(new FieldBool("price_round"));
+	
+				
 		pm.addParam(new FieldFloat("price"));
 	
 			
@@ -1644,6 +1691,66 @@ extend(DOCOrder_Controller,ControllerDb);
 	
 				
 		pm.addParam(new FieldString("source_doc_id_list"));
+	
+			
+}
+
+			DOCOrder_Controller.prototype.add_add_file = function(){
+	var pm = this.addMethodById('add_file');
+	
+				
+		pm.addParam(new FieldInt("doc_order_id"));
+	
+				
+		pm.addParam(new FieldText("file_data"));
+	
+				
+		pm.addParam(new FieldString("file_id"));
+	
+			
+}
+
+			DOCOrder_Controller.prototype.add_delete_file = function(){
+	var pm = this.addMethodById('delete_file');
+	
+				
+		pm.addParam(new FieldInt("doc_order_id"));
+	
+				
+		pm.addParam(new FieldString("file_id"));
+	
+			
+}
+
+			DOCOrder_Controller.prototype.add_get_file = function(){
+	var pm = this.addMethodById('get_file');
+	
+				
+		pm.addParam(new FieldInt("doc_order_id"));
+	
+				
+		pm.addParam(new FieldString("file_id"));
+	
+				
+		pm.addParam(new FieldInt("inline"));
+	
+			
+}
+
+			DOCOrder_Controller.prototype.add_get_files_list = function(){
+	var pm = this.addMethodById('get_files_list');
+	
+				
+		pm.addParam(new FieldInt("doc_order_id"));
+	
+			
+}
+
+			DOCOrder_Controller.prototype.add_get_nonegraphic_files_list = function(){
+	var pm = this.addMethodById('get_nonegraphic_files_list');
+	
+				
+		pm.addParam(new FieldInt("doc_order_id"));
 	
 			
 }

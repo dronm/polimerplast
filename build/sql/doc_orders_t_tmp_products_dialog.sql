@@ -27,6 +27,7 @@ CREATE OR REPLACE VIEW public.doc_orders_t_tmp_products_dialog AS
     t.pack_exists,
     t.pack_in_price,
     t.price_edit,
+    t.price_round,
     p.base_measure_unit_id,
     base_mu.name AS base_measure_unit_descr,
     base_mu.is_int AS base_measure_unit_is_int,

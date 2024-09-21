@@ -27,7 +27,7 @@ CREATE OR REPLACE VIEW doc_orders_print_h AS
 		
 		f.nds AS firm_nds
 		
-	FROM doc_orders_dialog AS d
+	FROM doc_orders_dialog_no_att AS d
 	LEFT JOIN clients AS cl ON cl.id=d.client_id
 	LEFT JOIN doc_orders AS h ON h.id=d.id
 	LEFT JOIN firms AS f ON f.id=d.firm_id

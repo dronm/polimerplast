@@ -47,6 +47,7 @@ function ProductDialog_View(id,options){
 	this.addControl(ctrl);
 
 	//наименование для 1с
+	//Теперь с 20/06/22 - СПРАВОЧНИК!!!
 	ctrl = new EditString(id+"_name_for_1c",
 		{"labelCaption":"Наименование для 1с:",
 		"name":"name_for_1c",
@@ -64,6 +65,7 @@ function ProductDialog_View(id,options){
 		"keyFieldIds":null},
 	{"valueFieldId":"name_for_1c","keyFieldIds":null});	
 	this.addControl(ctrl);
+	
 
 	//номенклатурная группа В комплексной не используется!!!
 	/*
@@ -128,6 +130,23 @@ function ProductDialog_View(id,options){
 		{"valueFieldId":"deleted","keyFieldIds":null,
 		"modelId":"Warehouse_Model"}
 	);
+
+	//****** Панель Наименования 1с ***************
+	var cont_m=new ControlContainer(uuid(),"div",{className:"row"});
+	var p_id = uuid();
+	cont_m.addElement(new ButtonToggle(uuid(),{
+		"caption":"Наименования для 1с",
+		"dataTarget":p_id,
+		"attrs":{								
+			"title":"показать/скрыть наименования для 1с"
+			}
+		}));	
+	var cont=new ControlContainer(p_id,"div",{className:"collapse"});	
+
+	this.m_product1cNameList = new Product1cNameList_View("Product1cNameList",options);
+	cont.addElement(this.m_product1cNameList);
+	cont_m.addElement(cont);
+	this.addElement(cont_m);
 	
 	//****** Панель Склады ***************
 	var cont_m=new ControlContainer(uuid(),"div",{className:"row"});
@@ -145,6 +164,7 @@ function ProductDialog_View(id,options){
 	cont_m.addElement(cont);
 	this.addElement(cont_m);
 	
+	//
 	var cont_m=new ControlContainer(uuid(),"div",{className:"row"});
 	var p_id = uuid();
 	cont_m.addElement(new ButtonToggle(uuid(),{
@@ -535,6 +555,11 @@ ProductDialog_View.prototype.onGetData = function(resp){
 	ClientDialog_View.superclass.onGetData.call(this,resp);	
 	var id=this.getDataControl("ProductList_View_gridEditView_id").control.getAttr("old_id");
 	if (id){
+		//Наименования
+		this.m_product1cNameList.setProductId(id);
+		this.m_product1cNameList.m_grid.setEnabled(true);
+		this.m_product1cNameList.m_grid.onRefresh();		
+	
 		//Склады
 		this.m_productWarehouseList.setProductId(id);
 		this.m_productWarehouseList.m_grid.setEnabled(true);

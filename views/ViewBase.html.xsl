@@ -30,8 +30,14 @@
 				"TEl_EXT":'<xsl:value-of select="/document/model[@id='ModelVars']/row/tel_ext"/>',
 				"CLIENT_PAYMENT_TYPE":'<xsl:value-of select="/document/model[@id='ModelVars']/row/client_payment_type"/>',
 				"CLIENT_SHIP_NOT_ALLOWED":'<xsl:value-of select="/document/model[@id='ModelVars']/row/client_ship_not_allowed"/>',
-				"ORDER_DESTINATION_TO_TTN":'<xsl:value-of select="/document/model[@id='ModelVars']/row/order_destination_to_ttn"/>'
+				"ORDER_DESTINATION_TO_TTN":'<xsl:value-of select="/document/model[@id='ModelVars']/row/order_destination_to_ttn"/>',
+				"DEBUG":'<xsl:value-of select="/document/model[@id='ModelVars']/row/debug"/>'
 				};
+			var WIN_MESSAGE_STYLE = {
+				"win_width":18,
+				"win_position":"overlap"
+			};
+			var ERR_MSG_WAIT_MS = 5000;
 			var NEW_CLIENT_CHECK;
 			var CONST_CONTROLS ={};
 			var TEMPLATE_PARAMS={};
@@ -54,7 +60,8 @@
 			}
 			*/			
 			function pageLoad(){
-				
+				BS_COL = ("col-"+$('#users-device-size').find('div:visible').first().attr('id')+"-");
+				/*
 				window.onerror = function(msg,url,line,col,error) {
 					   var extra = !col ? "" : "\ncolumn: " + col;
 					   extra += !error ? "" : "\nerror: " + error;
@@ -67,8 +74,13 @@
 						});
 					   return false;
 				};
+				*/
+				var applicationWin = new AppWin({
+					"widthType": BS_COL
+					//"app":application
+				});
 				
-				BS_COL = ("col-"+$('#users-device-size').find('div:visible').first().attr('id')+"-");
+				
 				
 				//getLocation();
 				
@@ -115,23 +127,59 @@
 		<!-- class="page-header" -->
 		<a href="#" onclick="copy_app();"><img id="logo_main" src="{$BASE_PATH}img/logo.png"/></a>		
 		
-		<ul id="mainMenu" class="nav nav-tabs">		
+		<ul id="mainMenu" class="nav nav-tabs">				
 		</ul>
+		<!--
 		<div id="content" class="panel-group">
 		</div>
 		<div id="footer">
 		</div>
+		-->
+		
+		<!-- Page container -->
+		<div class="page-container">
+			<!-- Page content -->
+			<div class="page-content">
+				<!-- Main content -->
+				<div class="content-wrapper">
+					<!-- Content area -->
+					<div class="content">
+						<div id="windowData">
+						</div>
+
+						<div class="windowMessage hidden">
+						</div>
+						<!--waiting  -->
+						<div id="waiting">
+							<div>Обработка...</div>
+							<img src="img/loading.gif"/>
+						</div>
+						
+						<!-- Footer -->
+						<div class="footer text-muted text-center">
+							2015г - 2024г  <a href="#">А. Михалевич</a>
+						</div>
+						<!-- /footer -->
+
+					</div>
+					<!-- /content area -->
+
+				</div>
+				<!-- /main content -->
+
+			</div>
+			<!-- /page content -->
+
+		</div>
+		<!-- /page container -->
+		
+		
 		<!-- bootstrap resolution-->
 		<div id="users-device-size">
 		  <div id="xs" class="visible-xs"></div>
 		  <div id="sm" class="visible-sm"></div>
 		  <div id="md" class="visible-md"></div>
 		  <div id="lg" class="visible-lg"></div>
-		</div>
-		<!--waiting  -->
-		<div id="waiting">
-			<div>Ждите</div>
-			<img src="{$BASE_PATH}img/loading.gif"/>
 		</div>
 		
 		<!--ALL js modules -->
@@ -159,7 +207,7 @@
 		{"onClose":onViewClose,
 		"connect":new ServConnector(HOST_NAME)
 		});	
-		MainView.toDOM(nd("content"));
+		MainView.toDOM(nd("windowData"));//content
 	};
 <xsl:apply-templates select="item"/>
 var item = new TabMenuItem('it_exit',{

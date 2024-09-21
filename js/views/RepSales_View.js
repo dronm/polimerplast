@@ -408,7 +408,26 @@ function RepSales_View(id,options){
 				}
 			)
 			},
-							
+				
+			//added 26/07/23
+			{"id":"doc_last_state",
+			"name":"Последний статус заявки",
+			"agg":false,
+			"filtered":false,
+			//"filterControl":new OrderStateEditObject('doc_state_id','doc_state_id',true)
+			"filterControl":new EditList(id+"_doc_last_state",{
+					"editContClassName":"input-group",
+					"editViewControl":new OrderStateEditObject(
+						"doc_last_state_id", //doc_state_id
+						id+"_filter_doc_last_state_id",
+						true,null,
+						{"editContClassName":"input-group "+get_bs_col()+"3"}
+					),
+					"filterSign":"incl"
+					}
+			)},
+			
+			
 			{"id":"doc_state_date_time",
 			"name":"Дата статуса заявки",
 			"agg":false,
@@ -432,7 +451,7 @@ function RepSales_View(id,options){
 			"filterControl":new EditList(id+"_doc_state",{
 				"editContClassName":"input-group",
 				"editViewControl":new OrderStateEditObject(
-					"doc_state_id",
+					"doc_state_id", //doc_state_id
 					id+"_filter_doc_state_id",
 					true,null,
 					{"editContClassName":"input-group "+get_bs_col()+"3"}
@@ -799,6 +818,19 @@ function RepSales_View(id,options){
 	
 	this.m_ctrlPeriodFrom.setValue(DateHandler.dateToStr(DateHandler.getStartOfDate(new Date()),d_mask));
 	this.m_ctrlPeriodTo.setValue(DateHandler.dateToStr(DateHandler.getEndOfDate(new Date()),d_mask));	
+
+	this.m_ctrlShippedOnly = new EditCheckBox(id + "_shipped_only",{
+		"labelClassName":"control-label " + get_bs_col()+"4" + " readOnly",
+		"labelCaption":"Только отгруженные заявки:",
+		"attrs":{"title":"Включать в отчет либо только отгруженные, либо все заявки"},
+		"checked": true
+		/*,
+		"events":{
+			"change":function(){
+				self.switchShippedOnly();
+			}
+		}*/
+	});	
 	
 	//все фильтры
 	this.addFilterContainer([
@@ -808,12 +840,17 @@ function RepSales_View(id,options){
 		},
 		{"control":this.m_ctrlPeriodTo,
 		"filter":{"sign":"le","valueFieldId":"doc_date_time"}
+		},
+		{"control":this.m_ctrlShippedOnly,
+		"filter":{"sign":"e","valueFieldId":"doc_order_delivered"}
 		}		
-	]);
-	
-	
-	this.m_filterContainer.addElement(this.m_ctrlDataType);
 		
+	]);
+
+	this.m_filterContainer.addElement(this.m_ctrlDataType);
+	
+	this.m_filterContainer.addElement(this.m_ctrlShippedOnly);
+				
 	this.addCmdFilter();
 	this.addCmdMakeReport();
 	this.addCmdPrint();
@@ -824,9 +861,15 @@ function RepSales_View(id,options){
 	this.addStoringControl(this.m_aggFieldContainer);
 }
 extend(RepSales_View,PPViewReport);
-
+/*
+RepSales_View.prototype.switchShippedOnly = function(){
+	var en = this.m_ctrlShippedOnly.getValue();
+	this.m_ctrlDataType.setEnabled(en);
+}
+*/
 RepSales_View.prototype.addExtraParams = function(struc){
 	RepSales_View.superclass.addExtraParams.call(this,struc);	
 	struc.templ="RepSales";
 	//вид даты
 }
+

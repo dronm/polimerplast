@@ -88,8 +88,19 @@ class ExtProg{
 			if (array_key_exists('toFile',$fileOpts) && $fileOpts['toFile']==TRUE){
 				file_put_contents(OUTPUT_PATH.$fileOpts['name'],$contents);
 				return OUTPUT_PATH.$fileOpts['name'];
-			}
-			else{
+			}else{
+				//inline file view
+				if(strlen($contents) < 500){
+					$contents = @iconv('Windows-1251','UTF-8',$contents);
+					try{
+						$xml = new SimpleXMLElement($contents);
+					}catch(Exception $e){
+					}
+					if ($xml['status']=='false'){
+						$err = (string) $xml->error;
+						throw new Exception($err);
+					}							
+				}
 				if (!array_key_exists('contentType',$fileOpts)){
 					$p = strpos($fileOpts['name'],'.');
 					if ($p !== FALSE){
@@ -108,7 +119,7 @@ class ExtProg{
 				ob_clean();//attachment
 				header("Content-type: ".$fileOpts['contentType']);
 				header("Content-Disposition: ".$fileOpts['disposition']."; filename=\"".$fileOpts['name']."\"");		
-				header("Content-length: ".strlen($contents));
+				// header("Content-length: ".strlen($contents)); //otherwise on error partial file with wrong lengh is delivered
 				header("Cache-control: private");
 				echo $contents;
 			}			
@@ -117,23 +128,22 @@ class ExtProg{
 			throw new Exception('Нет доступа к серверу 1с!');
 		}
 		else{
-			$contents = @iconv('Windows-1251','UTF-8',$contents);
 			//file_put_contents('output/cont_'.uniqid().'.xml',$contents);		
 			//throw new Exception("ОШИБКА!!!=".$contents);//$contents
-			
+			$contents = @iconv('Windows-1251','UTF-8',$contents);
 			try{
 				$xml = new SimpleXMLElement($contents);
-			}
-			catch(Exception $e){
+			}catch(Exception $e){
 				throw new Exception('Ошибка парсинга ответа 1с:'.$e->getMessage().' Строка: '.$contents);
 			}
 			
 			if ($xml['status']=='false'){
-				$e = (string) $xml->error;
-				throw new Exception($e);
+				$err = (string) $xml->error;
+				throw new Exception($err);
 			}							
 		}		
 	}
+
 
 	public static function getClientRefOnINN($inn){
 		$xml=null;
@@ -284,7 +294,6 @@ class ExtProg{
 	}	
 	
 	public static function sale($head,$items,&$res){
-	//throw new Exception("public static function sale");
 		$xml=null;
 		ExtProg::send_query('sale',
 			array('head'=>serialize($head),
@@ -296,38 +305,43 @@ class ExtProg{
 		$res['invRef'] = $xml->invRef;
 		$res['invNum'] = $xml->invNum;
 	}
+	
 	public static function order($head,$items,&$res){
 		$xml=null;
 		ExtProg::send_query('order',
 			array('head'=>serialize($head),
 			'items'=>serialize($items)
 			),
-			$xml);
+			$xml
+		);
 		$res['orderRef'] = $xml->orderRef;
 		$res['orderNum'] = $xml->orderNum;
 	}
 	public static function print_order($ref,$userExtRef,$stamp=0,$fileOpts=NULL){
 		$xml=null;
-		return ExtProg::send_query('print_order',
+		return (ExtProg::send_query('print_order',
 			array('doc_ref'=>$ref,
 				'stamp'=>$stamp,
 				'user_ref'=>$userExtRef),
-			$xml,$fileOpts);
+			$xml,$fileOpts)
+		);
 	}	
 	public static function print_torg12($ref,$userExtRef='',$stamp=0,$fileOpts=NULL){
 		$xml=null;
-		return ExtProg::send_query('print_torg12',
+		return (ExtProg::send_query('print_torg12',
 			array('doc_ref'=>$ref,
 				'stamp'=>$stamp,
 				'user_ref'=>$userExtRef),
-			$xml,$fileOpts);
+			$xml,$fileOpts)
+		);
 	}	
 	public static function print_invoice($ref,$userExtRef='',$fileOpts=NULL){
 		$xml=null;
-		return ExtProg::send_query('print_invoice',
+		return (ExtProg::send_query('print_invoice',
 			array('doc_ref'=>$ref,
 				'user_ref'=>$userExtRef
-			),$xml,$fileOpts);
+			),$xml,$fileOpts)
+		);
 	}	
 	public static function print_upd($ref,$userExtRef='',$stamp=0,$fileOpts=NULL){
 		$xml=null;
@@ -339,35 +353,35 @@ class ExtProg{
 	}		
 	public static function del_docs($ext_order_id,$ext_ship_id){
 		$xml=null;
-		return ExtProg::send_query('del_docs',
+		return (ExtProg::send_query('del_docs',
 			array('ext_order_id'=>$ext_order_id,
 				'ext_ship_id'=>ext_ship_id
 				),
 			$xml
-		);
+		));
 	}		
 	
 	public static function print_shipment($ref,$head,$userExtRef='',$stamp=0,$fileOpts=NULL){
 		$xml=null;
-		return ExtProg::send_query('print_shipment',
+		return (ExtProg::send_query('print_shipment',
 			array('doc_ref'=>$ref,
 				'head'=>serialize($head),
 				'user_ref'=>$userExtRef,
 				'stamp'=>$stamp),
-			$xml,$fileOpts);
+			$xml,$fileOpts));
 	}			
 	public static function print_ttn($ref,$head,$userExtRef='',$stamp=0,$fileOpts=NULL){
 		$xml=null;
-		return ExtProg::send_query('print_ttn',
+		return (ExtProg::send_query('print_ttn',
 			array('doc_ref'=>$ref,
 				'head'=>serialize($head),
 				'user_ref'=>$userExtRef,
 				'stamp'=>$stamp),
-			$xml,$fileOpts);
+			$xml,$fileOpts));
 	}			
-	public static function print_balance($from,$to,$clientRef,$firmRef,$userExtRef='',$fileType,$fileOpts=NULL){
+	public static function print_balance($from,$to,$clientRef,$firmRef,$userExtRef='',$fileType=NULL,$fileOpts=NULL){
 		$xml=null;
-		return ExtProg::send_query('print_balance',
+		return (ExtProg::send_query('print_balance',
 			array(
 				'to'=>$to,
 				'from'=>$from,
@@ -375,7 +389,8 @@ class ExtProg{
 				'client_ref'=>$clientRef,
 				'user_ref'=>$userExtRef,
 				'file_type'=>$fileType
-			),$xml,$fileOpts);
+			),$xml,$fileOpts)
+		);
 	}	
 	public static function paid_to_acc($firm_totals,$pkoType){
 		$xml=null;
@@ -389,6 +404,16 @@ class ExtProg{
 		$xml=null;
 		ExtProg::send_query('set_deliv_expenses',array('head'=>serialize($head)),$xml);
 	
+	}
+	public static function getProdBatchList($productList, $pattern, &$xml){
+		ExtProg::send_query(
+			'get_prod_batch_list',
+			array(
+				'product_list'=> serialize($productList),
+				'pattern' => $pattern
+			),
+			$xml
+		);
 	}
 }
 ?>

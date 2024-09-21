@@ -592,6 +592,33 @@ function DOCOrder_Model(options){
 	
 	options.fields.client_contract_name = new FieldString("client_contract_name",filed_options);
 	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	filed_options.alias = 'Адрес магазина';
+	filed_options.autoInc = false;	
+	
+	options.fields.sale_store_address_id = new FieldInt("sale_store_address_id",filed_options);
+	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	filed_options.alias = 'Номер заказа';
+	filed_options.autoInc = false;	
+	
+	options.fields.order_num = new FieldText("order_num",filed_options);
+	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	filed_options.alias = 'Номер партии';
+	filed_options.autoInc = false;	
+	
+	options.fields.batch_num = new FieldText("batch_num",filed_options);
+	
 			
 			
 			

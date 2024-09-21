@@ -32,6 +32,7 @@
 <li><a href="#CustomerSurveyQuestion_Controller">CustomerSurveyQuestion_Controller</a></li>
 <li><a href="#DOCOrder_Controller">DOCOrder_Controller</a></li>
 <li><a href="#DOCOrderDOCTCustSurvey_Controller">DOCOrderDOCTCustSurvey_Controller</a></li>
+<li><a href="#DOCOrderDOCTProdBatch_Controller">DOCOrderDOCTProdBatch_Controller</a></li>
 <li><a href="#DOCOrderDOCTProduct_Controller">DOCOrderDOCTProduct_Controller</a></li>
 <li><a href="#DelivCost_Controller">DelivCost_Controller</a></li>
 <li><a href="#DelivCostOpt_Controller">DelivCostOpt_Controller</a></li>
@@ -48,18 +49,20 @@
 <li><a href="#MeasureUnit_Controller">MeasureUnit_Controller</a></li>
 <li><a href="#Naspunkt_Controller">Naspunkt_Controller</a></li>
 <li><a href="#Payment_Controller">Payment_Controller</a></li>
+<li><a href="#ProdBatch_Controller">ProdBatch_Controller</a></li>
 <li><a href="#Product_Controller">Product_Controller</a></li>
+<li><a href="#Product1cName_Controller">Product1cName_Controller</a></li>
 <li><a href="#ProductCustomSizePrice_Controller">ProductCustomSizePrice_Controller</a></li>
 <li><a href="#ProductGroup_Controller">ProductGroup_Controller</a></li>
 <li><a href="#ProductMeasureUnit_Controller">ProductMeasureUnit_Controller</a></li>
 <li><a href="#ProductWarehouse_Controller">ProductWarehouse_Controller</a></li>
 <li><a href="#ProductionCity_Controller">ProductionCity_Controller</a></li>
 <li><a href="#ProductionState_Controller">ProductionState_Controller</a></li>
-<li><a href="#ProjectManager_Controller">ProjectManager_Controller</a></li>
 <li><a href="#Report_Controller">Report_Controller</a></li>
 <li><a href="#ReportVariant_Controller">ReportVariant_Controller</a></li>
 <li><a href="#SMSForSending_Controller">SMSForSending_Controller</a></li>
 <li><a href="#SMSTemplate_Controller">SMSTemplate_Controller</a></li>
+<li><a href="#SaleStoreAddress_Controller">SaleStoreAddress_Controller</a></li>
 <li><a href="#SertType_Controller">SertType_Controller</a></li>
 <li><a href="#SertTypeAttr_Controller">SertTypeAttr_Controller</a></li>
 <li><a href="#TTNAttrPair_Controller">TTNAttrPair_Controller</a></li>
@@ -127,6 +130,8 @@
 <li><a href="#ProductMeasureUnitList_Model">ProductMeasureUnitList_Model</a></li>
 <li><a href="#ProductWarehouse_Model">ProductWarehouse_Model</a></li>
 <li><a href="#ProductWarehouseList_Model">ProductWarehouseList_Model</a></li>
+<li><a href="#Product1cName_Model">Product1cName_Model</a></li>
+<li><a href="#Product1cNameList_Model">Product1cNameList_Model</a></li>
 <li><a href="#DOCOrder_Model">DOCOrder_Model</a></li>
 <li><a href="#DOCOrderLink_Model">DOCOrderLink_Model</a></li>
 <li><a href="#DOCOrderState_Model">DOCOrderState_Model</a></li>
@@ -215,6 +220,11 @@
 <li><a href="#BankList_Model">BankList_Model</a></li>
 <li><a href="#ClientFirmBankAccount_Model">ClientFirmBankAccount_Model</a></li>
 <li><a href="#ClientFirmBankAccountList_Model">ClientFirmBankAccountList_Model</a></li>
+<li><a href="#DocOrderAttachment_Model">DocOrderAttachment_Model</a></li>
+<li><a href="#SaleStoreAddress_Model">SaleStoreAddress_Model</a></li>
+<li><a href="#DOCOrderDOCTProdBatch_Model">DOCOrderDOCTProdBatch_Model</a></li>
+<li><a href="#DOCOrderDOCTProdBatchList_Model">DOCOrderDOCTProdBatchList_Model</a></li>
+<li><a href="#DOCOrderDOCTFProdBatch_Model">DOCOrderDOCTFProdBatch_Model</a></li>
 </ul>
 <div class="section-title">Enumerations</div>
 <ul>
@@ -1353,6 +1363,13 @@
 <p>Required:
 								Нет</p>
 </div>
+<h3>batch_num</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Type:Text</p>
+<p>Required:
+								Нет</p>
+</div>
 </div>
 <h2>get_ship_docs</h2>
 <p>Arguments:</p>
@@ -1645,6 +1662,13 @@
 <p>Required:
 								Да</p>
 </div>
+<h3>price_round</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Type:Bool</p>
+<p>Required:
+								Нет</p>
+</div>
 <h3>price</h3>
 <p></p>
 <div class="content_item content_item3">
@@ -1853,6 +1877,99 @@
 								Да</p>
 </div>
 </div>
+<h2>add_file</h2>
+<p>Arguments:</p>
+<div class="content_item content_item2">
+<h3>doc_order_id</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Type:Int</p>
+<p>Required:
+								Да</p>
+</div>
+<h3>file_data</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Type:Text</p>
+<p>Required:
+								Нет</p>
+</div>
+<h3>file_id</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Type:String</p>
+<p>Required:
+								Да</p>
+<p>Length:36</p>
+</div>
+</div>
+<h2>delete_file</h2>
+<p>Arguments:</p>
+<div class="content_item content_item2">
+<h3>doc_order_id</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Type:Int</p>
+<p>Required:
+								Да</p>
+</div>
+<h3>file_id</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Type:String</p>
+<p>Required:
+								Да</p>
+<p>Length:36</p>
+</div>
+</div>
+<h2>get_file</h2>
+<p>Arguments:</p>
+<div class="content_item content_item2">
+<h3>doc_order_id</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Type:Int</p>
+<p>Required:
+								Да</p>
+</div>
+<h3>file_id</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Type:String</p>
+<p>Required:
+								Да</p>
+<p>Length:36</p>
+</div>
+<h3>inline</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Type:Int</p>
+<p>Required:
+								Нет</p>
+</div>
+</div>
+<h2>get_files_list</h2>
+<p>Arguments:</p>
+<div class="content_item content_item2">
+<h3>doc_order_id</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Type:Int</p>
+<p>Required:
+								Да</p>
+</div>
+</div>
+<h2>get_nonegraphic_files_list</h2>
+<p>Arguments:</p>
+<div class="content_item content_item2">
+<h3>doc_order_id</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Type:Int</p>
+<p>Required:
+								Да</p>
+</div>
+</div>
 </div>
 </div>
 <div id="DOCOrderDOCTCustSurvey_Controller" class="content_box">
@@ -1866,6 +1983,19 @@
 <a href="#DOCOrderDOCTCustSurvey_Model">Model: DOCOrderDOCTCustSurvey_Model</a><h2>get_list</h2>
 <a href="#DOCOrderDOCTCustSurveyList_Model">Model: DOCOrderDOCTCustSurveyList_Model</a><h2>get_object</h2>
 <a href="#DOCOrderDOCTCustSurveyList_Model">Model: DOCOrderDOCTCustSurveyList_Model</a>
+</div>
+</div>
+<div id="DOCOrderDOCTProdBatch_Controller" class="content_box">
+<h1>DOCOrderDOCTProdBatch_Controller</h1>
+<div class="content_item">
+<p class="big"></p>
+<p>Методы:</p>
+<h2>insert</h2>
+<a href="#DOCOrderDOCTProdBatch_Model">Model: DOCOrderDOCTProdBatch_Model</a><h2>update</h2>
+<a href="#DOCOrderDOCTProdBatch_Model">Model: DOCOrderDOCTProdBatch_Model</a><h2>delete</h2>
+<a href="#DOCOrderDOCTProdBatch_Model">Model: DOCOrderDOCTProdBatch_Model</a><h2>get_list</h2>
+<a href="#DOCOrderDOCTProdBatchList_Model">Model: DOCOrderDOCTProdBatchList_Model</a><h2>get_object</h2>
+<a href="#DOCOrderDOCTProdBatchList_Model">Model: DOCOrderDOCTProdBatchList_Model</a>
 </div>
 </div>
 <div id="DOCOrderDOCTProduct_Controller" class="content_box">
@@ -2571,6 +2701,42 @@
 </div>
 </div>
 </div>
+<div id="ProdBatch_Controller" class="content_box">
+<h1>ProdBatch_Controller</h1>
+<div class="content_item">
+<p class="big"></p>
+<p>Методы:</p>
+<h2>get_list</h2>
+<p>Arguments:</p>
+<div class="content_item content_item2">
+<h3>doc_order_id</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Type:Int</p>
+<p>Required:
+								Нет</p>
+</div>
+</div>
+<h2>complete_from_1c</h2>
+<p>Arguments:</p>
+<div class="content_item content_item2">
+<h3>doc_order_id</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Type:Int</p>
+<p>Required:
+								Да</p>
+</div>
+<h3>pattern</h3>
+<p></p>
+<div class="content_item content_item3">
+<p>Type:String</p>
+<p>Required:
+								Да</p>
+</div>
+</div>
+</div>
+</div>
 <div id="Product_Controller" class="content_box">
 <h1>Product_Controller</h1>
 <div class="content_item">
@@ -2584,6 +2750,19 @@
 <a href="#ProductDialog_Model">Model: ProductDialog_Model</a><h2>get_list_for_order</h2>
 <a href="#ProductList_Model">Model: ProductList_Model</a><h2>get_filter_list</h2>
 <a href="#ProductFilterList_Model">Model: ProductFilterList_Model</a>
+</div>
+</div>
+<div id="Product1cName_Controller" class="content_box">
+<h1>Product1cName_Controller</h1>
+<div class="content_item">
+<p class="big"></p>
+<p>Методы:</p>
+<h2>insert</h2>
+<a href="#Product1cName_Model">Model: Product1cName_Model</a><h2>update</h2>
+<a href="#Product1cName_Model">Model: Product1cName_Model</a><h2>delete</h2>
+<a href="#Product1cName_Model">Model: Product1cName_Model</a><h2>get_list</h2>
+<a href="#Product1cNameList_Model">Model: Product1cNameList_Model</a><h2>get_object</h2>
+<a href="#Product1cNameList_Model">Model: Product1cNameList_Model</a>
 </div>
 </div>
 <div id="ProductCustomSizePrice_Controller" class="content_box">
@@ -2662,74 +2841,6 @@
 <a href="#ProductionState_Model">Model: ProductionState_Model</a><h2>get_list</h2>
 <a href="#ProductionState_Model">Model: ProductionState_Model</a><h2>get_object</h2>
 <a href="#ProductionState_Model">Model: ProductionState_Model</a>
-</div>
-</div>
-<div id="ProjectManager_Controller" class="content_box">
-<h1>ProjectManager_Controller</h1>
-<div class="content_item">
-<p class="big"></p>
-<p>Методы:</p>
-<h2>open_version</h2>
-<p>Arguments:</p>
-<div class="content_item content_item2">
-<h3>version</h3>
-<p></p>
-<div class="content_item content_item3">
-<p>Type:String</p>
-<p>Required:
-								Нет</p>
-<p>Length:15</p>
-</div>
-</div>
-<h2>close_version</h2>
-<p>Arguments:</p>
-<div class="content_item content_item2">
-<h3>commit_description</h3>
-<p></p>
-<div class="content_item content_item3">
-<p>Type:Text</p>
-<p>Required:
-								Нет</p>
-</div>
-</div>
-<h2>minify_js</h2>
-<p>Arguments:</p>
-<div class="content_item content_item2"></div>
-<h2>build_all</h2>
-<p>Arguments:</p>
-<div class="content_item content_item2"></div>
-<h2>create_symlinks</h2>
-<p>Arguments:</p>
-<div class="content_item content_item2"></div>
-<h2>pull</h2>
-<p>Arguments:</p>
-<div class="content_item content_item2"></div>
-<h2>push</h2>
-<p>Arguments:</p>
-<div class="content_item content_item2">
-<h3>commit_description</h3>
-<p></p>
-<div class="content_item content_item3">
-<p>Type:Text</p>
-<p>Required:
-								Нет</p>
-</div>
-</div>
-<h2>zip_project</h2>
-<p>Arguments:</p>
-<div class="content_item content_item2"></div>
-<h2>zip_db</h2>
-<p>Arguments:</p>
-<div class="content_item content_item2"></div>
-<h2>get_version</h2>
-<p>Arguments:</p>
-<div class="content_item content_item2"></div>
-<h2>apply_patch</h2>
-<p>Arguments:</p>
-<div class="content_item content_item2"></div>
-<h2>apply_sql</h2>
-<p>Arguments:</p>
-<div class="content_item content_item2"></div>
 </div>
 </div>
 <div id="Report_Controller" class="content_box">
@@ -2975,6 +3086,19 @@
 <a href="#SMSTemplate_Model">Model: SMSTemplate_Model</a><h2>get_list</h2>
 <a href="#SMSTemplateList_Model">Model: SMSTemplateList_Model</a><h2>get_object</h2>
 <a href="#SMSTemplateList_Model">Model: SMSTemplateList_Model</a>
+</div>
+</div>
+<div id="SaleStoreAddress_Controller" class="content_box">
+<h1>SaleStoreAddress_Controller</h1>
+<div class="content_item">
+<p class="big"></p>
+<p>Методы:</p>
+<h2>insert</h2>
+<a href="#SaleStoreAddress_Model">Model: SaleStoreAddress_Model</a><h2>update</h2>
+<a href="#SaleStoreAddress_Model">Model: SaleStoreAddress_Model</a><h2>delete</h2>
+<a href="#SaleStoreAddress_Model">Model: SaleStoreAddress_Model</a><h2>get_list</h2>
+<a href="#SaleStoreAddress_Model">Model: SaleStoreAddress_Model</a><h2>get_object</h2>
+<a href="#SaleStoreAddress_Model">Model: SaleStoreAddress_Model</a>
 </div>
 </div>
 <div id="SertType_Controller" class="content_box">
@@ -5278,6 +5402,24 @@
 <div>Required:</div>
 <div>Length:150</div>
 <div>Precision:</div>
+<h2>sale_store_address_id</h2>
+<div>Type:Int</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>order_num</h2>
+<div>Type:Text</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>batch_num</h2>
+<div>Type:Text</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
 </div>
 </div>
 <div id="DOCOrderCancelCause_Model" class="content_box">
@@ -6042,6 +6184,36 @@
 <div>Precision:</div>
 </div>
 </div>
+<div id="DOCOrderDOCTFProdBatch_Model" class="content_box">
+<h1>DOCOrderDOCTFProdBatch_Model</h1>
+<div class="content_item">
+<p>Поля:</p>
+<h2>doc_id</h2>
+<div>Type:Int</div>
+<div>Primary key:TRUE</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>line_number</h2>
+<div>Type:Int</div>
+<div>Primary key:TRUE</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>batch_descr</h2>
+<div>Type:Text</div>
+<div>Primary key:</div>
+<div>Required:TRUE</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>ext_id</h2>
+<div>Type:String</div>
+<div>Primary key:</div>
+<div>Required:TRUE</div>
+<div>Length:36</div>
+<div>Precision:</div>
+</div>
+</div>
 <div id="DOCOrderDOCTFProduct_Model" class="content_box">
 <h1>DOCOrderDOCTFProduct_Model</h1>
 <div class="content_item">
@@ -6142,6 +6314,12 @@
 <div>Required:</div>
 <div>Length:</div>
 <div>Precision:</div>
+<h2>price_round</h2>
+<div>Type:Bool</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
 <h2>total</h2>
 <div>Type:Float</div>
 <div>Primary key:</div>
@@ -6178,6 +6356,72 @@
 <div>Required:</div>
 <div>Length:15</div>
 <div>Precision:2</div>
+</div>
+</div>
+<div id="DOCOrderDOCTProdBatch_Model" class="content_box">
+<h1>DOCOrderDOCTProdBatch_Model</h1>
+<div class="content_item">
+<p>Поля:</p>
+<h2>view_id</h2>
+<div>Type:String</div>
+<div>Primary key:TRUE</div>
+<div>Required:</div>
+<div>Length:32</div>
+<div>Precision:</div>
+<h2>line_number</h2>
+<div>Type:Int</div>
+<div>Primary key:TRUE</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>login_id</h2>
+<div>Type:Int</div>
+<div>Primary key:TRUE</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>ext_id</h2>
+<div>Type:String</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:36</div>
+<div>Precision:</div>
+<h2>batch_descr</h2>
+<div>Type:Text</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+</div>
+</div>
+<div id="DOCOrderDOCTProdBatchList_Model" class="content_box">
+<h1>DOCOrderDOCTProdBatchList_Model</h1>
+<div class="content_item">
+<p>Поля:</p>
+<h2>view_id</h2>
+<div>Type:String</div>
+<div>Primary key:TRUE</div>
+<div>Required:</div>
+<div>Length:32</div>
+<div>Precision:</div>
+<h2>line_number</h2>
+<div>Type:Int</div>
+<div>Primary key:TRUE</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>ext_id</h2>
+<div>Type:String</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:36</div>
+<div>Precision:</div>
+<h2>batch_descr</h2>
+<div>Type:Text</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
 </div>
 </div>
 <div id="DOCOrderDOCTProduct_Model" class="content_box">
@@ -6275,6 +6519,12 @@
 <div>Length:15</div>
 <div>Precision:2</div>
 <h2>price_edit</h2>
+<div>Type:Bool</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>price_round</h2>
 <div>Type:Bool</div>
 <div>Primary key:</div>
 <div>Required:</div>
@@ -6402,6 +6652,12 @@
 <div>Precision:</div>
 <h2>vehicle_descr</h2>
 <div>Type:String</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>attachments</h2>
+<div>Type:JSONB</div>
 <div>Primary key:</div>
 <div>Required:</div>
 <div>Length:</div>
@@ -7112,6 +7368,48 @@
 <div>Type:Int</div>
 <div>Primary key:TRUE</div>
 <div>Required:TRUE</div>
+<div>Length:</div>
+<div>Precision:</div>
+</div>
+</div>
+<div id="DocOrderAttachment_Model" class="content_box">
+<h1>DocOrderAttachment_Model</h1>
+<div class="content_item">
+<p>Поля:</p>
+<h2>id</h2>
+<div>Type:String</div>
+<div>Primary key:TRUE</div>
+<div>Required:TRUE</div>
+<div>Length:36</div>
+<div>Precision:</div>
+<h2>date_time</h2>
+<div>Type:DateTimeTZ</div>
+<div>Primary key:</div>
+<div>Required:TRUE</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>doc_order_id</h2>
+<div>Type:Int</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>file_inf</h2>
+<div>Type:JSONB</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>file_data</h2>
+<div>Type:Text</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>preview_data</h2>
+<div>Type:Text</div>
+<div>Primary key:</div>
+<div>Required:</div>
 <div>Length:</div>
 <div>Precision:</div>
 </div>
@@ -8226,6 +8524,72 @@
 <div>Precision:</div>
 </div>
 </div>
+<div id="Product1cName_Model" class="content_box">
+<h1>Product1cName_Model</h1>
+<div class="content_item">
+<p>Поля:</p>
+<h2>id</h2>
+<div>Type:Int</div>
+<div>Primary key:TRUE</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>product_id</h2>
+<div>Type:Int</div>
+<div>Primary key:</div>
+<div>Required:TRUE</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>firm_id</h2>
+<div>Type:Int</div>
+<div>Primary key:</div>
+<div>Required:TRUE</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>name_for_1c</h2>
+<div>Type:String</div>
+<div>Primary key:</div>
+<div>Required:TRUE</div>
+<div>Length:100</div>
+<div>Precision:</div>
+</div>
+</div>
+<div id="Product1cNameList_Model" class="content_box">
+<h1>Product1cNameList_Model</h1>
+<div class="content_item">
+<p>Поля:</p>
+<h2>id</h2>
+<div>Type:Int</div>
+<div>Primary key:TRUE</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>product_id</h2>
+<div>Type:Int</div>
+<div>Primary key:</div>
+<div>Required:TRUE</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>firm_id</h2>
+<div>Type:Int</div>
+<div>Primary key:</div>
+<div>Required:TRUE</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>firm_descr</h2>
+<div>Type:String</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>name_for_1c</h2>
+<div>Type:String</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:100</div>
+<div>Precision:</div>
+</div>
+</div>
 <div id="ProductCustomSizePrice_Model" class="content_box">
 <h1>ProductCustomSizePrice_Model</h1>
 <div class="content_item">
@@ -8806,6 +9170,12 @@
 <div>Required:</div>
 <div>Length:</div>
 <div>Precision:</div>
+<h2>doc_last_state</h2>
+<div>Type:String</div>
+<div>Primary key:</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
 <h2>production_city_descr</h2>
 <div>Type:String</div>
 <div>Primary key:</div>
@@ -9368,6 +9738,30 @@
 <div>Type:Text</div>
 <div>Primary key:</div>
 <div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+</div>
+</div>
+<div id="SaleStoreAddress_Model" class="content_box">
+<h1>SaleStoreAddress_Model</h1>
+<div class="content_item">
+<p>Поля:</p>
+<h2>id</h2>
+<div>Type:Int</div>
+<div>Primary key:TRUE</div>
+<div>Required:</div>
+<div>Length:</div>
+<div>Precision:</div>
+<h2>code</h2>
+<div>Type:String</div>
+<div>Primary key:</div>
+<div>Required:TRUE</div>
+<div>Length:10</div>
+<div>Precision:</div>
+<h2>name</h2>
+<div>Type:Text</div>
+<div>Primary key:</div>
+<div>Required:TRUE</div>
 <div>Length:</div>
 <div>Precision:</div>
 </div>

@@ -79,13 +79,9 @@ BtnAppendOrder.prototype.append = function(targetDocId,sourceDocList){
 			self.m_grid.getErrorControl().setValue(errStr);
 		},
 		"func":function(resp){
-			WindowMessage.show({
-				"text":"Присоединение выполнено.",
-				"type":WindowMessage.TP_NOTE,
-				"callBack":function(){
+			window.showTempNote("Присоединение выполнено.", function(){
 					self.m_grid.onRefresh();
-				}
-			});							
+				}, ERR_MSG_WAIT_MS);								
 		}
 	});
 	

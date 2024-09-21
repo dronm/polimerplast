@@ -1,0 +1,6 @@
+UPDATE client_firm_bank_accounts
+SET
+	ext_bank_account_id = '0ed350f8-6bba-11ed-9dc0-f2158bff1135',
+	ext_bank_account_descr = 'ПолимерПласт ФК ОТКРЫТИЕ'
+WHERE firm_id=49 AND ext_bank_account_id <> '0ed350f8-6bba-11ed-9dc0-f2158bff1135'
+

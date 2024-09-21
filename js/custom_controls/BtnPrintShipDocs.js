@@ -36,13 +36,9 @@ function BtnPrintShipDocs(options){
 					self.setEnabled(true);
 				},
 				"err":function(resp,errCode,str){
-					WindowMessage.show({
-						"type":WindowMessage.TP_ER,
-						"text":str,
-						"callBack":function(){
+					window.showTempError(str, function(){
 							self.setEnabled(true);
-						}						
-					})
+						}, ERR_MSG_WAIT_MS);						
 				}
 			});
 		}

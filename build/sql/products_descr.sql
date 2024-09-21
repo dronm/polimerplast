@@ -1,11 +1,17 @@
---DROP FUNCTION products_descr(products,l int,w int,h int,for_1c boolean);
+--DROP FUNCTION products_descr(products,l int,w int,h int,for_1c boolean, firm_id int);
 
-CREATE or REPLACE FUNCTION products_descr(products,l int,w int,h int,for_1c boolean)
+CREATE or REPLACE FUNCTION products_descr(products, l int, w int, h int, for_1c boolean, firm_id int)
 RETURNS text
 AS $body$
 	SELECT
 		CASE
-			WHEN $5 THEN $1.name_for_1c
+			WHEN $5 THEN
+				 coalesce(
+				 	(SELECT p_nm.name_for_1c
+					FROM product_1c_names AS p_nm
+					WHERE p_nm.product_id = $1.id AND p_nm.firm_id = $6
+				)
+				, $1.name_for_1c)
 			ELSE $1.name
 		END
 		|| ' '||
@@ -27,5 +33,5 @@ AS $body$
 		);
 	
 $body$ LANGUAGE sql;
-ALTER function products_descr(products,l int,w int,h int,for_1c boolean)
+ALTER function products_descr(products,l int,w int,h int,for_1c boolean, firm_id int)
 	OWNER TO polimerplast;

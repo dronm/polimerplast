@@ -130,6 +130,12 @@ extend(DOCOrderDOCTProduct_Controller,ControllerDb);
 	pm.addParam(param);
 	
 	options = {};
+	
+	var param = new FieldBool("price_round",options);
+	
+	pm.addParam(param);
+	
+	options = {};
 	options["alias"]="Сумма";
 	var param = new FieldFloat("total",options);
 	
@@ -290,6 +296,12 @@ extend(DOCOrderDOCTProduct_Controller,ControllerDb);
 	options = {};
 	
 	var param = new FieldBool("price_edit",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldBool("price_round",options);
 	
 	pm.addParam(param);
 	

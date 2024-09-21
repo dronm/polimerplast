@@ -12,6 +12,8 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldExtPassword.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtBool.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPoint.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPolygon.php');
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtDateTimeTZ.php');
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtJSONB.php');
 
 /**
  * THIS FILE IS GENERATED FROM TEMPLATE build/templates/controllers/Controller_php.xsl
@@ -1130,7 +1132,7 @@ class Client_Controller extends ControllerSQL{
 	
 	
 	public function update($pm){
-		
+		$link = $this->getDbLink();
 		$params = new ParamsSQL($pm,$link);
 		$params->setValidated("old_id",DT_INT);
 		$old_id = $params->getParamById('old_id');

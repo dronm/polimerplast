@@ -167,6 +167,9 @@ function DOCOrderDOCTShipmentInline_View(id,options){
 		"events":{
 			"input":function(){
 				self.onChangeBaseQuant();
+			},
+			"focus":function(){
+				$(this.getNode()).select();
 			}
 		}
 		}
@@ -210,6 +213,9 @@ function DOCOrderDOCTShipmentInline_View(id,options){
 		"events":{
 			"input":function(){
 				self.onChangeDocQuant();
+			},
+			"focus":function(){
+				$(this.getNode()).select();
 			}
 		},	
 		"attrs":{"size":"5"}}

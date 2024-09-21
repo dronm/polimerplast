@@ -19,7 +19,8 @@ function Catalogs_View(id,options){
 	this.m_winObj = options.winObj;
 	this.addItem({"caption":"Фирмы","viewClassId":FirmList_View,"id":"FirmList_View"});	
 	this.addItem({"caption":"Города отгрузки","viewClassId":ProductionCityList_View,"id":"ProductionCityList_View"});
-	this.addItem({"caption":"Склады","viewClassId":WarehouseList_View,"id":"WarehouseList_View"});	
+	this.addItem({"caption":"Склады","viewClassId":WarehouseList_View, "id":"WarehouseList_View"});	
+	this.addItem({"caption":"Адреса магазинов","viewClassId":SaleStoreAddressList_View, "id":"SaleStoreAddressList_View"});	
 	
 	this.addItem({"caption":"Прайсы","viewClassId":ClientPriceListList_View,"id":"ClientPriceListList_View"});
 	

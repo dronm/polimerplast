@@ -1,22 +1,23 @@
--- Function: doc_orders_set_shipped(integer, varchar(32),integer,integer,integer,integer,boolean)
+-- FUNCTION: public.doc_orders_set_shipped(integer, character varying, integer, integer, integer, integer, boolean, text)
 
--- DROP FUNCTION doc_orders_set_shipped(integer, varchar(32),integer,integer,integer,integer,boolean);
+-- DROP FUNCTION public.doc_orders_set_shipped(integer, character varying, integer, integer, integer, integer, boolean, text);
 
-CREATE OR REPLACE FUNCTION doc_orders_set_shipped(
-		in_doc_id integer,
-		in_view_id varchar(32),
-		in_driver_id integer,
-		in_deliv_vehicle_count integer,
-		in_vehicle_id integer,
-		in_deliv_destination_id integer,
-		in_destination_to_ttn boolean
+CREATE OR REPLACE FUNCTION public.doc_orders_set_shipped(
+	in_doc_id integer,
+	in_view_id character varying,
+	in_driver_id integer,
+	in_deliv_vehicle_count integer,
+	in_vehicle_id integer,
+	in_deliv_destination_id integer,
+	in_destination_to_ttn boolean,
+	in_batch_num text
 )
-  RETURNS void AS
-$BODY$
+    RETURNS void
+AS $BODY$
 DECLARE
    	r RECORD;
 	v_new_doc_id integer;
-	v_new_prod_k numeric;
+	--v_new_prod_k numeric;
 	v_quant numeric;
 	v_base_quant numeric;
 	v_total numeric;
@@ -69,10 +70,9 @@ BEGIN
 		 * создадим из данного документа еще один
 		 * если меньше - нового докум.не создаем
 		 */
-		IF (r.quant_confirmed_base_measure_unit<
-		r.quant_base_measure_unit) THEN
+		IF (r.quant_confirmed_base_measure_unit < r.quant_base_measure_unit) THEN
 			--Новый документ
-			v_new_prod_k = 1 - r.quant_confirmed_base_measure_unit/r.quant_base_measure_unit;
+			--v_new_prod_k = 1 - r.quant_confirmed_base_measure_unit / r.quant_base_measure_unit;
 			IF v_new_doc_id=0 THEN
 				--Создадим шапку нового документа
 				INSERT INTO doc_orders
@@ -121,7 +121,7 @@ BEGIN
 								''
 							ELSE ' '
 						END
-					||'Остатки по заявке №'||h.number,
+					||'Остатки по заявке №'||h.number||coalesce(', счет №'||h.ext_order_num,''),
 					
 					h.warehouse_id,
 					h.deliv_type,
@@ -181,13 +181,12 @@ BEGIN
 					v_new_doc_user_id);
 			END IF;
 			
-			/** Неподтвержденное количество
-			 * в новую строку нового документа
+			/**
+			 * Неподтвержденное количество в новую строку нового документа
 			 */
 			
-			--базовое количество
-			v_base_quant = 	r.quant_base_measure_unit-
-				r.quant_confirmed_base_measure_unit;
+			--базовое количество - остаток
+			v_base_quant = 	r.quant_base_measure_unit - r.quant_confirmed_base_measure_unit;
 
 			--количество в единице документа
 			SELECT doc_order_calc_quant(
@@ -198,13 +197,33 @@ BEGIN
 						r.mes_height,
 						v_base_quant
 			) INTO v_quant;	
-			v_total = round(coalesce(r.price,0)*v_base_quant,2);
-			--RAISE 'r.price=%, r.total=%,v_new_prod_k=%',r.price,r.total,v_new_prod_k;
-			v_volume = round(v_base_quant*r.base_measure_unit_vol_m,3);
-			v_weight = round(v_base_quant*r.base_measure_unit_weight_t,3);
 			
-			/*IF in_doc_id = 39694 THEN
-			END IF;	*/
+			-- *** Значения в подтвержденном количестве ***
+			v_volume = round(r.quant_confirmed_base_measure_unit * r.base_measure_unit_vol_m, 3);
+			v_weight = round(r.quant_confirmed_base_measure_unit * r.base_measure_unit_weight_t, 3);
+			
+			v_total = CASE
+					WHEN coalesce(r.quant_base_measure_unit,0) * coalesce(r.quant_confirmed_base_measure_unit,0)=0 THEN 0
+					WHEN r.price_round THEN
+						ceil(r.total / r.quant_base_measure_unit * r.quant_confirmed_base_measure_unit)
+					ELSE
+						round(r.total / r.quant_base_measure_unit * r.quant_confirmed_base_measure_unit,2)
+				END;
+				
+			v_total_pack = CASE
+				WHEN coalesce(r.quant_base_measure_unit,0) * coalesce(r.quant_confirmed_base_measure_unit,0)=0 THEN 0
+				ELSE
+					round(r.total_pack / r.quant_base_measure_unit * r.quant_confirmed_base_measure_unit,2)
+				END;
+				
+			v_total_deliv = CASE
+				WHEN coalesce(r.quant_base_measure_unit, 0) * coalesce(r.quant_confirmed_base_measure_unit, 0)=0 THEN 0
+				ELSE
+					round( coalesce(r.total_deliv, 0) / r.quant_base_measure_unit * r.quant_confirmed_base_measure_unit, 2)
+				END;
+			-- **************************
+			
+			--RAISE EXCEPTION 'v_total=%, r.price_round=%', v_total, r.price_round;
 			
 			INSERT INTO doc_orders_t_products
 				(doc_id,
@@ -224,6 +243,7 @@ BEGIN
 				volume,
 				weight,
 				price_edit,
+				price_round,
 				total_pack,
 				total_deliv,
 				price_no_deliv,
@@ -239,8 +259,8 @@ BEGIN
 				 */
 				v_quant,				
 				--цена из основного документа
-				coalesce(r.price,0),
-				v_total,
+				coalesce(r.price, 0),
+				r.total - v_total,
 				
 				r.mes_length,
 				r.mes_width,
@@ -253,19 +273,20 @@ BEGIN
 				v_base_quant,
 				v_base_quant,
 					
-				v_volume,
-				v_weight,
+				r.volume - v_volume,
+				r.weight - v_weight,
 				
 				TRUE, -- Чтобы цена НЕ пересчиталась ни при каких условиях!!! r.price_edit,
-				round(coalesce(r.total_pack,0)*v_new_prod_k,2),
+				r.price_round,
+				r.total_pack - v_total_pack,
 				
-				round(coalesce(r.total_deliv,0)*v_new_prod_k,2),
+				r.total_deliv - v_total_deliv,
 				
 				CASE
 					WHEN v_base_quant=0 THEN 0
-					ELSE (v_total - round(coalesce(r.total_deliv,0)*v_new_prod_k,2) ) / v_base_quant
+					ELSE ((r.total - v_total) - (r.total_deliv - v_total_deliv)) / v_base_quant
 				END,
-				v_total - round(coalesce(r.total_deliv,0)*v_new_prod_k,2)
+				(r.total - v_total) - (r.total_deliv - v_total_deliv)
 			);
 			
 		END IF;
@@ -290,28 +311,40 @@ BEGIN
 					r.mes_height,
 					r.quant_confirmed_base_measure_unit
 			) INTO v_quant;
-			v_volume = round(
-				r.quant_confirmed_base_measure_unit*
-				r.base_measure_unit_vol_m,3);
-			v_weight = round(r.quant_confirmed_base_measure_unit*
-				r.base_measure_unit_weight_t,3);
-			v_total = CASE
-					WHEN coalesce(r.quant_base_measure_unit,0)*coalesce(r.quant_confirmed_base_measure_unit,0)=0 THEN 0
-					ELSE round(r.total/r.quant_base_measure_unit*r.quant_confirmed_base_measure_unit,2)
-				END;
-			v_total_pack = CASE
-				WHEN coalesce(r.quant_base_measure_unit,0)*coalesce(r.quant_confirmed_base_measure_unit,0)=0 THEN 0
-				ELSE round(r.total_pack/r.quant_base_measure_unit*r.quant_confirmed_base_measure_unit,2)
-				END;
-			v_total_deliv = CASE
-				WHEN coalesce(r.quant_base_measure_unit,0)*coalesce(r.quant_confirmed_base_measure_unit,0)=0 THEN 0
-				ELSE round( coalesce(r.total_deliv,0)/r.quant_base_measure_unit*r.quant_confirmed_base_measure_unit,2)
-				END;
+			
+			IF (r.quant_confirmed_base_measure_unit > r.quant_base_measure_unit) THEN
+				v_volume = round(
+					r.quant_confirmed_base_measure_unit *
+					r.base_measure_unit_vol_m, 3
+				);
+				v_weight = round(r.quant_confirmed_base_measure_unit *
+					r.base_measure_unit_weight_t, 3
+				);
+				v_total = CASE
+						WHEN coalesce(r.quant_base_measure_unit,0) * coalesce(r.quant_confirmed_base_measure_unit,0)=0 THEN 0
+						WHEN r.price_round THEN
+							ceil(r.total / r.quant_base_measure_unit * r.quant_confirmed_base_measure_unit)
+						ELSE
+							round(r.total / r.quant_base_measure_unit * r.quant_confirmed_base_measure_unit,2)
+					END;
+					
+				v_total_pack = CASE
+						WHEN coalesce(r.quant_base_measure_unit,0) * coalesce(r.quant_confirmed_base_measure_unit,0)=0 THEN 0
+						ELSE
+							round(r.total_pack / r.quant_base_measure_unit * r.quant_confirmed_base_measure_unit,2)
+					END;
+					
+				v_total_deliv = CASE
+						WHEN coalesce(r.quant_base_measure_unit,0) * coalesce(r.quant_confirmed_base_measure_unit,0)=0 THEN 0
+						ELSE
+							round( coalesce(r.total_deliv,0) / r.quant_base_measure_unit * r.quant_confirmed_base_measure_unit,2)
+					END;
+			END IF;
 		END IF;
---RAISE EXCEPTION 'v_total_deliv=%',v_total_deliv;				
+--RAISE EXCEPTION 'v_total=%',v_total;				
 --RAISE EXCEPTION 'price_no_deliv=%',round( (v_total-v_total_deliv) / r.quant_confirmed_base_measure_unit,2);		
-		/** То что подтверждено -
-		 * в реальную таблицу
+		/**
+		 * То что подтверждено - в реальную таблицу
 		 */
 		INSERT INTO doc_orders_t_products
 			(doc_id,
@@ -331,6 +364,7 @@ BEGIN
 			volume,
 			weight,
 			price_edit,
+			price_round,
 			total_pack,
 			total_deliv,
 			price_no_deliv,
@@ -357,6 +391,7 @@ BEGIN
 			v_weight,
 			
 			r.price_edit,
+			r.price_round,
 			v_total_pack,
 			
 			v_total_deliv,
@@ -441,13 +476,15 @@ BEGIN
 		OR in_deliv_vehicle_count IS NOT NULL
 		OR in_deliv_destination_id>0
 		OR in_destination_to_ttn IS NOT NULL
+		OR coalesce(in_batch_num, '') <>''		
 	THEN
 		UPDATE doc_orders
 		SET
 			driver_id = CASE WHEN in_driver_id>0 THEN in_driver_id ELSE driver_id END,
 			vehicle_id = CASE WHEN in_vehicle_id>0 THEN in_vehicle_id ELSE vehicle_id END,
 			deliv_destination_id = CASE WHEN in_deliv_destination_id>0 THEN in_deliv_destination_id ELSE deliv_destination_id END,
-			destination_to_ttn = CASE WHEN in_destination_to_ttn IS NOT NULL THEN in_destination_to_ttn ELSE destination_to_ttn END,			
+			destination_to_ttn = CASE WHEN in_destination_to_ttn IS NOT NULL THEN in_destination_to_ttn ELSE destination_to_ttn END,
+			batch_num = CASE WHEN coalesce(in_batch_num, '') <>'' THEN in_batch_num ELSE batch_num END,						
 			deliv_total =
 				CASE
 					WHEN coalesce(deliv_vehicle_count,0)=0 THEN deliv_total
@@ -474,9 +511,10 @@ BEGIN
 	END IF;	*/
 	
 	RETURN;
-END;		
+END;
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100 CALLED ON NULL INPUT;
-ALTER FUNCTION doc_orders_set_shipped(integer, varchar(32),integer,integer,integer,integer,boolean)
-  OWNER TO polimerplast;
+ALTER FUNCTION public.doc_orders_set_shipped(integer, character varying, integer, integer, integer, integer, boolean, text)
+    OWNER TO polimerplast;
+

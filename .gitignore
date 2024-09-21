@@ -5,6 +5,7 @@ Config.uniq.php
 page.xml
 test.php
 build/build.log
+build/Auth.txt
 output
 js20/controls
 js20/core

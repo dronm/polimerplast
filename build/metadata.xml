@@ -2,7 +2,7 @@
 <metadata debug="TRUE" owner="polimerplast" dataSchema="public">
 	<versions>
 		<version dateOpen="2016-06-07 07:05" dateClose="2016-06-07 11:06:25">1.0021</version>
-		<lastBuild>2021-02-17 15:51:58</lastBuild>
+		<lastBuild>2024-09-21 06:53:12</lastBuild>
 		<version dateOpen="2016-06-07 11:06:56"/>
 		<version dateOpen="2016-06-07 11:06:57" dateClose="2016-06-07 14:06:30">1.0022</version>
 		<version dateOpen="2016-06-07 14:06:32" dateClose="2016-06-07 16:06:31">1.0023</version>
@@ -127,7 +127,19 @@
 		<version dateOpen="2020-01-31 12:01:28" dateClose="2020-01-31 12:01:31">1.0133</version>
 		<version dateOpen="2020-03-02 07:03:12" dateClose="2020-03-02 07:03:14">1.0134</version>
 		<version dateOpen="2020-04-28 17:04:47" dateClose="2021-02-17 08:02:23">1.0135</version>
-	<version dateOpen="2021-02-17 15:02:51" dateClose="2021-02-17 15:02:52">1.0136</version></versions>
+		<version dateOpen="2021-02-17 15:02:51" dateClose="2021-02-17 15:02:52">1.0136</version>
+		<version dateOpen="2022-06-20 12:06:43" dateClose="2022-07-05 09:07:44">1.0137</version>
+		<version dateOpen="2022-07-07 08:07:54" dateClose="2022-07-07 08:07:56">1.0138</version>
+		<version dateOpen="2022-07-08 09:07:50" dateClose="2022-07-11 07:07:46">1.0139</version>
+		<version dateOpen="2023-03-27 07:03:59" dateClose="2023-03-27 08:03:06">1.0140</version>
+		<version dateOpen="2023-07-14 13:07:02" dateClose="2023-07-20 14:07:09">1.0141</version>
+		<version dateOpen="2023-07-26 07:07:40" dateClose="2023-07-26 07:07:44">1.0142</version>
+		<version dateOpen="2024-02-27 12:02:12" dateClose="2024-03-14 06:03:25">1.0143</version>
+		<version dateOpen="2024-03-27 12:03:21" dateClose="2024-03-27 12:03:52">1.0144</version>
+		<version dateOpen="2024-04-08 12:07:47" dateClose="2024-04-08 12:09:20">1.0145</version>
+		<version dateOpen="2024-06-25 16:22:52" dateClose="2024-09-12 14:27:58">1.0146</version>
+		<version dateOpen="2024-09-21 06:52:17" dateClose="2024-09-21 06:53:17">1.0147</version>
+	</versions>
 	<globalFilters>
 		<field id="client_id"/>
 	</globalFilters>
@@ -236,7 +248,7 @@
 			<field id="nds" dataType="Bool"/>
 			<field id="cash" dataType="Bool"/>
 			<field id="deleted" dataType="Bool" defaultValue="FALSE"/>
-			<field id="order_no_carrier_print" dataType="Bool" defaultValue="FALSE"/>			
+			<field id="order_no_carrier_print" dataType="Bool" defaultValue="FALSE"/>
 		</model>
 		<model id="FirmList" parent="ModelSQL" dataTable="firm_list" virtual="FALSE">
 			<field id="id" dataType="Int" primaryKey="TRUE"/>
@@ -805,6 +817,23 @@
 			<field id="warehouse_id" dataType="Int" required="TRUE" refTable="warehouses" refField="id" primaryKey="TRUE"/>
 			<field id="warehouse_descr" dataType="String"/>
 		</model>
+		<model id="Product1cName" parent="ModelSQL" dataTable="product_1c_names" virtual="FALSE">
+			<field id="id" primaryKey="TRUE" dataType="Int" autoInc="TRUE"/>
+			<field id="product_id" dataType="Int" required="TRUE" refTable="products" refField="id"/>
+			<field id="firm_id" dataType="Int" required="TRUE" refTable="firms" refField="id"/>
+			<field id="name_for_1c" dataType="String" required="TRUE" length="100"/>
+			<index id="product_1c_names_org_idx" unique="TRUE">
+				<field id="product_id"/>
+				<field id="firm_id"/>
+			</index>
+		</model>
+		<model id="Product1cNameList" parent="ModelSQL" dataTable="product_1c_names_list" virtual="FALSE">
+			<field id="id" primaryKey="TRUE" dataType="Int" autoInc="TRUE"/>
+			<field id="product_id" dataType="Int" required="TRUE" refTable="products" refField="id"/>
+			<field id="firm_id" dataType="Int" required="TRUE" refTable="firms" refField="id"/>
+			<field id="firm_descr" dataType="String"/>
+			<field id="name_for_1c" dataType="String" length="100"/>
+		</model>
 		<model id="DOCOrder" parent="ModelSQLDOCPl" dataTable="doc_orders" virtual="FALSE" modelType="DOC" docTypeId="order">
 			<defaultOrder>
 				<field id="date_time"/>
@@ -873,6 +902,9 @@
 			<field id="vehicle_id" dataType="Int" refTable="vehicles" refField="id"/>
 			<field id="client_contract_ext_id" dataType="String" length="36"/>
 			<field id="client_contract_name" dataType="String" length="150"/>
+			<field id="sale_store_address_id" dataType="Int" refTable="sale_store_addresses" refField="id" alias="Адрес магазина"/>
+			<field id="order_num" dataType="Text" alias="Номер заказа"/>
+			<field id="batch_num" dataType="Text" alias="Номер партии"/>
 			<index id="doc_orders_date_time_index" unique="FALSE">
 				<field id="date_time"/>
 			</index>
@@ -1084,6 +1116,7 @@
 			<field id="debt_total" dataType="Float" length="19" precision="2"/>
 			<field id="vehicle_id" dataType="Int"/>
 			<field id="vehicle_descr" dataType="String"/>
+			<field id="attachments" dataType="JSONB" noValueOnCopy="TRUE"/>
 		</model>
 		<model id="DOCOrderDivisDialog" parent="ModelSQL" dataTable="doc_orders_divis_dialog" virtual="TRUE">
 			<field id="main_doc_id" dataType="Int" primaryKey="TRUE"/>
@@ -1168,6 +1201,7 @@
 			<field id="weight" dataType="Float" length="19" precision="4"/>
 			<field id="price" dataType="Float" length="15" precision="2" alias="Цена"/>
 			<field id="price_edit" dataType="Bool" default="FALSE"/>
+			<field id="price_round" dataType="Bool" default="FALSE"/>
 			<field id="total" dataType="Float" length="15" precision="2" alias="Сумма"/>
 			<field id="total_pack" dataType="Float" length="15" precision="2" alias="Сумма"/>
 			<field id="pack_exists" dataType="Bool"/>
@@ -1203,6 +1237,7 @@
 			<field id="price" dataType="Float" length="15" precision="2" alias="Цена"/>
 			<field id="price_no_deliv" dataType="Float" length="15" precision="2" alias="Цена без доставки"/>
 			<field id="price_edit" dataType="Bool"/>
+			<field id="price_round" dataType="Bool"/>
 			<field id="total" dataType="Float" length="15" precision="2" alias="Сумма"/>
 			<field id="total_pack" dataType="Float" length="15" precision="2" alias="Упаковка"/>
 			<field id="pack_exists" dataType="Bool"/>
@@ -1408,6 +1443,7 @@
 			<field id="client_contract_end" dataType="String"/>
 			<field id="doc_number" dataType="String" alias="Номер заказа"/>
 			<field id="firm_descr" dataType="String" alias="Фирма"/>
+			<field id="doc_last_state" dataType="String" alias="Последний статус"/>
 			<field id="production_city_descr" dataType="String" alias="Город отгрузки"/>
 			<field id="doc_delivery_plan_date" dataType="String"/>
 			<field id="doc_in_time" dataType="Bool"/>
@@ -1858,6 +1894,44 @@
 			<field id="ext_bank_account_id" dataType="String" alias="Ссылка 1с на р/счет контрагента"/>
 			<field id="ext_bank_account_descr" dataType="Text" alias="Расчетный счет"/>
 		</model>
+		<model id="DocOrderAttachment" parent="ModelSQL" dataTable="doc_order_attachments" virtual="FALSE">
+			<field id="id" dataType="String" primaryKey="TRUE" required="TRUE" length="36"/>
+			<field id="date_time" dataType="DateTimeTZ" required="TRUE" defaultValue="CURRENT_TIMESTAMP"/>
+			<field id="doc_order_id" dataType="Int" refTable="doc_orders" refField="id"/>
+			<field id="file_inf" dataType="JSONB"/>
+			<field id="file_data" dataType="Text"/>
+			<field id="preview_data" dataType="Text"/>
+			<index id="doc_order_attachments_doc_idx">
+				<field id="doc_order_id"/>
+			</index>
+		</model>
+		<model id="SaleStoreAddress" parent="ModelSQL" dataTable="sale_store_addresses" virtual="FALSE">
+			<field id="id" dataType="Int" primaryKey="TRUE" autoInc="TRUE"/>
+			<field id="code" dataType="String" length="10" required="TRUE" alias="Код"/>
+			<field id="name" dataType="Text" required="TRUE" alias="Наименование адреса"/>
+			<index id="sale_store_addresses_name_idx">
+				<field id="name"/>
+			</index>
+		</model>
+		<model id="DOCOrderDOCTProdBatch" parent="ModelSQLDOCT20" dataTable="doc_orders_t_tmp_prod_batches" virtual="FALSE" modelType="DOCT" masterModel="DOCOrder">
+			<field id="view_id" dataType="String" length="32" primaryKey="TRUE"/>
+			<field id="line_number" dataType="Int" primaryKey="TRUE"/>
+			<field id="login_id" dataType="Int" primaryKey="TRUE"/>
+			<field id="ext_id" dataType="String" length="36" alias="Ссылка 1с"/>
+			<field id="batch_descr" dataType="Text" alias="Description 1с"/>
+		</model>
+		<model id="DOCOrderDOCTProdBatchList" parent="ModelSQLDOCT20" dataTable="doc_orders_t_tmp_prod_batches_list" virtual="TRUE" modelType="DOCT" masterModel="DOCOrder">
+			<field id="view_id" dataType="String" length="32" primaryKey="TRUE"/>
+			<field id="line_number" dataType="Int" primaryKey="TRUE"/>
+			<field id="ext_id" dataType="String" length="36" alias="Ссылка 1с"/>
+			<field id="batch_descr" dataType="Text" alias="Description 1с"/>
+		</model>
+		<model id="DOCOrderDOCTFProdBatch" parent="ModelSQL" dataTable="doc_orders_t_prod_batches" virtual="FALSE" modelType="DOCTF" masterModel="DOCOrder">
+			<field id="doc_id" dataType="Int" refTable="doc_orders" refField="id" primaryKey="TRUE"/>
+			<field id="line_number" dataType="Int" primaryKey="TRUE"/>
+			<field id="batch_descr" dataType="Text" required="TRUE"/>
+			<field id="ext_id" dataType="String" length="36" required="TRUE"/>
+		</model>
 	</models>
 	<constants>
 		<constant id="client_geo_zone_radius_m" name="Радиус (метры) геозон клиентов" descr="Геозона клиента представляет из себя окружность, которая строится на основании точки на карте, поставленной клиентом, и радиуса в метрах, заданного данной величиной" dataType="Int" defaultValue="50"/>
@@ -1874,6 +1948,7 @@
 		<constant id="order_deliv_add_cost_to_product" name="Значение по умолчанию для счета: включать стоимость доставки пропорционально в стоимость продукции" descr="" dataType="Bool" defaultValue="FALSE"/>
 		<constant id="order_destination_to_ttn" name="Значение по умолчанию для счета: Переносить адрес доставки в ТТН" descr="" dataType="Bool" defaultValue="FALSE"/>
 		<constant id="order_no_carrier_print" name="Если перевозчик не задан, обрабатывать как НАШИ АВТО" descr="" dataType="Bool" defaultValue="FALSE"/>
+		<constant id="allowed_extesions" name="Разрешенные расширения файлдов для загрузки" descr="Список расширений через запятую, разрешенных для загрузки" dataType="Text" defaultValue="jpg,png,jpeg,pdf,doc,docx,xls,xlsx" autoload="FALSE"/>
 	</constants>
 	<controllers>
 		<controller id="User" parentId="ControllerSQL" state="TRUE" noState="TRUE">
@@ -2272,6 +2347,7 @@
 				<field id="vehicle_id" dataType="Int"/>
 				<field id="deliv_destination_id" dataType="Int"/>
 				<field id="destination_to_ttn" dataType="Bool" defaultValue="FALSE"/>
+				<field id="batch_num" dataType="Text"/>
 			</publicMethod>
 			<publicMethod id="get_ship_docs">
 				<field id="doc_id" dataType="Int" required="TRUE"/>
@@ -2351,6 +2427,7 @@
 				<field id="pack_in_price" dataType="Bool" required="TRUE"/>
 				<field id="deliv_to_third_party" dataType="Bool" required="TRUE"/>
 				<field id="price_edit" dataType="Bool" required="TRUE"/>
+				<field id="price_round" dataType="Bool" required="FALSE"/>
 				<field id="price" dataType="Float" length="15" precision="2"/>
 			</publicMethod>
 			<publicMethod id="calc_quant">
@@ -2391,6 +2468,26 @@
 			<publicMethod id="append">
 				<field id="target_doc_id" dataType="Int" required="TRUE"/>
 				<field id="source_doc_id_list" dataType="String" required="TRUE"/>
+			</publicMethod>
+			<publicMethod id="add_file" encType="multipart" requestType="post">
+				<field id="doc_order_id" dataType="Int" required="TRUE"/>
+				<field id="file_data" dataType="Text"/>
+				<field id="file_id" dataType="String" length="36" required="TRUE"/>
+			</publicMethod>
+			<publicMethod id="delete_file">
+				<field id="doc_order_id" dataType="Int" required="TRUE"/>
+				<field id="file_id" dataType="String" length="36" required="TRUE"/>
+			</publicMethod>
+			<publicMethod id="get_file">
+				<field id="doc_order_id" dataType="Int" required="TRUE"/>
+				<field id="file_id" dataType="String" length="36" required="TRUE"/>
+				<field id="inline" dataType="Int"/>
+			</publicMethod>
+			<publicMethod id="get_files_list">
+				<field id="doc_order_id" dataType="Int" required="TRUE"/>
+			</publicMethod>
+			<publicMethod id="get_nonegraphic_files_list">
+				<field id="doc_order_id" dataType="Int" required="TRUE"/>
 			</publicMethod>
 		</controller>
 		<controller id="DOCOrderDOCTProduct" parentId="ControllerSQL" state="TRUE">
@@ -2789,7 +2886,7 @@
 			<publicMethod id="get_list" modelId="ProductGroupList"/>
 			<publicMethod id="get_object" modelId="ProductGroupList"/>
 		</controller>
-		<controller id="ProjectManager" parentId="Controller">
+		<!--<controller id="ProjectManager" parentId="Controller">
 			<publicMethod id="open_version">
 				<field id="version" dataType="String" length="15"/>
 			</publicMethod>
@@ -2809,6 +2906,7 @@
 			<publicMethod id="apply_patch"/>
 			<publicMethod id="apply_sql"/>
 		</controller>
+		-->
 		<controller id="Naspunkt" parentId="ControllerSQL" state="TRUE">
 			<publicMethod id="insert" modelId="Naspunkt"/>
 			<publicMethod id="update" modelId="Naspunkt"/>
@@ -2860,6 +2958,38 @@
 			<publicMethod id="delete" modelId="ClientFirmBankAccount"/>
 			<publicMethod id="get_list" modelId="ClientFirmBankAccountList"/>
 			<publicMethod id="get_object" modelId="ClientFirmBankAccountList"/>
+		</controller>
+		<controller id="Product1cName" parentId="ControllerSQL" state="TRUE">
+			<publicMethod id="insert" modelId="Product1cName"/>
+			<publicMethod id="update" modelId="Product1cName"/>
+			<publicMethod id="delete" modelId="Product1cName"/>
+			<publicMethod id="get_list" modelId="Product1cNameList"/>
+			<publicMethod id="get_object" modelId="Product1cNameList"/>
+		</controller>
+		<controller id="SaleStoreAddress" parentId="ControllerSQL" state="TRUE" noState="TRUE">
+			<publicMethod id="insert" modelId="SaleStoreAddress"/>
+			<publicMethod id="update" modelId="SaleStoreAddress"/>
+			<publicMethod id="delete" modelId="SaleStoreAddress"/>
+			<publicMethod id="get_list" modelId="SaleStoreAddress"/>
+			<publicMethod id="get_object" modelId="SaleStoreAddress"/>
+		</controller>
+		<controller id="ProdBatch" parentId="ControllerSQL" state="TRUE" noState="TRUE">
+			<publicMethod id="get_list" condFields="TRUE">
+				<field id="doc_order_id" dataType="Int"/>
+			</publicMethod>
+			<publicMethod id="complete_from_1c">
+				<field id="doc_order_id" dataType="Int" required="TRUE"/>
+				<field id="pattern" dataType="String" required="TRUE"/>
+			</publicMethod>
+		</controller>
+		<controller id="DOCOrderDOCTProdBatch" parentId="ControllerSQL" state="TRUE">
+			<publicMethod id="insert" modelId="DOCOrderDOCTProdBatch"/>
+			<publicMethod id="update" modelId="DOCOrderDOCTProdBatch"/>
+			<publicMethod id="delete" modelId="DOCOrderDOCTProdBatch"/>
+			<publicMethod id="get_list" modelId="DOCOrderDOCTProdBatchList">
+				<field id="view_id" dataType="String" length="32" required="TRUE"/>
+			</publicMethod>
+			<publicMethod id="get_object" modelId="DOCOrderDOCTProdBatchList"/>
 		</controller>
 	</controllers>
 	<permissions>
@@ -3037,6 +3167,7 @@
 		<jsScript file="common/DOMHandler.js"/>
 		<jsScript file="common/EventHandler.js"/>
 		<!-- CORE-->
+		<jsScript file="core/AppWin.js"/>
 		<jsScript file="core/Controller.js"/>
 		<jsScript file="core/ControllerDb.js"/>
 		<jsScript file="core/Field.js"/>
@@ -3054,6 +3185,8 @@
 		<jsScript file="core/FieldPassword.js"/>
 		<jsScript file="core/FieldGeomPoint.js"/>
 		<jsScript file="core/FieldGeomPolygon.js"/>
+		<jsScript file="core/FieldJSON.js"/>
+		<jsScript file="core/FieldJSONB.js"/>
 		<jsScript file="core/DataSource.js"/>
 		<jsScript file="core/Model.js"/>
 		<jsScript file="core/ModelSingleRow.js"/>
@@ -3070,9 +3203,18 @@
 		<jsScript file="core/ValidatorTime.js"/>
 		<jsScript file="core/ValidatorDateTime.js"/>
 		<jsScript file="core/ValidatorCellPhone.js"/>
+		<jsScript file="core/ValidatorJSON.js"/>
 		<jsScript file="core/ListFilter.js"/>
 		<jsScript file="core/ListGroupper.js"/>
 		<jsScript file="core/ConstantManager.js"/>
+		<jsScript file="core/CommonHelper.js"/>
+		<jsScript file="core/DateHelper.js"/>
+		<jsScript file="core/DOMHelper.js"/>
+		<jsScript file="core/FatalException.js"/>
+		<jsScript file="core/DbException.js"/>
+		<jsScript file="core/VersException.js"/>
+		<!-- <jsScript file="core/Response.js" /> -->
+		<!-- <jsScript file="core/ResponseXML.js" /> -->
 		<!-- basic window-->
 		<jsScript file="controlsBS/WindowForm.js"/>
 		<!-- draggable window-->
@@ -3088,6 +3230,7 @@
 		<!-- controls-->
 		<jsScript file="controlsBS/WindowQuestion.js"/>
 		<jsScript file="controlsBS/WindowMessage.js"/>
+		<jsScript file="controlsBS/WindowTempMessage.js"/>
 		<jsScript file="controlsBS/WindowPrint.js"/>
 		<jsScript file="controlsBS/Control.js"/>
 		<jsScript file="controlsBS/ControlContainer.js"/>
@@ -3233,6 +3376,7 @@
 		<jsScript file="controllers/ClientUser_Controller.js"/>
 		<jsScript file="controllers/ClientContract_Controller.js"/>
 		<jsScript file="controllers/Firm_Controller.js"/>
+		<jsScript file="controllers/SaleStoreAddress_Controller.js"/>
 		<jsScript file="controllers/Product_Controller.js"/>
 		<jsScript file="controllers/ClientPriceList_Controller.js"/>
 		<jsScript file="controllers/ProductionCity_Controller.js"/>
@@ -3305,6 +3449,7 @@
 		<jsScript file="views/UserWarehouseInline_View.js"/>
 		<jsScript file="views/FirmList_View.js"/>
 		<jsScript file="views/FirmInline_View.js"/>
+		<jsScript file="views/SaleStoreAddressInline_View.js"/>
 		<jsScript file="views/DeliveryPeriodList_View.js"/>
 		<jsScript file="views/DeliveryPeriodInline_View.js"/>
 		<jsScript file="views/ClientPriceListList_View.js"/>
@@ -3334,6 +3479,7 @@
 		<jsScript file="views/DOCOrderCancel_View.js"/>
 		<jsScript file="views/Catalogs_View.js"/>
 		<jsScript file="views/WarehouseList_View.js"/>
+		<jsScript file="views/SaleStoreAddressList_View.js"/>
 		<jsScript file="views/WarehouseDialog_View.js"/>
 		<jsScript file="views/ProductList_View.js"/>
 		<jsScript file="views/ProductDialog_View.js"/>
@@ -3344,6 +3490,8 @@
 		<jsScript file="views/ProductCustomSizePriceList_View.js"/>
 		<jsScript file="views/ProductCustomSizePriceInline_View.js"/>
 		<jsScript file="views/ProductWarehouseList_View.js"/>
+		<jsScript file="views/Product1cNameList_View.js"/>
+		<jsScript file="views/Product1cNameInline_View.js"/>
 		<jsScript file="views/ProductWarehouseInline_View.js"/>
 		<jsScript file="views/CustomerSurveyQuestionList_View.js"/>
 		<jsScript file="views/CustomerSurveyQuestionInline_View.js"/>
@@ -3407,6 +3555,9 @@
 		<jsScript file="views/AccPKOList_View.js"/>
 		<jsScript file="views/RepVehicleStop_View.js"/>
 		<jsScript file="views/DOCOrderAppend_View.js"/>
+		<jsScript file="views/ProdBatch1CList_View.js"/>
+		<jsScript file="views/DOCOrderDOCTProdBatchList_View.js"/>
+		<jsScript file="views/DOCOrderDOCTProdBatchInline_View.js"/>
 		<jsScript file="custom_controls/UnregClientCheck.js"/>
 		<jsScript file="custom_controls/ClientAttrs.js"/>
 		<jsScript file="custom_controls/ClientUserGridRowCommands.js"/>
@@ -3463,6 +3614,9 @@
 		<jsScript file="custom_controls/DOCOrderChildren.js"/>
 		<jsScript file="custom_controls/DOCOrderCancelCause.js"/>
 		<jsScript file="custom_controls/BtnRefreshClientDebts.js"/>
+		<jsScript file="custom_controls/EditFile.js"/>
+		<jsScript file="custom_controls/rs/EditFile.rs_ru.js" resource="ru"/>
+		<jsScript file="custom_controls/ProdBatchEdit.js"/>
 		<!--Drag && Drop-->
 		<jsScript file="extra/DragnDrop/DragObject.js"/>
 		<jsScript file="extra/DragnDrop/DropTarget.js"/>
@@ -3620,6 +3774,36 @@
 		<jsScript file="models/ClientFirmBankAccount_Model.js"/>
 		<jsScript file="models/ClientFirmBankAccountList_Model.js"/>
 		<jsScript file="controllers/ClientFirmBankAccount_Controller.js"/>
+		<jsScript file="models/Product1cName_Model.js"/>
+		<jsScript file="models/Product1cNameList_Model.js"/>
+		<jsScript file="controllers/Product1cName_Controller.js"/>
+		<jsScript file="models/DocOrderAttachment_Model.js"/>
+		<jsScript file="models/SaleStoreAddress_Model.js"/>
+		<jsScript file="controllers/ProdBatch_Controller.js"/>
+		<jsScript file="controllers/ProdBatch_Controller.js"/>
+		<jsScript file="models/DOCOrderDOCTProdBatch_Model.js"/>
+		<jsScript file="models/DOCOrderDOCTProdBatch_Model.js"/>
+		<jsScript file="models/DOCOrderDOCTProdBatchList_Model.js"/>
+		<jsScript file="models/DOCOrderDOCTFProdBatch_Model.js"/>
+		<jsScript file="controllers/DOCOrderDOCTProdBatch_Controller.js"/>
+		<jsScript file="controllers/DOCOrderDOCTProdBatch_Controller.js"/>
+		<jsScript file="models/DOCOrderDOCTProdBatch_Model.js"/>
+		<jsScript file="models/DOCOrderDOCTProdBatchList_Model.js"/>
+		<jsScript file="models/DOCOrderDOCTFProdBatch_Model.js"/>
+		<jsScript file="controllers/ProdBatch_Controller.js"/>
+		<jsScript file="controllers/ProdBatch_Controller.js"/>
+		<jsScript file="models/DOCOrderDOCTProdBatch_Model.js"/>
+		<jsScript file="controllers/DOCOrderDOCTProdBatch_Controller.js"/>
+		<jsScript file="controllers/DOCOrder_Controller.js"/>
+		<jsScript file="models/DOCOrderDOCTProduct_Model.js"/>
+		<jsScript file="models/DOCOrderDOCTFProduct_Model.js"/>
+		<jsScript file="controllers/DOCOrder_Controller.js"/>
+		<jsScript file="models/DOCOrderDOCTProduct_Model.js"/>
+		<jsScript file="controllers/DOCOrderDOCTProduct_Controller.js"/>
+		<jsScript file="controllers/ProdBatch_Controller.js"/>
+		<jsScript file="models/DOCOrderDOCTFProdBatch_Model.js"/>
+		<jsScript file="controllers/DOCOrder_Controller.js"/>
+		<jsScript file="js/controllers/DOCOrder_Controller.js"/>
 	</jsScripts>
 	<cssScripts>
 		<cssScript file="bootstrap.min.css" compressed="TRUE" standalone="TRUE"/>

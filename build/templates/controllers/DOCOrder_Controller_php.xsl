@@ -366,6 +366,17 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 			"products"
 		);		
 		
+		//только графические типы!!!
+		$this->addNewModel(
+			sprintf("SELECT	
+					encode(file_data, 'base64') AS file_data
+				FROM doc_order_attachments
+				WHERE doc_order_id=%d AND file_inf->>'mime' = 'image/jpeg'"
+				,$docIdForDb
+			)			
+			,'FileList_Model'
+		);					
+
 		//Отметка о печати если напечатал производство
 		if ($_SESSION['role_id']=='production' || $_SESSION['role_id']=='representative'){
 			$this->getDbLinkMaster()->query(sprintf(
@@ -798,7 +809,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 		
 		$this->addNewModel(
 		sprintf("SELECT * FROM doc_order_totals(
-			%d,%d,%d,%d,%d,%d,%f,%d,%s,%s,%s,%s,%f)
+			%d,%d,%d,%d,%d,%d,%f,%d,%s,%s,%s,%s,%s,%f)
 		AS (
 			base_quant numeric,
 			volume_m numeric,
@@ -818,6 +829,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 		$params->getParamById('pack_in_price'),
 		$params->getParamById('deliv_to_third_party'),
 		$params->getParamById('price_edit'),
+		$params->getParamById('price_round'),
 		$params->getParamById('price')
 		));
 	}
@@ -1271,7 +1283,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 					'vh_trailer_plate'=>$ar['vh_trailer_plate'],
 					'vh_trailer_model'=>$ar['vh_trailer_model'],
 					'ext_order_id'=>$ar['ext_order_id'],
-					'ext_order_num'=>$ar['ext_order_num'],
+					'ext_order_num'=> isset($ar['ext_order_num'])? $ar['ext_order_num'] : null,
 					'ext_ship_id'=>$ar['ext_ship_id'],
 					'client_comment'=>$ar['client_comment'],
 					'sales_manager_comment'=>$ar['sales_manager_comment'],
@@ -1279,14 +1291,18 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 					'deliv_vehicle_count'=>$ar['deliv_vehicle_count'],
 					'number'=>$ar['number'],
 					'firm_nds'=>$ar['firm_nds'],
-					'delivery_plan_date'=>$ar['delivery_plan_date'],
+					'delivery_plan_date'=>isset($ar['delivery_plan_date'])? $ar['delivery_plan_date'] : null,
 					'total_volume'=>$ar['total_volume'],
 					'total_weight'=>$ar['total_weight'],
 					'deliv_expenses'=>$ar['deliv_expenses'],
 					'client_contract_ext_id'=>$ar['client_contract_ext_id'],
 					'firm_bank_acc_ext_id'=>$ar['firm_bank_acc_ext_id'],
 					'deliv_add_cost_to_product'=>$ar['deliv_add_cost_to_product'],
-					'deliv_add_cost_to_product_total'=>$ar['deliv_add_cost_to_product_total']
+					'deliv_add_cost_to_product_total'=>$ar['deliv_add_cost_to_product_total'],
+					'order_num'=>$ar['order_num'],
+					'sale_store_address_code'=>$ar['sale_store_address_code'],
+					'batch_num'=>$ar['batch_num'],
+					'prod_batches'=>$ar['prod_batches']
 					);
 			}
 			if ($ar['product_name']){
@@ -1421,12 +1437,14 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 		$params->addAll();
 		
 		$doc_id = $params->getDbVal('doc_id');
+		$view_id = $params->getDbVal('view_id');
 		
 		$driver_id = (strtolower($params->getDbVal('driver_id'))=='null'||!$params->getDbVal('driver_id'))? 0:$params->getDbVal('driver_id');
 		$deliv_vehicle_count = (strtolower($params->getDbVal('deliv_vehicle_count'))=='null'||!$params->getDbVal('deliv_vehicle_count'))? 'NULL':$params->getDbVal('deliv_vehicle_count');
 		$vehicle_id = (strtolower($params->getDbVal('vehicle_id'))=='null'||!$params->getDbVal('vehicle_id'))? 0:$params->getDbVal('vehicle_id');
 		$deliv_destination_id = (strtolower($params->getDbVal('deliv_destination_id'))=='null'||!$params->getDbVal('deliv_destination_id'))? 0:$params->getDbVal('deliv_destination_id');
 		$destination_to_ttn = (strtolower($params->getDbVal('destination_to_ttn'))=='null')? 'NULL':$params->getDbVal('destination_to_ttn');
+		$batch_num = (strtolower($params->getDbVal('batch_num'))=='null')? 'NULL' : $params->getDbVal('batch_num');
 		
 		$this->check_state($doc_id,"'produced'");
 		
@@ -1438,16 +1456,30 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 		$link = $this->getDbLinkMaster();
 		$link->query('BEGIN');		
 		try{
+			//batches
+			$link->query(sprintf("DELETE FROM doc_orders_t_prod_batches WHERE doc_id=%d", $doc_id));
+			$link->query(sprintf(
+			"INSERT INTO doc_orders_t_prod_batches
+				(doc_id,line_number, ext_id, batch_descr)
+				(SELECT
+					%d,line_number,
+					ext_id, batch_descr
+				FROM doc_orders_t_tmp_prod_batches
+				WHERE view_id=%s)",
+			$doc_id,
+			$view_id));
+
 			//Отгрузка в БД
 			$link->query(sprintf(
-				"SELECT doc_orders_set_shipped(%d,%s,%d,%s,%d,%d,%s)",
+				"SELECT doc_orders_set_shipped(%d, %s, %d, %s, %d, %d, %s, %s)",
 				$doc_id,
 				$params->getDbVal('view_id'),
 				$driver_id,
 				$deliv_vehicle_count,
 				$vehicle_id,
 				$deliv_destination_id,
-				$destination_to_ttn
+				$destination_to_ttn,
+				$batch_num
 			));
 			
 			//ДАННЫЕ ДЛЯ 1С
@@ -1494,7 +1526,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 			и все смс/емайлы отправлялись, просто был обрыв и браузер об этом не знает,
 			в этом случае ничего не делаем!!!
 			*/
-			if (!strlen($head['ext_ship_id'])){
+			if (is_null($head['ext_ship_id']) || !strlen($head['ext_ship_id'])){
 				//Паспорт качества
 				$sert_tmp_file = NULL;
 				$this->makePassport($link,$doc_id);
@@ -1548,6 +1580,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 				$doc_id
 				));		
 		
+				//zip file with print forms.
 				$tmp_file = ExtProg::print_shipment(
 						$ttn_attrs['ext_ship_id'],
 						$ttn_attrs,
@@ -1555,11 +1588,10 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 						0,
 						array('toFile'=>true,'name'=>uniqid().'.zip')
 				);
-			
 				$_SESSION['ship_doc_'.$doc_id] = $tmp_file;
 			
 				//Только если еще не отправляли
-				if (!strlen($head['ext_ship_id'])){
+				if (is_null($head['ext_ship_id']) || !strlen($head['ext_ship_id'])){
 					$attch = array($tmp_file);
 					if (!is_null($sert_tmp_file)){
 						array_push($attch,$sert_tmp_file);
@@ -1589,8 +1621,26 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 		$doc_id = $params->getParamById('doc_id');
 		if (isset($_SESSION['ship_doc_'.$doc_id])){
 			$tmp_file = $_SESSION['ship_doc_'.$doc_id];
+			//need to parse file $tmp_file if its length less then X bytes as XML
+			//as it is not a regular zip file, but xml which may contain an error.
+			//If so, throw exception.
+			if(filesize($tmp_tile)&lt;500){
+				$contents = file_get_contents($tmp_file);
+				$contents = @iconv('Windows-1251','UTF-8',$contents);
+				try{
+					$xml = new SimpleXMLElement($contents);
+					if ($xml['status']=='false'){
+						$e = (string) $xml->error;
+						throw new Exception($e);
+					}							
+				}catch(Exception $e){
+					//do nothing here, just let the file be downloaded.
+					<!-- throw new Exception('Ошибка парсинга ответа 1с:'.$e->getMessage().' Строка: '.$contents); -->
+				}
+			}
 			ob_clean();
 			downloadFile($tmp_file,'application/zip','attachment;','Отгрузочные документы.zip');
+			unlink($tmp_file);
 			unset($_SESSION['ship_doc_'.$doc_id]);
 		}
 		else{
@@ -1679,9 +1729,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 		ExtProg::print_order($ar['ext_order_id'], $_SESSION['user_ext_id'],1,
 			array('name'=>$ar['file_name'].'_'.$ar_seq['ind'].'.pdf')
 		);
-		//ob_clean();
-		//downloadFile($tmp_file,'application/pdf','attachment;');
-		//unlink($tmp_file);
+		//no actual download here
 	}
 	
 	public function print_torg12($pm){
@@ -2185,6 +2233,217 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQLDOCPl{
 		
 		//Перенос в архив
 		$this->add_state($p->getDbVal('id'), 'canceled_by_sales_manager');
+	}
+	
+	
+	private static function get_data_file_path(){
+		return OUTPUT_PATH;
+	}
+
+	private static function get_data_file_pref($docId){
+		return self::get_data_file_path().'ord_'.$docId.'_';
+	}
+	
+	private static function delete_data_file($fl){
+		unlink($fl);
+	}
+	
+	private static function delete_data_files($docId){
+		$files = glob(self::get_data_file_pref($docId).'*');
+		foreach($files as $fl){
+			self::delete_data_file($fl);
+		}
+	}
+
+	private static function get_thumbnail($fl,$mimeType){
+		$thbn_pref = OUTPUT_PATH.uniqid();		
+		if($mimeType=='application/pdf'){
+			$cmd = sprintf("pdftoppm -q -l 1 -scale-to 150 -jpeg '%s' '%s'",$fl,$thbn_pref);
+			exec($cmd);
+			if(file_exists($thbn_pref.'-1.jpg')){
+				$thbn_fl = $thbn_pref.'-1.jpg';
+			}
+			else if(file_exists($thbn_pref.'-01.jpg')){
+				$thbn_fl = $thbn_pref.'-01.jpg';
+			}
+			
+		}
+		else if(substr($mimeType,0,5)=='image'){
+			$thbn_fl = $thbn_pref.'.gif';
+			$cmd = sprintf("convert -define jpeg:size=500x180 '%s' -auto-orient -thumbnail 250x100 -unsharp 0x.5 '%s'",$fl,$thbn_fl);
+			exec($cmd);
+		}
+		
+		return (file_exists($thbn_fl)? $thbn_fl:NULL);
+	}
+	
+	public function add_file($pm){	
+		$fl = self::get_data_file_pref($this->getExtVal($pm,"doc_order_id")).$this->getExtVal($pm,"file_id");
+		if(file_exists($fl)){
+			self::delete_data_file($fl);
+		}
+		
+		if(isset($_FILES) &amp;&amp; isset($_FILES['file_data'])){
+			if(!isset($_SESSION['allowed_extesions'])){
+				$ar = $this->getDbLink()->query_first(("SELECT const_allowed_extesions_val() AS v"));
+				$_SESSION['allowed_extesions'] = explode(',',$ar['v']);
+			}
+			$ext = pathinfo($_FILES['file_data']['name'][0], PATHINFO_EXTENSION);
+			if (!in_array(strtolower($ext), $_SESSION['allowed_extesions'])) {
+				throw new Exception('Файлы с данным расширением загружать запрещено!');
+			}		
+			
+			if(!move_uploaded_file($_FILES['file_data']['tmp_name'][0],$fl)){
+				throw new Exception('Ошибка загрузки файла!');
+			}
+			
+			$link = $this->getDbLinkMaster();
+			try{
+				$link->query("BEGIN");
+			
+				$fl_mime = getMimeTypeOnExt($_FILES['file_data']['name'][0]);//mime_content_type($fl)
+				$prev_fl = self::get_thumbnail($fl,$fl_mime);
+				if($prev_fl){
+					$prev_data = file_get_contents($prev_fl);
+				}
+				try{
+					$link->query(sprintf(
+						"DELETE FROM doc_order_attachments WHERE id=%s"
+						,$this->getExtDbVal($pm,"file_id")
+					));
+
+					$link->query(sprintf(
+						"INSERT INTO doc_order_attachments
+						(id,doc_order_id,file_inf,file_data,preview_data)
+						VALUES
+						(%s,
+						%d,
+						jsonb_build_object(
+							'id',%s
+							,'name','%s'
+							,'size',%s
+							,'mime','%s'
+						),
+						'%s',
+						%s
+						)"
+						,$this->getExtDbVal($pm,"file_id")
+						,$this->getExtDbVal($pm,"doc_order_id")
+						,$this->getExtDbVal($pm,"file_id")
+						,$_FILES['file_data']['name'][0]
+						,filesize($fl)
+						,$fl_mime
+						,pg_escape_bytea(file_get_contents($fl))
+						,$prev_fl? "'".pg_escape_bytea($prev_data)."'":'NULL'
+					));
+			
+					$link->query("COMMIT");
+					
+					//self::clear_print_cache($this->getExtDbVal($pm,"doc_order_id"));
+				}
+				finally{
+					if(file_exists($prev_fl)){
+						unlink($prev_fl);
+					}
+				}
+					
+			}
+			catch(Exception $e){
+				$link->query("ROLLBACK");
+				unlink($fl);
+				throw $e;
+			}
+		}
+		
+		if($prev_data){
+			$this->addModel(new ModelVars(
+				array('name'=>'Vars',
+					'id'=>'Preview_Model',
+					'values'=>array(
+							new Field('value',DT_STRING,array('value'=>base64_encode($prev_data) ))
+						)
+					)
+				)
+			);		
+		}		
+	}
+
+	public function delete_file($pm){
+		$this->getDbLinkMaster()->query(sprintf(
+			"DELETE FROM doc_order_attachments WHERE id=%s AND doc_order_id=%d"
+			,$this->getExtDbVal($pm,"file_id")
+			,$this->getExtDbVal($pm,"doc_order_id")
+		));
+		
+		$fl = self::get_data_file_pref($this->getExtVal($pm,"doc_order_id")).$this->getExtVal($pm,"file_id");
+		if(file_exists($fl)){
+			self::delete_data_file($fl);
+		}		
+	}
+	
+	public function get_file($pm){
+		$fl = self::get_data_file_pref($this->getExtVal($pm,"doc_order_id")).$this->getExtVal($pm,"file_id");
+		$need_data = !file_exists($fl);
+
+		$ar = $this->getDbLink()->query_first(sprintf(
+			"SELECT
+				file_inf%s
+			FROM doc_order_attachments
+			WHERE id=%s AND doc_order_id=%d"
+			,$need_data? ",file_data":""
+			,$this->getExtDbVal($pm,"file_id")
+			,$this->getExtDbVal($pm,"doc_order_id")
+		));
+
+		if(!is_array($ar) || !count($ar)){
+			throw new Exception('Файл не найден!');
+		}
+
+		if($need_data){
+			file_put_contents($fl,pg_unescape_bytea($ar['file_data']));
+		}
+
+		$fl_n = json_decode($ar['file_inf'])->name;
+		$fl_mime = getMimeTypeOnExt($fl_n);
+		/*json_decode($ar['file_inf'])->mime;
+		if(!$fl_mime){
+			$fl_mime = mime_content_type($fl_n);//getMimeTypeOnExt($fl_n);
+		}
+		*/
+		ob_clean();
+		downloadFile(
+			$fl,
+			$fl_mime,
+			($this->getExtVal($pm,"inline")==1)? 'inline;':'attachment;',
+			$fl_n
+		);
+		return TRUE;
+		
+	}
+
+
+	private static function get_files_list_query($orderId, $nonegraphic){
+		return sprintf(
+			"SELECT
+				file_inf
+			FROM doc_order_attachments
+			WHERE doc_order_id=%d".(($nonegraphic==TRUE)? " AND file_inf->>'mime' &lt;&gt; 'image/jpeg'" : "")
+			,$orderId
+		);
+	}
+
+	public function get_files_list($pm){
+		$this->addNewModel(
+			self::get_files_list_query($this->getExtDbVal($pm,"doc_order_id"), FALSE)
+			,'FileList_Model'
+		);					
+	}
+
+	public function get_nonegraphic_files_list($pm){
+		$this->addNewModel(
+			self::get_files_list_query($this->getExtDbVal($pm,"doc_order_id"), TRUE)
+			,'FileList_Model'
+		);					
 	}
 	
 	

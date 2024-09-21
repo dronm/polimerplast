@@ -326,17 +326,13 @@ DOCOrderDivisDialog_View.prototype.onGetData = function(resp){
 			];
 		if (allowed_states.indexOf(state)<0){
 			var self = this;
-			WindowMessage.show({
-				"text":"Документ в неверном статусе!",
-				"type":WindowMessage.TP_ER,
-				"callBack":function(){
+			window.showTempError("Документ в неверном статусе!", function(){
 					//self.onCancel();
 					self.setEnabled(false);
 					if (self.m_ctrlCancel){
 						self.m_ctrlCancel.setEnabled(true);
 					}
-				}
-			})
+				}, ERR_MSG_WAIT_MS);
 		}
 		
 		//доступность и надобность категории

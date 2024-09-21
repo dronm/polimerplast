@@ -12,6 +12,8 @@ require_once(FRAME_WORK_PATH.'basic_classes/FieldExtPassword.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtBool.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPoint.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldExtGeomPolygon.php');
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtDateTimeTZ.php');
+require_once(FRAME_WORK_PATH.'basic_classes/FieldExtJSONB.php');
 
 /**
  * THIS FILE IS GENERATED FROM TEMPLATE build/templates/controllers/Controller_php.xsl
@@ -379,6 +381,15 @@ class Report_Controller extends ControllerSQL{
 			$base_where_q.=($base_where_q=='')? 'WHERE ':' '.$field['cond'].' ';
 			
 			$f_id = $field['field']->getId();
+			
+			//correct state field!
+			if($f_id == "doc_state"){
+				$f_id = "doc_state_id";			
+			}
+			if($f_id == "doc_last_state"){
+				$f_id = "doc_last_state_id";			
+			}
+			
 			if (!array_key_exists($f_id,$field_resolver)){
 				throw new Exception('Field '.$f_id.' is not resolved!');
 			}
@@ -420,7 +431,7 @@ class Report_Controller extends ControllerSQL{
 		}
 		
 		// !!!*******  УСЛОВИЕ ТОЛЬКО ОТГРУЖЕННЫЕ ЗАЯВКИ *************!!!
-		$base_where_q.=' AND doc_orders.delivery_fact_date IS NOT NULL';
+		//$base_where_q.=' AND doc_orders.delivery_fact_date IS NOT NULL';
 		
 		//******** Сборка полей ************
 		

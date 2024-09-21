@@ -22,7 +22,8 @@
 <!-- Main template-->
 <xsl:template match="/">
 	<xsl:apply-templates select="document/model[@id='ModelServResponse']"/>	
-	<xsl:apply-templates select="document/model[@id='head']"/>	
+	<xsl:apply-templates select="document/model[@id='head']"/>
+	<xsl:apply-templates select="document/model[@id='FileList_Model']"/>		
 </xsl:template>
 
 <!-- Error -->
@@ -150,8 +151,17 @@
 			</div>
 		</xsl:for-each>
 		
-		
-		<div>Адрес доставки: <xsl:value-of select="deliv_destination_descr"/>
+		<xsl:variable name="deliv_dest_descr">
+			<xsl:choose>
+			<xsl:when test="deliv_type='by_client'">
+				<xsl:value-of select="concat('Самовывоз ', deliv_destination_descr)"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="deliv_destination_descr"/>
+			</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<div>Адрес доставки: <xsl:value-of select="$deliv_dest_descr"/>
 		</div>
 		<div>Контактный телефон: <xsl:value-of select="tels"/>
 		</div>
@@ -281,4 +291,10 @@
 
 </xsl:template>
 
+
+<xsl:template match="model[@id='FileList_Model']/row">
+	<p style="page-break-before: always;">&#160;</p>
+	<img src="data:image/png;base64, {file_data}">
+	</img>	
+</xsl:template>
 </xsl:stylesheet>

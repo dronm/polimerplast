@@ -551,6 +551,36 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		$f_client_contract_name=new FieldSQLString($this->getDbLink(),$this->getDbName(),$this->getTableName(),"client_contract_name",$f_opts);
 		$this->addField($f_client_contract_name);
 		//********************
+		
+		//*** Field sale_store_address_id ***
+		$f_opts = array();
+		
+		$f_opts['alias']='Адрес магазина';
+		$f_opts['id']="sale_store_address_id";
+						
+		$f_sale_store_address_id=new FieldSQLInt($this->getDbLink(),$this->getDbName(),$this->getTableName(),"sale_store_address_id",$f_opts);
+		$this->addField($f_sale_store_address_id);
+		//********************
+		
+		//*** Field order_num ***
+		$f_opts = array();
+		
+		$f_opts['alias']='Номер заказа';
+		$f_opts['id']="order_num";
+						
+		$f_order_num=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"order_num",$f_opts);
+		$this->addField($f_order_num);
+		//********************
+		
+		//*** Field batch_num ***
+		$f_opts = array();
+		
+		$f_opts['alias']='Номер партии';
+		$f_opts['id']="batch_num";
+						
+		$f_batch_num=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"batch_num",$f_opts);
+		$this->addField($f_batch_num);
+		//********************
 	
 		$order = new ModelOrderSQL();		
 		$this->setDefaultModelOrder($order);		
@@ -625,7 +655,7 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 		}	
 	}
 	
-	public function insert($needId,$row=NULL){
+	public function insert($needId = FALSE, $row = NULL){
 		$view_id_for_db = "'".$_REQUEST['view_id']."'";
 	
 		$link = $this->getDbLink();
@@ -1034,6 +1064,9 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 						);
 				}				
 				
+				//Added 27/02/24: if order is derived from a split order - do not create 1c Order!
+				$derived_from_split_order = ($ar['state'] == 'waiting_for_us');				
+				
 				if (
 				!$create_alter_order
 				&& !is_null($deliv_expenses)
@@ -1041,9 +1074,8 @@ class DOCOrder_Model extends ModelSQLDOCPl{
 				&& $ar['ext_ship_id']
 				){
 					$this->set_ship_deliv_expenses($ar['ext_ship_id'],$deliv_expenses);
-				}				
-				//Выписка - изменение счета
-				else if ($create_alter_order){
+
+				}else if ($create_alter_order && !$derived_from_split_order){
 					$this->create_alter_order($doc_id);
 				}
 				

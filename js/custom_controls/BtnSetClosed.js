@@ -22,13 +22,9 @@ function BtnSetClosed(options){
 				"xml":true,
 				"params":{"doc_id":keys["id"]},
 				"func":function(resp){					
-					WindowMessage.show({
-						"text":"Заявка переведена в статус 'закрыта' или 'выполнена'.",
-						"type":WindowMessage.TP_NOTE,
-						"callBack":function(){
+					window.showTempNote("Заявка переведена в статус 'закрыта' или 'выполнена'.", function(){
 							options.grid.onRefresh();
-						}
-						});					
+						}, ERR_MSG_WAIT_MS);								
 				},
 				"cont":this,
 				"errControl":options.grid.getErrorControl()

@@ -172,6 +172,15 @@ function DOCOrderDOCTProduct_Model(options){
 	
 	var filed_options = {};
 	filed_options.primaryKey = false;	
+	
+	filed_options.autoInc = false;	
+	
+	options.fields.price_round = new FieldBool("price_round",filed_options);
+	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
 	filed_options.alias = 'Сумма';
 	filed_options.autoInc = false;	
 	
