@@ -264,6 +264,12 @@ extend(Client_Controller,ControllerDb);
 	
 	pm.addParam(param);
 	
+	options = {};
+	
+	var param = new FieldText("comment_text",options);
+	
+	pm.addParam(param);
+	
 	pm.addParam(new FieldInt("ret_id",{}));
 	
 	
@@ -497,6 +503,12 @@ extend(Client_Controller,ControllerDb);
 	options = {};
 	
 	var param = new FieldBool("is_carrier",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
+	var param = new FieldText("comment_text",options);
 	
 	pm.addParam(param);
 	

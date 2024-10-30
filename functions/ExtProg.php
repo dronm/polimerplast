@@ -130,7 +130,7 @@ class ExtProg{
 		else{
 			//file_put_contents('output/cont_'.uniqid().'.xml',$contents);		
 			//throw new Exception("ОШИБКА!!!=".$contents);//$contents
-			$contents = @iconv('Windows-1251','UTF-8',$contents);
+			// $contents = @iconv('Windows-1251','UTF-8',$contents);
 			try{
 				$xml = new SimpleXMLElement($contents);
 			}catch(Exception $e){
@@ -139,6 +139,9 @@ class ExtProg{
 			
 			if ($xml['status']=='false'){
 				$err = (string) $xml->error;
+				if(substr($err, 0, 5) != "Failed"){
+					$contents = @iconv('Windows-1251','UTF-8',$contents);
+				}
 				throw new Exception($err);
 			}							
 		}		

@@ -375,6 +375,15 @@ function Client_Model(options){
 	
 	options.fields.is_carrier = new FieldBool("is_carrier",filed_options);
 	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	
+	filed_options.autoInc = false;	
+	
+	options.fields.comment_text = new FieldText("comment_text",filed_options);
+	
 			
 			
 		Client_Model.superclass.constructor.call(this,id,options);

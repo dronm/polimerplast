@@ -692,7 +692,7 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/ProdBatch_Controller.js?'.date("Y-m-dTH:i:s", filemtime(USER_JS_PATH.'controllers/ProdBatch_Controller.js')) ));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DOCOrderDOCTFProdBatch_Model.js?'.date("Y-m-dTH:i:s", filemtime(USER_JS_PATH.'models/DOCOrderDOCTFProdBatch_Model.js')) ));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/DOCOrder_Controller.js?'.date("Y-m-dTH:i:s", filemtime(USER_JS_PATH.'controllers/DOCOrder_Controller.js')) ));
-		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'js/controllers/DOCOrder_Controller.js?'.date("Y-m-dTH:i:s", filemtime(USER_JS_PATH.'js/controllers/DOCOrder_Controller.js')) ));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/DOCOrder_Controller.js?'.date("Y-m-dTH:i:s", filemtime(USER_JS_PATH.'controllers/DOCOrder_Controller.js')) ));
 				
 			if (isset($_SESSION['scriptId'])){
 				$script_id = $_SESSION['scriptId'];

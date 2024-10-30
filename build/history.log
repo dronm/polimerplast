@@ -316,6 +316,20 @@ DOCOrderShipmentDialog_View.js batch_num is a Text, not number!
 	DocOrderDOCTProductDialog_View  added this.m_priceRoundCtrl
 		this call to calc_totals() server method.
 
+
+1.0148
+1) Deleted all accounts not equal to СОВКОМБАНК: 
+delete from client_firm_bank_accounts where trim(ext_bank_account_descr) = 'ДЕКОР БД Сбербанк';
+delete from client_firm_bank_accounts where trim(ext_bank_account_descr) = 'ГеоПласт СБЕРБАНК  Расчетный счет';
+delete from client_firm_bank_accounts where trim(ext_bank_account_descr) = 'ПолимерПласт  СБЕРБАНК  рублевый';
+2) Client_Model new field: comment_text
+	ClientDialog_Model
+	Client_Controller
+	custom_contols/ClientAtts.js
+	views/ClientDialog_View.js
+
+
+
 doc_orders_t_tmp_prod_batches_list
 	V doc_orders_t_tmp_products_dialog.sql
 	V doc_orders_t_products_dialog.sql

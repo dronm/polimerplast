@@ -149,6 +149,9 @@ class Client_Controller extends ControllerSQL{
 		$param = new FieldExtBool('is_carrier'
 				,array());
 		$pm->addParam($param);
+		$param = new FieldExtText('comment_text'
+				,array());
+		$pm->addParam($param);
 		
 		$pm->addParam(new FieldExtInt('ret_id'));
 		
@@ -309,6 +312,10 @@ class Client_Controller extends ControllerSQL{
 			));
 			$pm->addParam($param);
 		$param = new FieldExtBool('is_carrier'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtText('comment_text'
 				,array(
 			));
 			$pm->addParam($param);

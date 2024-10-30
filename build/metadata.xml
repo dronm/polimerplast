@@ -2,7 +2,7 @@
 <metadata debug="TRUE" owner="polimerplast" dataSchema="public">
 	<versions>
 		<version dateOpen="2016-06-07 07:05" dateClose="2016-06-07 11:06:25">1.0021</version>
-		<lastBuild>2024-09-21 06:53:12</lastBuild>
+		<lastBuild>2024-10-30 15:37:19</lastBuild>
 		<version dateOpen="2016-06-07 11:06:56"/>
 		<version dateOpen="2016-06-07 11:06:57" dateClose="2016-06-07 14:06:30">1.0022</version>
 		<version dateOpen="2016-06-07 14:06:32" dateClose="2016-06-07 16:06:31">1.0023</version>
@@ -139,6 +139,7 @@
 		<version dateOpen="2024-04-08 12:07:47" dateClose="2024-04-08 12:09:20">1.0145</version>
 		<version dateOpen="2024-06-25 16:22:52" dateClose="2024-09-12 14:27:58">1.0146</version>
 		<version dateOpen="2024-09-21 06:52:17" dateClose="2024-09-21 06:53:17">1.0147</version>
+		<version dateOpen="2024-10-30 15:37:16" dateClose="2024-10-30 15:50:15">1.0148</version>
 	</versions>
 	<globalFilters>
 		<field id="client_id"/>
@@ -314,6 +315,7 @@
 			<field id="deliv_add_cost_to_product" dataType="Bool"/>
 			<field id="is_supplier" dataType="Bool"/>
 			<field id="is_carrier" dataType="Bool" defaultValue="FALSE"/>
+			<field id="comment_text" dataType="Text"/>
 			<index id="clients_name_index" unique="TRUE">
 				<expression>lower(name)</expression>
 			</index>
@@ -353,6 +355,7 @@
 			<field id="deliv_add_cost_to_product" dataType="Bool"/>
 			<field id="is_supplier" dataType="Bool"/>
 			<field id="is_carrier" dataType="Bool"/>
+			<field id="comment_text" dataType="Text"/>
 		</model>
 		<model id="ClientComplete" parent="ModelSQL" dataTable="clients_complete" virtual="TRUE">
 			<field id="id" dataType="Int" primaryKey="TRUE"/>
@@ -3803,7 +3806,10 @@
 		<jsScript file="controllers/ProdBatch_Controller.js"/>
 		<jsScript file="models/DOCOrderDOCTFProdBatch_Model.js"/>
 		<jsScript file="controllers/DOCOrder_Controller.js"/>
-		<jsScript file="js/controllers/DOCOrder_Controller.js"/>
+		<jsScript file="controllers/DOCOrder_Controller.js"/>
+		<jsScript file="js/controllers/Client_Controller.js"/>
+		<jsScript file="js/models/Client_Model.js"/>
+		<jsScript file="js/models/ClientDialog_Model.js"/>
 	</jsScripts>
 	<cssScripts>
 		<cssScript file="bootstrap.min.css" compressed="TRUE" standalone="TRUE"/>

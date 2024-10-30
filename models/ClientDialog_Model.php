@@ -126,6 +126,14 @@ class ClientDialog_Model extends ModelSQL{
 		$f_is_carrier=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"is_carrier",$f_opts);
 		$this->addField($f_is_carrier);
 		//********************
+		
+		//*** Field comment_text ***
+		$f_opts = array();
+		$f_opts['id']="comment_text";
+						
+		$f_comment_text=new FieldSQLText($this->getDbLink(),$this->getDbName(),$this->getTableName(),"comment_text",$f_opts);
+		$this->addField($f_comment_text);
+		//********************
 	
 	}
 

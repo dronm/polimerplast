@@ -192,19 +192,24 @@
 		<br></br>
 		<br></br>
 		 <!-- 2024-06-27 added predefined name for one organization -->
-		<choose>
-				<xsl:when test="firm_descr='Андреев А. Н. ИП'">___________ </xsl:when>
-					<div>
-						<span>Отпустил _________ /Негматов Джамшеджон Хусенбоевич/</span>
-						<span style="float:right;margin-right:50px;">Получил ___________________</span>
-					</div>
-				<xsl:otherwise>
-					<div>
-						<span>Отпустил __________________</span>
-						<span style="float:right;margin-right:50px;">Получил ___________________</span>
-					</div>
-				</xsl:otherwise>
-		</choose>
+		<!-- <xsl:choose> -->
+		<!-- <xsl:when test="firm_descr='Андреев А. Н. ИП'"> -->
+		<!-- 	<div> -->
+		<!-- 		<span>Отпустил _________ /Негматов Д. Х./</span> -->
+		<!-- 		<span style="float:right;margin-right:10px;">Получил ___________________</span> -->
+		<!-- 	</div> -->
+		<!-- </xsl:when> -->
+		<!-- <xsl:otherwise> -->
+		<!-- 	<div> -->
+		<!-- 		<span>Отпустил __________________</span> -->
+		<!-- 		<span style="float:right;margin-right:50px;">Получил ___________________</span> -->
+		<!-- 	</div> -->
+		<!-- </xsl:otherwise> -->
+		<!-- </xsl:choose> -->
+			<div>
+				<span>Отпустил __________________</span>
+				<span style="float:right;margin-right:50px;">Получил ___________________</span>
+			</div>
 	</div>
 	<div style="display:inline-block;width:25%;padding-left:10px;vertical-align:top">
 		<h5>Отрывной талон №<xsl:value-of select="number"/> от <xsl:value-of select="date_descr"/></h5>

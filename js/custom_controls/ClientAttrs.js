@@ -162,4 +162,10 @@ function ClientAttrs(attrs,formContext){
 		"buttonClear":false,
 		"tableLayout":false,
 		"attrs":{"maxlength":15,"size":20}});
+
+	attrs["comment_text"] = new EditString("Client_comment_text",
+		{"labelCaption":"Комментарий:","name":"comment_text",
+		"buttonClear":false,
+		"tableLayout":false,
+		"attrs":{"size":70}});
 }
