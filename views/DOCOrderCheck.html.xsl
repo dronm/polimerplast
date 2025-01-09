@@ -36,6 +36,8 @@
 	</xsl:choose>
 </xsl:variable>
 
+<xsl:variable name="firm_nds_val" select="number(firm_nds_val)"/>
+
 <xsl:variable name="total_formatted">
 	<xsl:call-template name="format_money">
 		<xsl:with-param name="val" select="$total"/>
@@ -159,7 +161,7 @@
 						<xsl:if test="firm_nds='t'">
 							<div>
 							<xsl:call-template name="format_money">
-								<xsl:with-param name="val" select="round($total*18 div 118*100) div 100"/>
+								<xsl:with-param name="val" select="round($total*$firm_nds_val div (100+$firm_nds_val)*100) div 100"/>
 							</xsl:call-template>																					
 							</div>
 						</xsl:if>

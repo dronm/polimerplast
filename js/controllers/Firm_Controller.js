@@ -59,6 +59,12 @@ extend(Firm_Controller,ControllerDb);
 	
 	options = {};
 	
+	var param = new FieldFloat("nds_val",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
 	var param = new FieldBool("cash",options);
 	
 	pm.addParam(param);
@@ -120,6 +126,12 @@ extend(Firm_Controller,ControllerDb);
 	
 	options = {};
 	
+	var param = new FieldFloat("nds_val",options);
+	
+	pm.addParam(param);
+	
+	options = {};
+	
 	var param = new FieldBool("cash",options);
 	
 	pm.addParam(param);
@@ -156,6 +168,7 @@ extend(Firm_Controller,ControllerDb);
 	pm.addParam(new FieldString("name",options));
 	pm.addParam(new FieldString("match_1c",options));
 	pm.addParam(new FieldBool("nds",options));
+	pm.addParam(new FieldFloat("nds_val",options));
 	pm.addParam(new FieldBool("cash",options));
 	pm.addParam(new FieldBool("deleted",options));
 	pm.addParam(new FieldBool("order_no_carrier_print",options));

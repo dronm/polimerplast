@@ -37,6 +37,9 @@ function FirmList_View(id,options){
 	row.addElement(new GridDbHeadCellBool(id+"_col_nds",{"value":"Есть НДС",
 		"readBind":{"valueFieldId":"nds"}
 		}));
+	row.addElement(new GridDbHeadCell(id+"_col_nds_val",{"value":"% НДС",
+		"readBind":{"valueFieldId":"nds_val"}
+		}));
 	row.addElement(new GridDbHeadCellBool(id+"_col_cash",{"value":"За нал.расчет",
 		"readBind":{"valueFieldId":"cash"}
 		}));

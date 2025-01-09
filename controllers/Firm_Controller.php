@@ -43,6 +43,9 @@ class Firm_Controller extends ControllerSQL{
 		$param = new FieldExtBool('nds'
 				,array());
 		$pm->addParam($param);
+		$param = new FieldExtFloat('nds_val'
+				,array());
+		$pm->addParam($param);
 		$param = new FieldExtBool('cash'
 				,array());
 		$pm->addParam($param);
@@ -83,6 +86,10 @@ class Firm_Controller extends ControllerSQL{
 			));
 			$pm->addParam($param);
 		$param = new FieldExtBool('nds'
+				,array(
+			));
+			$pm->addParam($param);
+		$param = new FieldExtFloat('nds_val'
 				,array(
 			));
 			$pm->addParam($param);

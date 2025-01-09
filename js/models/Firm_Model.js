@@ -78,6 +78,15 @@ function Firm_Model(options){
 	
 	filed_options.autoInc = false;	
 	
+	options.fields.nds_val = new FieldFloat("nds_val",filed_options);
+	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	
+	filed_options.autoInc = false;	
+	
 	options.fields.cash = new FieldBool("cash",filed_options);
 	
 				
@@ -99,7 +108,7 @@ function Firm_Model(options){
 	filed_options.autoInc = false;	
 	
 	options.fields.order_no_carrier_print = new FieldBool("order_no_carrier_print",filed_options);
-				
+	
 		Firm_Model.superclass.constructor.call(this,id,options);
 }
 extend(Firm_Model,Model);

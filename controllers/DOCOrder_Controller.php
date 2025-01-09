@@ -3100,6 +3100,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 					'deliv_vehicle_count'=>$ar['deliv_vehicle_count'],
 					'number'=>$ar['number'],
 					'firm_nds'=>$ar['firm_nds'],
+					'firm_nds_val'=>$ar['firm_nds_val'],
 					'delivery_plan_date'=>isset($ar['delivery_plan_date'])? $ar['delivery_plan_date'] : null,
 					'total_volume'=>$ar['total_volume'],
 					'total_weight'=>$ar['total_weight'],
@@ -4254,6 +4255,7 @@ class DOCOrder_Controller extends ControllerSQLDOCPl{
 			,'FileList_Model'
 		);					
 	}
+	
 	
 
 }

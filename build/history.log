@@ -328,6 +328,8 @@ delete from client_firm_bank_accounts where trim(ext_bank_account_descr) = 'По
 	custom_contols/ClientAtts.js
 	views/ClientDialog_View.js
 
+1.0149
+1) Firm, new field nds_val float
 
 
 doc_orders_t_tmp_prod_batches_list

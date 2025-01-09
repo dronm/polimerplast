@@ -10,6 +10,7 @@ require_once(FRAME_WORK_PATH.'basic_classes/ModelSQL.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLInt.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLString.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLText.php');
+require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLFloat.php');
 require_once(FRAME_WORK_PATH.'basic_classes/FieldSQLBool.php');
 require_once(FRAME_WORK_PATH.'basic_classes/ModelOrderSQL.php');
  
@@ -65,6 +66,15 @@ class Firm_Model extends ModelSQL{
 						
 		$f_nds=new FieldSQLBool($this->getDbLink(),$this->getDbName(),$this->getTableName(),"nds",$f_opts);
 		$this->addField($f_nds);
+		//********************
+		
+		//*** Field nds_val ***
+		$f_opts = array();
+		$f_opts['length']=15;
+		$f_opts['id']="nds_val";
+						
+		$f_nds_val=new FieldSQLFloat($this->getDbLink(),$this->getDbName(),$this->getTableName(),"nds_val",$f_opts);
+		$this->addField($f_nds_val);
 		//********************
 		
 		//*** Field cash ***

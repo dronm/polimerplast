@@ -19,8 +19,12 @@
 <xsl:call-template name="add_requirements"/>
 
 require_once('common/OSRMV5.php');
-require_once('common/geo/yandex.php');
+
+//require_once('common/geo/yandex.php');
+require_once('common/geo/dadata.php');
+
 require_once('common/geo/YndxReverseCode.php');
+
 require_once(FRAME_WORK_PATH.'basic_classes/ParamsSQL.php');
 require_once(ABSOLUTE_PATH.'controllers/Kladr_Controller.php');
 require_once(ABSOLUTE_PATH.'models/ClientDestination_Model.php');
@@ -126,7 +130,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 					'korpus'=>''
 			);
 			
-			get_inf_on_address($addr,$res);
+			get_inf_on_address(DADATA_KEY, DADATA_SECRET, $addr, $res);
 			
 			if ($res['lon_pos'] &amp;&amp; $res['lat_pos']){
 				$pm->setParamValue('zone_center',
@@ -240,7 +244,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 						'korpus'=>''
 				);
 				
-				get_inf_on_address($addr,$res);
+				get_inf_on_address(DADATA_KEY, DADATA_SECRET, $addr, $res);
 				
 				if ($res['lon_pos'] &amp;&amp; $res['lat_pos']){
 					$pm->setParamValue('zone_center',
@@ -337,7 +341,7 @@ class <xsl:value-of select="@id"/>_Controller extends ControllerSQL{
 			);
 		
 		}
-		get_inf_on_address($addr,$res);
+		get_inf_on_address(DADATA_KEY, DADATA_SECRET, $addr, $res);
 	
 		if (!$value &amp;&amp; $pm->getParamValue('ulitza') &amp;&amp; $pm->getParamValue('dom') &amp;&amp; $res['precision']!="exact" &amp;&amp; $res['precision']!="near" &amp; $res['precision']!="street"){
 			throw new Exception("Адрес не найден!");

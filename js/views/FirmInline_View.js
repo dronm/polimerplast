@@ -59,6 +59,15 @@ function FirmInline_View(id,options){
 		{"valueFieldId":"nds","keyFieldIds":null}
 	);
 	this.addDataControl(
+		new EditFloat(id+"_nds_val",
+		{"precision":2
+		}),
+		{"modelId":"FirmList_Model",
+		"valueFieldId":"nds_val",
+		"keyFieldIds":null},
+		{"valueFieldId":"nds_val","keyFieldIds":null}
+	);
+	this.addDataControl(
 		new EditCheckBox(id+"_cash",
 		{
 		}),

@@ -25,7 +25,8 @@ CREATE OR REPLACE VIEW doc_orders_print_h AS
 				
 		(coalesce(d.deliv_responsable_tel,coalesce(d.tel,d.client_user_cel_phone)))::text AS tels,
 		
-		f.nds AS firm_nds
+		f.nds AS firm_nds,
+		f.nds_val AS firm_nds_val
 		
 	FROM doc_orders_dialog_no_att AS d
 	LEFT JOIN clients AS cl ON cl.id=d.client_id

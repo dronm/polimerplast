@@ -65,6 +65,15 @@ function FirmList_Model(options){
 	
 	filed_options.autoInc = false;	
 	
+	options.fields.nds_val = new FieldFloat("nds_val",filed_options);
+	
+				
+	
+	var filed_options = {};
+	filed_options.primaryKey = false;	
+	
+	filed_options.autoInc = false;	
+	
 	options.fields.cash = new FieldBool("cash",filed_options);
 	
 				

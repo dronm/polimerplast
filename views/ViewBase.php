@@ -693,6 +693,12 @@ class ViewBase extends ViewHTMLXSLT {
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/DOCOrderDOCTFProdBatch_Model.js?'.date("Y-m-dTH:i:s", filemtime(USER_JS_PATH.'models/DOCOrderDOCTFProdBatch_Model.js')) ));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/DOCOrder_Controller.js?'.date("Y-m-dTH:i:s", filemtime(USER_JS_PATH.'controllers/DOCOrder_Controller.js')) ));
 		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/DOCOrder_Controller.js?'.date("Y-m-dTH:i:s", filemtime(USER_JS_PATH.'controllers/DOCOrder_Controller.js')) ));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/Client_Controller.js?'.date("Y-m-dTH:i:s", filemtime(USER_JS_PATH.'controllers/Client_Controller.js')) ));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/Client_Model.js?'.date("Y-m-dTH:i:s", filemtime(USER_JS_PATH.'models/Client_Model.js')) ));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/ClientDialog_Model.js?'.date("Y-m-dTH:i:s", filemtime(USER_JS_PATH.'models/ClientDialog_Model.js')) ));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/Firm_Model.js?'.date("Y-m-dTH:i:s", filemtime(USER_JS_PATH.'models/Firm_Model.js')) ));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'controllers/Firm_Controller.js?'.date("Y-m-dTH:i:s", filemtime(USER_JS_PATH.'controllers/Firm_Controller.js')) ));
+		$this->addJsModel(new ModelJavaScript(USER_JS_PATH.'models/FirmList_Model.js?'.date("Y-m-dTH:i:s", filemtime(USER_JS_PATH.'models/FirmList_Model.js')) ));
 				
 			if (isset($_SESSION['scriptId'])){
 				$script_id = $_SESSION['scriptId'];

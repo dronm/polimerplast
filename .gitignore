@@ -37,3 +37,4 @@ build/templates/models/Model_php.xsl
 build/templates/models/MainMenu_Model_php.tmpl
 build/templates/models/Model_php.tmpl
 build/templates/models/MainMenu_Model_php.xsl
+build/migration.txt

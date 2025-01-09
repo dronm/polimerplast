@@ -1,6 +1,6 @@
 -- View: doc_orders_data_for_ext
 
---DROP VIEW doc_orders_data_for_ext;
+DROP VIEW doc_orders_data_for_ext;
 
 /**
  * АТРИБУТЫ ВОДИТЕЛЬ - ДЛЯ ЗАПИСИ В СВОЙСТВА!!!
@@ -124,6 +124,7 @@ CREATE OR REPLACE VIEW doc_orders_data_for_ext AS
 		h.deliv_vehicle_count,
 		
 		f.nds AS firm_nds,
+		f.nds_val AS firm_nds_val,
 		
 		h.total_volume AS total_volume,
 		h.total_weight AS total_weight,

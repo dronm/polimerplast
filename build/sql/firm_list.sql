@@ -10,7 +10,8 @@ CREATE OR REPLACE VIEW firm_list AS
 		nds,
 		cash,
 		deleted,
-		order_no_carrier_print
+		order_no_carrier_print,
+		nds_val
 	FROM firms
 	ORDER BY name;
 ALTER TABLE firm_list OWNER TO polimerplast;
